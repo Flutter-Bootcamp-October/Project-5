@@ -14,6 +14,7 @@ Your task is to create a functional and user-friendly CV app using Flutter. This
 - **User Information:** Users will be able to write their information using the app in the (About) screen, users should able to view and edit their information. And be able to delete their account.
 - **Project and skills:** Users will be able to insert, view, and delete their projects and skills. They will be able to add a description of each project in the (Projects) screen, and Also, be able to add their skills in the (Skill) screen
 - **Educational data:** Users will be able to add their educational data to the app. They will be able to add the name of their university, the degree they earned, and the dates they graduated.
+- **Social Media:** Users will be able to insert, view, and delete their Social Media accounts.
 
 
 ## Delivery Requirements
@@ -40,13 +41,38 @@ Your task is to create a functional and user-friendly CV app using Flutter. This
 ## Schedule & Deadlines
 
 - **Project Start Date:** 9/11/2023 - 3:00 PM
-- **Project Submission Deadline:** 14/11/2023 – 9:59 PM
+- **Project Submission Deadline:** 15/11/2023 – 9:59 PM
 
+## EndPoints
+**Auth** 
+  - **Post:** https://bacend-fshi.onrender.com/auth/registration 
+  - **Post:** https://bacend-fshi.onrender.com/auth/verification 
+  - **Post:** https://bacend-fshi.onrender.com/auth/login
 
-## Resources
+**About** 
+  - **Get:** https://bacend-fshi.onrender.com/user/about
+  - **Put:** https://bacend-fshi.onrender.com/user/edit/about
+  - **Delete:** https://bacend-fshi.onrender.com/user/delete_account
 
-- [Dart Tutorials](https://dart.dev/tutorials)
-- [Flutter Documentation](https://docs.flutter.dev/)
-- [Flutter Tutorial by GeeksforGeeks](https://www.geeksforgeeks.org/flutter-tutorial/)
+**Project** 
+  - **Get:** https://bacend-fshi.onrender.com/user/projects
+  - **Post:** https://bacend-fshi.onrender.com/user/add/project
+  - **Delete:** https://bacend-fshi.onrender.com/user/delete/project
 
+**Skills** 
+  - **Get:** https://bacend-fshi.onrender.com/user/skills 
+  - **Post:** https://bacend-fshi.onrender.com/user/add/skills 
+  - **Delete:** https://bacend-fshi.onrender.com/user/delete/skills
+
+**Education** 
+  - **Get:** https://bacend-fshi.onrender.com/user/education
+  - **Post:** https://bacend-fshi.onrender.com/user/add/education
+  - **Delete:** https://bacend-fshi.onrender.com/user/delete/education
+
+**Social Media** 
+  - **Get:** https://bacend-fshi.onrender.com/user/social_media
+  - **Post:** https://bacend-fshi.onrender.com/user/add/social_media
+  - **Delete:** https://bacend-fshi.onrender.com/user/delete/social_media
+
+<br>
 Good luck with your exam project! If you have any general questions or need guidance, don't hesitate to reach out to the instructor. Happy coding!
