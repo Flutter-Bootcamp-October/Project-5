@@ -15,6 +15,7 @@ Your task is to create a functional and user-friendly CV app using Flutter. This
 - **Project and skills:** Users will be able to insert, view, and delete their projects and skills. They will be able to add a description of each project in the (Projects) screen, and Also, be able to add their skills in the (Skill) screen
 - **Educational data:** Users will be able to add their educational data to the app. They will be able to add the name of their university, the degree they earned, and the dates they graduated.
 - **Social Media:** Users will be able to insert, view, and delete their Social Media accounts.
+- **Display all Users:** Users will be able to view all other users' details.
 
 
 ## Delivery Requirements
@@ -73,6 +74,9 @@ Your task is to create a functional and user-friendly CV app using Flutter. This
   - **Get:** https://bacend-fshi.onrender.com/user/social_media
   - **Post:** https://bacend-fshi.onrender.com/user/add/social_media
   - **Delete:** https://bacend-fshi.onrender.com/user/delete/social_media
+
+**Get All users**
+  - **Get:** https://bacend-fshi.onrender.com/user/get_users
 
 <br>
 Good luck with your exam project! If you have any general questions or need guidance, don't hesitate to reach out to the instructor. Happy coding!
