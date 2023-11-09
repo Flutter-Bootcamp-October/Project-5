@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 
@@ -37,41 +38,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                 ),
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextFieldWidget(
-                  text: 'Username',
-                  obscure: false,
-                  controller: usernameController,
-                ),
+              TextFieldWidget(
+                text: 'Username',
+                obscure: false,
+                controller: usernameController,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextFieldWidget(
-                  text: 'Phone',
-                  obscure: false,
-                  controller: phoneController,
-                ),
+              TextFieldWidget(
+                text: 'Phone',
+                obscure: false,
+                controller: phoneController,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextFieldWidget(
-                  text: 'Email',
-                  obscure: false,
-                  controller: emailController,
-                ),
+              TextFieldWidget(
+                text: 'Email',
+                obscure: false,
+                controller: emailController,
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 10),
-                child: TextFieldWidget(
-                  text: 'Password',
-                  obscure: true,
-                  controller: passwordController,
-                ),
+              TextFieldWidget(
+                text: 'Password',
+                obscure: true,
+                controller: passwordController,
               ),
-             
               ButtonWidget(
-                onPressed: () {},
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => SignInScreen(),
+                      ));
+                },
                 text: 'Register',
               ),
               Center(

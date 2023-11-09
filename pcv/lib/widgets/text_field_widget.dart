@@ -12,22 +12,25 @@ class TextFieldWidget extends StatelessWidget {
   final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
-    return TextField(
-      obscureText: obscure,
-      controller: controller,
-      onTap: () => print(controller!.text),
-      decoration: InputDecoration(
-          label: Text(text),
-          labelStyle: const TextStyle(
-              fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
-          floatingLabelBehavior: FloatingLabelBehavior.always,
-          enabledBorder: const OutlineInputBorder(
-              borderSide: BorderSide(width: 0.5),
-              borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(20), right: Radius.circular(20))),
-          focusedBorder: const OutlineInputBorder(
-              borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(20), right: Radius.circular(20)))),
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 15),
+      child: TextField(
+        obscureText: obscure,
+        controller: controller,
+        onTap: () => print(controller!.text),
+        decoration: InputDecoration(
+            label: Text(text),
+            labelStyle: const TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+            enabledBorder: const OutlineInputBorder(
+                borderSide: BorderSide(width: 0.5),
+                borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(30), right: Radius.circular(30))),
+            focusedBorder: const OutlineInputBorder(
+                borderRadius: BorderRadius.horizontal(
+                    left: Radius.circular(30), right: Radius.circular(30)))),
+      ),
     );
   }
 }
