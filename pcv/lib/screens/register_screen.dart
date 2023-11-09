@@ -1,4 +1,6 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/screens/verification_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
@@ -70,14 +72,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               Center(
                 child: RichText(
-                  text: const TextSpan(
-                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  text: TextSpan(
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
                     children: [
-                      TextSpan(text: 'Already Register?'),
-                      
+                      const TextSpan(text: 'Already Register?'),
                       TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () => Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => const SignInScreen(),
+                                )),
                           text: ' Log In',
-                          style: TextStyle(color: Color(0xff7052ff)))
+                          style: const TextStyle(color: Color(0xff7052ff)))
                     ],
                   ),
                 ),

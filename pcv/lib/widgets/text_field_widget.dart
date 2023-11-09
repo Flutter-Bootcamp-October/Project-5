@@ -17,7 +17,6 @@ class TextFieldWidget extends StatelessWidget {
       child: TextField(
         obscureText: obscure,
         controller: controller,
-        onTap: () => print(controller!.text),
         decoration: InputDecoration(
             label: Text(text),
             labelStyle: const TextStyle(

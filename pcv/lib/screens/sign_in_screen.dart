@@ -1,4 +1,7 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/screens/rest_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 
@@ -33,7 +36,13 @@ class SignInScreen extends StatelessWidget {
                   const TextFieldWidget(
                       text: 'Password', obscure: true, controller: null),
                   TextButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const RestScreen(),
+                            ));
+                      },
                       child: const Text(
                         'Forget Password?',
                         style: TextStyle(color: Color(0xff7052ff)),
@@ -47,9 +56,15 @@ class SignInScreen extends StatelessWidget {
                         children: [
                           const TextSpan(text: 'Don\'t have an account?'),
                           TextSpan(
-                              onExit: (event) => Container(),
                               text: ' Register',
-                              style: const TextStyle(color: Color(0xff7052ff)))
+                              style: const TextStyle(color: Color(0xff7052ff)),
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          const RegisterScreen(),
+                                    )))
                         ],
                       ),
                     ),
