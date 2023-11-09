@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pcv/screens/sign_in_screen.dart';
+import 'package:pcv/screens/verification_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 
@@ -63,21 +63,21 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => SignInScreen(),
+                        builder: (context) => const VerificationScreen(),
                       ));
                 },
                 text: 'Register',
               ),
               Center(
                 child: RichText(
-                  text: TextSpan(
-                    style: const TextStyle(color: Colors.black, fontSize: 16),
+                  text: const TextSpan(
+                    style: TextStyle(color: Colors.black, fontSize: 16),
                     children: [
-                      const TextSpan(text: 'Already Register?'),
+                      TextSpan(text: 'Already Register?'),
+                      
                       TextSpan(
-                          onExit: (event) => Container(),
                           text: ' Log In',
-                          style: const TextStyle(color: Color(0xff7052ff)))
+                          style: TextStyle(color: Color(0xff7052ff)))
                     ],
                   ),
                 ),
