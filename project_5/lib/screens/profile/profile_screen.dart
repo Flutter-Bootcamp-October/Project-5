@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
 import 'package:project_5/screens/profile/components/experience.dart';
+import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
 import 'package:project_5/screens/settings/settings_screen.dart';
 
 import 'components/education.dart';
@@ -16,21 +17,9 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: AppBar(
-        backgroundColor: const Color(0xffe1dfef),
-        elevation: 1.5,
-        scrolledUnderElevation: 2.5,
-        automaticallyImplyLeading: false,
-        centerTitle: true,
-        actions: [
-          IconButton(
-              iconSize: 26,
-              onPressed: () {
-                navigationPush(context, const SettingsScreen());
-              },
-              icon: const Icon(Icons.settings_outlined))
-        ],
-        title: const Text("Profile {UserName}"),
+      appBar: const CustomAppBar(
+        hasAction: true,
+        title: "Profile {UserName}",
       ),
       body: SingleChildScrollView(
         child: Column(

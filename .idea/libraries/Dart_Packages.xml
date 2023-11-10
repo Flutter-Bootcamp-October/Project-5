@@ -2,6 +2,13 @@
   <library name="Dart Packages" type="DartPackagesLibraryType">
     <properties>
       <option name="packageNameToDirsMap">
+        <entry key="animated_toggle_switch">
+          <value>
+            <list>
+              <option value="$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/animated_toggle_switch-0.8.0/lib" />
+            </list>
+          </value>
+        </entry>
         <entry key="async">
           <value>
             <list>
@@ -187,6 +194,7 @@
       </option>
     </properties>
     <CLASSES>
+      <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/animated_toggle_switch-0.8.0/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/async-2.11.0/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/boolean_selector-2.1.1/lib" />
       <root url="file://$USER_HOME$/AppData/Local/Pub/Cache/hosted/pub.dev/characters-1.3.0/lib" />

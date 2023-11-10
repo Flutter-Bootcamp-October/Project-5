@@ -11,9 +11,15 @@ class ProfileUserInformation extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Center(
-          child: CircleAvatar(
-            radius: 50,
+        Center(
+          child: InkWell(
+            onLongPress: () {
+              //TODO: CHANGE IMAGE ON LONG PRESS
+              print("Change Image");
+            },
+            child: const CircleAvatar(
+              radius: 50,
+            ),
           ),
         ),
         Padding(
