@@ -1,3 +1,4 @@
+import 'package:cv_app/screens/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,22 +11,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: LoginScreen(),
-    );
-  }
-}
-
-class LoginScreen extends StatelessWidget {
-  const LoginScreen({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Hello World!'),
-      ),
     );
   }
 }
