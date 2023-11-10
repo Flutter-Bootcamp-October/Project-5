@@ -1,5 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
 import 'package:cv/screens/signin_screen.dart';
-import 'package:cv/services/cearte_account.dart';
+import 'package:cv/screens/verification_screen.dart';
+import 'package:cv/services/auth/cearte_account.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
@@ -81,9 +86,17 @@ class SignupScreen extends StatelessWidget {
                   if (response.statusCode >= 200 && response.statusCode < 300) {
                     ScaffoldMessenger.of(context)
                         .showSnackBar(const SnackBar(content: Text("done")));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VerificationScreen(
+                            type: 'registration',
+                            email: emailController.text,
+                          ),
+                        ));
                   } else {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar( SnackBar(content: Text(response.body)));
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(jsonDecode(response.body)["msg"])));
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

@@ -1,4 +1,4 @@
-import 'package:cv/screens/signup_screen.dart';
+import 'package:cv/screens/loding_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -11,7 +11,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SignupScreen(),
+      home: lodingScreen(),
     );
   }
 }

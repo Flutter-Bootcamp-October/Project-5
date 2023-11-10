@@ -1,11 +1,23 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
+import 'package:cv/screens/home_screen.dart';
+import 'package:cv/screens/signin_screen.dart';
+import 'package:cv/services/auth/verification.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationScreen extends StatelessWidget {
   const VerificationScreen({
     super.key,
+    required this.email,
+    required this.type,
   });
+  final String email;
+  final String type;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +48,48 @@ class VerificationScreen extends StatelessWidget {
               height: 100,
             ),
             InkWell(
-              onTap: () {},
+              onTap: () async {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                try {
+                  if (otpController.text.isNotEmpty) {
+                    final response = await verification({
+                      "otp": otpController.text,
+                      "email": email,
+                      "type": type
+                    });
+                    if (response.statusCode >= 200 &&
+                        response.statusCode < 300) {
+                      await prefs.setString(
+                          'token', jsonDecode(response.body)["data"]["token"]);
+                      ScaffoldMessenger.of(context)
+                          .showSnackBar(const SnackBar(content: Text("done")));
+                      type == "login"
+                          ? Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const HomeScreen(),
+                              ),
+                              (route) => false,
+                            )
+                          : Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const SigninScreen(),
+                              ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(jsonDecode(response.body)["msg"])));
+                    }
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("please enter the OTP")));
+                  }
+                } catch (error) {
+                  ScaffoldMessenger.of(context)
+                      .showSnackBar(SnackBar(content: Text(error.toString())));
+                }
+              },
               child: Container(
                 width: 330,
                 height: 50,

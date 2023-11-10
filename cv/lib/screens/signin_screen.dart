@@ -1,5 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
 import 'package:cv/screens/signup_screen.dart';
 import 'package:cv/screens/verification_screen.dart';
+import 'package:cv/services/auth/login.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
@@ -49,12 +54,37 @@ class SigninScreen extends StatelessWidget {
           hight40(),
           hight8(),
           InkWell(
-            onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const VerificationScreen(),
-                  ));
+            onTap: () async {
+              try {
+                if (emailController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty) {
+                  final response = await login({
+                    "email": emailController.text,
+                    "password": passwordController.text
+                  });
+                  if (response.statusCode >= 200 && response.statusCode < 300) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(const SnackBar(content: Text("done")));
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => VerificationScreen(
+                            email: emailController.text,
+                            type: 'login',
+                          ),
+                        ));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        content: Text(jsonDecode(response.body)["msg"])));
+                  }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("please enter all information")));
+                }
+              } catch (error) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(error.toString())));
+              }
             },
             child: Container(
               width: 330,
