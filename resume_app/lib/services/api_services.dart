@@ -11,8 +11,8 @@ class ApiServices {
   registrerUser({required Map body}) async {
     var url = Uri.https(_api, _registration);
     var response = await http.post(url, body: json.encode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    // print('Response status: ${response.statusCode}');
+    // print('Response body: ${response.body}');
     return response;
   }
 
