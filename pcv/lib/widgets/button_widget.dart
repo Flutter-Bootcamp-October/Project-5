@@ -24,7 +24,10 @@ class ButtonWidget extends StatelessWidget {
             fixedSize: Size(MediaQuery.of(context).size.width * 0.9, 1),
           ),
           onPressed: onPressed,
-          child: Text(text),
+          child: Text(
+            text,
+            style: TextStyle(color: Colors.white),
+          ),
         ));
   }
 }

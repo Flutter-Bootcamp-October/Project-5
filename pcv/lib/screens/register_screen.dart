@@ -1,9 +1,15 @@
+import 'dart:convert';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/screens/verification_screen.dart';
+import 'package:pcv/services/api_services.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
+
+final network = Network();
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({
@@ -24,8 +30,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: true,
-        body: SafeArea(
-            child: Padding(
+        body: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -61,12 +66,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 controller: passwordController,
               ),
               ButtonWidget(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const VerificationScreen(),
-                      ));
+                onPressed: () async {
+                  try {
+                    final Response resp = await network.registerMethod({
+                      "name": usernameController.text,
+                      "phone": phoneController.text,
+                      "password": passwordController.text,
+                      "email": emailController.text
+                    });
+
+                    if (resp.statusCode == 200) {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>  VerificationScreen(type: 'registration', email: emailController.text,),
+                          ));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text((await jsonDecode(resp.body))["msg"]
+                              .toString())));
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
+                  }
                 },
                 text: 'Register',
               ),
@@ -91,6 +114,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
               )
             ],
           ),
-        )));
+        ));
   }
 }
