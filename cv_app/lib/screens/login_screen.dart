@@ -1,4 +1,5 @@
 import 'package:cv_app/screens/signup_screen.dart';
+import 'package:cv_app/services/auth.dart';
 import 'package:cv_app/widgets/app_botton.dart';
 import 'package:cv_app/widgets/app_textfield.dart';
 import 'package:cv_app/widgets/change_accees_method.dart';
@@ -36,10 +37,16 @@ class LoginScreen extends StatelessWidget {
             const OrSignInWith(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
-              child: ChangeAccessMethod(quistion: "Don't have an account? ", accessMethos: "SIGN UP", onTap: (){
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const SignupScreen()));
-          },),
+              child: ChangeAccessMethod(
+                quistion: "Don't have an account? ",
+                accessMethos: "SIGN UP",
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SignupScreen()));
+                },
+              ),
             )
           ],
         ),
