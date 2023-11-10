@@ -11,9 +11,9 @@ dependencies:
   flutter:
     sdk: flutter
 
-
   cupertino_icons: ^1.0.2
   timelines: ^0.1.0
+  flex_list: ^1.0.0
 
 dev_dependencies:
   flutter_test:

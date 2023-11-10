@@ -1,4 +1,3 @@
-import 'package:timelines/timelines.dart';
 import 'package:flutter/material.dart';
 
 class Skills extends StatelessWidget {
@@ -6,15 +5,34 @@ class Skills extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Timeline.tileBuilder(
-        builder: TimelineTileBuilder.fromStyle(
-          contentsBuilder: (context, index) => Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Text('Timeline Event $index'),
-          ),
-          itemCount: 3,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 12.0),
+      child: GridView.builder(
+        itemCount: 6,
+        shrinkWrap: true,
+        physics: const NeverScrollableScrollPhysics(),
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 4, // number of items in each row
+          mainAxisSpacing: 8.0, // spacing between rows
+          crossAxisSpacing: 8.0,
         ),
+        itemBuilder: (context, index) {
+          return const Card(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(
+                  Icons.flutter_dash,
+                  color: Colors.blueAccent,
+                ),
+                Text(
+                  textAlign: TextAlign.center,
+                  "Flutter",
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
