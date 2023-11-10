@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -49,18 +51,16 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             await SharedPreferences.getInstance();
                         print(token);
                         await prefs.setString('token', token);
-                        // ignore: use_build_context_synchronously
                         Navigator.push(
                             context,
                             MaterialPageRoute(
                               builder: (context) => const HomeScreen(),
                             ));
                       } else {
-                        // ignore: use_build_context_synchronously
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const RegisterScreen(),
+                              builder: (context) => const SignInScreen(),
                             ));
                       }
                     } else {

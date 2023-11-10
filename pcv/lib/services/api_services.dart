@@ -58,4 +58,12 @@ class Network {
     print('Response body: ${response.body}');
     return response;
   }
+    deleteAccountMethod({required String token,}) async {
+    var url = Uri.https(_apiUrl, _editAbout);
+    var response = await http.delete(url,
+        headers: {"Authorization": token},);
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    return response;
+  }
 }

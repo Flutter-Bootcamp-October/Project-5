@@ -17,7 +17,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Map about = {};
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loadingAbout();
   }
@@ -29,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     if (res.statusCode == 200) {
       about = (await jsonDecode(res.body))["data"];
       setState(() {});
-      // print(about);
+      print(token);
     }
   }
 
@@ -43,7 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
         centerTitle: true,
       ),
       drawer: const Drawer(
-
         child: DrawerScreens(),
       ),
       body: SafeArea(
@@ -69,5 +67,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
-
