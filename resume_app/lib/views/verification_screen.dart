@@ -57,7 +57,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     "type": widget.type
                   }, token: widget.token);
                 }
-
+                print('Response status: ${res.statusCode}');
+                print('Response body: ${res.body}');
                 if (res.statusCode == 200) {
                   final String token = json.decode(res.body)["data"]["token"];
                   if (widget.type == "registration") {

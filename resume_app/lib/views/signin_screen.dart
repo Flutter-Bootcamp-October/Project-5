@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:resume_app/services/api_services.dart';
+import 'package:resume_app/views/signup_screen.dart';
 import 'package:resume_app/views/verification_screen.dart';
+import 'package:resume_app/widgets/custom_rich_text.dart';
 
 class SignInScreen extends StatelessWidget {
   const SignInScreen({super.key, required this.token});
@@ -46,7 +48,12 @@ class SignInScreen extends StatelessWidget {
                   );
                 }
               },
-              child: const Text("login"))
+              child: const Text("login")),
+          const SizedBox(height: 20),
+          const RichTextCustom(
+              text1: "don't have an account?",
+              text2: "Sign up",
+              screen: SignUpSreen())
         ],
       )),
     );
