@@ -59,8 +59,11 @@ class _FirstScreenState extends State<FirstScreen> {
                             )),
                   );
                 } on FormatException catch (error) {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(error.message.toString())));
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Text(
+                      error.message.toString(),
+                    ),
+                  ));
                 }
               },
               child: const Text("Create account"))

@@ -4,6 +4,7 @@ import 'screens/first_screen.dart';
 
 void main() {
   runApp(const MainApp());
+  WidgetsFlutterBinding.ensureInitialized();
 }
 
 class MainApp extends StatelessWidget {
