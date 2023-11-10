@@ -8,7 +8,7 @@ class PrifileScreen extends StatelessWidget {
     return const SafeArea(
         child: Scaffold(
       resizeToAvoidBottomInset: false,
-      body: Text("dara"),
+      body: Text("Profile Screen"),
     ));
   }
 }
