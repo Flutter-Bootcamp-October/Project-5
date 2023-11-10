@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:pcv/screens/home_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
-import 'package:pcv/screens/verification_screen.dart';
 
 void main() {
   runApp(const MainApp());
