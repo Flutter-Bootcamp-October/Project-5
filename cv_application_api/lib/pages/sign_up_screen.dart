@@ -2,12 +2,13 @@
 
 import 'package:cv_application_api/constant/constant.dart';
 import 'package:cv_application_api/model/user.dart';
-import 'package:cv_application_api/pages/login_screen.dart';
+import 'package:cv_application_api/pages/otp_screen.dart';
 import 'package:cv_application_api/services/api/create_account.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
 import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';
 import 'package:cv_application_api/widgets/custom_buttom.dart';
 import 'package:cv_application_api/widgets/custom_text_field.dart';
+import 'package:cv_application_api/widgets/sign_up_widget/title.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -32,9 +33,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
             const BackgroundImage(),
             const BackgroundWhiteContainer(),
             Padding(
-              padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 10),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 100, horizontal: 10),
               child: Column(
                 children: [
+                  const TitleOfScreen(
+                    title: "Sign Up",
+                    titleFontSize: 40,
+                    titleletterSpacing: 10,
+                    titlefontWeight: FontWeight.bold,
+                    titleColor: app2DarkGreen,
+                  ),
+                  height50,
                   CustomTextFiled(
                     suffix: const Icon(
                       Icons.person,
@@ -83,6 +93,19 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     textButtom: 'Sign Up',
                     onPressed: () async {
                       try {
+                        
+                        //-------------------------------------
+
+                        showDialog(
+                          context: context,
+                          barrierColor: appcoldGreenTrans,
+                          builder: (context) => const Center(
+                            child: CircularProgressIndicator(
+                              color: app2DarkGreen,
+                            ),
+                          ),
+                        );
+
                         // i want to add condition for password
 
                         //-------------------------------------
@@ -109,9 +132,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                         if (response.codeState == 200) {
                           print(response.msg);
+                          print(response.dataUser!.email!);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
-                            return const LoginScreen();
+                            return OTPScreen(
+                              user: response,
+                            );
                           }));
                         }
 
