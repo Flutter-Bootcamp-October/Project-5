@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:resume_app/views/signin_screen.dart';
 import 'package:resume_app/views/signup_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+late SharedPreferences prefs;
+String? token;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
+  token = prefs.getString("token");
   runApp(const MainApp());
 }
 
@@ -10,7 +17,13 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-        debugShowCheckedModeBanner: false, home: SignUpSreen());
+    final StatelessWidget screen;
+    if (token != null) {
+      print("got here");
+      screen = SignInScreen(token: token!);
+    } else {
+      screen = const SignUpSreen();
+    }
+    return MaterialApp(debugShowCheckedModeBanner: false, home: screen);
   }
 }

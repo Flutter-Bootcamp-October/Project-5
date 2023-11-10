@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
-import 'package:resume_app/services/api_services.dart';
+import 'package:resume_app/services/authorization.dart';
 import 'package:resume_app/views/signup_screen.dart';
 import 'package:resume_app/views/verification_screen.dart';
 import 'package:resume_app/widgets/custom_rich_text.dart';
@@ -30,28 +29,38 @@ class SignInScreen extends StatelessWidget {
           const SizedBox(height: 20),
           ElevatedButton(
               onPressed: () async {
-                Response x = await ApiServices().loginUser(body: {
-                  "email": emailController.text,
-                  "password": passwordController.text
-                });
-                print('Response status: ${x.statusCode}');
-                print('Response body: ${x.body}');
-                if (x.statusCode == 200) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => VerificationScreen(
-                              email: emailController.text,
-                              type: 'login',
-                              token: token,
-                            )),
-                  );
+                if (passwordController.text.isNotEmpty &&
+                    emailController.text.isNotEmpty) {
+                  try {
+                    final res = await Authorization().loginUser(body: {
+                      "email": emailController.text,
+                      "password": passwordController.text
+                    });
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(res)));
+
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => VerificationScreen(
+                                email: emailController.text,
+                                type: 'login',
+                                token: token,
+                              )),
+                    );
+                  } on FormatException catch (error) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(error.message.toString())));
+                  }
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text("Please fill out required fields")));
                 }
               },
               child: const Text("login")),
           const SizedBox(height: 20),
           const RichTextCustom(
-              text1: "don't have an account?",
+              text1: "Don't have an account?",
               text2: "Sign up",
               screen: SignUpSreen())
         ],
