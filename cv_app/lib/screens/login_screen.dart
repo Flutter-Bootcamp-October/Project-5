@@ -1,54 +1,48 @@
+import 'package:cv_app/screens/signup_screen.dart';
 import 'package:cv_app/widgets/app_botton.dart';
 import 'package:cv_app/widgets/app_textfield.dart';
+import 'package:cv_app/widgets/change_accees_method.dart';
 import 'package:cv_app/widgets/or_sign_in_with.dart';
 import 'package:cv_app/widgets/welcome_back.dart';
 import 'package:flutter/material.dart';
 
-class LoginScreen extends StatefulWidget {
+class LoginScreen extends StatelessWidget {
   const LoginScreen({
     super.key,
   });
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       backgroundColor: Colors.white,
       resizeToAvoidBottomInset: true,
-      body: Column(
-        children: [
-          WelcomeBack(),
-          AppTextField(label: "Email Address", icon: Icons.email_rounded),
-          AppTextField(
-              label: "Password", isObscure: true, icon: Icons.lock_rounded),
-          Row(children: [
-            Spacer(),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            const WelcomeBack(),
+            const SizedBox(height: 24),
+            const AppTextField(
+                label: "Email Address", icon: Icons.email_rounded),
+            const AppTextField(
+                label: "Password", isObscure: true, icon: Icons.lock_rounded),
+            const Row(children: [
+              Spacer(),
+              Padding(
+                padding: EdgeInsets.only(right: 32, bottom: 32),
+                child: Text("forgot password?"),
+              )
+            ]),
+            const AppBotton(text: "LOGIN"),
+            const OrSignInWith(),
             Padding(
-              padding: EdgeInsets.only(right: 32, bottom: 32),
-              child: Text("forgot password?"),
+              padding: const EdgeInsets.symmetric(horizontal: 32),
+              child: ChangeAccessMethod(quistion: "Don't have an account? ", accessMethos: "SIGN UP", onTap: (){
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SignupScreen()));
+          },),
             )
-          ]),
-          AppBotton(text: "LOGIN"),
-          OrSignInWith(),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 32),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text("Don't have an account? "),
-                Text(
-                  "SIGN UP",
-                  style: TextStyle(
-                      color: Color(0xff0c3a2d), fontWeight: FontWeight.bold),
-                )
-              ],
-            ),
-          )
-        ],
+          ],
+        ),
       ),
     );
   }
