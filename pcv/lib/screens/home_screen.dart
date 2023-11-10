@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:pcv/screens/drawer_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -41,35 +42,9 @@ class _HomeScreenState extends State<HomeScreen> {
         title: const Text('home'),
         centerTitle: true,
       ),
-      drawer: Drawer(
-        // Add a ListView to the drawer. This ensures the user can scroll
-        // through the options in the drawer if there isn't enough vertical
-        // space to fit everything.
-        child: ListView(
-          // Important: Remove any padding from the ListView.
-          children: [
-            const DrawerHeader(
-              decoration: BoxDecoration(
-                color: Colors.transparent,
-              ),
-              child: Text('Drawer Header'),
-            ),
-            ListTile(
-              title: const Text('Item 1'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-            ListTile(
-              title: const Text('Item 2'),
-              onTap: () {
-                // Update the state of the app.
-                // ...
-              },
-            ),
-          ],
-        ),
+      drawer: const Drawer(
+
+        child: DrawerScreens(),
       ),
       body: SafeArea(
         child: Column(
@@ -94,3 +69,5 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
+
+

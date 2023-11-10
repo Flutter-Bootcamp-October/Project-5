@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Network {
   final String _apiUrl = 'bacend-fshi.onrender.com';
@@ -10,6 +8,7 @@ class Network {
   final String _verification = '/auth/verification';
   final String _rest = '/auth/rest_password';
   final String _about = '/user/about';
+  final String _editAbout = '/user/edit/about';
 
   loginMethod(Map body) async {
     var url = Uri.https(_apiUrl, _login);
@@ -46,6 +45,15 @@ class Network {
   aboutMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _about);
     var response = await http.get(url, headers: {"Authorization": token});
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    return response;
+  }
+
+  editAboutMethod({required String token, required Map body}) async {
+    var url = Uri.https(_apiUrl, _editAbout);
+    var response = await http.put(url,
+        headers: {"Authorization": token}, body: jsonEncode(body));
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     return response;
