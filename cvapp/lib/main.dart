@@ -1,4 +1,4 @@
-import 'package:cvapp/screens/login_screen.dart';
+import 'package:cvapp/screens/register_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,6 +10,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: LoginScreen());
+    return const MaterialApp(home: RegisterScreen());
   }
 }
