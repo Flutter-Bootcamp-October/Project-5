@@ -1,5 +1,6 @@
 import 'package:cv_app/models/globals.dart';
 import 'package:cv_app/screens/authorization_screens/sign_up_screen.dart';
+import 'package:cv_app/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -15,9 +16,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: SignUpScreen(),
+      home: HomeScreen(),
     );
   }
 }
-
-
