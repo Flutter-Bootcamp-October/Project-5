@@ -8,7 +8,8 @@ class CustomTextFiled extends StatelessWidget {
       required this.controller,
       required this.hintText,
       required this.obscureText,
-      required this.suffix, required this.keyboardType});
+      required this.suffix,
+      required this.keyboardType});
 
   final TextEditingController controller;
   final String hintText;
@@ -19,6 +20,8 @@ class CustomTextFiled extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextField(
+      style: const TextStyle(
+          color: app1DarkGreen, fontWeight: FontWeight.bold, letterSpacing: 2),
       keyboardType: keyboardType,
       controller: controller,
       maxLines: 1,
