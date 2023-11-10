@@ -1,4 +1,5 @@
 import 'package:cv_app/constentes/colors.dart';
+import 'package:cv_app/constentes/sized_box.dart';
 import 'package:cv_app/widgets/auth_widgets/auth_textfelid.dart';
 import 'package:flutter/material.dart';
 
@@ -34,7 +35,7 @@ class VerificationScreen extends StatelessWidget {
                         fontSize: 24,
                         fontWeight: FontWeight.w700),
                   ),
-                  const SizedBox(height: 10),
+                  height10,
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
@@ -43,7 +44,7 @@ class VerificationScreen extends StatelessWidget {
                         icon: Icons.lock_outline_rounded,
                         isHaveIcon: true,
                       ),
-                      const SizedBox(height: 20),
+                      height20,
                       InkWell(
                         onTap: () {
                           // Navigator.push(

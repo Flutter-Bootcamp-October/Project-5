@@ -19,3 +19,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - lib/assets/images/
+    - lib/assets/icon_skills/
+    - lib/assets/icon_social_media/

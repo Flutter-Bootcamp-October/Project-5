@@ -1,4 +1,5 @@
 import 'package:cv_app/constentes/colors.dart';
+import 'package:cv_app/constentes/sized_box.dart';
 import 'package:cv_app/screens/authorization_screens/log_in_screen.dart';
 import 'package:cv_app/screens/authorization_screens/verification_screen.dart';
 import 'package:cv_app/widgets/auth_widgets/auth_textfelid.dart';
@@ -60,7 +61,7 @@ class SignUpScreen extends StatelessWidget {
                         icon: Icons.lock_outline_rounded,
                         isHaveIcon: true,
                       ),
-                      const SizedBox(height: 10),
+                      height10,
                       InkWell(
                         onTap: () {
                           Navigator.push(
@@ -88,7 +89,7 @@ class SignUpScreen extends StatelessWidget {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 10),
+                      height10,
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [

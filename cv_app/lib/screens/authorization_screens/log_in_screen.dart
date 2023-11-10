@@ -2,7 +2,7 @@ import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/screens/authorization_screens/verification_screen.dart';
 import 'package:cv_app/widgets/auth_widgets/auth_textfelid.dart';
 import 'package:flutter/material.dart';
-
+import 'package:cv_app/constentes/sized_box.dart';
 class LogInScreen extends StatelessWidget {
   const LogInScreen({
     super.key,
@@ -49,7 +49,7 @@ class LogInScreen extends StatelessWidget {
                         icon: Icons.lock_outline_rounded,
                         isHaveIcon: true,
                       ),
-                      const SizedBox(height: 20),
+                       height20,
                       InkWell(
                         onTap: () {
                           Navigator.push(
