@@ -4,7 +4,7 @@ class Project {
     required this.userId,
     required this.name,
     required this.description,
-    required this.state,
+    required this.state, //'completed','processing', 'other'
   });
   late final int id;
   late final int userId;
