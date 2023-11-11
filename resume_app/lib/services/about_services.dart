@@ -5,7 +5,7 @@ import 'package:resume_app/models/error_model.dart';
 
 class AboutServ {
   final String _api = "bacend-fshi.onrender.com";
-  final String _image = '/user/upload';
+  // final String _image = '/user/upload';
   final String _about = '/user/about';
   final String _edit = '/user/edit/about';
   final String _delete = '/user/delete_account';

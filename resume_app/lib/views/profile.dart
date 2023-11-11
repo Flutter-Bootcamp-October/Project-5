@@ -29,9 +29,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(error.message.toString())));
     }
-    About z = await AboutServ().getAbout(token: getToken());
-    print(z.toJson().toString());
-    getToken();
+    // About z = await AboutServ().getAbout(token: getToken());
+    // print(z.toJson().toString());
+    // getToken();
     // print("______________LOOK HERE_________________");
     // await AboutServ().deleteAccount(token: getToken());
     // prefs.clear();
