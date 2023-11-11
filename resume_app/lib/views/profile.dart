@@ -13,49 +13,14 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    // testMethod();
-    return const Scaffold(
-        // body: FutureBuilder(
-        //     future: AboutServ().getAbout(token: widget.token),
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasData) {
-        //         try {
-        //           return const Center(
-        //             child: Padding(
-        //                 padding: EdgeInsets.symmetric(horizontal: 16.0),
-        //                 child: InkWell(
-        //                     // onTap: () async {
-        //                     //   userAbout.birthday = "9/30/1997";
-        //                     //   try {
-        //                     //     final response = AboutServ().editAbout(
-        //                     //         token: widget.token, userAbout: userAbout);
-        //                     //     ScaffoldMessenger.of(context).showSnackBar(
-        //                     //         SnackBar(content: Text(response)));
-        //                     //   } on FormatException catch (error) {
-        //                     //     ScaffoldMessenger.of(context).showSnackBar(
-        //                     //         SnackBar(
-        //                     //             content: Text(error.message.toString())));
-        //                     //   }
-        //                     // },
-        //                     // child: Text(userAbout.toJson().toString()))),
-        //                     child: Text("getData(snapshot.data)"))),
-        //           );
-        //         } on FormatException catch (error) {
-        //           ScaffoldMessenger.of(context).showSnackBar(
-        //               SnackBar(content: Text(error.message.toString())));
-        //           return const Text("no data available for user at this time");
-        //         }
-        //       } else {
-        //         return const Center(child: LinearProgressIndicator());
-        //       }
-        //     }),
-        );
+    testMethod();
+    return const Scaffold();
   }
 
   void testMethod() async {
     About x = await AboutServ().getAbout(token: getToken());
     print(x.toJson().toString());
-    //print("______________LOOK HERE_________________");
+    print("______________LOOK HERE_________________");
     x.birthday = "9/30/1997";
     print(x.toJson().toString());
     try {
@@ -64,13 +29,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(error.message.toString())));
     }
-    //print("______________LOOK HERE_________________");
-    // await AboutServ().deleteAccount(token: widget.token);
+    About z = await AboutServ().getAbout(token: getToken());
+    print(z.toJson().toString());
+    getToken();
+    // print("______________LOOK HERE_________________");
+    // await AboutServ().deleteAccount(token: getToken());
     // prefs.clear();
   }
 
   String getToken() {
-    print("in getToken: ${prefs.getString("token")}");
+    print("in profile get token ${prefs.getString("token")}");
     return prefs.getString("token") ?? "";
   }
 }

@@ -8,7 +8,7 @@ String? token;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
-  token = prefs.getString("token");
+  token = prefs.getString("tokenReg");
   runApp(const MainApp());
 }
 

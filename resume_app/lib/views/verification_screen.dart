@@ -47,15 +47,17 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         "email": widget.email,
                         "type": widget.type
                       });
-                      //else if (widget.type == "login")
+                      print("Reg res is $res");
+                      prefs.setString("tokenReg", res);
                     } else {
                       res = await network.verifiyUserLogin(body: {
                         "otp": controllerOTP.text,
                         "email": widget.email,
                         "type": widget.type
                       }, token: getToken());
+                      print("login res is $res");
+                      prefs.setString("token", res);
                     }
-                    prefs.setString("token", res);
                     if (widget.type == "registration") {
                       Navigator.push(
                           context,
@@ -76,12 +78,11 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       const SnackBar(content: Text("Please insert code")));
                 }
               },
-              child: const Text("check"))
+              child: const Text("enter"))
         ]));
   }
 
   String getToken() {
-    print("in getToken: ${prefs.getString("token")}");
-    return prefs.getString("token") ?? "";
+    return prefs.getString("tokenReg") ?? "";
   }
 }

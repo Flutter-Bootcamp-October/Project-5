@@ -12,8 +12,8 @@ class Authorization {
   registrerUser({required Map body}) async {
     var url = Uri.https(_api, _registration);
     var response = await http.post(url, body: json.encode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       return json.decode(response.body)["msg"];
     } else {
@@ -25,8 +25,8 @@ class Authorization {
   loginUser({required Map body}) async {
     var url = Uri.https(_api, _login);
     var response = await http.post(url, body: json.encode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       return json.decode(response.body)["msg"];
     } else {
@@ -39,8 +39,8 @@ class Authorization {
     var url = Uri.https(_api, _verification);
     var response = await http
         .post(url, body: json.encode(body), headers: {'Authorization': token});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       return json.decode(response.body)["data"]["token"];
@@ -53,8 +53,8 @@ class Authorization {
   verifiyRegistration({required Map body}) async {
     var url = Uri.https(_api, _verification);
     var response = await http.post(url, body: json.encode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       return json.decode(response.body)["data"]["token"];
