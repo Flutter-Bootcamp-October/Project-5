@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:cvapp/screens/vervcation_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
+import 'package:cvapp/wedgets/sginup_wedget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,52 +53,70 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
-        key: _formKey,
-        child: Column(
-          children: <Widget>[
-            SizedBox(height: 200),
-            TextFormField(
-              controller: nameController,
-              decoration: InputDecoration(labelText: 'Name'),
-              validator: (value) {
-                // Add your validation logic here
-              },
+      backgroundColor: Color(0xff8C5CB3),
+      body: Column(
+        children: <Widget>[
+          SizedBox(height: 200),
+          Padding(
+            padding: const EdgeInsets.all(50),
+            child: Column(
+              children: [
+                SinUpWedget(
+                    Controller: nameController,
+                    labelText: "   Enter your name"),
+                SizedBox(height: 20),
+                SinUpWedget(
+                    Controller: phoneController,
+                    labelText: "  Enter your phone"),
+                SizedBox(height: 20),
+                SinUpWedget(
+                    Controller: emailController,
+                    labelText: "  Enter your email"),
+                SizedBox(height: 20),
+                SinUpWedget(
+                    Controller: passwordController,
+                    labelText: "  Enter your password"),
+                SizedBox(height: 20),
+              ],
             ),
-            TextFormField(
-              controller: phoneController,
-              decoration: InputDecoration(labelText: 'Phone'),
-              validator: (value) {
-                // Add your validation logic here
-              },
+          ),
+          ElevatedButton(
+            onPressed: () {
+              _register();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VerificationScreen()));
+            },
+            child: Text('Register'),
+          ),
+          InkWell(
+            onTap: () {
+              _register();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => VerificationScreen()));
+            },
+            child: Container(
+              width: 180,
+              height: 55,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(40), color: Colors.black),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Text(
+                  "Create Account",
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 17,
+                      fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
+                ),
+              ),
             ),
-            TextFormField(
-              controller: emailController,
-              decoration: InputDecoration(labelText: 'Email'),
-              validator: (value) {
-                // Add your validation logic here
-              },
-            ),
-            TextFormField(
-              controller: passwordController,
-              decoration: InputDecoration(labelText: 'Password'),
-              obscureText: true,
-              validator: (value) {
-                // Add your validation logic here
-              },
-            ),
-            ElevatedButton(
-              onPressed: () {
-                _register();
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => VerificationScreen()));
-              },
-              child: Text('Register'),
-            ),
-          ],
-        ),
+          )
+        ],
       ),
     );
   }
