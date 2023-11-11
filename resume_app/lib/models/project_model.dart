@@ -1,13 +1,13 @@
 class Project {
   Project({
-    required this.id,
-    required this.userId,
+    this.id,
+    this.userId,
     required this.name,
     required this.description,
     required this.state, //'completed','processing', 'other'
   });
-  late final int id;
-  late final int userId;
+  late final int? id;
+  late final int? userId;
   late final String name;
   late final String description;
   late final String state;

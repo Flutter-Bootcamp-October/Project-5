@@ -1,11 +1,11 @@
 class Skill {
   Skill({
-    required this.id,
-    required this.userId,
+    this.id,
+    this.userId,
     required this.skill,
   });
-  late final int id;
-  late final int userId;
+  late final int? id;
+  late final int? userId;
   late final String skill;
 
   Skill.fromJson(Map<String, dynamic> json) {

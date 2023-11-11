@@ -1,15 +1,15 @@
 class Education {
   Education({
-    required this.id,
-    required this.userId,
+    this.id,
+    this.userId,
     required this.graduationDate,
     required this.university,
     required this.college,
     required this.specialization,
     required this.level, //school, diploma, Bachelors, Master, Ph.D ,other
   });
-  late final int id;
-  late final int userId;
+  late final int? id;
+  late final int? userId;
   late final String graduationDate;
   late final String university;
   late final String college;

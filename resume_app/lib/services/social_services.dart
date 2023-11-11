@@ -15,8 +15,10 @@ class SocialServ {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     if (response.statusCode == 200) {
-      List<Map<String, dynamic>> temp = json.decode(response.body)["data"];
-      return List.from(temp).map((e) => Social.fromJson(e)).toList();
+      List<Social> temp = (json.decode(response.body)["data"] as List)
+          .map((item) => Social.fromJson(item))
+          .toList();
+      return temp;
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg);

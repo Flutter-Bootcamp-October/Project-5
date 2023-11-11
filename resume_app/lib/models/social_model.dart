@@ -1,12 +1,12 @@
 class Social {
   Social({
-    required this.id,
-    required this.userId,
+    this.id,
+    this.userId,
     required this.username,
     required this.social, //'facebook','youtube', 'whatsapp', 'instagram', 'twitter', 'tiktok', 'telegram', 'snapchat','other'
   });
-  late final int id;
-  late final int userId;
+  late final int? id;
+  late final int? userId;
   late final String username;
   late final String social;
 

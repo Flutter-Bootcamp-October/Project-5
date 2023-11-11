@@ -12,11 +12,13 @@ class ProjectServ {
   getProjects({required String token}) async {
     var url = Uri.https(_api, _projects);
     var response = await http.get(url, headers: {"authorization": token});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     if (response.statusCode == 200) {
-      List<Map<String, dynamic>> temp = json.decode(response.body)["data"];
-      return List.from(temp).map((e) => Project.fromJson(e)).toList();
+      List<Project> temp = (json.decode(response.body)["data"] as List)
+          .map((item) => Project.fromJson(item))
+          .toList();
+      return temp;
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg);
@@ -27,8 +29,8 @@ class ProjectServ {
     var url = Uri.https(_api, _add);
     var response = await http.post(url,
         headers: {"authorization": token}, body: json.encode(project.toJson()));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    //print('Response status: ${response.statusCode}');
+    //print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       return json.decode(response.body)["msg"];
     } else {
