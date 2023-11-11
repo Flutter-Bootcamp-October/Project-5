@@ -1,7 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:pcv/screens/add_skill.dart';
+import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/add_social.dart';
 import 'package:pcv/screens/drawer_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
@@ -33,7 +33,9 @@ class _SocialScreenState extends State<SocialScreen> {
         setState(() {});
         // ignore: empty_catches
       }
-    } catch (error) {}
+    } catch (error) {
+      //
+    }
   }
 
   @override
@@ -43,11 +45,7 @@ class _SocialScreenState extends State<SocialScreen> {
         child: DrawerScreens(),
       ),
       backgroundColor: const Color.fromARGB(255, 104, 87, 186),
-      appBar: AppBar(
-        title: const Text('social'),
-        centerTitle: true,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: appBarMethod(title: "Social"),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 176, 165, 186),
         onPressed: () {
@@ -64,7 +62,7 @@ class _SocialScreenState extends State<SocialScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             if (social.isEmpty)
-                const Center(child: CircularProgressIndicator()),
+              const Center(child: CircularProgressIndicator()),
             if (social.isNotEmpty)
               Column(
                   crossAxisAlignment: CrossAxisAlignment.center,

@@ -1,9 +1,13 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:pcv/method/app_bar_mathod.dart';
 
 import 'package:pcv/screens/drawer_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/widgets/conta_home_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -33,6 +37,14 @@ class _HomeScreenState extends State<HomeScreen> {
       setState(() {});
       print(token);
     }
+    if (res.statusCode == 401) {
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+            builder: (context) => const SignInScreen(),
+          ),
+          (route) => false);
+    }
   }
 
   @override
@@ -40,11 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: true,
       backgroundColor: const Color.fromARGB(255, 104, 87, 186),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        title: const Text('home'),
-        centerTitle: true,
-      ),
+      appBar: appBarMethod(title: 'Home'),
       drawer: const Drawer(
         child: DrawerScreens(),
       ),
@@ -56,7 +64,8 @@ class _HomeScreenState extends State<HomeScreen> {
               if (about.isEmpty)
                 const Center(child: CircularProgressIndicator()),
               if (about.isNotEmpty)
-                Column(children: [
+                Column( crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [ 
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
@@ -79,7 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
-                  Text('about: ${about["about"].toString()}'),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 20),
+                    child: Text('about: ${about["about"].toString()}'),
+                  ),
                   const SizedBox(
                     height: 24,
                   ),

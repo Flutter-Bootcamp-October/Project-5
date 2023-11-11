@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pcv/screens/home_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
@@ -22,7 +23,6 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
     super.initState();
     _loadingAbout();
   }
-
   _loadingAbout() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
@@ -32,7 +32,10 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
         about = (await jsonDecode(res.body))["data"];
         setState(() {});
       }
-    } catch (e) {}
+    } catch (e) {
+      // ScaffoldMessenger.of(context)
+      //     .showSnackBar(SnackBar(content: Text(e.toString())));
+    }
   }
 
   TextEditingController usernameController = TextEditingController();
@@ -51,13 +54,7 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
     aboutController.text = about["about"].toString();
     birthdayController.text = about["birthday"].toString();
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Update information'),
-          centerTitle: true,
-          foregroundColor: Colors.black,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
+        appBar: appBarMethod(title: "Update Information"),
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: SingleChildScrollView(
@@ -67,15 +64,6 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                  // const Padding(
-                  //   padding: EdgeInsets.symmetric(vertical: ),
-                  //   child: Center(
-                  //     child: Text(
-                  //       'Register',
-                  //       style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                  //     ),
-                  //   ),
-                  // ),
                   TextFieldWidget(
                     text: 'name',
                     obscure: false,

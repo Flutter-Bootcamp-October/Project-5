@@ -48,7 +48,7 @@ class Network {
 
   restMethod(Map body) async {
     var url = Uri.https(_apiUrl, _rest);
-    var response = await http.post(url, body: body);
+    var response = await http.post(url, body: jsonEncode(body));
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     return response;

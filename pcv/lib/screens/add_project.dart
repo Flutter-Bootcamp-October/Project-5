@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/project.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
@@ -25,13 +28,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('add Project'),
-          centerTitle: true,
-          foregroundColor: Colors.black,
-          elevation: 0,
-          backgroundColor: Colors.transparent,
-        ),
+        appBar: appBarMethod(title: 'Add Project'),
         resizeToAvoidBottomInset: true,
         body: SafeArea(
           child: SingleChildScrollView(

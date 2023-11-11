@@ -1,8 +1,12 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pcv/screens/edit_about.dart';
+import 'package:pcv/screens/education_screen.dart';
 import 'package:pcv/screens/project.dart';
 import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/screens/skill_screen.dart';
 import 'package:pcv/screens/social_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -42,36 +46,14 @@ class _DrawerScreensState extends State<DrawerScreens> {
     return SafeArea(
       child: Column(
         children: [
-          InkWell(
-            onTap: () async {
-              if (imageFile == null) {
-                XFile? image =
-                    await picker.pickImage(source: ImageSource.gallery);
-                print(image!.path);
-                imageFile = File(image.path);
-                final SharedPreferences prefs =
-                    await SharedPreferences.getInstance();
-                await prefs.setString('image', image.path);
-                setState(() {});
-              }
-            },
-            child: DrawerHeader(
-              decoration: const BoxDecoration(
-                color: Colors.transparent,
-              ),
-              child: Column(
-                children: [
-                  const Text('Drawer Header'),
-                  // if (about["image"] != null)
-                  //   Container(
-                  //       height: 100,
-                  //       width: 100,
-                  //       decoration: const BoxDecoration(
-                  //         shape: BoxShape.circle,
-                  //       ),
-                  //       child: Image.file(about["image"])),
-                ],
-              ),
+          const DrawerHeader(
+            decoration: BoxDecoration(
+              color: Colors.transparent,
+            ),
+            child: Column(
+              children: [
+                Text('Services'),
+              ],
             ),
           ),
           ListTile(
@@ -82,8 +64,6 @@ class _DrawerScreensState extends State<DrawerScreens> {
                   MaterialPageRoute(
                     builder: (context) => const EditAboutScreen(),
                   ));
-              // Update the state of the app.
-              // ...
             },
           ),
           const Divider(
@@ -97,8 +77,6 @@ class _DrawerScreensState extends State<DrawerScreens> {
                   MaterialPageRoute(
                     builder: (context) => const ProjectScreen(),
                   ));
-              // Update the state of the app.
-              // ...
             },
           ),
           const Divider(
@@ -112,7 +90,6 @@ class _DrawerScreensState extends State<DrawerScreens> {
                   MaterialPageRoute(
                     builder: (context) => const SkillScreen(),
                   ));
-              // Update the state of the app.
             },
           ),
           const Divider(
@@ -126,8 +103,19 @@ class _DrawerScreensState extends State<DrawerScreens> {
                   MaterialPageRoute(
                     builder: (context) => const SocialScreen(),
                   ));
-              // Update the state of the app.
-              // ...
+            },
+          ),
+          const Divider(
+            color: Colors.black45,
+          ),
+          ListTile(
+            title: const Text('Education'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const EducationScreen(),
+                  ));
             },
           ),
           const Divider(
@@ -159,6 +147,42 @@ class _DrawerScreensState extends State<DrawerScreens> {
                         network.deleteAccountMethod(token: token!);
                       },
                       child: const Text("DELETE"),
+                    ),
+                  ],
+                ),
+              );
+            },
+          ),
+          ListTile(
+            title: const Text(
+              'Log out',
+              style: TextStyle(color: Colors.red),
+            ),
+            onTap: () {
+              showAdaptiveDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text("Are You Sure Log out?"),
+                  actions: [
+                    TextButton(
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                      child: const Text("Back"),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        final SharedPreferences prefs =
+                            await SharedPreferences.getInstance();
+                        prefs.setString('token', '');
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SignInScreen(),
+                            ),
+                            (route) => false);
+                      },
+                      child: const Text("Log out"),
                     ),
                   ],
                 ),

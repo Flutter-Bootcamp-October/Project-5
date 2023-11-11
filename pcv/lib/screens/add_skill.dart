@@ -1,7 +1,10 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/skill_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
@@ -20,13 +23,7 @@ class _AddSkillState extends State<AddSkill> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('add Skill'),
-        centerTitle: true,
-        foregroundColor: Colors.black,
-        elevation: 0,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: appBarMethod(title: "Add Skill"),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.center,
@@ -46,7 +43,8 @@ class _AddSkillState extends State<AddSkill> {
 
                   if (resp.statusCode == 200) {
                     Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(builder: (context) => SkillScreen()),
+                        MaterialPageRoute(
+                            builder: (context) => const SkillScreen()),
                         (Route<dynamic> route) => false);
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(

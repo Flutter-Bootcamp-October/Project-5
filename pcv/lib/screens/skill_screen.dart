@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/add_skill.dart';
 import 'package:pcv/screens/drawer_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
@@ -32,19 +33,16 @@ class _SkillScreenState extends State<SkillScreen> {
         setState(() {});
         // ignore: empty_catches
       }
-    } catch (error) {}
+    } catch (error) {
+      //
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 104, 87, 186),
-      appBar: AppBar(
-        title: const Text('Skills'),
-        centerTitle: true,
-        foregroundColor: Colors.white,
-        backgroundColor: Colors.transparent,
-      ),
+      appBar: appBarMethod(title: "Skills"),
       floatingActionButton: FloatingActionButton(
         backgroundColor: const Color.fromARGB(255, 176, 165, 186),
         onPressed: () {

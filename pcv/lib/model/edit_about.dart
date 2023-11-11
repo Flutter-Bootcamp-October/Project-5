@@ -24,7 +24,7 @@ class AboutModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['name'] = name;
     data['title_position'] = titlePosition;
     data['phone'] = phone;
