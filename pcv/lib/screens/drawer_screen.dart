@@ -1,7 +1,7 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:pcv/screens/edit_about.dart';
+import 'package:pcv/screens/project.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
@@ -16,8 +16,25 @@ class DrawerScreens extends StatefulWidget {
 }
 
 class _DrawerScreensState extends State<DrawerScreens> {
+  Map about = {};
   final ImagePicker picker = ImagePicker();
   File? imageFile;
+  @override
+  // void initState() {
+  //   super.initState();
+  //   _loadingAbout();
+  // }
+
+  // _loadingAbout() async {
+  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   final token = prefs.getString('token');
+  //   final Response res = await network.aboutUploadMethod(token: token!);
+  //   if (res.statusCode == 200) {
+  //      await jsonDecode(res.body);
+  //     setState(() {});
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -30,29 +47,27 @@ class _DrawerScreensState extends State<DrawerScreens> {
                     await picker.pickImage(source: ImageSource.gallery);
                 print(image!.path);
                 imageFile = File(image.path);
-                
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+                await prefs.setString('image', image.path);
                 setState(() {});
               }
             },
             child: DrawerHeader(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: Colors.transparent,
               ),
               child: Column(
                 children: [
                   const Text('Drawer Header'),
-                  // if (imageFile != null)
-                  Container(
-                    height: 100,
-                    width: 100,
-                    decoration: const BoxDecoration(
-                      shape: BoxShape.circle,
-                    ),
-                    child: Image.file(
-                      imageFile!,
-                      fit: BoxFit.cover,
-                    ),
-                  ),
+                  // if (about["image"] != null)
+                  //   Container(
+                  //       height: 100,
+                  //       width: 100,
+                  //       decoration: const BoxDecoration(
+                  //         shape: BoxShape.circle,
+                  //       ),
+                  //       child: Image.file(about["image"])),
                 ],
               ),
             ),
@@ -64,6 +79,18 @@ class _DrawerScreensState extends State<DrawerScreens> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const EditAboutScreen(),
+                  ));
+              // Update the state of the app.
+              // ...
+            },
+          ),
+          ListTile(
+            title: const Text('projects'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const ProjectScreen(),
                   ));
               // Update the state of the app.
               // ...

@@ -1,7 +1,5 @@
 // ignore_for_file: use_build_context_synchronously
-
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,7 +17,6 @@ class EditAboutScreen extends StatefulWidget {
 
 class _EditAboutScreenState extends State<EditAboutScreen> {
   Map about = {};
-
   @override
   void initState() {
     super.initState();
@@ -68,6 +65,7 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
+                 
                   // const Padding(
                   //   padding: EdgeInsets.symmetric(vertical: ),
                   //   child: Center(
@@ -113,6 +111,8 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         final token = prefs.getString('token');
+                        final picture = prefs.getString("image");
+
                         final Response resp =
                             await network.editAboutMethod(token: token!, body: {
                           "name": usernameController.text,
@@ -120,7 +120,8 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                           "title_position": titPoController.text,
                           "location": locationController.text,
                           "about": aboutController.text,
-                          "birthday": birthdayController.text
+                          "birthday": birthdayController.text,
+                          "image": picture
                         });
 
                         if (resp.statusCode == 200) {
