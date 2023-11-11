@@ -54,7 +54,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         "otp": controllerOTP.text,
                         "email": widget.email,
                         "type": widget.type
-                      }, token: getToken());
+                      }, token: await getToken());
                       print("login res is $res");
                       prefs.setString("token", res);
                     }
@@ -82,7 +82,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         ]));
   }
 
-  String getToken() {
+  Future<String> getToken() async {
     return prefs.getString("tokenReg") ?? "";
   }
 }

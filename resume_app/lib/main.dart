@@ -4,7 +4,7 @@ import 'package:resume_app/views/signup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 late SharedPreferences prefs;
-String? token;
+late String? token;
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   prefs = await SharedPreferences.getInstance();
