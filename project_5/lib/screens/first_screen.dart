@@ -3,13 +3,13 @@ import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/auth_model.dart';
 import 'package:project_5/screens/create_verification.dart';
 
-class FirstScreen extends StatefulWidget {
-  const FirstScreen({
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({
     super.key,
   });
 
   @override
-  State<FirstScreen> createState() => _FirstScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
 TextEditingController nameController = TextEditingController(),
@@ -18,7 +18,7 @@ TextEditingController nameController = TextEditingController(),
     passwordController = TextEditingController(),
     otpController = TextEditingController();
 
-class _FirstScreenState extends State<FirstScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   @override
   void initState() {
     super.initState();

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
-import 'package:project_5/screens/login_scrren.dart';
+import 'package:project_5/models/verification_model.dart';
+import 'package:project_5/screens/home_screen.dart';
+import 'package:project_5/screens/login_screen.dart';
 
 class AccountVerification extends StatefulWidget {
   const AccountVerification(
@@ -31,16 +33,26 @@ class _AccountVerificationState extends State<AccountVerification> {
                 final apiMethod = ApiMethods();
                 if (otpController.text.isNotEmpty) {
                   try {
-                    apiMethod.emailVerification(body: {
+                    final Verification res =
+                        await apiMethod.emailVerification(body: {
                       "otp": otpController.text,
                       "email": widget.email,
                       "type": widget.type,
                     });
-                    Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginScreen()),
-                    );
+                    if (res.codeState == 200) {
+                      print(res.data.token);
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(),
+                          // LoginScreen(
+                          //   email: res.data.email,
+                          //   type: 'login',
+                          //   token: res.data.token,
+                          // ),
+                        ),
+                      );
+                    }
                   } on FormatException catch (error) {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Text(
