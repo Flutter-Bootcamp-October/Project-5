@@ -1,6 +1,4 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:resume_app/main.dart';
 import 'package:resume_app/services/authorization.dart';
 import 'package:resume_app/views/profile.dart';
@@ -8,14 +6,10 @@ import 'package:resume_app/views/signin_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen(
-      {super.key,
-      required this.email,
-      required this.type,
-      required this.token});
+      {super.key, required this.email, required this.type});
 
   final String email;
   final String type;
-  final String token;
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -48,6 +42,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 if (controllerOTP.text.isNotEmpty) {
                   try {
                     if (widget.type == "registration") {
+                      print("in registration: ${prefs.getString("token")}");
                       res = await network.verifiyRegistration(body: {
                         "otp": controllerOTP.text,
                         "email": widget.email,
@@ -55,24 +50,24 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       });
                       //else if (widget.type == "login")
                     } else {
+                      print("in login: ${prefs.getString("token")}");
                       res = await network.verifiyUserLogin(body: {
                         "otp": controllerOTP.text,
                         "email": widget.email,
                         "type": widget.type
-                      }, token: widget.token);
+                      }, token: getToken());
                     }
-                    print("this is res : $res");
                     prefs.setString("token", res);
                     if (widget.type == "registration") {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => SignInScreen(token: res)));
+                              builder: (context) => const SignInScreen()));
                     } else if (widget.type == "login") {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => ProfileScreen(token: res)));
+                              builder: (context) => const ProfileScreen()));
                     }
                   } on FormatException catch (error) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -85,5 +80,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
               },
               child: const Text("check"))
         ]));
+  }
+
+  String getToken() {
+    print("in getToken: ${prefs.getString("token")}");
+    return prefs.getString("token") ?? "";
   }
 }

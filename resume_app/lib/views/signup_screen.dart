@@ -57,9 +57,7 @@ class SignUpSreen extends StatelessWidget {
                           builder: (context) => VerificationScreen(
                                 email: emailController.text,
                                 type: 'registration',
-                                token: getToken(),
                               )),
-                              
                     );
                   } on FormatException catch (error) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -74,9 +72,5 @@ class SignUpSreen extends StatelessWidget {
         ],
       )),
     );
-  }
-
-  String getToken() {
-    return prefs.getString("token") ?? "";
   }
 }

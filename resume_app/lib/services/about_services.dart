@@ -13,8 +13,7 @@ class AboutServ {
   getAbout({required String token}) async {
     var url = Uri.https(_api, _about);
     var response = await http.get(url, headers: {"authorization": token});
-    //print('Response status: ${response.statusCode}');
-    //print('Response body: ${response.body}');
+    // print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       return About.fromJson(json.decode(response.body)["data"]);
     } else {
@@ -27,10 +26,11 @@ class AboutServ {
   editAbout({required String token, required About userAbout}) async {
     var url = Uri.https(_api, _edit);
     var response = await http.post(url,
-        body: json.encode(userAbout.toJson()),
+        body: json.encode({"name": "foo", "title_position": "", "phone": "0598746578", "location":"jeddah" , "birthday": "9/30/1997", "about": ""}
+),
         headers: {"Authorization": token});
-    //print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body.runtimeType}');
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
       return json.decode(response.body)["msg"];

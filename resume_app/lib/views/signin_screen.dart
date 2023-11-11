@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:resume_app/main.dart';
 import 'package:resume_app/services/authorization.dart';
 import 'package:resume_app/views/signup_screen.dart';
 import 'package:resume_app/views/verification_screen.dart';
 import 'package:resume_app/widgets/custom_rich_text.dart';
 
 class SignInScreen extends StatelessWidget {
-  const SignInScreen({super.key, required this.token});
-  final String token;
+  const SignInScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,6 @@ class SignInScreen extends StatelessWidget {
                           builder: (context) => VerificationScreen(
                                 email: emailController.text,
                                 type: 'login',
-                                token: token,
                               )),
                     );
                   } on FormatException catch (error) {
@@ -66,5 +65,9 @@ class SignInScreen extends StatelessWidget {
         ],
       )),
     );
+  }
+  String getToken() {
+    print("in getToken: ${prefs.getString("token")}");
+    return prefs.getString("token") ?? "";
   }
 }

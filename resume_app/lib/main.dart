@@ -20,7 +20,7 @@ class MainApp extends StatelessWidget {
     final StatelessWidget screen;
     if (token != null) {
       print("got here");
-      screen = SignInScreen(token: token!);
+      screen = const SignInScreen();
     } else {
       screen = const SignUpSreen();
     }
