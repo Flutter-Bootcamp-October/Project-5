@@ -19,7 +19,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final StatelessWidget screen;
     if (token != null) {
-      print("got here");
+      print("Yay token saved");
       screen = const SignInScreen();
     } else {
       screen = const SignUpSreen();

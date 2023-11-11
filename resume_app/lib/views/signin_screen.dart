@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:resume_app/main.dart';
 import 'package:resume_app/services/authorization.dart';
 import 'package:resume_app/views/signup_screen.dart';
 import 'package:resume_app/views/verification_screen.dart';
@@ -59,15 +58,11 @@ class SignInScreen extends StatelessWidget {
               child: const Text("login")),
           const SizedBox(height: 20),
           const RichTextCustom(
-              text1: "Don't have an account?",
+              text1: "Don't have an account? ",
               text2: "Sign up",
               screen: SignUpSreen())
         ],
       )),
     );
-  }
-  String getToken() {
-    print("in getToken: ${prefs.getString("token")}");
-    return prefs.getString("token") ?? "";
   }
 }

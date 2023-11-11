@@ -42,7 +42,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                 if (controllerOTP.text.isNotEmpty) {
                   try {
                     if (widget.type == "registration") {
-                      print("in registration: ${prefs.getString("token")}");
                       res = await network.verifiyRegistration(body: {
                         "otp": controllerOTP.text,
                         "email": widget.email,
@@ -50,7 +49,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       });
                       //else if (widget.type == "login")
                     } else {
-                      print("in login: ${prefs.getString("token")}");
                       res = await network.verifiyUserLogin(body: {
                         "otp": controllerOTP.text,
                         "email": widget.email,
