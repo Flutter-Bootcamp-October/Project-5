@@ -1,6 +1,8 @@
+import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:animated_toggle_switch/animated_toggle_switch.dart';
 import 'package:flutter/material.dart';
 import 'package:project_5/data/global_data.dart';
+import 'package:project_5/main.dart';
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
 
 class ThemeSettingsScreen extends StatefulWidget {
@@ -26,6 +28,8 @@ class _ThemeSettingsState extends State<ThemeSettingsScreen> {
                   values: const [true, false],
                   onChanged: (i) {
                     isDarkTheme = i;
+                    pref.isDarkThemePref(i);
+                    AdaptiveTheme.of(context).setDark();
                     setState(() {});
                   },
                   style: const ToggleStyle(backgroundColor: Colors.transparent),

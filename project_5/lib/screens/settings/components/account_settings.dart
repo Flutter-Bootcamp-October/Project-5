@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project_5/extensions/size_extension.dart';
-import 'package:project_5/screens/auth/components/auth_button.dart';
-import 'package:project_5/screens/auth/components/auth_text_field.dart';
+
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
 
-import 'customBottomModalSheet.dart';
+import 'custom_bottom_modal_sheet.dart';
 import 'settings_options.dart';
 
 class AccountInformationScreen extends StatefulWidget {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_5/main.dart';
 
 class AuthButton extends StatefulWidget {
   const AuthButton({
@@ -26,9 +27,10 @@ class _AuthFloatingButtonState extends State<AuthButton> {
         height: 55,
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
-              disabledForegroundColor: const Color(0xFF9A9EC1),
-              disabledBackgroundColor: const Color(0xFF454B94),
-              backgroundColor: widget.color,
+              // disabledForegroundColor: const Color(0xFF9A9EC1),
+              // disabledBackgroundColor: const Color(0xFF454B94),
+              //TODO:FIX COLORS
+              backgroundColor: pref.getTheme() ? widget.color : Colors.black,
               elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30))),

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:project_5/main.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
 import 'package:project_5/screens/auth/components/auth_button.dart';
-import 'package:project_5/screens/auth/sign_up_screen.dart';
+import 'package:project_5/screens/auth/sign_in_screen.dart';
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
 import 'package:project_5/screens/settings/components/theme_settings.dart';
 
@@ -68,9 +69,10 @@ class SettingsScreen extends StatelessWidget {
           content: "Log Out",
           color: Colors.grey[400]!,
           onPressedFunc: () {
+            pref.cleanToken();
             Navigator.pushAndRemoveUntil(
                 context,
-                MaterialPageRoute(builder: (context) => const SignUpScreen()),
+                MaterialPageRoute(builder: (context) => const SignInScreen()),
                 (route) => false);
           },
           isDisabled: false),
