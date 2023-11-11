@@ -1,3 +1,4 @@
+import 'package:cv_app/globals/colors.dart';
 import 'package:cv_app/widgets/app_botton.dart';
 import 'package:cv_app/widgets/app_textfield.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class OTPScreen extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           height: MediaQuery.of(context).size.height / 1.5,
           decoration: const BoxDecoration(
-            color: Colors.brown,
+            color: secondaryColor,
             borderRadius: BorderRadius.only(
               bottomLeft: Radius.circular(30),
               bottomRight: Radius.circular(30),
@@ -40,14 +41,14 @@ class OTPScreen extends StatelessWidget {
               ),
               const Text(
                 "xxxx@xxxxx.xxxx",
-                style:
-                    TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                style: TextStyle(color: mainColor, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 16),
               const AppTextField(
                 label: "Enter OTP 6-Digits",
                 icon: Icons.shield,
                 textInputType: TextInputType.number,
+                autofocus: true,
               ),
               const SizedBox(height: 16),
               AppBotton(text: "Enter", onTap: () {})

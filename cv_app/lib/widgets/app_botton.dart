@@ -1,3 +1,4 @@
+import 'package:cv_app/globals/colors.dart';
 import 'package:flutter/material.dart';
 
 class AppBotton extends StatelessWidget {
@@ -17,7 +18,7 @@ class AppBotton extends StatelessWidget {
         width: MediaQuery.of(context).size.width * 0.85,
         height: 60,
         decoration: BoxDecoration(
-          color: const Color(0xff6d9674),
+          color: midColor,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Center(

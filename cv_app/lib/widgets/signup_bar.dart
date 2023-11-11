@@ -1,3 +1,4 @@
+import 'package:cv_app/globals/colors.dart';
 import 'package:flutter/material.dart';
 
 class SigninBar extends StatelessWidget {
@@ -11,7 +12,7 @@ class SigninBar extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       height: 130,
       decoration: const BoxDecoration(
-        color: Color(0xff0c3a2d),
+        color: mainColor,
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(50)),
       ),
       child: Column(
@@ -28,7 +29,7 @@ class SigninBar extends StatelessWidget {
                   child: Container(
                     width: 40,
                     height: 40,
-                    color: Colors.amber,
+                    color: midColor,
                     child: const Icon(Icons.arrow_back_rounded,
                         color: Colors.white),
                   ),

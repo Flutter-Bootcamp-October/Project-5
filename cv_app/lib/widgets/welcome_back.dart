@@ -1,3 +1,4 @@
+import 'package:cv_app/globals/colors.dart';
 import 'package:flutter/material.dart';
 
 class WelcomeBack extends StatelessWidget {
@@ -15,7 +16,7 @@ class WelcomeBack extends StatelessWidget {
           width: width,
           height: height,
           decoration: const BoxDecoration(
-            color: Color(0xff0c3a2d),
+            color: mainColor,
             borderRadius: BorderRadius.only(
               bottomRight: Radius.circular(50),
             ),
@@ -47,7 +48,7 @@ class WelcomeBack extends StatelessWidget {
                 child: Container(
                   width: 60,
                   height: 60,
-                  color: const Color(0xffffb902),
+                  color: midColor,
                   child: const Icon(
                     Icons.bubble_chart_outlined,
                     size: 40,

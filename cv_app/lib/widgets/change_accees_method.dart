@@ -1,3 +1,4 @@
+import 'package:cv_app/globals/colors.dart';
 import 'package:flutter/material.dart';
 
 class ChangeAccessMethod extends StatelessWidget {
@@ -21,8 +22,8 @@ class ChangeAccessMethod extends StatelessWidget {
           onTap: onTap,
           child: Text(
             accessMethos,
-            style: const TextStyle(
-                color: Color(0xff0c3a2d), fontWeight: FontWeight.bold),
+            style:
+                const TextStyle(color: mainColor, fontWeight: FontWeight.bold),
           ),
         )
       ],
