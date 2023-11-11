@@ -1,5 +1,5 @@
+import 'package:cv_app/screens/otp_screen.dart';
 import 'package:cv_app/screens/signup_screen.dart';
-import 'package:cv_app/services/auth.dart';
 import 'package:cv_app/widgets/app_botton.dart';
 import 'package:cv_app/widgets/app_textfield.dart';
 import 'package:cv_app/widgets/change_accees_method.dart';
@@ -33,7 +33,14 @@ class LoginScreen extends StatelessWidget {
                 child: Text("forgot password?"),
               )
             ]),
-            const AppBotton(text: "LOGIN"),
+            AppBotton(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const OTPScreen()),
+                  );
+                },
+                text: "LOGIN"),
             const OrSignInWith(),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -42,9 +49,10 @@ class LoginScreen extends StatelessWidget {
                 accessMethos: "SIGN UP",
                 onTap: () {
                   Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const SignupScreen()));
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const SignupScreen()),
+                  );
                 },
               ),
             )

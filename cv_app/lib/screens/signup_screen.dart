@@ -24,7 +24,7 @@ class SignupScreen extends StatelessWidget {
             const AppTextField(
                 label: "Password", icon: Icons.lock_rounded, isObscure: true),
             const SizedBox(height: 64),
-            const AppBotton(text: "SIGN UP"),
+            AppBotton(onTap: () {}, text: "SIGN UP"),
             const OrSignInWith(),
             ChangeAccessMethod(
                 quistion: "Already have an account? ",

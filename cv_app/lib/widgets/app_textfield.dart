@@ -5,10 +5,12 @@ class AppTextField extends StatelessWidget {
       {super.key,
       required this.label,
       this.isObscure = false,
-      required this.icon});
+      required this.icon,
+      this.textInputType = TextInputType.text});
   final String label;
   final bool isObscure;
   final IconData icon;
+  final TextInputType textInputType;
 
   @override
   Widget build(BuildContext context) {
@@ -20,6 +22,7 @@ class AppTextField extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
       child: TextField(
         obscureText: isObscure,
+        keyboardType: textInputType,
         decoration: InputDecoration(
           prefixIcon: Icon(icon),
           prefixIconColor: const Color(0xffffb902).withOpacity(0.9),

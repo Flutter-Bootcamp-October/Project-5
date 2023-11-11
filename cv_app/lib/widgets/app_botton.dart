@@ -4,13 +4,15 @@ class AppBotton extends StatelessWidget {
   const AppBotton({
     super.key,
     required this.text,
+    required this.onTap,
   });
   final String text;
+  final Function() onTap;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: onTap,
       child: Container(
         width: MediaQuery.of(context).size.width * 0.85,
         height: 60,
