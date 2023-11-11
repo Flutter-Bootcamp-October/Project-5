@@ -43,26 +43,35 @@ class _FirstScreenState extends State<FirstScreen> {
           ElevatedButton(
               onPressed: () async {
                 final apiMethod = ApiMethods();
-                try {
-                  await apiMethod.createAccount(body: {
-                    "name": nameController.text,
-                    "phone": phoneController.text,
-                    "email": emailController.text,
-                    "password": passwordController.text,
-                  });
+                if (nameController.text.isNotEmpty &&
+                    phoneController.text.isNotEmpty &&
+                    emailController.text.isNotEmpty &&
+                    passwordController.text.isNotEmpty) {
+                  try {
+                    await apiMethod.createAccount(body: {
+                      "name": nameController.text,
+                      "phone": phoneController.text,
+                      "email": emailController.text,
+                      "password": passwordController.text,
+                    });
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const AccountVerification(
-                            //email, type:register
-                            )),
-                  );
-                } on FormatException catch (error) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AccountVerification(
+                              //email, type:register
+                              )),
+                    );
+                  } on FormatException catch (error) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                        error.message.toString(),
+                      ),
+                    ));
+                  }
+                } else {
                   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                    content: Text(
-                      error.message.toString(),
-                    ),
+                    content: Text("plese fill all the fields"),
                   ));
                 }
               },

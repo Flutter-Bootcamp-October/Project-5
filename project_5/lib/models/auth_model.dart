@@ -15,11 +15,11 @@ class Auth {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['msg'] = msg;
-    _data['data'] = data.toJson();
-    _data['codeState'] = codeState;
-    return _data;
+    final jsonData = <String, dynamic>{};
+    jsonData['msg'] = msg;
+    jsonData['data'] = data.toJson();
+    jsonData['codeState'] = codeState;
+    return jsonData;
   }
 }
 
@@ -29,7 +29,7 @@ class Data {
   Data.fromJson(Map json);
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    return _data;
+    final jsonData = <String, dynamic>{};
+    return jsonData;
   }
 }
