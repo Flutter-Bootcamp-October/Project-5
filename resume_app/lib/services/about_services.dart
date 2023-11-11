@@ -25,9 +25,15 @@ class AboutServ {
   //return String
   editAbout({required String token, required About userAbout}) async {
     var url = Uri.https(_api, _edit);
-    var response = await http.post(url,
-        body: json.encode({"name": "foo", "title_position": "", "phone": "0598746578", "location":"jeddah" , "birthday": "9/30/1997", "about": ""}
-),
+    var response = await http.put(url,
+        body: json.encode({
+          "name": "foo",
+          "title_position": "",
+          "phone": "0598746578",
+          "location": "jeddah",
+          "birthday": "9/30/1997",
+          "about": ""
+        }),
         headers: {"Authorization": token});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
