@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:testapp_aoi/pallete.dart';
-import 'package:testapp_aoi/screens/login_screen.dart';
+import 'package:project_5/pallete.dart';
+import 'package:project_5/screens/login_screen.dart';
 
 void main() {
   runApp(const MyApp());
