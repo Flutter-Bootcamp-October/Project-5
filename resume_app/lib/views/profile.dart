@@ -13,7 +13,7 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    testMethod();
+    // testMethod();
     return const Scaffold(
         // body: FutureBuilder(
         //     future: AboutServ().getAbout(token: widget.token),
