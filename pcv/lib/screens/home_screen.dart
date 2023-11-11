@@ -38,6 +38,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       backgroundColor: const Color.fromARGB(255, 104, 87, 186),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -47,57 +48,60 @@ class _HomeScreenState extends State<HomeScreen> {
       drawer: const Drawer(
         child: DrawerScreens(),
       ),
-      body: SafeArea(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            if (about.isEmpty) const Center(child: CircularProgressIndicator()),
-            if (about.isNotEmpty)
-              Column(children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    Container(
-                      height: 100,
-                      width: 100,
-                    ),
-                    Column(
-                      children: [
-                        Text(
-                          ' ${about["name"].toString()}',
-                          style: const TextStyle(fontSize: 28),
-                        ),
-                        Text(
-                          about["title_position"].toString(),
-                          style:
-                              TextStyle(fontSize: 16, color: Colors.grey[400]),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                Text('about: ${about["about"].toString()}'),
-                const SizedBox(
-                  height: 24,
-                ),
-                ContaHomeWidget(
-                  icon: Icons.email,
-                  text: about["email"].toString(),
-                ),
-                ContaHomeWidget(
-                  icon: Icons.phone,
-                  text: about["phone"].toString(),
-                ),
-                ContaHomeWidget(
-                  icon: Icons.location_on,
-                  text: about["location"].toString(),
-                ),
-                ContaHomeWidget(
-                  icon: Icons.email,
-                  text: about["birthday"].toString(),
-                ),
-              ]),
-          ],
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (about.isEmpty)
+                const Center(child: CircularProgressIndicator()),
+              if (about.isNotEmpty)
+                Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 100,
+                      ),
+                      Column(
+                        children: [
+                          Text(
+                            ' ${about["name"].toString()}',
+                            style: const TextStyle(fontSize: 28),
+                          ),
+                          Text(
+                            about["title_position"].toString(),
+                            style: TextStyle(
+                                fontSize: 16, color: Colors.grey[400]),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  Text('about: ${about["about"].toString()}'),
+                  const SizedBox(
+                    height: 24,
+                  ),
+                  ContaHomeWidget(
+                    icon: Icons.email,
+                    text: about["email"].toString(),
+                  ),
+                  ContaHomeWidget(
+                    icon: Icons.phone,
+                    text: about["phone"].toString(),
+                  ),
+                  ContaHomeWidget(
+                    icon: Icons.location_on,
+                    text: about["location"].toString(),
+                  ),
+                  ContaHomeWidget(
+                    icon: Icons.email,
+                    text: about["birthday"].toString(),
+                  ),
+                ]),
+            ],
+          ),
         ),
       ),
     );

@@ -27,10 +27,12 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     final Response res = await network.aboutMethod(token: token!);
-    if (res.statusCode == 200) {
-      about = (await jsonDecode(res.body))["data"];
-      setState(() {});
-    }
+    try {
+      if (res.statusCode == 200) {
+        about = (await jsonDecode(res.body))["data"];
+        setState(() {});
+      }
+    } catch (e) {}
   }
 
   TextEditingController usernameController = TextEditingController();
@@ -65,7 +67,6 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-                 
                   // const Padding(
                   //   padding: EdgeInsets.symmetric(vertical: ),
                   //   child: Center(
@@ -111,7 +112,6 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         final token = prefs.getString('token');
-                        final picture = prefs.getString("image");
 
                         final Response resp =
                             await network.editAboutMethod(token: token!, body: {
@@ -121,7 +121,6 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                           "location": locationController.text,
                           "about": aboutController.text,
                           "birthday": birthdayController.text,
-                          "image": picture
                         });
 
                         if (resp.statusCode == 200) {

@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:pcv/screens/edit_about.dart';
 import 'package:pcv/screens/project.dart';
 import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/screens/skill_screen.dart';
+import 'package:pcv/screens/social_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -84,6 +86,9 @@ class _DrawerScreensState extends State<DrawerScreens> {
               // ...
             },
           ),
+          const Divider(
+            color: Colors.black45,
+          ),
           ListTile(
             title: const Text('projects'),
             onTap: () {
@@ -97,7 +102,36 @@ class _DrawerScreensState extends State<DrawerScreens> {
             },
           ),
           const Divider(
-            color: Colors.black,
+            color: Colors.black45,
+          ),
+          ListTile(
+            title: const Text('Skills'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SkillScreen(),
+                  ));
+              // Update the state of the app.
+            },
+          ),
+          const Divider(
+            color: Colors.black45,
+          ),
+          ListTile(
+            title: const Text('Social'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const SocialScreen(),
+                  ));
+              // Update the state of the app.
+              // ...
+            },
+          ),
+          const Divider(
+            color: Colors.black45,
           ),
           const Spacer(),
           ListTile(

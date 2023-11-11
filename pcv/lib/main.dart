@@ -14,7 +14,8 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          textTheme: const TextTheme(bodyMedium: TextStyle(color: Colors.white))),
+          textTheme:
+              const TextTheme(bodyMedium: TextStyle(color: Colors.white))),
       home: const HomeScreen(),
     );
   }

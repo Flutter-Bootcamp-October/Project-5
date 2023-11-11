@@ -98,7 +98,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                             SnackBar(content: Text(e.toString())));
                       }
                     },
-                    text: 'Register',
+                    text: 'Add',
                   ),
                 ],
               ),

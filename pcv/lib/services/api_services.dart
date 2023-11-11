@@ -14,8 +14,8 @@ class Network {
   final String _addProject = '/user/add/project';
   final String _deleteProject = '/user/delete/project';
   final String _skill = '/user/skills';
-  final String _addSkill = '/user/add/project';
-  final String _deleteSkill = '/user/delete/project';
+  final String _addSkill = '/user/add/skills';
+  final String _deleteSkill = '/user/delete/skills';
   final String _social = '/user/social_media';
   final String _addSocial = '/user/add/social_media';
   final String _deleteSocial = '/user/delete/social_media';
