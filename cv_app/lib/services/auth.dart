@@ -21,15 +21,17 @@ Future<http.Response> login(String email, String password) async {
   return response;
 }
 
-Future<http.Response> verification(int otp, String email, String type) async {
-  final url = Uri.parse("https://bacend-fshi.onrender.com/auth/login");
+Future<http.Response> verification(
+    String otp, String email, String type) async {
+  final url = Uri.parse("https://bacend-fshi.onrender.com/auth/verification");
   Map body = {"otp": otp, "email": email, "type": type};
+  print(body);
   final response = await http.post(url, body: jsonEncode(body));
   return response;
 }
 
 Future<http.Response> restPassword(String email) async {
-  final url = Uri.parse("https://bacend-fshi.onrender.com/auth/login");
+  final url = Uri.parse("https://bacend-fshi.onrender.com/auth/rest_password");
   Map body = {"email": email};
   final response = await http.post(url, body: jsonEncode(body));
   return response;

@@ -10,7 +10,7 @@ class SigninBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: MediaQuery.of(context).size.width,
-      height: 130,
+      height: 140,
       decoration: const BoxDecoration(
         color: mainColor,
         borderRadius: BorderRadius.only(bottomRight: Radius.circular(50)),

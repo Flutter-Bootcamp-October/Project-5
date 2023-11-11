@@ -8,12 +8,14 @@ class AppTextField extends StatelessWidget {
       this.isObscure = false,
       required this.icon,
       this.textInputType = TextInputType.text,
-      this.autofocus = false});
+      this.autofocus = false,
+      required this.controller});
   final String label;
   final bool isObscure;
   final IconData icon;
   final TextInputType textInputType;
   final bool autofocus;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class AppTextField extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 8),
       child: TextField(
+        controller: controller,
         autofocus: autofocus,
         obscureText: isObscure,
         keyboardType: textInputType,
