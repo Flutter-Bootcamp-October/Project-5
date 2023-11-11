@@ -15,11 +15,11 @@ class Verification {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['msg'] = msg;
-    _data['data'] = data.toJson();
-    _data['codeState'] = codeState;
-    return _data;
+    final vData = <String, dynamic>{};
+    vData['msg'] = msg;
+    vData['data'] = data.toJson();
+    vData['codeState'] = codeState;
+    return vData;
   }
 }
 
@@ -46,12 +46,12 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['token'] = token;
-    _data['expiresAt'] = expiresAt;
-    _data['tokenType'] = tokenType;
-    _data['expiresIn'] = expiresIn;
-    _data['email'] = email;
-    return _data;
+    final vData = <String, dynamic>{};
+    vData['token'] = token;
+    vData['expiresAt'] = expiresAt;
+    vData['tokenType'] = tokenType;
+    vData['expiresIn'] = expiresIn;
+    vData['email'] = email;
+    return vData;
   }
 }

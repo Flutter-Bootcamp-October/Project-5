@@ -15,11 +15,11 @@ class ErrorModel {
   }
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    _data['msg'] = msg;
-    _data['data'] = data?.toJson();
-    _data['codeState'] = codeState;
-    return _data;
+    final vData = <String, dynamic>{};
+    vData['msg'] = msg;
+    vData['data'] = data?.toJson();
+    vData['codeState'] = codeState;
+    return vData;
   }
 }
 
@@ -29,7 +29,7 @@ class Data {
   Data.fromJson(Map json);
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    return _data;
+    final vData = <String, dynamic>{};
+    return vData;
   }
 }
