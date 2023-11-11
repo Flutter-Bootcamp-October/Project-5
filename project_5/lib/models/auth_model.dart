@@ -15,21 +15,27 @@ class Auth {
   }
 
   Map<String, dynamic> toJson() {
-    final jsonData = <String, dynamic>{};
-    jsonData['msg'] = msg;
-    jsonData['data'] = data.toJson();
-    jsonData['codeState'] = codeState;
-    return jsonData;
+    final vData = <String, dynamic>{};
+    vData['msg'] = msg;
+    vData['data'] = data.toJson();
+    vData['codeState'] = codeState;
+    return vData;
   }
 }
 
 class Data {
-  Data();
+  Data({
+    required this.email,
+  });
+  late final String email;
 
-  Data.fromJson(Map json);
+  Data.fromJson(Map<String, dynamic> json) {
+    email = json['email'];
+  }
 
   Map<String, dynamic> toJson() {
-    final jsonData = <String, dynamic>{};
-    return jsonData;
+    final vData = <String, dynamic>{};
+    vData['email'] = email;
+    return vData;
   }
 }

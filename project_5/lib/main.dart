@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:project_5/screens/create_verification.dart';
 
 import 'screens/first_screen.dart';
 
@@ -14,7 +13,7 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
-      home: AccountVerification(),
+      home: FirstScreen(),
     );
   }
 }
