@@ -5,5 +5,6 @@ class ApiEndpoints {
 
 class AuthEndPoints {
   final registerEmail = "auth/registration";
-  final String loginEmail = "auth/verification";
+  final String verification = "auth/verification";
+  final String login = "auth/login";
 }

@@ -1,3 +1,4 @@
+import 'package:cvapp/screens/login_screen.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/wedgets/sgin_continer.dart';
 import 'package:flutter/material.dart';
@@ -136,7 +137,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => RegisterScreen()));
+                            builder: (context) => SginInScreen()));
                   },
                   child: Text(
                     "Login",

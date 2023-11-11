@@ -1,9 +1,12 @@
 import 'dart:convert';
 
+import 'package:cvapp/screens/login_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+
+bool isvalid = false;
 
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen({super.key});
@@ -21,7 +24,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
     try {
       var headers = {'Content-Type': 'application/json'};
       var url = Uri.parse(
-          ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.loginEmail);
+          ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.verification);
 
       Map body = {
         'otp': otpcontroller.text,
@@ -35,6 +38,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         final json = jsonDecode(response.body);
         var token = json['data']['token'];
         print(token);
+        isvalid = true;
         final SharedPreferences? prefs = await _prefs;
         await prefs?.setString('token', token);
         print("suscess");
@@ -67,8 +71,15 @@ class _VerificationScreenState extends State<VerificationScreen> {
             },
           ),
           ElevatedButton(
-            onPressed: () {
-              verifyOtp();
+            onPressed: () async {
+              await verifyOtp();
+              if (isvalid == true) {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SginInScreen()));
+              } else {
+                showAboutDialog(
+                    context: context, children: [Text("invalid otp")]);
+              }
             },
             child: const Text('Submit'),
           ),

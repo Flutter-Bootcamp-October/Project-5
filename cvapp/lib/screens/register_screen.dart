@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+bool isvalid = false;
+String errormassage = "";
+
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
 
@@ -43,9 +46,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (response.statusCode == 200) {
         final json = jsonDecode(response.body);
         print("suscess");
+        isvalid = true;
         print(response.body);
       }
     } catch (e) {
+      errormassage = e.toString();
       print(e);
     }
   }
@@ -53,6 +58,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
       body: Column(
         children: <Widget>[
@@ -81,22 +87,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
             ),
           ),
           ElevatedButton(
-            onPressed: () {
-              _register();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => VerificationScreen()));
+            onPressed: () async {
+              await _register();
+              if (isvalid == true) {
+                _register();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VerificationScreen()));
+              } else {
+                showAboutDialog(
+                    context: context,
+                    children: [Text("please enter valid data")]);
+              }
             },
             child: Text('Register'),
           ),
           InkWell(
             onTap: () {
-              _register();
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => VerificationScreen()));
+              if (isvalid == true) {
+                _register();
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => VerificationScreen()));
+              } else {
+                showAboutDialog(
+                    context: context, children: [Text(errormassage)]);
+              }
             },
             child: Container(
               width: 180,
