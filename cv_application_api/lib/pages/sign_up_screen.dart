@@ -1,14 +1,16 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cv_application_api/constant/constant.dart';
-import 'package:cv_application_api/model/user.dart';
+import 'package:cv_application_api/model/user_model.dart';
+import 'package:cv_application_api/pages/login_screen.dart';
 import 'package:cv_application_api/pages/otp_screen.dart';
-import 'package:cv_application_api/services/api/create_account.dart';
+import 'package:cv_application_api/services/api/create_account_api.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
 import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';
-import 'package:cv_application_api/widgets/custom_buttom.dart';
-import 'package:cv_application_api/widgets/custom_text_field.dart';
-import 'package:cv_application_api/widgets/sign_up_widget/title.dart';
+import 'package:cv_application_api/widgets/custom_widget_for_all_screens/custom_buttom.dart';
+import 'package:cv_application_api/widgets/custom_widget_for_all_screens/custom_text_field.dart';
+import 'package:cv_application_api/widgets/custom_widget_for_all_screens/text_login_or_sign_up.dart';
+import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title.dart';
 import 'package:flutter/material.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -34,7 +36,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             const BackgroundWhiteContainer(),
             Padding(
               padding:
-                  const EdgeInsets.symmetric(vertical: 100, horizontal: 10),
+                  const EdgeInsets.symmetric(vertical: 100, horizontal: 20),
               child: Column(
                 children: [
                   const TitleOfScreen(
@@ -88,12 +90,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     hintText: 'Password',
                     obscureText: false,
                   ),
-                  height20,
+                  height10,
+                  TextLoginorSignUP(
+                    titleTest: 'Already have an account?',
+                    titleButtom: 'Login',
+                    onPressed: () {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) {
+                        return const LoginScreen();
+                      }));
+                    },
+                  ),
+                  height16,
                   CustomButtom(
                     textButtom: 'Sign Up',
                     onPressed: () async {
                       try {
-                        
                         //-------------------------------------
 
                         showDialog(
@@ -136,6 +148,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return OTPScreen(
+                              typeOTP: "registration",
                               user: response,
                             );
                           }));

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class PrifileScreen extends StatelessWidget {
-  const PrifileScreen({super.key});
+class NavBarScreen extends StatelessWidget {
+  const NavBarScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
