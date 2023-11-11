@@ -1,3 +1,6 @@
+import 'package:cv_app/globals/colors.dart';
+import 'package:cv_app/screens/home_screen.dart';
+import 'package:cv_app/widgets/nav_bar_item.dart';
 import 'package:flutter/material.dart';
 
 class BottomNavBar extends StatefulWidget {
@@ -8,6 +11,13 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+  List<Widget> screens = [
+    const HomeScreen(),
+    const HomeScreen(),
+    const HomeScreen(),
+    const HomeScreen(),
+  ];
+  int selectedIndex = 0;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,27 +25,60 @@ class _BottomNavBarState extends State<BottomNavBar> {
       bottomNavigationBar: BottomAppBar(
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
-        height: 50,
+        height: 60,
         elevation: 0,
-        color: Colors.amber,
+        color: mainColor,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
-            IconButton(onPressed: () {}, icon: const Icon(Icons.home_filled)),
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.data_exploration)),
+            NavBarItem(
+              onPressed: () {
+                setState(() {
+                  selectedIndex = 0;
+                });
+              },
+              selectedIcon: Icons.home_filled,
+              unselectedIcon: Icons.home_outlined,
+              isSelected: selectedIndex == 0,
+            ),
+            NavBarItem(
+              onPressed: () {
+                setState(() {
+                  selectedIndex = 1;
+                });
+              },
+              selectedIcon: Icons.drag_indicator_outlined,
+              unselectedIcon: Icons.drag_indicator,
+              isSelected: selectedIndex == 1,
+            ),
             const SizedBox(width: 24),
-            IconButton(
-                onPressed: () {}, icon: const Icon(Icons.people_alt_rounded)),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(Icons.person_pin_circle_rounded)),
+            NavBarItem(
+              onPressed: () {
+                setState(() {
+                  selectedIndex = 2;
+                });
+              },
+              selectedIcon: Icons.people,
+              unselectedIcon: Icons.people_alt_outlined,
+              isSelected: selectedIndex == 2,
+            ),
+            NavBarItem(
+              onPressed: () {
+                setState(() {
+                  selectedIndex = 3;
+                });
+              },
+              selectedIcon: Icons.person,
+              unselectedIcon: Icons.person_outline,
+              isSelected: selectedIndex == 3,
+            ),
           ],
         ),
       ),
+      body: screens[selectedIndex],
       floatingActionButton: FloatingActionButton(
         onPressed: () {},
-        backgroundColor: Colors.amber,
+        backgroundColor: mainColor,
         elevation: 0,
         child: const Icon(
           Icons.add_circle_outline_sharp,

@@ -1,6 +1,6 @@
 import 'package:cv_app/globals/app_loading.dart';
 import 'package:cv_app/globals/colors.dart';
-import 'package:cv_app/screens/home_screen.dart';
+import 'package:cv_app/screens/bottom_nav_bar.dart';
 import 'package:cv_app/services/auth.dart';
 import 'package:cv_app/widgets/app_botton.dart';
 import 'package:cv_app/widgets/app_textfield.dart';
@@ -74,7 +74,7 @@ class OTPScreen extends StatelessWidget {
                           Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()),
+                                  builder: (context) => const BottomNavBar()),
                               (route) => false);
                         } else {
                           // ignore: use_build_context_synchronously
