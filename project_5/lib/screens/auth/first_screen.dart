@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/auth_model.dart';
-import 'package:project_5/screens/create_verification.dart';
+import 'package:project_5/screens/auth/create_verification.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({

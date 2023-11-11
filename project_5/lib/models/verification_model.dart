@@ -7,8 +7,8 @@ class Verification {
   late final String msg;
   late final Data data;
   late final int codeState;
-  
-  Verification.fromJson(Map<String, dynamic> json){
+
+  Verification.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     data = Data.fromJson(json['data']);
     codeState = json['codeState'];
@@ -36,8 +36,8 @@ class Data {
   late final String tokenType;
   late final int expiresIn;
   late final String email;
-  
-  Data.fromJson(Map<String, dynamic> json){
+
+  Data.fromJson(Map<String, dynamic> json) {
     token = json['token'];
     expiresAt = json['expiresAt'];
     tokenType = json['tokenType'];

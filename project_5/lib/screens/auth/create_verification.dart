@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/verification_model.dart';
 import 'package:project_5/screens/home_screen.dart';
-import 'package:project_5/screens/login_screen.dart';
+import 'package:project_5/screens/auth/login_screen.dart';
 
 class AccountVerification extends StatefulWidget {
   const AccountVerification(
@@ -45,10 +45,10 @@ class _AccountVerificationState extends State<AccountVerification> {
                         context,
                         MaterialPageRoute(
                           builder: (context) => HomeScreen(),
+                          //make new verification screen for login ??
                           // LoginScreen(
-                          //   email: res.data.email,
                           //   type: 'login',
-                          //   token: res.data.token,
+                          //
                           // ),
                         ),
                       );
