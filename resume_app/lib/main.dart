@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resume_app/views/profile_screen.dart';
 import 'package:resume_app/views/signin_screen.dart';
 import 'package:resume_app/views/signup_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -24,6 +25,7 @@ class MainApp extends StatelessWidget {
     } else {
       screen = const SignUpSreen();
     }
-    return MaterialApp(debugShowCheckedModeBanner: false, home: screen);
+    return const MaterialApp(
+        debugShowCheckedModeBanner: false, home: ProfileScreen());
   }
 }

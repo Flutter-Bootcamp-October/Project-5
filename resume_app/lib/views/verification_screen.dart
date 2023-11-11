@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resume_app/main.dart';
 import 'package:resume_app/services/authorization.dart';
-import 'package:resume_app/views/profile.dart';
+import 'package:resume_app/views/profile_screen.dart';
 import 'package:resume_app/views/signin_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
