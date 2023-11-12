@@ -28,6 +28,7 @@ class _AccountInformationScreenState extends State<AccountInformationScreen> {
             controller: nameController,
             content: "Display Name",
             onPressedFunc: () {},
+            isSkills: false,
           );
         },
       },
@@ -39,6 +40,7 @@ class _AccountInformationScreenState extends State<AccountInformationScreen> {
             controller: emailController,
             content: "Email Address",
             onPressedFunc: () {},
+            isSkills: false,
           );
         },
       },
@@ -50,6 +52,7 @@ class _AccountInformationScreenState extends State<AccountInformationScreen> {
             controller: phoneController,
             content: "Phone Number",
             onPressedFunc: () {},
+            isSkills: false,
           );
         },
       },

@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/main.dart';
 import 'package:project_5/models/about_model.dart';
+import 'package:project_5/models/skills_model.dart';
 import 'package:project_5/screens/auth/sign_in_screen.dart';
 import 'package:project_5/screens/profile/components/experience.dart';
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
+import 'package:project_5/screens/settings/components/custom_bottom_modal_sheet.dart';
 import 'package:project_5/services/about_api.dart';
+import 'package:project_5/services/skills_api.dart';
+import 'package:project_5/theme/shimmer/shimmer_profile_header_skeleton.dart';
 
 import 'components/education.dart';
 import 'components/profile_user_information.dart';
@@ -21,10 +25,10 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileScreenState extends State<ProfileScreen> {
-  Future? data;
+  Future? aboutModelData;
   AboutModel? aboutModel;
-
-  bool isWaiting = true;
+  Future? skillsModelData;
+  TextEditingController skillsController = TextEditingController();
   @override
   void initState() {
     loadData();
@@ -34,15 +38,26 @@ class ProfileScreenState extends State<ProfileScreen> {
   loadData() async {
     final check = checkTokenValidity(check: await getAboutApi());
     if (check) {
-      data = getAboutApi();
-      aboutModel = await data;
-      isWaiting = false;
+      aboutModel = await aboutModelData;
+      aboutModelData = getAboutApi();
+      skillsModelData = getSkillsData();
+
       setState(() {});
-      return aboutModel!.data!.name;
     }
   }
 
+  updateAboutModel() async {
+    aboutModel = await aboutModelData;
+    setState(() {});
+  }
+
+  updateSkillsModel() async {
+    skillsModelData = getSkillsData();
+    setState(() {});
+  }
+
   bool checkTokenValidity({required check}) {
+    print(pref.getToken());
     if (check == "Token is expired or invalid") {
       pref.cleanToken();
       ScaffoldMessenger.of(context)
@@ -64,61 +79,88 @@ class ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       appBar: CustomAppBar(
         hasAction: true,
         title: "Profile ${aboutModel?.data?.name?.toUpperCase() ?? "..."}",
       ),
       body: SingleChildScrollView(
-        child: FutureBuilder(
-            future: data,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final AboutModel x = snapshot.data!;
-                print(x.data!.name);
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(height: context.getHeight() * .02),
-                    ProfileUserInformation(userData: aboutModel),
-                    //--Education--
-                    SectionTitle(
-                        title: "Education 🎓",
-                        iconData: Icons.mode_edit_outline_outlined,
-                        onPressedFunc: () {}),
-                    const Education(),
-                    //--Skills--
-                    SectionTitle(
-                      title: "Skills 🚀",
-                      iconData: Icons.add,
-                      onPressedFunc: () {},
-                    ),
-                    const Skills(),
-                    //--Experiences--
-                    SectionTitle(
-                      title: "Experiences 💼",
-                      iconData: Icons.add,
-                      onPressedFunc: () {},
-                    ),
-                    const Experience(),
-                    //--PlaceHolder--
-                    SectionTitle(
-                      title: "PlaceHolder 💭󠀠󠀠",
-                      iconData: Icons.add,
-                      onPressedFunc: () {},
-                    ),
-                  ],
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(height: context.getHeight() * .02),
+            FutureBuilder(
+                future: aboutModelData,
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final AboutModel x = snapshot.data;
+                    return ProfileUserInformation(
+                      aboutModelData: aboutModelData,
+                      imageUrl: x.data?.image,
+                    );
+                  } else {
+                    return const ShimmerProfileHeaderSkeleton();
+                  }
+                }),
+            //--Education--
+            SectionTitle(
+              title: "Education 🎓",
+              iconData: Icons.mode_edit_outline_outlined,
+              onPressedFunc: () {},
+            ),
+            const Education(),
+            //--Skills--
+            SectionTitle(
+              title: "Skills 🚀",
+              iconData: Icons.add,
+              onPressedFunc: () {
+                customModalBottomSheet(
+                  context,
+                  controller: skillsController,
+                  content: "Skills",
+                  onPressedFunc: () {
+                    if (skillsController.text.isNotEmpty) {
+                      addSkills(skill: skillsController.text);
+                      setState(() {
+                        loadData();
+                        skillsController.clear();
+                        Navigator.pop(context);
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("Please Enter a Name for the Skill")));
+                    }
+                  },
+                  isSkills: true,
                 );
-              } else {
-                return Center(
-                  child: Shimmer.fromColors(
-                    baseColor: Colors.white,
-                    highlightColor: Colors.grey,
-                    child: const Text("waiting"),
-                  ),
-                );
-              }
-            }),
+              },
+            ),
+            Skills(
+                skillsData: skillsModelData, updateMethod: updateSkillsModel),
+            //--Experiences--
+            SectionTitle(
+              title: "Experiences 💼",
+              iconData: Icons.add,
+              onPressedFunc: () {},
+            ),
+            const Experience(),
+            //--PlaceHolder--
+            SectionTitle(
+              title: "PlaceHolder 💭󠀠󠀠",
+              iconData: Icons.add,
+              onPressedFunc: () {},
+            ),
+          ],
+        ),
+
+        // else {
+        //   return Center(
+        //     child: Shimmer.fromColors(
+        //       baseColor: Colors.white,
+        //       highlightColor: Colors.grey,
+        //       child: const Text("waiting"),
+        //     ),
+        //   );
+        // }
       ),
       floatingActionButton: SelectableText(
           "${aboutModel?.data?.email ?? "..."}\n${aboutModel?.data?.phone ?? "..."}"),

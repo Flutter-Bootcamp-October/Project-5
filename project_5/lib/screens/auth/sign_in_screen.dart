@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:flutter/material.dart  ';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/navigations/navigation_methods.dart';

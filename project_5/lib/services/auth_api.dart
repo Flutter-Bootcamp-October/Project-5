@@ -43,12 +43,10 @@ Future<String> loginApi(
   final response = await http.post(url,
       body: jsonEncode(data), headers: {"content-Type": "application/json"});
 
-  print(response.body);
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return "Ok";
   } else if (response.statusCode >= 400) {
     final err = ErrorModel.fromJson(json.decode(response.body));
-    print(err.msg);
     return err.msg;
   } else {
     final err = ErrorModel.fromJson(json.decode(response.body));
@@ -64,7 +62,6 @@ void resetPasswordApi({required String email}) async {
 
   final response = await http.post(url,
       body: jsonEncode(data), headers: {"content-Type": "application/json"});
-  print(response.body);
 }
 
 Future verificationApi(
@@ -80,14 +77,12 @@ Future verificationApi(
 
   final response = await http.post(url,
       body: jsonEncode(data), headers: {"content-Type": "application/json"});
-  print(response.body);
 
   if (response.statusCode >= 200 && response.statusCode < 300) {
     pref.setToken(json.decode(response.body)["data"]["token"]);
     return "Ok";
   } else if (response.statusCode >= 400) {
     final err = ErrorModel.fromJson(json.decode(response.body));
-    print(err.msg);
     return err.msg;
   } else {
     final err = ErrorModel.fromJson(json.decode(response.body));
