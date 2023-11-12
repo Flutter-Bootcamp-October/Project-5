@@ -20,11 +20,12 @@ class ProfileUserInformation extends StatefulWidget {
 class _ProfileUserInformationState extends State<ProfileUserInformation> {
   String url = "";
   ImageProvider? _pic;
-  bool isLoading = true;
+  bool isLoading = false;
   @override
   void initState() {
-    url = widget.userData?.data?.image;
+    url = widget.userData?.data?.image ?? "";
     _pic = NetworkImage(url);
+    isLoading = true;
     super.initState();
   }
 
@@ -32,6 +33,7 @@ class _ProfileUserInformationState extends State<ProfileUserInformation> {
 
   _updateImgWidget() async {
     isLoading = false;
+    bytes = null;
     Future.delayed(
       const Duration(seconds: 5),
       () async {
@@ -52,70 +54,79 @@ class _ProfileUserInformationState extends State<ProfileUserInformation> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Center(
-          child: InkWell(
-            onTap: () {
-              _updateImgWidget();
-              setState(() {});
-            },
-            onLongPress: () async {
-              XFile? file = await _picker.pickImage(source: source);
-              filePath = File(file!.path);
-              if (filePath == null) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text("No Image was selected")));
-              } else {
-                imageCache.clear();
-                uploadAboutImageApi(image: filePath!);
-              }
-              _updateImgWidget();
-              setState(() {});
-            },
-            child: isLoading
-                ? CircleAvatar(
-                    radius: 50,
-                    foregroundImage: _pic,
-                  )
-                : const CircleAvatar(
-                    radius: 50,
-                    child: CircularProgressIndicator(),
-                  ),
+    return RefreshIndicator(
+      strokeWidth: 3,
+      onRefresh: () async {
+        await _updateImgWidget();
+        setState(() {});
+      },
+      child: ListView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        shrinkWrap: true,
+        // crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Center(
+            child: InkWell(
+              onLongPress: () async {
+                XFile? file = await _picker.pickImage(source: source);
+                if (file == null) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(content: Text("No Image was selected")));
+                } else {
+                  filePath = File(file.path);
+                  imageCache.clear();
+                  uploadAboutImageApi(image: filePath!);
+                  _updateImgWidget();
+                  setState(() {});
+                }
+              },
+              child: isLoading
+                  ? CircleAvatar(
+                      radius: 50,
+                      backgroundImage: _pic,
+                    )
+                  : const CircleAvatar(
+                      radius: 50,
+                      child: CircularProgressIndicator(),
+                    ),
+            ),
           ),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(left: 8.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text("${widget.userData!.data!.name}"),
-                  Text(widget.userData!.data!.about ?? "-You have no bio yet-"),
-                  SizedBox(
-                      width: 300,
-                      child: FlexList(
-                        horizontalSpacing: 4,
-                        verticalSpacing: 5,
-                        children: const [
-                          Text("{Social Media}"),
-                          Text("{Social Media}"),
-                          Text("{Social Media}"),
-                        ],
-                      )),
-                ],
-              ),
-              IconButton(
-                  onPressed: () {}, icon: const Icon(Icons.edit_outlined)),
-            ],
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text("${widget.userData?.data?.name}"),
+                    Text(widget.userData?.data?.about ??
+                        "-You have no bio yet-"),
+                    SizedBox(
+                        width: 300,
+                        child: FlexList(
+                          horizontalSpacing: 4,
+                          verticalSpacing: 5,
+                          children: const [
+                            Text("{Social Media}"),
+                            Text("{Social Media}"),
+                            Text("{Social Media}"),
+                          ],
+                        )),
+                  ],
+                ),
+                IconButton(
+                    onPressed: () {}, icon: const Icon(Icons.edit_outlined)),
+              ],
+            ),
           ),
-        ),
-        const Divider(
-            thickness: .8, indent: 16, endIndent: 16, color: Color(0xffded3fc)),
-      ],
+          const Divider(
+              thickness: .8,
+              indent: 16,
+              endIndent: 16,
+              color: Color(0xffded3fc)),
+        ],
+      ),
     );
   }
 }

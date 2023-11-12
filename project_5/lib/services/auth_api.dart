@@ -68,7 +68,7 @@ void resetPasswordApi({required String email}) async {
 }
 
 Future verificationApi(
-    {required int otp, required String email, required String type}) async {
+    {required String otp, required String email, required String type}) async {
   //login or registration rest
   final data = {
     "otp": otp, // 412958

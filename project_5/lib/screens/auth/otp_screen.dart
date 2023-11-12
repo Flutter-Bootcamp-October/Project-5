@@ -88,7 +88,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             const SnackBar(content: Text("Please Enter OTP")));
                       } else {
                         final response = await verificationApi(
-                            otp: int.tryParse(controller.text)!,
+                            otp: controller.text,
                             email: widget.emailAddress,
                             type: widget.type);
                         if (response.toLowerCase() == "ok") {
