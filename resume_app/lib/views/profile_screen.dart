@@ -51,34 +51,41 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 const SizedBox(height: 20),
                 Row(
                   children: [
-                    Image.network("https://openclipart.org/image/800px/167281",
-                        width: 170, height: 160),
+                    Container(
+                      color: Colors.white,
+                      width: 170,
+                      height: 180,
+                      child: const Text("insert imgae"),
+                    ),
                     const Expanded(
                       child: Wrap(children: [
-                        Text(
-                          "Rafeef Jamjoom",
-                          style: TextStyle(
-                              fontSize: 40,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              shadows: [
-                                Shadow(
-                                    // bottomLeft
-                                    offset: Offset(-1.5, -1.5),
-                                    color: appBlue),
-                                Shadow(
-                                    // bottomRight
-                                    offset: Offset(1.5, -1.5),
-                                    color: appBlue),
-                                Shadow(
-                                    // topRight
-                                    offset: Offset(1.5, 1.5),
-                                    color: appBlue),
-                                Shadow(
-                                    // topLeft
-                                    offset: Offset(-1.5, 1.5),
-                                    color: appBlue),
-                              ]),
+                        Align(
+                          alignment: Alignment.topLeft,
+                          child: Text(
+                            "Rafal Abu Eshey",
+                            style: TextStyle(
+                                fontSize: 33,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                                shadows: [
+                                  // Shadow(
+                                  //     // bottomLeft
+                                  //     offset: Offset(-1.5, -1.5),
+                                  //     color: appBlue),
+                                  Shadow(
+                                      // bottomRight
+                                      offset: Offset(1.5, -1.5),
+                                      color: appBlue),
+                                  // Shadow(
+                                  //     // topRight
+                                  //     offset: Offset(1.5, 1.5),
+                                  //     color: appBlue),
+                                  Shadow(
+                                      // topLeft
+                                      offset: Offset(-1.5, 1.5),
+                                      color: appBlue),
+                                ]),
+                          ),
                         ),
                       ]),
                     )
@@ -89,12 +96,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
       ),
-      // Positioned(
-      //   top: 80,
-      //   left: 10,
-      //   child: Image.network("https://openclipart.org/image/800px/167281",
-      //       width: 170, height: 170),
-      // )
     ]);
   }
 
