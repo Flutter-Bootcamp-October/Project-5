@@ -31,7 +31,7 @@ class MainApp extends StatelessWidget {
             fontFamily: 'Oswald',
           ),
           debugShowCheckedModeBanner: false,
-          home: const SignInScreen());
+          home: const ProfileScreen());
     }
   }
 }

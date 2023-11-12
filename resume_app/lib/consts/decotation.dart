@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resume_app/consts/colors.dart';
 
-returnDec(
-    {required Widget icon, required String hint, required String labelText}) {
+returnDec({Widget? icon, required String hint, required String labelText}) {
   return InputDecoration(
     floatingLabelBehavior: FloatingLabelBehavior.always,
     labelStyle: const TextStyle(color: appBlue),
@@ -25,4 +24,25 @@ returnDec(
         borderSide: const BorderSide(color: appBlue),
         borderRadius: BorderRadius.circular(13)),
   );
+}
+
+List<Shadow> returnShadows() {
+  return [
+    const Shadow(
+        // bottomLeft
+        offset: Offset(-1.5, -1.5),
+        color: appBlue),
+    const Shadow(
+        // bottomRight
+        offset: Offset(1.5, -1.5),
+        color: appBlue),
+    const Shadow(
+        // topRight
+        offset: Offset(1.5, 1.5),
+        color: appBlue),
+    const Shadow(
+        // topLeft
+        offset: Offset(-1.5, 1.5),
+        color: appBlue),
+  ];
 }
