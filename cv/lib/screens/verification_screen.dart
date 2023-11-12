@@ -2,7 +2,7 @@
 
 import 'dart:convert';
 
-import 'package:cv/screens/home_screen.dart';
+import 'package:cv/screens/loding_screen.dart';
 import 'package:cv/screens/signin_screen.dart';
 import 'package:cv/services/auth/verification.dart';
 import 'package:cv/style/colors.dart';
@@ -68,7 +68,7 @@ class VerificationScreen extends StatelessWidget {
                           ? Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
+                                builder: (context) => const lodingScreen(),
                               ),
                               (route) => false,
                             )
