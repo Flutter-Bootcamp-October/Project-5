@@ -6,7 +6,7 @@ import 'package:pcv/screens/add_education_screen.dart';
 import 'package:pcv/screens/drawer_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+ List education = [];
 class EducationScreen extends StatefulWidget {
   const EducationScreen({super.key});
 
@@ -15,7 +15,7 @@ class EducationScreen extends StatefulWidget {
 }
 
 class _EducationScreenState extends State<EducationScreen> {
-  List education = [];
+
 
   @override
   void initState() {

@@ -13,7 +13,7 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
           textTheme:
-              const TextTheme(bodyMedium: TextStyle(color: Colors.white))),
+              const TextTheme(bodyLarge: TextStyle(color: Colors.white))),
       home: const HomeScreen(),
     );
   }

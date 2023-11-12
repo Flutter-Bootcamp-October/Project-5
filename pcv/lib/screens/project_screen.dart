@@ -7,7 +7,7 @@ import 'package:pcv/screens/add_project.dart';
 import 'package:pcv/screens/drawer_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+  List projects = [];
 class ProjectScreen extends StatefulWidget {
   const ProjectScreen({super.key});
 
@@ -16,7 +16,7 @@ class ProjectScreen extends StatefulWidget {
 }
 
 class _ProjectScreenState extends State<ProjectScreen> {
-  List projects = [];
+
 
   @override
   void initState() {

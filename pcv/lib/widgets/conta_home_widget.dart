@@ -16,7 +16,7 @@ class ContaHomeWidget extends StatelessWidget {
           width: MediaQuery.of(context).size.width * 0.88,
           height: 60,
           decoration: BoxDecoration(
-              color: Colors.grey.shade100.withOpacity(0.5),
+              color: Colors.grey.shade100.withOpacity(0.2),
               borderRadius: const BorderRadius.horizontal(
                   left: Radius.circular(15), right: Radius.circular(15))),
           child: Center(

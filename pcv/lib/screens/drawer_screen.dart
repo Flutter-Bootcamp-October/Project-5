@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/screens/edit_about.dart';
 import 'package:pcv/screens/education_screen.dart';
-import 'package:pcv/screens/project.dart';
+import 'package:pcv/screens/home_screen.dart';
+import 'package:pcv/screens/project_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/screens/skill_screen.dart';
@@ -73,7 +74,7 @@ class _DrawerScreensState extends State<DrawerScreens> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const EditAboutScreen(),
+                    builder: (context) => const HomeScreen(),
                   ));
             },
           ),

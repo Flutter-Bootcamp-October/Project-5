@@ -6,7 +6,7 @@ import 'package:pcv/screens/add_skill.dart';
 import 'package:pcv/screens/drawer_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
+ List skills = [];
 class SkillScreen extends StatefulWidget {
   const SkillScreen({super.key});
 
@@ -15,7 +15,7 @@ class SkillScreen extends StatefulWidget {
 }
 
 class _SkillScreenState extends State<SkillScreen> {
-  List skills = [];
+ 
 
   @override
   void initState() {
