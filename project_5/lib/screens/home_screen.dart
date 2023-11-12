@@ -15,6 +15,27 @@ class _HomeScreenState extends State<HomeScreen> {
   // File? image;
 
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return const Scaffold(
+      body: Column(
+        children: [
+          // show all about data here then navigate to each screen (skills, projects, social, education) 
+          // using a container button and make editing and deleting in these screens
+
+
+          
+          /**
+           * profile image
+           * 
+           * name
+           * title position
+           *
+           * information: phone, location, birthday
+           * about paragraph
+           * 
+           * at the end creat acount date
+           */
+        ],
+      ),
+    );
   }
 }
