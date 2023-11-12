@@ -4,6 +4,9 @@ import 'package:project_5/models/auth_model.dart';
 import 'package:project_5/screens/auth/create_verification.dart';
 import 'package:project_5/screens/auth/register_screen.dart';
 import 'package:project_5/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+SharedPreferences? pref;
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({
@@ -18,6 +21,12 @@ TextEditingController emailController = TextEditingController(),
     passwordController = TextEditingController();
 
 class _LoginScreenState extends State<LoginScreen> {
+  @override
+  void initState() {
+    super.initState();
+    getPref();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -37,7 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     MaterialPageRoute(
                         builder: (context) => const RegisterScreen()));
               },
-              child: const Text("Create Account")),
+              child: const Text("Login")),
           ElevatedButton(
               onPressed: () async {
                 final apiMethod = ApiMethods();
@@ -52,12 +61,11 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (res.codeState == 200) {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()
-                            // AccountVerification(
-                            //   email: res.data.email,
-                            //   type: 'login',
-                            // ),
-                            ),
+                        MaterialPageRoute(
+                            builder: (context) => AccountVerification(
+                                  email: res.data.email,
+                                  type: "login",
+                                )),
                       );
                     }
                   } on FormatException catch (error) {
@@ -80,4 +88,8 @@ class _LoginScreenState extends State<LoginScreen> {
       ),
     );
   }
+}
+
+Future getPref() async {
+  pref = await SharedPreferences.getInstance();
 }

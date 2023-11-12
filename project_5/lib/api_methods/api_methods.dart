@@ -5,6 +5,7 @@ import 'package:project_5/models/auth_model.dart';
 import 'package:project_5/models/error_model.dart';
 import 'package:project_5/models/skill_model.dart';
 import 'package:project_5/models/verification_model.dart';
+import 'package:project_5/screens/auth/login_screen.dart';
 
 class ApiMethods {
   //
@@ -39,7 +40,9 @@ class ApiMethods {
 // edit on login method
   Future<Auth> login({required Map body}) async {
     final url = Uri.parse("https://bacend-fshi.onrender.com/auth/login");
-    final response = await https.post(url, body: json.encode(body));
+    final response = await https.post(url,
+        body: json.encode(body),
+        headers: {"authorization": pref!.getString('token') ?? ""});
     print("Response body: ${response.body}");
     print("Response status: ${response.statusCode}");
 

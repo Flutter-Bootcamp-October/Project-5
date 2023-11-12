@@ -10,7 +10,10 @@ class ResetPasswordScreen extends StatefulWidget {
   State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
 }
 
-TextEditingController emailController = TextEditingController();
+TextEditingController emailController =
+// TextEditingController(),
+//     passwordController =
+    TextEditingController();
 
 class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   @override
@@ -22,6 +25,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
           TextField(
               decoration: const InputDecoration(label: Text("Enter email")),
               controller: emailController),
+          // TextField(
+          //     decoration: const InputDecoration(label: Text("Enter password")),
+          //     controller: passwordController),
           ElevatedButton(
             onPressed: () async {
               final apiMethod = ApiMethods();

@@ -7,8 +7,8 @@ class SkillModel {
   late final String msg;
   late final Data data;
   late final int codeState;
-  
-  SkillModel.fromJson(Map<String, dynamic> json){
+
+  SkillModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     data = Data.fromJson(json['data']);
     codeState = json['codeState'];
@@ -27,23 +27,23 @@ class Data {
   Data({
     required this.id,
     required this.userId,
-    required this.SkillModel,
+    required this.skill,
   });
   late final int id;
   late final int userId;
-  late final String SkillModel;
-  
-  Data.fromJson(Map<String, dynamic> json){
+  late final String skill;
+
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    SkillModel = json['SkillModel'];
+    skill = json['skill'];
   }
 
   Map<String, dynamic> toJson() {
     final vData = <String, dynamic>{};
     vData['id'] = id;
     vData['user_id'] = userId;
-    vData['SkillModel'] = SkillModel;
+    vData['skill'] = skill;
     return vData;
   }
 }
