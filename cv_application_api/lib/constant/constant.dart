@@ -51,6 +51,8 @@ const Color appWhite = Color(0xffffffff);
 const Color appcoldGreen = Color(0xff99a678);
 const Color appcoldGreenTrans = Color.fromARGB(116, 153, 166, 120);
 const Color appGreen = Color(0xff687353);
+const Color appGreenTrans = Color.fromARGB(142, 104, 115, 83);
+
 const Color app1DarkGreen = Color(0xff515a47);
 const Color app2DarkGreen = Color(0xff3a4032);
 const Color app2DarkGreenTrans = Color.fromARGB(199, 80, 93, 63);

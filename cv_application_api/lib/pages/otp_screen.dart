@@ -104,7 +104,9 @@ class OTPScreen extends StatelessWidget {
                         context,
                         MaterialPageRoute(
                           builder: (context) {
-                            return const NavBarScreen();
+                            return const NavBarScreen(
+                         
+                            );
                           },
                         ),
                       );
