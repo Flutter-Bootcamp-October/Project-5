@@ -1,3 +1,4 @@
+import 'package:cv_application_api/pages/check_auth_screen.dart';
 import 'package:cv_application_api/pages/login_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -10,6 +11,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: LoginScreen());
+    return const MaterialApp(home: CheckAuthScreen());
   }
 }
