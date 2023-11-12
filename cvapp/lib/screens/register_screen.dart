@@ -1,8 +1,10 @@
 import 'dart:convert';
 import 'dart:math';
+import 'package:cvapp/screens/login_screen.dart';
 import 'package:cvapp/screens/vervcation_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
 import 'package:cvapp/wedgets/costom_divider.dart';
+import 'package:cvapp/wedgets/imge_sinup.dart';
 import 'package:cvapp/wedgets/sginup_wedget.dart';
 import 'package:cvapp/wedgets/welcome_wedget.dart';
 import 'package:flutter/material.dart';
@@ -98,64 +100,39 @@ class _RegisterScreenState extends State<RegisterScreen> {
           ),
           Stack(
             children: [
-              Column(
-                children: [
-                  Container(
-                    width: 390,
-                    height: 280,
-                    color: Colors.amber,
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 150,
-                          height: 50,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.black),
-                          child: TextButton(
-                            onPressed: () async {
-                              await _register();
-                              if (isvalid == true) {
-                                _register();
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            VerificationScreen()));
-                              } else {
-                                showAboutDialog(context: context, children: [
-                                  Text("please enter valid data")
-                                ]);
-                              }
-                            },
-                            child: Text(
-                              'Register',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                        Column(
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(right: 90),
-                              child: Container(
-                                color: Colors.red,
-                                alignment: Alignment.centerLeft,
-                                width: 200,
-                                height: 200,
-                                child: Image.asset(
-                                  "lib\\assets\\imges\\img1.png",
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                            )
-                          ],
-                        )
-                      ],
-                    ),
-                  )
-                ],
-              )
+              Container(
+                width: 390,
+                height: 284,
+              ),
+              Positioned(bottom: -10, child: Costomimage()),
+              Positioned(top: 30, left: 170, child: RegisterWedget(context)),
+              Positioned(
+                  top: 100,
+                  left: 170,
+                  child: Text(
+                    "Already have an account?",
+                    style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.white),
+                  )),
+              Positioned(
+                  top: 120,
+                  left: 280,
+                  child: TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SginInScreen()));
+                      },
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold),
+                      )))
             ],
           ),
           SizedBox(height: 20),
@@ -163,7 +140,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
       ),
     );
   }
+
+  Container RegisterWedget(BuildContext context) {
+    return Container(
+      width: 200,
+      height: 60,
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(40), color: Colors.black),
+      child: TextButton(
+        onPressed: () async {
+          await _register();
+          if (isvalid == true) {
+            _register();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => VerificationScreen()));
+          } else {
+            showAboutDialog(
+                context: context, children: [Text("please enter valid data")]);
+          }
+        },
+        child: Text(
+          'Create Account',
+          style: TextStyle(color: Colors.white, fontSize: 18),
+        ),
+      ),
+    );
+  }
 }
+
 
 
 

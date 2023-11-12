@@ -1,8 +1,10 @@
 import 'dart:convert';
 
 import 'package:cvapp/screens/home_screen.dart';
+import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
 import 'package:cvapp/wedgets/costom_divider.dart';
+import 'package:cvapp/wedgets/sginin_text_wedget.dart';
 import 'package:cvapp/wedgets/welcome_wedget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -72,54 +74,17 @@ class _SginInScreenState extends State<SginInScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text("Username or Email"),
               SizedBox(
                 height: 20,
               ),
-              Container(
-                height: 50,
-                width: 300,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 10,
-                          color: Colors.black,
-                          offset: Offset(0, 1))
-                    ],
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white),
-                child: TextField(
-                  controller: emaiilcontroller,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                  ),
-                ),
-              ),
+              SginInText(
+                  emaiilcontroller: emaiilcontroller, labelText: "Email"),
               SizedBox(
-                height: 20,
+                height: 30,
               ),
-              Text("Password"),
-              SizedBox(
-                height: 20,
-              ),
-              Container(
-                height: 50,
-                width: 300,
-                decoration: BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                          blurRadius: 10,
-                          color: Colors.black,
-                          offset: Offset(0, 1))
-                    ],
-                    borderRadius: BorderRadius.circular(30),
-                    color: Colors.white),
-                child: TextField(
-                  controller: passwordcontroller,
-                  decoration: InputDecoration(
-                    border: InputBorder.none,
-                  ),
-                ),
+              SginInText(
+                emaiilcontroller: passwordcontroller,
+                labelText: "Password",
               ),
               SizedBox(
                 height: 20,
@@ -162,10 +127,15 @@ class _SginInScreenState extends State<SginInScreen> {
                     print(prefs?.get('token'));
                   },
                   child: Text("print token")),
-              Column(
+              Stack(
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 90),
+                  Container(
+                    width: 390,
+                    height: 260,
+                  ),
+                  Positioned(
+                    left: 170,
+                    top: 60,
                     child: Container(
                       alignment: Alignment.centerLeft,
                       width: 300,
@@ -175,7 +145,32 @@ class _SginInScreenState extends State<SginInScreen> {
                         fit: BoxFit.contain,
                       ),
                     ),
-                  )
+                  ),
+                  Positioned(
+                      top: 50,
+                      left: 50,
+                      child: Text(
+                        "Dont have an account?",
+                        style: TextStyle(fontSize: 19, color: Colors.white),
+                      )),
+                  Positioned(
+                      top: 77,
+                      left: 130,
+                      child: TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RegisterScreen()));
+                        },
+                        child: Text(
+                          "Sign up",
+                          style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
+                        ),
+                      ))
                 ],
               )
             ],
