@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/main.dart';
 import 'package:project_5/models/about_model.dart';
-import 'package:project_5/models/skills_model.dart';
 import 'package:project_5/screens/auth/sign_in_screen.dart';
 import 'package:project_5/screens/profile/components/experience.dart';
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
@@ -15,7 +14,6 @@ import 'components/education.dart';
 import 'components/profile_user_information.dart';
 import 'components/section_title.dart';
 import 'components/skills.dart';
-import 'package:shimmer/shimmer.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -59,9 +57,10 @@ class ProfileScreenState extends State<ProfileScreen> {
   bool checkTokenValidity({required check}) {
     print(pref.getToken());
     if (check == "Token is expired or invalid") {
-      pref.cleanToken();
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Token Has Expired")));
+      pref.cleanToken();
+
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(
@@ -98,6 +97,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                       imageUrl: x.data?.image,
                     );
                   } else {
+                    loadData();
                     return const ShimmerProfileHeaderSkeleton();
                   }
                 }),

@@ -15,7 +15,7 @@ dependencies:
   timelines: ^0.1.0
   flex_list: ^1.0.0
   animated_toggle_switch: ^0.8.0
-  native_shared_preferences: ^2.0.9
+  shared_preferences: ^2.2.2
   adaptive_theme: ^3.4.1
   http: ^1.1.0
   shimmer: ^3.0.0

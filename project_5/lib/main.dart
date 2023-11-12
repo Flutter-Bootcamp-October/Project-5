@@ -2,7 +2,6 @@ import 'package:adaptive_theme/adaptive_theme.dart';
 import 'package:flutter/material.dart';
 import 'package:project_5/data/global_data.dart';
 import 'package:project_5/screens/profile/profile_screen.dart';
-import 'package:project_5/services/about_api.dart';
 
 import 'prefrences/shared_prefrences.dart';
 import 'screens/auth/sign_in_screen.dart';
