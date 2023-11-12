@@ -2,22 +2,21 @@
 
 import 'dart:convert';
 
-import 'package:cv/models/user.dart';
 import 'package:cv/screens/auth_screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<User?> aboutAPI(BuildContext context) async {
+Future<Response?> addEducation(BuildContext context, Map body) async {
+  final SharedPreferences prefs = await SharedPreferences.getInstance();
+  final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/education");
+  final response = await post(url,
+      body: jsonEncode(body),
+      headers: {"authorization": prefs.getString("token")!});
+  print(response.body);
   try {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
-    final response =
-        await get(url, headers: {"authorization": prefs.getString("token")!});
-    print(response.body);
-
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return User.fromJson(jsonDecode(response.body)["data"]);
+      return response;
     } else if (jsonDecode(response.body)["msg"] ==
         "Token is expired or invalid") {
       prefs.remove("token");
@@ -29,12 +28,12 @@ Future<User?> aboutAPI(BuildContext context) async {
           (route) => false);
       return null;
     } else {
-      return null;
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text(jsonDecode(response.body)["msg"])));
     }
   } catch (error) {
     print("Error: $error");
     return null;
   }
+  return null;
 }
-
-

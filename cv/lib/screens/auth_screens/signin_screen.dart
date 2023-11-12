@@ -2,8 +2,8 @@
 
 import 'dart:convert';
 
-import 'package:cv/screens/signup_screen.dart';
-import 'package:cv/screens/verification_screen.dart';
+import 'package:cv/screens/auth_screens/signup_screen.dart';
+import 'package:cv/screens/auth_screens/verification_screen.dart';
 import 'package:cv/services/auth/login.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
@@ -79,7 +79,7 @@ class SigninScreen extends StatelessWidget {
                   }
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("please enter all information")));
+                      content: Text("Please enter all information")));
                 }
               } catch (error) {
                 ScaffoldMessenger.of(context)

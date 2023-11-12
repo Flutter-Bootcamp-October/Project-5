@@ -1,3 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
+import 'package:cv/services/skill/add_skill.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
@@ -35,7 +40,33 @@ class SkillsScreen extends StatelessWidget {
               hight40(),
               hight8(),
               InkWell(
-                onTap: () async {},
+                onTap: () async {
+                  try {
+                    if (skillController.text.isNotEmpty) {
+                      final response = await addSkill(context, {
+                        "skill": skillController.text,
+                      });
+                      if (response != null) {
+                        if (response.statusCode >= 200 &&
+                            response.statusCode < 300) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                  content:
+                                      Text("Skill is added successfully")));
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(jsonDecode(response.body)["msg"])));
+                        }
+                      }
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text("Please enter all information")));
+                    }
+                  } catch (error) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(content: Text(error.toString())));
+                  }
+                },
                 child: Container(
                   width: 330,
                   height: 50,

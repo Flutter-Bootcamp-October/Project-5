@@ -1,5 +1,5 @@
 import 'package:cv/screens/navigationbar_screen.dart';
-import 'package:cv/screens/signin_screen.dart';
+import 'package:cv/screens/auth_screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

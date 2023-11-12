@@ -1,3 +1,8 @@
+// ignore_for_file: use_build_context_synchronously
+
+import 'dart:convert';
+
+import 'package:cv/services/social/add_social.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
@@ -12,11 +17,10 @@ class SocilaScreen extends StatefulWidget {
 
 class _SocilaScreenState extends State<SocilaScreen> {
   String type = "Income";
+  TextEditingController socialController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    TextEditingController socialController = TextEditingController();
-
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 40.0),
@@ -28,7 +32,7 @@ class _SocilaScreenState extends State<SocilaScreen> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    "Add New Social",
+                    "Add New Social Media",
                     style: TextStyle(
                         fontSize: 25, color: blue, fontWeight: FontWeight.bold),
                   ),
@@ -54,11 +58,12 @@ class _SocilaScreenState extends State<SocilaScreen> {
                   children: [
                     hight8(),
                     Text(
-                      "Choose social type:",
+                      "Choose social media type:",
                       style: TextStyle(fontSize: 16, color: blue),
                     ),
                     hight8(),
                     RadioListTile(
+                        fillColor: MaterialStateProperty.all(lightOrange),
                         activeColor: lightOrange,
                         title: const Text("Facebook"),
                         value: "facebook",
@@ -70,6 +75,7 @@ class _SocilaScreenState extends State<SocilaScreen> {
                         },
                         dense: true),
                     RadioListTile(
+                        fillColor: MaterialStateProperty.all(lightOrange),
                         activeColor: lightOrange,
                         title: const Text("Youtube"),
                         value: "youtube",
@@ -81,6 +87,7 @@ class _SocilaScreenState extends State<SocilaScreen> {
                         },
                         dense: true),
                     RadioListTile(
+                        fillColor: MaterialStateProperty.all(lightOrange),
                         activeColor: lightOrange,
                         title: const Text("Whatsapp"),
                         value: "whatsapp",
@@ -92,6 +99,7 @@ class _SocilaScreenState extends State<SocilaScreen> {
                         },
                         dense: true),
                     RadioListTile(
+                        fillColor: MaterialStateProperty.all(lightOrange),
                         activeColor: lightOrange,
                         title: const Text("Instagram"),
                         value: "instagram",
@@ -103,6 +111,7 @@ class _SocilaScreenState extends State<SocilaScreen> {
                         },
                         dense: true),
                     RadioListTile(
+                        fillColor: MaterialStateProperty.all(lightOrange),
                         activeColor: lightOrange,
                         title: const Text("Twitter"),
                         value: "twitter",
@@ -114,6 +123,7 @@ class _SocilaScreenState extends State<SocilaScreen> {
                         },
                         dense: true),
                     RadioListTile(
+                        fillColor: MaterialStateProperty.all(lightOrange),
                         activeColor: lightOrange,
                         title: const Text("Tiktok"),
                         value: "tiktok",
@@ -125,6 +135,7 @@ class _SocilaScreenState extends State<SocilaScreen> {
                         },
                         dense: true),
                     RadioListTile(
+                        fillColor: MaterialStateProperty.all(lightOrange),
                         activeColor: lightOrange,
                         title: const Text("Telegram"),
                         value: "telegram",
@@ -141,7 +152,36 @@ class _SocilaScreenState extends State<SocilaScreen> {
               hight20(),
               Center(
                 child: InkWell(
-                  onTap: () async {},
+                  onTap: () async {
+                    try {
+                      if (socialController.text.isNotEmpty) {
+                        final response = await addSocial(context, {
+                          "username": socialController.text,
+                          "social": type
+                        });
+                        if (response != null) {
+                          if (response.statusCode >= 200 &&
+                              response.statusCode < 300) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text(
+                                        "Social Media is added successfully")));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content:
+                                    Text(jsonDecode(response.body)["msg"])));
+                          }
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                                content: Text("Please enter all information")));
+                      }
+                    } catch (error) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(error.toString())));
+                    }
+                  },
                   child: Container(
                     width: 330,
                     height: 50,

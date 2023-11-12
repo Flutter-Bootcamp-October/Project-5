@@ -2,22 +2,28 @@
 
 import 'dart:convert';
 
-import 'package:cv/models/user.dart';
+import 'package:cv/models/project.dart';
 import 'package:cv/screens/auth_screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<User?> aboutAPI(BuildContext context) async {
+Future<List<Project>> getProjects(BuildContext context) async {
+  List<Project> projectsList = [];
+
   try {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/projects");
     final response =
         await get(url, headers: {"authorization": prefs.getString("token")!});
     print(response.body);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return User.fromJson(jsonDecode(response.body)["data"]);
+      final responseDecode = jsonDecode(response.body)["data"];
+      for (var element in responseDecode) {
+        projectsList.add(Project.fromJson(element));
+      }
+      return projectsList;
     } else if (jsonDecode(response.body)["msg"] ==
         "Token is expired or invalid") {
       prefs.remove("token");
@@ -27,14 +33,12 @@ Future<User?> aboutAPI(BuildContext context) async {
             builder: (context) => const SigninScreen(),
           ),
           (route) => false);
-      return null;
+      return projectsList;
     } else {
-      return null;
+      return projectsList;
     }
   } catch (error) {
     print("Error: $error");
-    return null;
+    return projectsList;
   }
 }
-
-

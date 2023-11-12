@@ -1,4 +1,5 @@
 class Education {
+  int? id;
   String? graduationDate;
   String? university;
   String? college;
@@ -8,6 +9,7 @@ class Education {
   Education(
       {this.graduationDate,
       this.university,
+      this.id,
       this.college,
       this.specialization,
       this.level});
@@ -18,6 +20,7 @@ class Education {
     college = json['college'];
     specialization = json['specialization'];
     level = json['level'];
+    id = json['id'];
   }
 
   Map<String, dynamic> toJson() {
@@ -27,6 +30,8 @@ class Education {
     data['college'] = college;
     data['specialization'] = specialization;
     data['level'] = level;
+    data['id'] = id;
+
     return data;
   }
 }

@@ -1,4 +1,4 @@
-import 'package:cv/screens/loding_screen.dart';
+import 'package:cv/screens/auth_screens/loding_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {

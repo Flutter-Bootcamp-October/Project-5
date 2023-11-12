@@ -2,8 +2,8 @@
 
 import 'dart:convert';
 
-import 'package:cv/screens/loding_screen.dart';
-import 'package:cv/screens/signin_screen.dart';
+import 'package:cv/screens/auth_screens/loding_screen.dart';
+import 'package:cv/screens/auth_screens/signin_screen.dart';
 import 'package:cv/services/auth/verification.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/widgets/text_field.dart';
@@ -83,7 +83,7 @@ class VerificationScreen extends StatelessWidget {
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text("please enter the OTP")));
+                        const SnackBar(content: Text("Please enter the OTP")));
                   }
                 } catch (error) {
                   ScaffoldMessenger.of(context)

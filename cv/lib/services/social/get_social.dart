@@ -2,22 +2,28 @@
 
 import 'dart:convert';
 
-import 'package:cv/models/user.dart';
+import 'package:cv/models/social.dart';
 import 'package:cv/screens/auth_screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<User?> aboutAPI(BuildContext context) async {
+Future<List<Social>> getsocials(BuildContext context) async {
+  List<Social> socialsList = [];
+
   try {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/social_media");
     final response =
         await get(url, headers: {"authorization": prefs.getString("token")!});
     print(response.body);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return User.fromJson(jsonDecode(response.body)["data"]);
+      final responseDecode = jsonDecode(response.body)["data"];
+      for (var element in responseDecode) {
+        socialsList.add(Social.fromJson(element));
+      }
+      return socialsList;
     } else if (jsonDecode(response.body)["msg"] ==
         "Token is expired or invalid") {
       prefs.remove("token");
@@ -27,14 +33,12 @@ Future<User?> aboutAPI(BuildContext context) async {
             builder: (context) => const SigninScreen(),
           ),
           (route) => false);
-      return null;
+      return socialsList;
     } else {
-      return null;
+      return socialsList;
     }
   } catch (error) {
     print("Error: $error");
-    return null;
+    return socialsList;
   }
 }
-
-

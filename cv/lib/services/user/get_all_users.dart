@@ -8,16 +8,22 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<User?> aboutAPI(BuildContext context) async {
+Future<List<User>> getAllUsers(BuildContext context) async {
+  List<User> usersList = [];
+
   try {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/get_users");
     final response =
         await get(url, headers: {"authorization": prefs.getString("token")!});
     print(response.body);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return User.fromJson(jsonDecode(response.body)["data"]);
+      final responseDecode = jsonDecode(response.body)["data"];
+      for (var element in responseDecode) {
+        usersList.add(User.fromJson(element));
+      }
+      return usersList;
     } else if (jsonDecode(response.body)["msg"] ==
         "Token is expired or invalid") {
       prefs.remove("token");
@@ -27,14 +33,12 @@ Future<User?> aboutAPI(BuildContext context) async {
             builder: (context) => const SigninScreen(),
           ),
           (route) => false);
-      return null;
+      return usersList;
     } else {
-      return null;
+      return usersList;
     }
   } catch (error) {
     print("Error: $error");
-    return null;
+    return usersList;
   }
 }
-
-

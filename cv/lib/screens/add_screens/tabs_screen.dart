@@ -1,8 +1,8 @@
 import 'package:custom_sliding_segmented_control/custom_sliding_segmented_control.dart';
-import 'package:cv/screens/education_screen.dart';
-import 'package:cv/screens/project_screen.dart';
-import 'package:cv/screens/skill_screen.dart';
-import 'package:cv/screens/social_screen.dart';
+import 'package:cv/screens/add_screens/education_screen.dart';
+import 'package:cv/screens/add_screens/project_screen.dart';
+import 'package:cv/screens/add_screens/skill_screen.dart';
+import 'package:cv/screens/add_screens/social_screen.dart';
 import 'package:cv/style/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -35,7 +35,9 @@ class _TabsScreenState extends State<TabsScreen>
               children: const {
                 1: Text(
                   'Project',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(
+                    color: Colors.white,
+                  ),
                 ),
                 2: Text(
                   'Education',
