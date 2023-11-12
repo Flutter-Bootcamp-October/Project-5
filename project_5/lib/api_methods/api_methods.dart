@@ -43,6 +43,8 @@ class ApiMethods {
     print("Response body: ${response.body}");
     print("Response status: ${response.statusCode}");
 
+    //get token
+
     if (response.statusCode == 200 || response.statusCode < 300) {
       return Auth.fromJson(json.decode(response.body));
     } else {

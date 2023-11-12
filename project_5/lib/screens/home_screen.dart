@@ -12,8 +12,8 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   @override
-  File? image;
-  
+  // File? image;
+
   Widget build(BuildContext context) {
     return const Placeholder();
   }

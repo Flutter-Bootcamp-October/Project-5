@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/verification_model.dart';
+import 'package:project_5/screens/auth/register_screen.dart';
 import 'package:project_5/screens/home_screen.dart';
 import 'package:project_5/screens/auth/login_screen.dart';
 
@@ -40,11 +41,13 @@ class _AccountVerificationState extends State<AccountVerification> {
                       "type": widget.type,
                     });
                     if (res.codeState == 200) {
+                      //sharedprefrence
+                      final String token = res.data.token;
                       print(res.data.token);
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => HomeScreen(),
+                          builder: (context) => RegisterScreen(),
                           //make new verification screen for login ??
                           // LoginScreen(
                           //   type: 'login',
