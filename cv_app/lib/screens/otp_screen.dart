@@ -1,5 +1,9 @@
+import 'dart:convert';
+import 'dart:developer';
+
 import 'package:cv_app/globals/app_loading.dart';
 import 'package:cv_app/globals/colors.dart';
+import 'package:cv_app/main.dart';
 import 'package:cv_app/screens/bottom_nav_bar.dart';
 import 'package:cv_app/services/auth.dart';
 import 'package:cv_app/widgets/app_botton.dart';
@@ -70,6 +74,10 @@ class OTPScreen extends StatelessWidget {
                         Navigator.pop(context);
                         print(response.body);
                         if (response.statusCode == 200) {
+                          Map responseMap = jsonDecode(response.body);
+                          prefs.setString(
+                              "token", responseMap['data']['token']);
+                          log(responseMap['data']['token']);
                           // ignore: use_build_context_synchronously
                           Navigator.pushAndRemoveUntil(
                               context,

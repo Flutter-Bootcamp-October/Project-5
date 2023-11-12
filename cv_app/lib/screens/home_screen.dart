@@ -86,15 +86,24 @@ class HomeScreen extends StatelessWidget {
                     fontWeight: FontWeight.bold),
               ),
             ),
-            const SingleChildScrollView(
+            SingleChildScrollView(
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  FillCV(text: "AboutMe", icon: Icons.data_saver_off_outlined),
-                  FillCV(text: "Projects", icon: Icons.work),
-                  FillCV(text: "Skills", icon: Icons.precision_manufacturing),
-                  FillCV(text: "Social", icon: Icons.connect_without_contact),
-                  FillCV(text: "Education", icon: Icons.school),
+                  FillCV(
+                      onTap: () {},
+                      text: "AboutMe",
+                      icon: Icons.data_saver_off_outlined),
+                  FillCV(onTap: () {}, text: "Projects", icon: Icons.work),
+                  FillCV(
+                      onTap: () {},
+                      text: "Skills",
+                      icon: Icons.precision_manufacturing),
+                  FillCV(
+                      onTap: () {},
+                      text: "Social",
+                      icon: Icons.connect_without_contact),
+                  FillCV(onTap: () {}, text: "Education", icon: Icons.school),
                 ],
               ),
             ),
