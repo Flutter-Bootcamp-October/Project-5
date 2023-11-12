@@ -49,9 +49,17 @@ class _SinUpWedgetState extends State<SinUpWedget> {
         focusNode: _focusNode,
         controller: widget.Controller,
         decoration: InputDecoration(
-          border: InputBorder.none,
-          labelText: shouldHideLabel ? '' : widget.labelText,
-        ),
+            enabledBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide.none),
+            focusedBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(20),
+                borderSide: BorderSide.none),
+            contentPadding: EdgeInsets.only(left: 10),
+
+            // border: InputBorder.none,
+            // labelText: shouldHideLabel ? '' : widget.labelText,
+            hintText: widget.labelText),
       ),
     );
   }

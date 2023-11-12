@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cvapp/screens/login_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
+import 'package:cvapp/wedgets/sginup_wedget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,45 +53,47 @@ class _VerificationScreenState extends State<VerificationScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Text("enter otp"),
-          TextFormField(
-            controller: otpcontroller,
-            decoration: InputDecoration(labelText: 'otp'),
-            validator: (value) {
-              // Add your validation logic here
-            },
-          ),
-          Text("email"),
-          TextFormField(
-            controller: emaiilcontroller,
-            decoration: InputDecoration(labelText: 'email'),
-            validator: (value) {
-              // Add your validation logic here
-            },
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              await verifyOtp();
-              if (isvalid == true) {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SginInScreen()));
-              } else {
-                showAboutDialog(
-                    context: context, children: [Text("invalid otp")]);
-              }
-            },
-            child: const Text('Submit'),
-          ),
-          ElevatedButton(
+      backgroundColor: Color(0xff8C5CB3),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+        child: Column(
+          children: [
+            SizedBox(
+              height: 200,
+            ),
+            SinUpWedget(
+              Controller: otpcontroller,
+              labelText: "otp",
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            SinUpWedget(
+              Controller: emaiilcontroller,
+              labelText: "email",
+            ),
+            ElevatedButton(
               onPressed: () async {
-                final SharedPreferences? prefs = await _prefs;
-
-                print(prefs?.get('token'));
+                await verifyOtp();
+                if (isvalid == true) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => SginInScreen()));
+                } else {
+                  showAboutDialog(
+                      context: context, children: [Text("invalid otp")]);
+                }
               },
-              child: Text("print token"))
-        ],
+              child: const Text('Submit'),
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  final SharedPreferences? prefs = await _prefs;
+
+                  print(prefs?.get('token'));
+                },
+                child: Text("print token"))
+          ],
+        ),
       ),
     );
   }

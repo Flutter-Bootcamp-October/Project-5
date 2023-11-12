@@ -2,6 +2,8 @@ import 'dart:convert';
 
 import 'package:cvapp/screens/home_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
+import 'package:cvapp/wedgets/costom_divider.dart';
+import 'package:cvapp/wedgets/welcome_wedget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -57,7 +59,15 @@ class _SginInScreenState extends State<SginInScreen> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           SizedBox(
-            height: 200,
+            height: 50,
+          ),
+          WelcomeWidget("Login to CV app"),
+          SizedBox(
+            height: 20,
+          ),
+          CustomDivider(),
+          SizedBox(
+            height: 20,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -151,7 +161,23 @@ class _SginInScreenState extends State<SginInScreen> {
 
                     print(prefs?.get('token'));
                   },
-                  child: Text("print token"))
+                  child: Text("print token")),
+              Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(left: 90),
+                    child: Container(
+                      alignment: Alignment.centerLeft,
+                      width: 300,
+                      height: 200,
+                      child: Image.asset(
+                        "lib\\assets\\imges\\img2.png",
+                        fit: BoxFit.contain,
+                      ),
+                    ),
+                  )
+                ],
+              )
             ],
           )
         ],
