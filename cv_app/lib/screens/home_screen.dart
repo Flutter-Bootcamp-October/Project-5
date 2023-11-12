@@ -1,22 +1,39 @@
+import 'package:cv_app/models/education/education_data_model.dart';
+import 'package:cv_app/models/globals.dart';
+import 'package:cv_app/models/projects/project_data_model.dart';
+import 'package:cv_app/models/projects/project_model.dart';
+import 'package:cv_app/models/skill/skill_data_model.dart';
+import 'package:cv_app/models/skill/skill_model.dart';
+import 'package:cv_app/models/social_media/social_media_data_model.dart';
+import 'package:cv_app/models/social_media/social_media_model.dart';
+import 'package:cv_app/services/api/networking_methods.dart';
+import 'package:cv_app/widgets/home_tab_bar/social_media_tab_bar/gridview_social_media.dart';
+import 'package:flutter/material.dart';
 import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/constentes/sized_box.dart';
+import 'package:cv_app/models/education/education_model.dart';
 import 'package:cv_app/widgets/home_tab_bar/education_tab_bar/education_card.dart';
 import 'package:cv_app/widgets/home_tab_bar/project_tab_bar/gridview_project.dart';
 import 'package:cv_app/widgets/home_tab_bar/skill_tab_bar/gridview_skill.dart';
-import 'package:cv_app/widgets/home_tab_bar/social_media_tab_bar/gridview_social_media.dart';
-import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({
-    Key? key,
-  }) : super(key: key);
+    super.key,
+  });
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: 4,
       child: Scaffold(
-        backgroundColor: eggShell,
+        backgroundColor: richBlack,
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -39,7 +56,7 @@ class HomeScreen extends StatelessWidget {
                         Text(
                           'name',
                           style: TextStyle(
-                            color: prussianBlue,
+                            color: eggShell,
                             fontSize: 20,
                             fontWeight: FontWeight.w700,
                           ),
@@ -72,7 +89,7 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w800,
-                    color: prussianBlue,
+                    color: eggShell,
                   ),
                 ),
                 const Text(
@@ -80,15 +97,15 @@ class HomeScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w800,
-                    color: payneGrey,
+                    color: silverBlue,
                   ),
                 ),
                 height20,
                 const TabBar(
                   isScrollable: true,
-                  indicatorColor: richBlack,
+                  indicatorColor: eggShell,
                   unselectedLabelStyle: TextStyle(color: payneGrey),
-                  labelColor: prussianBlue,
+                  labelColor: eggShell,
                   labelStyle:
                       TextStyle(fontWeight: FontWeight.w900, fontSize: 16),
                   tabs: [
@@ -98,13 +115,80 @@ class HomeScreen extends StatelessWidget {
                     Tab(text: 'Social Media'),
                   ],
                 ),
-                const Expanded(
+                Expanded(
                   child: TabBarView(
                     children: [
-                      EducationCard(),
-                      GridViewSkills(),
-                      ProjectGridView(),
-                      GridViewSocialMedia()
+                      FutureBuilder<EducationModel>(
+                        future: network.getEducationMethod(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<EducationModel> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData) {
+                            final EducationData data =
+                                snapshot.data as EducationData;
+                            return EducationCard(education: data);
+                          } else {
+                            return Text('');
+                          }
+                        },
+                      ),
+                      FutureBuilder<SkillsModel>(
+                        future: network.getSkillsMethod(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<SkillsModel> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData) {
+                            final SkillData data = snapshot.data as SkillData;
+                            return GridViewSkills(skill: data);
+                          } else {
+                            return Text('');
+                          }
+                        },
+                      ),
+                      FutureBuilder<ProjectsModel>(
+                        future: network.getProjectsMethod(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<ProjectsModel> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData) {
+                            final ProjectData data =
+                                snapshot.data as ProjectData;
+                            return ProjectGridView(project: data);
+                          } else {
+                            return Text('');
+                          }
+                        },
+                      ),
+                      FutureBuilder<SocialMediaModel>(
+                        future: network.getSocialMediaMethod(),
+                        builder: (BuildContext context,
+                            AsyncSnapshot<SocialMediaModel> snapshot) {
+                          if (snapshot.connectionState ==
+                              ConnectionState.waiting) {
+                            return Center(child: CircularProgressIndicator());
+                          } else if (snapshot.hasError) {
+                            return Text('Error: ${snapshot.error}');
+                          } else if (snapshot.hasData) {
+                            final SocialMediaData data =
+                                snapshot.data as SocialMediaData;
+                            return GridViewSocialMedia(socialmedia: data);
+                          } else {
+                            return Text('');
+                          }
+                        },
+                      ),
                     ],
                   ),
                 ),

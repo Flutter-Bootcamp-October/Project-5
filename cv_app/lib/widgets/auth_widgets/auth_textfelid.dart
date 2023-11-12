@@ -2,16 +2,17 @@ import 'package:cv_app/constentes/colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthTextFelid extends StatelessWidget {
-  const AuthTextFelid({
+   AuthTextFelid({
     super.key,
     required this.text,
     required this.icon,
-    required this.isHaveIcon,
+    required this.isHaveIcon,required this.controller
   });
 
   final String text;
   final IconData? icon;
   final bool isHaveIcon;
+   TextEditingController? controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -30,6 +31,7 @@ class AuthTextFelid extends StatelessWidget {
           ),
         ),
         TextField(
+          controller: controller,
           decoration: InputDecoration(
               prefixIcon: isHaveIcon
                   ? Icon(

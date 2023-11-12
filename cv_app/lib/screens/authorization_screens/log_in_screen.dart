@@ -1,12 +1,37 @@
+import 'dart:convert';
 import 'package:cv_app/constentes/colors.dart';
+import 'package:cv_app/models/authentiction/authentiction_model.dart';
+import 'package:cv_app/models/globals.dart';
 import 'package:cv_app/screens/authorization_screens/verification_screen.dart';
+import 'package:cv_app/services/api/networking_methods.dart';
 import 'package:cv_app/widgets/auth_widgets/auth_textfelid.dart';
 import 'package:flutter/material.dart';
 import 'package:cv_app/constentes/sized_box.dart';
-class LogInScreen extends StatelessWidget {
+import 'package:shared_preferences/shared_preferences.dart';
+
+class LogInScreen extends StatefulWidget {
   const LogInScreen({
     super.key,
   });
+
+  @override
+  State<LogInScreen> createState() => _LogInScreenState();
+}
+
+class _LogInScreenState extends State<LogInScreen> {
+  TextEditingController? emailController = TextEditingController();
+  TextEditingController? passwordController = TextEditingController();
+  late SharedPreferences prefs;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    inite();
+  }
+
+  Future inite() async {
+    prefs = await SharedPreferences.getInstance();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,24 +64,45 @@ class LogInScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const AuthTextFelid(
+                      AuthTextFelid(
                         text: 'Email',
                         icon: Icons.email_outlined,
                         isHaveIcon: true,
+                        controller: emailController,
                       ),
-                      const AuthTextFelid(
+                      AuthTextFelid(
                         text: 'Password',
                         icon: Icons.lock_outline_rounded,
                         isHaveIcon: true,
+                        controller: passwordController,
                       ),
-                       height20,
+                      height20,
                       InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const VerificationScreen()));
+                        onTap: () async {
+                          final network = ConsentNetworking();
+
+                          final AuthentictionModel respons = await network
+                              .loginMethod(body: {
+                            "email": emailController!.text,
+                            "password": passwordController!.text
+                          });
+
+                          if (respons.codeState == 200) {
+                            // ignore: use_build_context_synchronously
+
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => VerificationScreen(
+                                          email: respons.data.email,
+                                          type: "login",
+                                        )));
+                          } else {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(respons.msg.toString())));
+                          }
+                          setState(() {});
                         },
                         child: Container(
                           width: 300,

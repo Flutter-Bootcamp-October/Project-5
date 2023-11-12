@@ -1,19 +1,33 @@
+import 'dart:convert';
+
 import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/constentes/sized_box.dart';
+import 'package:cv_app/models/globals.dart';
 import 'package:cv_app/screens/authorization_screens/log_in_screen.dart';
 import 'package:cv_app/screens/authorization_screens/verification_screen.dart';
+import 'package:cv_app/services/api/networking_methods.dart';
 import 'package:cv_app/widgets/auth_widgets/auth_textfelid.dart';
 import 'package:flutter/material.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({
     super.key,
   });
 
   @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: richBlack,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
           Expanded(
@@ -41,34 +55,61 @@ class SignUpScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const AuthTextFelid(
+                      AuthTextFelid(
                         text: 'Name',
                         icon: null,
                         isHaveIcon: false,
+                        controller: nameController,
                       ),
-                      const AuthTextFelid(
+                      AuthTextFelid(
                         text: 'Phone Number',
                         icon: null,
                         isHaveIcon: false,
+                        controller: phoneNumberController,
                       ),
-                      const AuthTextFelid(
+                      AuthTextFelid(
                         text: 'Email',
                         icon: Icons.email_outlined,
+                        controller: emailController,
                         isHaveIcon: true,
                       ),
-                      const AuthTextFelid(
+                      AuthTextFelid(
                         text: 'Password',
                         icon: Icons.lock_outline_rounded,
+                        controller: passwordController,
                         isHaveIcon: true,
                       ),
                       height10,
                       InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const VerificationScreen()));
+                        onTap: () async {
+                          try {
+                            final network = ConsentNetworking();
+                            final respons =
+                                await network.registrationMethod(body: {
+                              "name": nameController.text,
+                              "phone": phoneNumberController.text,
+                              "password": passwordController.text,
+                              "email": emailController.text
+                            });
+                            if (respons.codeState == 200) {
+                              // ignore: use_build_context_synchronously
+                              Navigator.pushReplacement(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => VerificationScreen(
+                                            email: emailController.text,
+                                            type: 'registration',
+                                          )));
+                            } else {
+                              // ignore: use_build_context_synchronously
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(respons.msg.toString())));
+                            }
+                          } catch (error) {
+                            print(error.toString());
+                          }
+                          setState(() {});
                         },
                         child: Container(
                           width: 250,
@@ -99,7 +140,7 @@ class SignUpScreen extends StatelessWidget {
                                 color: payneGrey, fontWeight: FontWeight.w500),
                           ),
                           InkWell(
-                            onTap: () {
+                            onTap: () async {
                               Navigator.push(
                                   context,
                                   MaterialPageRoute(

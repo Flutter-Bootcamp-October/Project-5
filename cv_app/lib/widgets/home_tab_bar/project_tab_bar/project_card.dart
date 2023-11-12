@@ -1,21 +1,20 @@
-
 import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/constentes/sized_box.dart';
+import 'package:cv_app/models/projects/project_data_model.dart';
 import 'package:flutter/material.dart';
 
 class ProjectCard extends StatelessWidget {
-  const ProjectCard({
+   ProjectCard({
     super.key,
   });
-
+  late ProjectData project;
   @override
   Widget build(BuildContext context) {
-    return const Card(
-        margin: EdgeInsets.only(top: 16, bottom: 200),
-        color: lightEggShell,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-              horizontal: 16, vertical: 8),
+    return Card(
+        margin: const EdgeInsets.only(top: 16, bottom: 200),
+        color: eggShell,
+        child:  Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -29,17 +28,13 @@ class ProjectCard extends StatelessWidget {
               ),
               height15,
               Row(
-                children: [
-                  Text('Project name '),
-                  Spacer(),
-                  Text('status')
-                ],
+                children: [Text(project.name), Spacer(), Text(project.state)],
               ),
               Divider(
                 thickness: 1,
                 color: grey,
               ),
-              Text('description')
+              Text(project.description)
             ],
           ),
         ));

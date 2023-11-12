@@ -1,5 +1,14 @@
 import 'dart:convert';
+import 'package:cv_app/models/about/about_model.dart';
+import 'package:cv_app/models/authentiction/authentiction_model.dart';
+import 'package:cv_app/models/delete_account/delete_account_model.dart';
+import 'package:cv_app/models/education/education_model.dart';
+import 'package:cv_app/models/error_model.dart';
 import 'package:cv_app/models/globals.dart';
+import 'package:cv_app/models/otp/otp_msg_model.dart';
+import 'package:cv_app/models/projects/project_model.dart';
+import 'package:cv_app/models/skill/skill_model.dart';
+import 'package:cv_app/models/social_media/social_media_model.dart';
 import 'package:http/http.dart' as http;
 
 class ConsentNetworking {
@@ -35,17 +44,22 @@ class ConsentNetworking {
     return response;
   }
 
-  getEducationMethod() async {
+  Future<EducationModel> getEducationMethod() async {
     var url = Uri.https(_urlApi, _getEducation);
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return EducationModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  deleteEducationMethod({required Map body}) async {
+  Future<EducationModel> deleteEducationMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _deleteEducation);
     var response = await http.delete(url,
         body: json.encode(body),
@@ -53,10 +67,15 @@ class ConsentNetworking {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return EducationModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  addEducationMethod({required Map body}) async {
+  Future<EducationModel> addEducationMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _addEducation);
     var response = await http.post(url,
         body: json.encode(body),
@@ -64,10 +83,15 @@ class ConsentNetworking {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return EducationModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  deleteSocialMediaMethod({required Map body}) async {
+  Future<SocialMediaModel> deleteSocialMediaMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _deleteSocialMedia);
     var response = await http.delete(url,
         body: json.encode(body),
@@ -75,31 +99,44 @@ class ConsentNetworking {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return SocialMediaModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  getSocialMediaMethod() async {
+  Future<SocialMediaModel> getSocialMediaMethod() async {
     var url = Uri.https(_urlApi, _getSocialMedia);
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
-
-    return response;
+    if (response.statusCode == 200) {
+      return SocialMediaModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  addSocialMediaMethod({required Map body}) async {
+  Future<SocialMediaModel> addSocialMediaMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _addSocialMedia);
     var response = await http.post(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
-
-    return response;
+    if (response.statusCode == 200) {
+      return SocialMediaModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  addSkillsMethod({required Map body}) async {
+  Future<SkillsModel> addSkillsMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _addSkills);
     var response = await http.post(url,
         body: json.encode(body),
@@ -107,10 +144,15 @@ class ConsentNetworking {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return SkillsModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  deleteProjecttMethod({required Map body}) async {
+  Future<ProjectsModel> deleteProjecttMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _deleteProject);
     var response = await http.delete(url,
         body: json.encode(body),
@@ -118,20 +160,30 @@ class ConsentNetworking {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return ProjectsModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  getProjectsMethod() async {
+  Future<ProjectsModel> getProjectsMethod() async {
     var url = Uri.https(_urlApi, _getProjects);
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return ProjectsModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  addProjectMethod({required Map body}) async {
+  Future<ProjectsModel> addProjectMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _addProject);
     var response = await http.post(url,
         body: json.encode(body),
@@ -139,10 +191,15 @@ class ConsentNetworking {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return ProjectsModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  deleteAccountMethod({required Map body}) async {
+  Future<DeleteAccountModel> deleteAccountMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _deleteAccount);
     var response = await http.delete(url,
         body: json.encode(body),
@@ -150,10 +207,15 @@ class ConsentNetworking {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return DeleteAccountModel.fromJson(json.decode(response.body));
+    } else {
+      final error = AuthentictionModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  updateAboutMethod({required Map body}) async {
+  Future<AboutModel> updateAboutMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _updateAbute);
     var response = await http.put(url,
         body: json.encode(body),
@@ -161,57 +223,89 @@ class ConsentNetworking {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return AboutModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  loginMethod({required Map body}) async {
+  Future<AuthentictionModel> loginMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _login);
-    var response = await http.post(url, body: json.encode(body));
+    var response = await http.post(url,
+        body: json.encode(body),
+        headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return AuthentictionModel.fromJson(json.decode(response.body));
+    } else {
+      final error = AuthentictionModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  getAboutMethod({required Map body}) async {
+  Future<AboutModel> getAboutMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _getabute);
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return AboutModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  registrationMethod({required Map body}) async {
+  Future<AuthentictionModel> registrationMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _registration);
     var response = await http.post(url, body: json.encode(body));
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return AuthentictionModel.fromJson(json.decode(response.body));
+    } else {
+      final error = AuthentictionModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  verificationLoginMethod({required Map body}) async {
+  Future<OTPModel> verificationMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _verification);
     var response = await http.post(url, body: json.encode(body));
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return OTPModel.fromJson(json.decode(response.body));
+    } else {
+      final error = AuthentictionModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  getSkillsMethod() async {
+  Future<SkillsModel> getSkillsMethod() async {
     var url = Uri.https(_urlApi, _getSkills);
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return SkillsModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  removeSkillsMethod({required Map body}) async {
+  Future<SkillsModel> removeSkillsMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _deleteSkills);
     var response = await http.delete(url,
         body: json.encode(body),
@@ -219,15 +313,25 @@ class ConsentNetworking {
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return SkillsModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 
-  resetPasswordMethod({required Map body}) async {
+  Future<AuthentictionModel> resetPasswordMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _rest);
     var response = await http.post(url, body: json.encode(body));
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
-    return response;
+    if (response.statusCode == 200) {
+      return AuthentictionModel.fromJson(json.decode(response.body));
+    } else {
+      final error = AuthentictionModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
   }
 }

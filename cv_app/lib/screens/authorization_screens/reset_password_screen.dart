@@ -1,13 +1,16 @@
 import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/constentes/sized_box.dart';
+import 'package:cv_app/models/authentiction/authentiction_model.dart';
+import 'package:cv_app/screens/authorization_screens/verification_screen.dart';
+import 'package:cv_app/services/api/networking_methods.dart';
 import 'package:cv_app/widgets/auth_widgets/auth_textfelid.dart';
 import 'package:flutter/material.dart';
 
 class ResetPasswordScreen extends StatelessWidget {
-  const ResetPasswordScreen({
+  ResetPasswordScreen({
     super.key,
   });
-
+  TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -39,24 +42,35 @@ class ResetPasswordScreen extends StatelessWidget {
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      const AuthTextFelid(
+                      AuthTextFelid(
                         text: 'Email',
                         icon: Icons.email_outlined,
                         isHaveIcon: true,
-                      ),
-                      const AuthTextFelid(
-                        text: ' new Password',
-                        icon: Icons.lock_outline_rounded,
-                        isHaveIcon: true,
+                        controller: emailController,
                       ),
                       height20,
                       InkWell(
-                        onTap: () {
-                          // Navigator.push(
-                          //     context,
-                          //     MaterialPageRoute(
-                          //         builder: (context) =>
-                          //             const VerificationScreen()));
+                        onTap: () async {
+                          final network = ConsentNetworking();
+
+                          final AuthentictionModel respons =
+                              await network.resetPasswordMethod(body: {
+                            "email": emailController.text,
+                          });
+                          if (respons.codeState == 200) {
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => VerificationScreen(
+                                          email: respons.data.email,
+                                          type: "rest_password",
+                                        )));
+                          } else {
+                            // ignore: use_build_context_synchronously
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(respons.msg.toString())));
+                          }
                         },
                         child: Container(
                           width: 300,

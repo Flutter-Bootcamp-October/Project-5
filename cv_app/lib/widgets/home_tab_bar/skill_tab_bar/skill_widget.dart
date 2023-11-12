@@ -1,12 +1,12 @@
-
 import 'package:cv_app/constentes/sized_box.dart';
+import 'package:cv_app/models/skill/skill_data_model.dart';
 import 'package:flutter/material.dart';
 
 class SkillWidget extends StatelessWidget {
-  const SkillWidget({
-    super.key,
+   SkillWidget({
+    super.key,  
   });
-
+  late SkillData skill;
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -19,7 +19,7 @@ class SkillWidget extends StatelessWidget {
           height: 50,
         ),
         height10,
-        Text('Html')
+        Text(skill.skill)
       ],
     );
   }
