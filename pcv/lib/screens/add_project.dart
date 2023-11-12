@@ -83,7 +83,7 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                         if (resp.statusCode == 200) {
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                  builder: (context) => ProjectScreen()),
+                                  builder: (context) => const ProjectScreen()),
                               (Route<dynamic> route) => false);
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(

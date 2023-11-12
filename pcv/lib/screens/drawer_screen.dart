@@ -1,7 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:pcv/screens/edit_about.dart';
 import 'package:pcv/screens/education_screen.dart';
 import 'package:pcv/screens/project.dart';
@@ -26,35 +28,57 @@ class _DrawerScreensState extends State<DrawerScreens> {
   final ImagePicker picker = ImagePicker();
   File? imageFile;
   @override
-  // void initState() {
-  //   super.initState();
-  //   _loadingAbout();
-  // }
+  void initState() {
+    super.initState();
+    _loadingAbout();
+  }
 
-  // _loadingAbout() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   final token = prefs.getString('token');
-  //   final Response res = await network.aboutUploadMethod(token: token!);
-  //   if (res.statusCode == 200) {
-  //      await jsonDecode(res.body);
-  //     setState(() {});
-  //   }
-  // }
+  _loadingAbout() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final Response res = await network.aboutMethod(
+      token: token!,
+    );
+    if (res.statusCode == 200) {
+      about = (await jsonDecode(res.body))["data"];
+      setState(() {});
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
-          const DrawerHeader(
+          DrawerHeader(
             decoration: BoxDecoration(
               color: Colors.transparent,
             ),
             child: Column(
               children: [
                 Text('Services'),
+                if (about.isNotEmpty)
+                  ClipOval(
+                      child: Container(
+                          height: 120,
+                          width: 120,
+                          child: Image.network(about["image"])))
               ],
             ),
+          ),
+          ListTile(
+            title: const Text('Home'),
+            trailing: Icon(Icons.home_outlined),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const EditAboutScreen(),
+                  ));
+            },
+          ),
+          const Divider(
+            color: Colors.black45,
           ),
           ListTile(
             title: const Text('Update information'),

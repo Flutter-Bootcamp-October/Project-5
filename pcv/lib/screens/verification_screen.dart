@@ -44,7 +44,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     });
 
                     if (resp.statusCode == 200) {
-                      if (widget.type == "login") {
+                      if (widget.type == "login" ||
+                          widget.type == "registration") {
                         final String token =
                             jsonDecode(resp.body)['data']['token'];
                         final SharedPreferences prefs =

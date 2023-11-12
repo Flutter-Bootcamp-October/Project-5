@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 class Network {
@@ -62,9 +63,9 @@ class Network {
     return response;
   }
 
-  aboutUploadMethod({required String token}) async {
+  aboutUploadMethod({required String token, required File image}) async {
     var url = Uri.https(_apiUrl, _upload);
-    var response = await http.get(url, headers: {"Authorization": token});
+    var response = await http.post(url, headers: {"Authorization": token},body: {"image": image.readAsBytes()});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     return response;
