@@ -14,8 +14,8 @@ class NavigationBarScreen extends StatefulWidget {
 class _NavigationBarScreenState extends State<NavigationBarScreen> {
   var _currentIndex = 0;
   List screensList = [
-    const HomeScreen(),
     const TabsScreen(),
+    const HomeScreen(),
     const communityScreen(),
   ];
   @override
@@ -26,24 +26,24 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
         currentIndex: _currentIndex,
         onTap: (i) => setState(() => _currentIndex = i),
         items: [
-          /// Home
+          /// Profile
           SalomonBottomBarItem(
             icon: const Icon(Icons.home),
             title: const Text("Profile"),
             selectedColor: Colors.purple,
           ),
 
-          /// Likes
+          /// Add
           SalomonBottomBarItem(
             icon: const Icon(Icons.add_circle_outline_sharp),
             title: const Text("Add"),
             selectedColor: Colors.pink,
           ),
 
-          /// Profile
+          /// Community
           SalomonBottomBarItem(
             icon: const Icon(Icons.people_alt_outlined),
-            title: const Text("community"),
+            title: const Text("Community"),
             selectedColor: Colors.teal,
           ),
         ],
