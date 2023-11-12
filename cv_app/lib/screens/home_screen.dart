@@ -1,4 +1,6 @@
 import 'package:cv_app/globals/colors.dart';
+import 'package:cv_app/widgets/connect_with.dart';
+import 'package:cv_app/widgets/fill_cv.dart';
 import 'package:flutter/material.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,21 +9,21 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 8),
-              const Row(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(height: 8),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "Hello Miqdad",
+                        "Hello,",
                         style: TextStyle(
                             color: secondaryColor,
                             fontSize: 16,
@@ -42,83 +44,76 @@ class HomeScreen extends StatelessWidget {
                   )
                 ],
               ),
-              const SizedBox(height: 32),
-              Container(
+            ),
+            const SizedBox(height: 32),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Container(
                 height: 150,
                 width: double.infinity,
                 decoration: BoxDecoration(
                     color: midColor, borderRadius: BorderRadius.circular(30)),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      "assets\\cv.png",
+                      scale: 5,
+                    ),
+                    const Padding(
+                      padding: EdgeInsets.only(top: 8),
+                      child: Text(
+                        "Generate a curriculum vitae\nusing the MyCV app.",
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              const SizedBox(height: 32),
-              const Text(
+            ),
+            const SizedBox(height: 32),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
                 "Fill your CV: ",
                 style: TextStyle(
                     color: mainColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
-              const SingleChildScrollView(
-                scrollDirection: Axis.horizontal,
-                child: Row(
-                  children: [
-                    FillCV(),
-                    FillCV(),
-                    FillCV(),
-                    FillCV(),
-                  ],
-                ),
+            ),
+            const SingleChildScrollView(
+              scrollDirection: Axis.horizontal,
+              child: Row(
+                children: [
+                  FillCV(text: "AboutMe", icon: Icons.data_saver_off_outlined),
+                  FillCV(text: "Projects", icon: Icons.work),
+                  FillCV(text: "Skills", icon: Icons.precision_manufacturing),
+                  FillCV(text: "Social", icon: Icons.connect_without_contact),
+                  FillCV(text: "Education", icon: Icons.school),
+                ],
               ),
-              const SizedBox(height: 24),
-              const Text(
+            ),
+            const SizedBox(height: 24),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16),
+              child: Text(
                 "Connect with: ",
                 style: TextStyle(
                     color: mainColor,
                     fontSize: 20,
                     fontWeight: FontWeight.bold),
               ),
-              const ConnectWith(),
-              const ConnectWith(),
-            ],
-          ),
+            ),
+            const ConnectWith(
+                image: "assets\\linked_in.png", text: "Linked in"),
+            const ConnectWith(image: "assets\\whatsapp.png", text: "WhatsApp"),
+          ],
         ),
-      ),
-    );
-  }
-}
-
-class ConnectWith extends StatelessWidget {
-  const ConnectWith({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8),
-      child: Container(
-        height: 115,
-        width: double.infinity,
-        decoration: BoxDecoration(
-            color: midColor, borderRadius: BorderRadius.circular(30)),
-      ),
-    );
-  }
-}
-
-class FillCV extends StatelessWidget {
-  const FillCV({
-    super.key,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8),
-      child: Container(
-        height: 120,
-        width: 120,
-        decoration: BoxDecoration(
-            color: midColor, borderRadius: BorderRadius.circular(30)),
       ),
     );
   }

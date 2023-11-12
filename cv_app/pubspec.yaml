@@ -22,3 +22,6 @@ flutter:
   assets:
     - assets\welcome.jpg
     - assets\social_media.jpg
+    - assets\cv.png
+    - assets\linked_in.png
+    - assets\whatsapp.png

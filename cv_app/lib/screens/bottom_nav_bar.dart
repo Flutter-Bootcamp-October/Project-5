@@ -1,5 +1,8 @@
 import 'package:cv_app/globals/colors.dart';
+import 'package:cv_app/screens/community_screen.dart';
 import 'package:cv_app/screens/home_screen.dart';
+import 'package:cv_app/screens/my_cv.dart';
+import 'package:cv_app/screens/profile_screen.dart';
 import 'package:cv_app/widgets/nav_bar_item.dart';
 import 'package:flutter/material.dart';
 
@@ -13,9 +16,9 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   List<Widget> screens = [
     const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
-    const HomeScreen(),
+    const MyCVScreen(),
+    const CommunityScreen(),
+    const ProfileScreen(),
   ];
   int selectedIndex = 0;
   @override
