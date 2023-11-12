@@ -21,7 +21,8 @@ class RichTextCustom extends StatelessWidget {
         children: <TextSpan>[
           TextSpan(
               text: text2,
-              style: const TextStyle(color: Color(0xff1e3867)),
+              style: const TextStyle(
+                  color: Color(0xff1e3867), fontFamily: 'Oswlad'),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
                   Navigator.pushAndRemoveUntil(

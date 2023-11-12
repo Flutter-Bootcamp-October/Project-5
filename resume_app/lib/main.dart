@@ -19,11 +19,19 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     if (token != null) {
       print("Yay token saved");
-      return const MaterialApp(
-          debugShowCheckedModeBanner: false, home: ProfileScreen());
+      return MaterialApp(
+          theme: ThemeData(
+            fontFamily: 'Oswald',
+          ),
+          debugShowCheckedModeBanner: false,
+          home: const ProfileScreen());
     } else {
-      return const MaterialApp(
-          debugShowCheckedModeBanner: false, home: SignInScreen());
+      return MaterialApp(
+          theme: ThemeData(
+            fontFamily: 'Oswald',
+          ),
+          debugShowCheckedModeBanner: false,
+          home: const SignInScreen());
     }
   }
 }

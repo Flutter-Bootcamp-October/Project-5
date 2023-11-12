@@ -19,4 +19,11 @@ dev_dependencies:
   flutter_lints: ^2.0.0
 
 flutter:
+  assets:
+    - assets/
+  fonts:
+  - family: Oswald
+    fonts:
+      - asset: assets/fonts/Oswald-Regular.ttf
+      - asset: assets/fonts/Oswald-Bold.ttf
   uses-material-design: true

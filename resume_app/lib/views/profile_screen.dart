@@ -3,6 +3,8 @@ import 'package:resume_app/consts/colors.dart';
 import 'package:resume_app/main.dart';
 import 'package:resume_app/models/project_model.dart';
 import 'package:resume_app/services/project_services.dart';
+import 'package:resume_app/widgets/app_bg.dart';
+import 'package:resume_app/widgets/app_container.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -14,27 +16,12 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
-    // testMethod();
     return Stack(children: [
-      Container(
-        width: MediaQuery.of(context).size.width,
-        height: MediaQuery.of(context).size.height,
-        color: const Color.fromARGB(255, 242, 240, 234),
-      ),
-      Positioned(
+      const BackgroundContainer(),
+      const Positioned(
         top: -199,
         right: 99,
-        child: RotationTransition(
-          turns: const AlwaysStoppedAnimation(45 / 360),
-          child: Container(
-            height: 480,
-            width: 400,
-            decoration: const BoxDecoration(
-              borderRadius: BorderRadius.all(Radius.circular(20)),
-              color: appBlue,
-            ),
-          ),
-        ),
+        child: BlueContainer(),
       ),
       SafeArea(
         child: Scaffold(
@@ -97,19 +84,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
       ),
     ]);
-  }
-
-  void testMethod() async {
-    print("______________LOOK HERE_________________");
-    try {
-      List<Project> x = await ProjectServ().getProjects(token: getToken());
-      ProjectServ()
-          .deleteProject(projectID: x.last.id!.toString(), token: getToken());
-      print(x.last.description);
-    } on FormatException catch (error) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.message.toString())));
-    }
   }
 
   String getToken() {
