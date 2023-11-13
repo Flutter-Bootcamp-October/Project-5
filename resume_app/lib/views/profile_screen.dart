@@ -1,6 +1,3 @@
-import 'dart:io';
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:resume_app/globals/global.dart';
 import 'package:resume_app/main.dart';
@@ -66,7 +63,7 @@ class ProfileScreenState extends State<ProfileScreen> {
       print("-----------------skills Set Successful-----------------");
       userSocials = await SocialServ().getSocials(token: userToken);
       print("-----------------social Set Successful---------------------");
-    
+
       return "loaded";
     } on FormatException catch (error) {
       if (error.message.toString().contains("token") ||

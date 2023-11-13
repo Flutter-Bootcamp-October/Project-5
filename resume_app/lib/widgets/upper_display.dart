@@ -4,7 +4,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:resume_app/globals/global.dart';
 import 'package:resume_app/main.dart';
 import 'package:resume_app/services/about_services.dart';
-import 'package:resume_app/views/profile_screen.dart';
 import 'package:resume_app/views/signin_screen.dart';
 import 'package:resume_app/views/signup_screen.dart';
 import 'package:resume_app/widgets/user_display.dart';
@@ -54,11 +53,9 @@ class _UpperDisplayState extends State<UpperDisplay> {
                 await AboutServ()
                     .uploadImage(token: getToken(), image: imageFile);
 
-                
-                  context
-                      .findAncestorStateOfType<UserDisplayState>()!
-                      .setState(() {});
-                
+                context
+                    .findAncestorStateOfType<UserDisplayState>()!
+                    .setState(() {});
               } on FormatException catch (error) {
                 if (error.message.toString().contains("token") ||
                     error.message.toString().contains("Token")) {
