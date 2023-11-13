@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_5/pallete.dart';
+import 'package:project_5/color/palette.dart';
 
 class LoginButton extends StatelessWidget {
   final String label;

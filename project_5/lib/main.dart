@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_5/pallete.dart';
+import 'package:project_5/color/palette.dart';
 import 'package:project_5/screens/registration_screen%20.dart';
 
 void main() {
@@ -17,7 +17,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: Palette.backgroundColor,
       ),
-      home: const RegistrationScreen(),
+      home: RegistrationScreen(),
     );
   }
 }

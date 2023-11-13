@@ -1,17 +1,164 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:project_5/pallete.dart';
+import 'package:flutter_svg/svg.dart';
+import 'package:project_5/model/Auth.dart';
+import 'package:project_5/color/palette.dart';
+import 'package:project_5/screens/home_page.dart';
+import 'package:project_5/screens/login_screen.dart';
 import 'package:project_5/widgets/login_button.dart';
 import 'package:project_5/widgets/login_field.dart';
 import 'package:project_5/widgets/social_button.dart';
-import 'login_screen.dart';
+import 'package:http/http.dart' as http;
 
 class RegistrationScreen extends StatelessWidget {
-  const RegistrationScreen({Key? key});
+  RegistrationScreen({Key? key});
+  var auth = Auth();
 
-  Future<void> _showOtpCheckContainer(
-    BuildContext context,
-  ) async {
-    return showDialog<void>(
+  TextEditingController? controllerName = TextEditingController();
+  TextEditingController? controllerPhone = TextEditingController();
+  TextEditingController? controllerEmail = TextEditingController();
+  TextEditingController? controllerPassword = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              Stack(
+                children: [
+                  Image.asset("assets/images/signin_balls.png"),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 40),
+                    child: Center(
+                      child: SvgPicture.asset(
+                        "assets/svgs/planet-registration.svg",
+                        // adjust width and height accordingly
+                        width: 100,
+                        height: 100,
+                      ),
+                    ),
+                  ),
+                  const Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 150),
+                      child: Text(
+                        "Register Now.",
+                        style: TextStyle(
+                            fontSize: 30, fontWeight: FontWeight.bold),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 30),
+              LoginField(
+                hintText: "Name",
+                iconData: Icons.person,
+                controller: controllerName,
+              ),
+              const SizedBox(height: 20),
+              LoginField(
+                hintText: "Phone",
+                iconData: Icons.phone,
+                controller: controllerPhone,
+              ),
+              const SizedBox(height: 20),
+              LoginField(
+                hintText: "Email",
+                iconData: Icons.email,
+                controller: controllerEmail,
+              ),
+              const SizedBox(height: 20),
+              LoginField(
+                hintText: "Password",
+                iconData: Icons.password,
+                controller: controllerPassword,
+              ),
+              const SizedBox(height: 20),
+              LoginButton(
+                onPressed: () async {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
+
+                  try {
+                    final http.Response res = await auth.postRegistration({
+                      "name": controllerName?.text,
+                      "phone": controllerPhone?.text,
+                      "password": controllerPassword?.text,
+                      "email": controllerEmail?.text,
+                    });
+                    Navigator.of(context).pop(); // Close the loading dialog
+                    if (res.statusCode == 200) {
+                      String userEmail = json.decode(res.body)["data"]["email"];
+                      print("Registered successfully. User email: $userEmail");
+                      showOtpCheckContainer(context);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(
+                            (await json.decode(res.body))["msg"].toString(),
+                          ),
+                        ),
+                      );
+                    }
+                  } catch (error) {
+                    print('Error during registration: $error');
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content: Text(
+                          'An error occurred during registration. Please try again.',
+                        ),
+                      ),
+                    );
+                  }
+                },
+                label: "Register",
+              ),
+              const SizedBox(height: 10),
+              const Text("or"),
+              const SizedBox(height: 10),
+              const SocialButton(
+                iconPath: "assets/svgs/g_logo.svg",
+                label: "Continue with Google",
+                horizontalPadding: 38,
+              ),
+              const SizedBox(height: 20),
+              const SocialButton(
+                iconPath: "assets/svgs/f_logo.svg",
+                label: "Continue with Face Book",
+              ),
+              const SizedBox(height: 20),
+              TextButton(
+                onPressed: () {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => LoginScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "Do you have an account? Login here",
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  showOtpCheckContainer(BuildContext context) {
+    showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
@@ -34,16 +181,12 @@ class RegistrationScreen extends StatelessWidget {
                 const SizedBox(height: 15),
                 ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context)
-                        .pop(); // Close the OTP check container
-
-                    // Delay the navigation to the LoginScreen
-                    Future.delayed(Duration(milliseconds: 300), () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()),
-                      );
-                    });
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const ProfilePage(),
+                      ),
+                    );
                   },
                   child: const Text('Verify'),
                   style: ElevatedButton.styleFrom(
@@ -55,80 +198,6 @@ class RegistrationScreen extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        body: SingleChildScrollView(
-          child: Column(
-            children: [
-              Image.asset("assets/images/signin_balls.png"),
-              const Center(
-                child: Text(
-                  "Register Now.",
-                  style: TextStyle(fontSize: 50, fontWeight: FontWeight.bold),
-                ),
-              ),
-              const SizedBox(height: 30),
-              LoginField(
-                hintText: "Name",
-                iconData: Icons.person,
-              ),
-              const SizedBox(height: 20),
-              LoginField(
-                hintText: "Phone",
-                iconData: Icons.phone,
-              ),
-              const SizedBox(height: 20),
-              LoginField(
-                hintText: "Email",
-                iconData: Icons.email,
-              ),
-              const SizedBox(height: 20),
-              LoginField(
-                hintText: "Password",
-                iconData: Icons.password,
-              ),
-              const SizedBox(height: 20),
-              LoginButton(
-                onPressed: () {
-                  // Simulate registration with user data
-                  _showOtpCheckContainer(context);
-                },
-                label: "Register",
-              ),
-              const SizedBox(height: 10),
-              const Text("or"),
-              const SizedBox(height: 10),
-              const SocialButton(
-                iconPath: "assets/svgs/g_logo.svg",
-                label: "Continue with Google",
-                horizontalPadding: 38,
-              ),
-              const SizedBox(height: 20),
-              const SocialButton(
-                iconPath: "assets/svgs/f_logo.svg",
-                label: "Continue with Face Book",
-              ),
-              const SizedBox(height: 20),
-              TextButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => LoginScreen()),
-                  );
-                },
-                child: const Text(
-                  "Do you have an account? Login here",
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
     );
   }
 }
