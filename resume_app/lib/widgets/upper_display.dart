@@ -54,14 +54,11 @@ class _UpperDisplayState extends State<UpperDisplay> {
                 await AboutServ()
                     .uploadImage(token: getToken(), image: imageFile);
 
-                Future.delayed(const Duration(seconds: 10), () async {
+                
                   context
-                      .findAncestorStateOfType<ProfileScreenState>()!
+                      .findAncestorStateOfType<UserDisplayState>()!
                       .setState(() {});
-                  print("----------here i am");
-                  userAbout = await AboutServ().getAbout(token: getToken());
-                  setState(() {});
-                });
+                
               } on FormatException catch (error) {
                 if (error.message.toString().contains("token") ||
                     error.message.toString().contains("Token")) {
