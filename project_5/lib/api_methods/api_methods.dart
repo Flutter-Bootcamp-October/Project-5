@@ -85,10 +85,9 @@ class ApiMethods {
     }
   }
 
-  Future getAbout({required String token}) async {
+  Future<About> getAbout({required String token}) async {
     final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
-    final response = await https.get(url,
-        headers: {"content-type": "application/json", "authorization": token});
+    final response = await https.get(url, headers: {"authorization": token});
     print("Response body: ${response.body}");
     print("Response status: ${response.statusCode}");
 
