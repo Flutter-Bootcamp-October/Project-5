@@ -3,6 +3,7 @@ import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/verification_model.dart';
 import 'package:project_5/screens/home_screen.dart';
 import 'package:project_5/screens/auth/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountVerification extends StatefulWidget {
   const AccountVerification(
@@ -40,10 +41,11 @@ class _AccountVerificationState extends State<AccountVerification> {
                       "type": widget.type,
                     });
                     if (res.codeState == 200) {
+                      final SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      pref.setString("token", res.data.token);
                       //sharedprefrence
                       print(res.data.token);
-                      // final String token = res.data.token;
-                      pref?.setString('token', res.data.token);
 
                       if (widget.type == "registration") {
                         Navigator.push(

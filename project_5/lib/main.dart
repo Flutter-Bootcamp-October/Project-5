@@ -1,11 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:project_5/screens/home_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'screens/auth/register_screen.dart';
 
-void main() {
-  runApp(const MainApp());
+bool hasToken = false;
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  hasToken = await shared();
+  runApp(const MainApp());
+}
+
+Future<bool> shared() async {
+  final SharedPreferences pref = await SharedPreferences.getInstance();
+  bool token = pref.containsKey("token");
+  return token;
 }
 
 class MainApp extends StatelessWidget {
