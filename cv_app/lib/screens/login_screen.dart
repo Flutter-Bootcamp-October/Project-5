@@ -60,7 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         emailController.text, passwordController.text);
                     // ignore: use_build_context_synchronously
                     Navigator.pop(context);
-                    if (response.statusCode == 200) {
+                    if (response['codeStatus'] == 200) {
                       // ignore: use_build_context_synchronously
                       Navigator.push(
                         context,
@@ -71,8 +71,8 @@ class _LoginScreenState extends State<LoginScreen> {
                       );
                     } else {
                       // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text("Invalid login credentials")));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(response['msg'])));
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(const SnackBar(

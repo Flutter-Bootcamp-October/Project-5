@@ -14,7 +14,7 @@ class SignupScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController = TextEditingController(),
-        phoneController = TextEditingController(),
+        phoneController = TextEditingController(text: "05"),
         emailController = TextEditingController(),
         passwordController = TextEditingController();
     return Scaffold(
@@ -60,7 +60,7 @@ class SignupScreen extends StatelessWidget {
                         emailController.text,
                         passwordController.text);
                     Navigator.pop(context);
-                    if (response.statusCode == 200) {
+                    if (response['codeStatus'] == 200) {
                       // ignore: use_build_context_synchronously
                       Navigator.push(
                           context,
@@ -70,8 +70,8 @@ class SignupScreen extends StatelessWidget {
                                   type: "registration")));
                     } else {
                       // ignore: use_build_context_synchronously
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text("Invalid registration")));
+                      ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text(response['msg'])));
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

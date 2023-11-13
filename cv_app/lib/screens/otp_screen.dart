@@ -72,12 +72,9 @@ class OTPScreen extends StatelessWidget {
                         final response =
                             await verification(otpController.text, email, type);
                         Navigator.pop(context);
-                        print(response.body);
-                        if (response.statusCode == 200) {
-                          Map responseMap = jsonDecode(response.body);
-                          prefs.setString(
-                              "token", responseMap['data']['token']);
-                          log(responseMap['data']['token']);
+                        if (response['codeStatus'] == 200) {
+                          prefs.setString("token", response['data']['token']);
+                          log(response['data']['token']);
                           // ignore: use_build_context_synchronously
                           Navigator.pushAndRemoveUntil(
                               context,
@@ -87,7 +84,7 @@ class OTPScreen extends StatelessWidget {
                         } else {
                           // ignore: use_build_context_synchronously
                           ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Invalid otp.")),
+                            SnackBar(content: Text(response['msg'])),
                           );
                         }
                       } else {

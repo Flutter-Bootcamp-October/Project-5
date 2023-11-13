@@ -1,3 +1,4 @@
+import 'package:cv_app/services/users.dart';
 import 'package:flutter/material.dart';
 
 class CommunityScreen extends StatelessWidget {
@@ -5,6 +6,7 @@ class CommunityScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    showUsers();
     return const Placeholder();
   }
 }
