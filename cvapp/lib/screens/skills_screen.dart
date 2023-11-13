@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cvapp/get_models/get_skills.dart';
 import 'package:cvapp/models/skills_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
@@ -10,6 +11,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+List<Skill> skillLsit = [];
 
 final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 String? token;
@@ -38,26 +41,6 @@ class _SkillsScreenState extends State<SkillsScreen> {
   bool isvalid = false;
   TextEditingController skillcontroller = TextEditingController();
 
-  void _addItem(String projectnameController, String descriptionController,
-      String stateController) {
-    if (projectnameController.isNotEmpty && descriptionController.isNotEmpty) {
-      setState(() {
-        items.add(Item(
-            projectname: projectnameController,
-            description: descriptionController,
-            state: stateController));
-      });
-    }
-  }
-
-  // void dispose() {
-  //   // Dispose controllers when the widget is disposed
-  //   projectnameController.dispose();
-  //   descriptionController.dispose();
-  //   stateController.dispose();
-  //   super.dispose();
-  // }
-
   Future pushproject({required String token}) async {
     try {
       Map body = {
@@ -85,10 +68,37 @@ class _SkillsScreenState extends State<SkillsScreen> {
     }
   }
 
+  Future fetchSkills({required String token}) async {
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/skills");
+
+    var response = await http.get(url, headers: {"authorization": token});
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      print("success");
+
+      var c = Skill.fromJson(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to load skills');
+    }
+  }
+
   @override
   void initState() {
     super.initState();
     _loadToken();
+    fetchSkills(
+            token:
+                "eyJhbGciOiJIUzI1NiIsImtpZCI6Ikc4c2lRbVB5dGw3Vzc2K00iLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjk5ODc2NDEwLCJpYXQiOjE2OTk4NTg0MTAsImlzcyI6Imh0dHBzOi8vbXpranV5cnZ3eHVsc3d3cmlvcm0uc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6ImUwOWUxOTk1LTgzNDYtNDdjNC1hOGExLWNjYWUwNDM1M2VhMSIsImVtYWlsIjoieGF4ZW05OTQ5OUBtYWlubWlsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7fSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvdHAiLCJ0aW1lc3RhbXAiOjE2OTk4NTg0MTB9XSwic2Vzc2lvbl9pZCI6IjIyMGMzMGI4LWM4YzAtNDQxMy1hZWMyLTRlNTUzZmI2ZDc5NSJ9.FcnDT2kDwjS76tDD5PBdtovSK_1sWwnCGCnUHUtQmkU")
+        .then((skills) {
+      setState(() {
+        // Now 'skills' is a List<Skill> populated with your data
+        for (var skill in skills) {
+          print(
+              'Skill: ${skill.skill}, ID: ${skill.id}, User ID: ${skill.userId}');
+        }
+      });
+    });
   }
 
   Future<void> _loadToken() async {
@@ -122,17 +132,16 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 setState(() {});
               },
               child: Text("push")),
-          SizedBox(height: 20),
           SizedBox(
-            width: 100,
-            height: 100,
-            child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return Text(items[index].projectname);
-              },
-            ),
+            height: 30,
           ),
+          ElevatedButton(
+              onPressed: () async {
+                await fetchSkills(token: token.toString());
+                print(token);
+                setState(() {});
+              },
+              child: Text("get")),
         ],
       ),
     );

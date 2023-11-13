@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cvapp/global.dart';
 import 'package:cvapp/models/skills_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
@@ -33,7 +34,6 @@ class Item {
 }
 
 class _ProjectScreenState extends State<ProjectScreen> {
-  File? selectedimage;
   List<Item> items = [];
   bool isvalid = false;
   TextEditingController projectnameController = TextEditingController();
@@ -124,7 +124,10 @@ class _ProjectScreenState extends State<ProjectScreen> {
               ),
               Text("welcome conan"),
               TextButton(
-                onPressed: _pickImageFromGallery,
+                onPressed: () async {
+                  await pickImageFromGallery();
+                  setState(() {});
+                },
                 child: Text("chane image"),
               ),
             ],
@@ -163,16 +166,5 @@ class _ProjectScreenState extends State<ProjectScreen> {
         ],
       ),
     );
-  }
-
-  Future _pickImageFromGallery() async {
-    final returnedimage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (returnedimage != null) {
-      setState(() {
-        selectedimage = File(returnedimage.path);
-      });
-    }
   }
 }

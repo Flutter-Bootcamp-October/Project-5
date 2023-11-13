@@ -22,7 +22,6 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> {
-  File? selectedimage;
   bool isvalid = false;
   TextEditingController usernamecontroller = TextEditingController();
   TextEditingController socialcontroller = TextEditingController();

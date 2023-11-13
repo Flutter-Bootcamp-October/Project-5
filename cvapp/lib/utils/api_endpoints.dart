@@ -10,5 +10,7 @@ class AuthEndPoints {
   final String project = "user/add/project";
   final String addskills = "user/add/skills";
   final String addeducation = "user/add/education";
-  final String addsocial = "user/add/social_media";
+  final String addsocial = "user/skills";
+
+  final String getskills = "user/add/social_media";
 }

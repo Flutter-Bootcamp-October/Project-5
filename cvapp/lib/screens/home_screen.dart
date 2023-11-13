@@ -43,13 +43,30 @@ class _HomeScreenState extends State<HomeScreen> {
       };
 
       if (response.statusCode == 200) {
-        return SkillsModel.fromJson(json.decode(response
-            .body)); // isvalid = true; // Consider using setState if this affects UI
-        // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Success!')));
-        // // Clear the text fields after success
-        // projectnameController.clear();
-        // descriptionController.clear();
-        // stateController.clear();
+        return SkillsModel.fromJson(json.decode(response.body));
+      } else {
+        // Handle different responses
+        ScaffoldMessenger.of(context)
+            .showSnackBar(SnackBar(content: Text('Failed to push project.')));
+      }
+    } catch (e) {
+      // Handle the exception
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+    }
+  }
+
+  Future imageupload({required String token}) async {
+    try {
+      var url = Uri.parse("https://bacend-fshi.onrender.com/user/upload");
+      var response = await http.post(url, headers: {"authorization": token});
+      final body = await selectedimage?.readAsBytes();
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        return SkillsModel.fromJson(json.decode(response.body));
       } else {
         // Handle different responses
         ScaffoldMessenger.of(context)
@@ -93,7 +110,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 Text("welcome conan"),
                 TextButton(
-                  onPressed: _pickImageFromGallery,
+                  onPressed: () {
+                    _pickImageFromGallery();
+                    setState(() {});
+                  },
                   child: Text("chane image"),
                 ),
               ],
@@ -179,6 +199,8 @@ class _HomeScreenState extends State<HomeScreen> {
     if (returnedimage != null) {
       setState(() {
         selectedimage = File(returnedimage.path);
+
+        imageupload(token: token.toString());
       });
     }
   }

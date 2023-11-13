@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cvapp/global.dart';
 import 'package:cvapp/models/skills_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
@@ -21,20 +22,8 @@ class EducationScreen extends StatefulWidget {
   State<EducationScreen> createState() => _EducationScreenState();
 }
 
-class Item {
-  String projectname;
-  String description;
-  String state;
-
-  Item(
-      {required this.projectname,
-      required this.description,
-      required this.state});
-}
-
 class _EducationScreenState extends State<EducationScreen> {
   File? selectedimage;
-  List<Item> items = [];
   bool isvalid = false;
   TextEditingController graduation_dateController = TextEditingController();
   TextEditingController universityController = TextEditingController();
@@ -105,7 +94,7 @@ class _EducationScreenState extends State<EducationScreen> {
               ),
               Text("welcome conan"),
               TextButton(
-                onPressed: _pickImageFromGallery,
+                onPressed: pickImageFromGallery,
                 child: Text("chane image"),
               ),
             ],
@@ -138,29 +127,8 @@ class _EducationScreenState extends State<EducationScreen> {
               },
               child: Text("push")),
           SizedBox(height: 20),
-          SizedBox(
-            width: 100,
-            height: 100,
-            child: ListView.builder(
-              itemCount: items.length,
-              itemBuilder: (context, index) {
-                return Text(items[index].projectname);
-              },
-            ),
-          ),
         ],
       ),
     );
-  }
-
-  Future _pickImageFromGallery() async {
-    final returnedimage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (returnedimage != null) {
-      setState(() {
-        selectedimage = File(returnedimage.path);
-      });
-    }
   }
 }
