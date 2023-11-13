@@ -15,7 +15,7 @@ class AboutServ {
   getAbout({required String token}) async {
     var url = Uri.https(_api, _about);
     var response = await http.get(url, headers: {"authorization": token});
-    // print('Response body: ${response.body}');
+    print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       return About.fromJson(json.decode(response.body)["data"]);
     } else {

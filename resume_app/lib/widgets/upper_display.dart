@@ -22,9 +22,9 @@ class _UpperDisplayState extends State<UpperDisplay> {
     return FittedBox(
       child: Row(children: [
         Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          const Text(
-            "Rafal Abu Eshey",
-            style: TextStyle(
+          Text(
+            userAbout.name!,
+            style: const TextStyle(
                 fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
           ),
           IconButton(
@@ -41,7 +41,7 @@ class _UpperDisplayState extends State<UpperDisplay> {
                 color: Colors.red,
               ))
         ]),
-        const SizedBox(width: 15),
+        const SizedBox(width: 20),
         InkWell(
           onTap: () async {
             late File imageFile;
@@ -53,10 +53,15 @@ class _UpperDisplayState extends State<UpperDisplay> {
                 imageFile = File(image.path);
                 await AboutServ()
                     .uploadImage(token: getToken(), image: imageFile);
-                setState(() {});
-                context
-                    .findAncestorStateOfType<UserDisplayState>()!
-                    .setState(() {});
+
+                Future.delayed(const Duration(seconds: 10), () async {
+                  context
+                      .findAncestorStateOfType<ProfileScreenState>()!
+                      .setState(() {});
+                  print("----------here i am");
+                  userAbout = await AboutServ().getAbout(token: getToken());
+                  setState(() {});
+                });
               } on FormatException catch (error) {
                 if (error.message.toString().contains("token") ||
                     error.message.toString().contains("Token")) {

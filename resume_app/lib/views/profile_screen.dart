@@ -66,6 +66,7 @@ class ProfileScreenState extends State<ProfileScreen> {
       print("-----------------skills Set Successful-----------------");
       userSocials = await SocialServ().getSocials(token: userToken);
       print("-----------------social Set Successful---------------------");
+    
       return "loaded";
     } on FormatException catch (error) {
       if (error.message.toString().contains("token") ||
