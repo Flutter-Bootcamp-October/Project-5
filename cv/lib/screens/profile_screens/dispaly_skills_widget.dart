@@ -15,45 +15,49 @@ class DisplayAllSkills extends StatelessWidget {
           if (snapshot.hasData) {
             List<Skill> skillsList = snapshot.data!;
 
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
-                  child: Text(
-                    "Skills:",
-                    style: TextStyle(
-                        fontSize: 16, color: blue, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                SizedBox(
-                  height: 50,
-                  width: MediaQuery.of(context).size.width,
-                  child: Padding(
-                    padding: const EdgeInsets.only(left: 18.0),
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: skillsList.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Chip(
-                              backgroundColor: lightBlue,
-                              // avatar: logo,
-                              label: Text(
-                                skillsList[index].skill ?? "",
-                              ),
-                            ),
-                            width14(),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            );
+            return skillsList.isNotEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Text(
+                          "Skills:",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: blue,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 50,
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 18.0),
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: skillsList.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  Chip(
+                                    backgroundColor: lightBlue,
+                                    // avatar: logo,
+                                    label: Text(
+                                      skillsList[index].skill ?? "",
+                                    ),
+                                  ),
+                                  width14(),
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : const Text("");
           } else if (snapshot.hasError) {
             return const Center(child: Text("error"));
           }

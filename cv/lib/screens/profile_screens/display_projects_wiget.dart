@@ -12,87 +12,98 @@ class DisplayAllProject extends StatelessWidget {
         future: getProjects(context),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
-                  child: Text(
-                    "Projects:",
-                    style: TextStyle(
-                        fontSize: 16, color: blue, fontWeight: FontWeight.bold),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 18.0),
-                  child: SizedBox(
-                    height: 150,
-                    width: MediaQuery.of(context).size.width,
-                    child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      itemCount: snapshot.data!.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            SizedBox(
-                              height: 150,
-                              width: 180,
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                      color: const Color.fromARGB(69, 0, 0, 0)),
-                                  shape: BoxShape.rectangle,
-                                  borderRadius: BorderRadius.circular(35),
-                                  color: const Color.fromARGB(22, 0, 0, 0),
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      const Text(
-                                        "Project Name:",
-                                        style: TextStyle(
-                                            fontWeight: FontWeight.w500),
+            return snapshot.data!.isNotEmpty
+                ? Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: Text(
+                          "Projects:",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: blue,
+                              fontWeight: FontWeight.bold),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 18.0),
+                        child: SizedBox(
+                          height: 150,
+                          width: MediaQuery.of(context).size.width,
+                          child: ListView.builder(
+                            scrollDirection: Axis.horizontal,
+                            itemCount: snapshot.data!.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return Row(
+                                children: [
+                                  SizedBox(
+                                    height: 150,
+                                    width: 180,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                            color: const Color.fromARGB(
+                                                69, 0, 0, 0)),
+                                        shape: BoxShape.rectangle,
+                                        borderRadius: BorderRadius.circular(35),
+                                        color:
+                                            const Color.fromARGB(22, 0, 0, 0),
                                       ),
-                                      Text(
-                                        snapshot.data![index].name ?? "",
-                                        overflow: TextOverflow.clip,
-                                        maxLines: 1,
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.center,
+                                          children: [
+                                            const Text(
+                                              "Project Name:",
+                                              style: TextStyle(
+                                                  fontWeight: FontWeight.w500),
+                                            ),
+                                            Text(
+                                              snapshot.data![index].name ?? "",
+                                              overflow: TextOverflow.clip,
+                                              maxLines: 1,
+                                            ),
+                                            hight14(),
+                                            const Text("Project Description: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            Text(
+                                              snapshot.data![index]
+                                                      .description ??
+                                                  "",
+                                              overflow: TextOverflow.clip,
+                                              maxLines: 1,
+                                            ),
+                                            hight14(),
+                                            const Text("Project State: ",
+                                                style: TextStyle(
+                                                    fontWeight:
+                                                        FontWeight.w500)),
+                                            Text(
+                                              snapshot.data![index].state ?? "",
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                      hight14(),
-                                      const Text("Project Description: ",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500)),
-                                      Text(
-                                        snapshot.data![index].description ?? "",
-                                        overflow: TextOverflow.clip,
-                                        maxLines: 1,
-                                      ),
-                                      hight14(),
-                                      const Text("Project State: ",
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w500)),
-                                      Text(
-                                        snapshot.data![index].state ?? "",
-                                      ),
-                                    ],
+                                    ),
                                   ),
-                                ),
-                              ),
-                            ),
-                            width10()
-                          ],
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ],
-            );
+                                  width10()
+                                ],
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : const Text("");
           } else if (snapshot.hasError) {
             return const Center(child: Text("error"));
           }

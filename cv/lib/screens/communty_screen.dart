@@ -1,8 +1,8 @@
 import 'package:cv/services/user/get_all_users.dart';
 import 'package:flutter/material.dart';
 
-class communityScreen extends StatelessWidget {
-  const communityScreen({super.key});
+class CommunityScreen extends StatelessWidget {
+  const CommunityScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

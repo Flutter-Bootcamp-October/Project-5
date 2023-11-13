@@ -1,16 +1,16 @@
-import 'package:cv/screens/navigationbar_screen.dart';
 import 'package:cv/screens/auth_screens/signin_screen.dart';
+import 'package:cv/screens/navigationbar_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class lodingScreen extends StatefulWidget {
-  const lodingScreen({super.key});
+class LodingScreen extends StatefulWidget {
+  const LodingScreen({super.key});
 
   @override
-  State<lodingScreen> createState() => _lodingScreenState();
+  State<LodingScreen> createState() => _LodingScreenState();
 }
 
-class _lodingScreenState extends State<lodingScreen> {
+class _LodingScreenState extends State<LodingScreen> {
   @override
   Widget build(BuildContext context) {
     String token = "";

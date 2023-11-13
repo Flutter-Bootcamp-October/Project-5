@@ -1,21 +1,36 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:cv/screens/auth_screens/signin_screen.dart';
 import 'package:cv/screens/profile_screens/dispaly_skills_widget.dart';
 import 'package:cv/screens/profile_screens/dispaly_userinfo.dart';
 import 'package:cv/screens/profile_screens/display_educations_widget.dart';
 import 'package:cv/screens/profile_screens/display_projects_wiget.dart';
 import 'package:cv/screens/profile_screens/display_social_widget.dart';
+import 'package:cv/screens/profile_screens/settings_screen.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
   @override
+  State<HomeScreen> createState() => HomeScreenState();
+}
+
+class HomeScreenState extends State<HomeScreen> {
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: const Text("Home"),
+        leading: InkWell(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SettingScreen()));
+            },
+            child: const Icon(Icons.settings)),
+      ),
       body: Center(
         child: ListView(
           children: [
@@ -23,6 +38,7 @@ class HomeScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                hight14(),
                 const DisplayUserInfo(),
                 const DisplayAllSkills(),
                 hight14(),
@@ -32,22 +48,6 @@ class HomeScreen extends StatelessWidget {
                 hight14(),
                 const DisplayAllEducation(),
                 hight14(),
-                IconButton(
-                    onPressed: () async {
-                      final SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.remove("token");
-                      Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const SigninScreen(),
-                          ),
-                          (route) => false);
-                    },
-                    icon: const Icon(
-                      Icons.logout_outlined,
-                      color: Colors.black,
-                    )),
               ],
             ),
           ],

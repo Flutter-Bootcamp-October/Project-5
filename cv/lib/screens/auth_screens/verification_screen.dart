@@ -68,7 +68,7 @@ class VerificationScreen extends StatelessWidget {
                           ? Navigator.pushAndRemoveUntil(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => const lodingScreen(),
+                                builder: (context) => const LodingScreen(),
                               ),
                               (route) => false,
                             )

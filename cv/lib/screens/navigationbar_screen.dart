@@ -16,7 +16,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
   List screensList = [
     const HomeScreen(),
     const TabsScreen(),
-    const communityScreen(),
+    const CommunityScreen(),
   ];
   @override
   Widget build(BuildContext context) {
