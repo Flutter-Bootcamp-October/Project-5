@@ -14,11 +14,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 String? token;
 
-class ProjectScreen extends StatefulWidget {
-  const ProjectScreen({super.key});
+class SkillsScreen extends StatefulWidget {
+  const SkillsScreen({super.key});
 
   @override
-  State<ProjectScreen> createState() => _ProjectScreenState();
+  State<SkillsScreen> createState() => _SkillsScreenState();
 }
 
 class Item {
@@ -32,13 +32,11 @@ class Item {
       required this.state});
 }
 
-class _ProjectScreenState extends State<ProjectScreen> {
+class _SkillsScreenState extends State<SkillsScreen> {
   File? selectedimage;
   List<Item> items = [];
   bool isvalid = false;
-  TextEditingController projectnameController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
+  TextEditingController skillcontroller = TextEditingController();
 
   void _addItem(String projectnameController, String descriptionController,
       String stateController) {
@@ -63,12 +61,10 @@ class _ProjectScreenState extends State<ProjectScreen> {
   Future pushproject({required String token}) async {
     try {
       Map body = {
-        "name": projectnameController.text,
-        "description": descriptionController.text,
-        "state": stateController.text,
+        "skill": skillcontroller.text,
       };
-      var url =
-          Uri.parse(ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.project);
+      var url = Uri.parse(
+          ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.addskills);
       var response = await http.post(url,
           headers: {"authorization": token}, body: json.encode(body));
       print('Response status: ${response.statusCode}');
@@ -79,16 +75,11 @@ class _ProjectScreenState extends State<ProjectScreen> {
         isvalid = true;
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Success!')));
-        // projectnameController.clear();
-        // descriptionController.clear();
-        // stateController.clear();
       } else {
-        // Handle different responses
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Failed to push project.')));
       }
     } catch (e) {
-      // Handle the exception
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
@@ -97,7 +88,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
   @override
   void initState() {
     super.initState();
-    _loadToken(); // Call an async method to load the token
+    _loadToken();
   }
 
   Future<void> _loadToken() async {
@@ -116,32 +107,14 @@ class _ProjectScreenState extends State<ProjectScreen> {
           SizedBox(height: 50),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (selectedimage != null)
-                ProfileImage(selectedimage: selectedimage),
-              SizedBox(
-                height: 20,
-              ),
-              Text("welcome conan"),
-              TextButton(
-                onPressed: _pickImageFromGallery,
-                child: Text("chane image"),
-              ),
-            ],
+            children: [],
           ),
           Divider(
             thickness: 1,
           ),
           SinUpWedget(
-              Controller: projectnameController,
-              labelText: "  Enter your project name"),
+              Controller: skillcontroller, labelText: "  Enter your skill"),
           SizedBox(height: 20),
-          SinUpWedget(
-              Controller: descriptionController,
-              labelText: "  Enter your description"),
-          SizedBox(height: 20),
-          SinUpWedget(
-              Controller: stateController, labelText: "  Enter your state"),
           ElevatedButton(
               onPressed: () async {
                 await pushproject(token: token.toString());
@@ -163,16 +136,5 @@ class _ProjectScreenState extends State<ProjectScreen> {
         ],
       ),
     );
-  }
-
-  Future _pickImageFromGallery() async {
-    final returnedimage =
-        await ImagePicker().pickImage(source: ImageSource.gallery);
-
-    if (returnedimage != null) {
-      setState(() {
-        selectedimage = File(returnedimage.path);
-      });
-    }
   }
 }

@@ -14,11 +14,11 @@ import 'package:shared_preferences/shared_preferences.dart';
 final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 String? token;
 
-class ProjectScreen extends StatefulWidget {
-  const ProjectScreen({super.key});
+class EducationScreen extends StatefulWidget {
+  const EducationScreen({super.key});
 
   @override
-  State<ProjectScreen> createState() => _ProjectScreenState();
+  State<EducationScreen> createState() => _EducationScreenState();
 }
 
 class Item {
@@ -32,43 +32,27 @@ class Item {
       required this.state});
 }
 
-class _ProjectScreenState extends State<ProjectScreen> {
+class _EducationScreenState extends State<EducationScreen> {
   File? selectedimage;
   List<Item> items = [];
   bool isvalid = false;
-  TextEditingController projectnameController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-  TextEditingController stateController = TextEditingController();
-
-  void _addItem(String projectnameController, String descriptionController,
-      String stateController) {
-    if (projectnameController.isNotEmpty && descriptionController.isNotEmpty) {
-      setState(() {
-        items.add(Item(
-            projectname: projectnameController,
-            description: descriptionController,
-            state: stateController));
-      });
-    }
-  }
-
-  // void dispose() {
-  //   // Dispose controllers when the widget is disposed
-  //   projectnameController.dispose();
-  //   descriptionController.dispose();
-  //   stateController.dispose();
-  //   super.dispose();
-  // }
+  TextEditingController graduation_dateController = TextEditingController();
+  TextEditingController universityController = TextEditingController();
+  TextEditingController collegeController = TextEditingController();
+  TextEditingController specializationController = TextEditingController();
+  TextEditingController levelController = TextEditingController();
 
   Future pushproject({required String token}) async {
     try {
       Map body = {
-        "name": projectnameController.text,
-        "description": descriptionController.text,
-        "state": stateController.text,
+        "graduation_date": graduation_dateController.text,
+        "university": universityController.text,
+        "college": collegeController.text,
+        "specialization": specializationController.text,
+        "level": levelController.text,
       };
-      var url =
-          Uri.parse(ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.project);
+      var url = Uri.parse(
+          ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.addeducation);
       var response = await http.post(url,
           headers: {"authorization": token}, body: json.encode(body));
       print('Response status: ${response.statusCode}');
@@ -79,11 +63,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
         isvalid = true;
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Success!')));
-        // projectnameController.clear();
-        // descriptionController.clear();
-        // stateController.clear();
       } else {
-        // Handle different responses
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Failed to push project.')));
       }
@@ -110,6 +90,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
       body: Column(
         children: [
@@ -133,15 +114,22 @@ class _ProjectScreenState extends State<ProjectScreen> {
             thickness: 1,
           ),
           SinUpWedget(
-              Controller: projectnameController,
-              labelText: "  Enter your project name"),
+              Controller: graduation_dateController,
+              labelText: " Enter your graduation_date"),
           SizedBox(height: 20),
           SinUpWedget(
-              Controller: descriptionController,
-              labelText: "  Enter your description"),
+              Controller: universityController,
+              labelText: "  Enter your university"),
           SizedBox(height: 20),
           SinUpWedget(
-              Controller: stateController, labelText: "  Enter your state"),
+              Controller: collegeController, labelText: " Enter your college"),
+          SizedBox(height: 20),
+          SinUpWedget(
+              Controller: specializationController,
+              labelText: " Enter your specialization"),
+          SizedBox(height: 20),
+          SinUpWedget(
+              Controller: levelController, labelText: " Enter your level"),
           ElevatedButton(
               onPressed: () async {
                 await pushproject(token: token.toString());
