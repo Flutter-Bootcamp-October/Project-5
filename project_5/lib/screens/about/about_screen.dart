@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/global/globally.dart';
-import 'package:project_5/models/about_model.dart';
 
 class AboutScreen extends StatefulWidget {
   const AboutScreen({super.key});
@@ -18,64 +17,37 @@ class _AboutScreenState extends State<AboutScreen> {
 
   @override
   void initState() {
-    //get about data, send token
+    //get skills data, send token to edit, add and delete
     super.initState();
   }
 
-  File? imageGet;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         body: Column(
       children: [
-        //image picjer
-        if (imageGet != null)
-          Image.file(
-            imageGet!,
-            width: 85,
-            height: 85,
-          ),
-
-        if (aboutList.isEmpty)
+        if (skillList.isEmpty)
           const Center(
-            child: Text("No about data added"),
+            child: Text("No skills added"),
           ),
-
-        if (aboutList.isNotEmpty)
+        if (skillList.isNotEmpty)
           Column(
-              children: aboutList
+              children: skillList
                   .map(
-                    (e) => InkWell(
-                      onTap: () async {
-                        e.data.id;
-                        aboutList.remove(e);
-                      },
-                      child: ListTile(
-                        subtitle: Text(e.data.about),
-                      ),
+                    (e) => ListTile(
+                      subtitle: Text(e.data.skill),
+                      trailing: InkWell(
+                          onTap: () async {
+                            e.data.id;
+                            skillList.remove(e);
+                          },
+                          child: Icon(Icons.delete)),
                     ),
                   )
                   .toList()),
-
-        ElevatedButton(
-          onPressed: () async {
-            final ImagePicker picker = ImagePicker();
-            XFile? ImageFile =
-                await picker.pickImage(source: ImageSource.gallery);
-            imageGet = File(ImageFile!.path);
-            setState(() {});
-
-            // call api upload image method
-          },
-          child: const Text("upload image "),
-        ),
         ElevatedButton(
           onPressed: () {},
-          child: const Text("edit about "),
-        ),
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text("delete about "),
+          child: const Text("edit skill "),
         ),
       ],
     ));
