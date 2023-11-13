@@ -1,6 +1,7 @@
 import 'package:cv_app_project/components/general/app_button.dart';
 import 'package:cv_app_project/components/general/is_member.dart';
 import 'package:cv_app_project/components/general/textfield_with_label.dart';
+import 'package:cv_app_project/screens/home_screen.dart';
 import 'package:cv_app_project/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -33,7 +34,10 @@ class SignInScreen extends StatelessWidget {
             SizedBox(height: 8),
             AppButton(
               text: 'sign in',
-              onTap: () {},
+              onTap: () {
+                // Navigator.push(
+                //     context, MaterialPageRoute(builder: (context) => Home()));
+              },
             ),
             SizedBox(height: 16),
             IsMember(

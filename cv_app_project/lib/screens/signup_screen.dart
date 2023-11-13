@@ -3,17 +3,28 @@ import 'dart:developer';
 import 'package:cv_app_project/components/general/app_button.dart';
 import 'package:cv_app_project/components/general/is_member.dart';
 import 'package:cv_app_project/components/general/textfield_with_label.dart';
+import 'package:cv_app_project/screens/home_screen.dart';
 import 'package:cv_app_project/screens/signin_screen.dart';
+import 'package:cv_app_project/services/registration_api.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   SignUpScreen({super.key});
 
+  @override
+  State<SignUpScreen> createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController nameController = TextEditingController();
+
   TextEditingController phoneController = TextEditingController();
+
   TextEditingController emailController = TextEditingController();
+
   TextEditingController passwordController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,12 +57,26 @@ class SignUpScreen extends StatelessWidget {
               label: 'Password',
               hint: 'Enter Your Password',
               controller: passwordController,
-              isPass: false,
+              isPass: true,
             ),
             SizedBox(height: 8),
             AppButton(
               text: 'sign up',
-              onTap: () {},
+              onTap: () {
+                if (nameController.text.isEmpty ||
+                    phoneController.text.isEmpty ||
+                    emailController.text.isEmpty ||
+                    passwordController.text.isEmpty) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("All fields are required!"),
+                    ),
+                  );
+                } else {
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) => Home()));
+                }
+              },
             ),
             SizedBox(height: 16),
             IsMember(
