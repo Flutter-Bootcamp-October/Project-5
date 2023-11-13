@@ -35,3 +35,27 @@ hight40() {
     height: 40,
   );
 }
+
+width10() {
+  return const SizedBox(
+    width: 10,
+  );
+}
+
+width20() {
+  return const SizedBox(
+    width: 20,
+  );
+}
+
+width16() {
+  return const SizedBox(
+    width: 16,
+  );
+}
+
+width14() {
+  return const SizedBox(
+    width: 14,
+  );
+}

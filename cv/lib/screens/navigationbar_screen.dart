@@ -1,6 +1,6 @@
-import 'package:cv/screens/communty_screen.dart';
-import 'package:cv/screens/home_screen.dart';
 import 'package:cv/screens/add_screens/tabs_screen.dart';
+import 'package:cv/screens/communty_screen.dart';
+import 'package:cv/screens/profile_screens/home_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -14,8 +14,8 @@ class NavigationBarScreen extends StatefulWidget {
 class _NavigationBarScreenState extends State<NavigationBarScreen> {
   var _currentIndex = 0;
   List screensList = [
-    const TabsScreen(),
     const HomeScreen(),
+    const TabsScreen(),
     const communityScreen(),
   ];
   @override

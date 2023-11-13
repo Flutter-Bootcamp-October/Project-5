@@ -12,6 +12,7 @@ dependencies:
     sdk: flutter
   group_radio_button: ^1.3.0
   http: ^1.1.0
+  icons_plus: ^4.0.0
   salomon_bottom_bar: ^3.3.2
   shared_preferences: ^2.2.2
 
@@ -22,3 +23,7 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  assets:
+    - assets/tiktok.png
+    - assets/219986.png
+
