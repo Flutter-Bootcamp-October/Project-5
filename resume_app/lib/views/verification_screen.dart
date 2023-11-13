@@ -59,15 +59,17 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       prefs.setString("token", res);
                     }
                     if (widget.type == "registration") {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const SignInScreen()));
+                              builder: (context) => const SignInScreen()),
+                          ModalRoute.withName("/screen"));
                     } else if (widget.type == "login") {
-                      Navigator.push(
+                      Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProfileScreen()));
+                              builder: (context) => const ProfileScreen()),
+                          ModalRoute.withName("/screen"));
                     }
                   } on FormatException catch (error) {
                     ScaffoldMessenger.of(context).showSnackBar(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 TabBar tabBar = TabBar(
-    isScrollable: true,
+    // isScrollable: true,
     labelColor: Colors.black,
     labelStyle: const TextStyle(
         letterSpacing: 1,
