@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/add_skill.dart';
 import 'package:pcv/screens/drawer_screen.dart';
-import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/services/skill_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List skills = [];
@@ -15,6 +18,13 @@ class SkillScreen extends StatefulWidget {
 }
 
 class _SkillScreenState extends State<SkillScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _loedingSkill();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,7 +66,7 @@ class _SkillScreenState extends State<SkillScreen> {
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 final token = prefs.getString('token');
-                                network.deleteSkillMethod(
+                                netSkill.deleteSkillMethod(
                                     token: token!, body: {"id_skill": e["id"]});
                                 skills.removeWhere(
                                     (element) => element["id"] == e["id"]);
@@ -75,5 +85,19 @@ class _SkillScreenState extends State<SkillScreen> {
         ),
       ),
     );
+  }
+
+  _loedingSkill() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final Response res = await netSkill.skillMethod(token: token!);
+    try {
+      if (res.statusCode == 200) {
+        skills = (await jsonDecode(res.body))["data"];
+        setState(() {});
+      }
+    } catch (error) {
+      //
+    }
   }
 }

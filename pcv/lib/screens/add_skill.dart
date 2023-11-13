@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
-import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/skill_screen.dart';
+import 'package:pcv/services/skill_api.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +22,8 @@ class _AddSkillState extends State<AddSkill> {
   TextEditingController skillController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Container( decoration: const BoxDecoration(
+    return Container(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
@@ -42,10 +43,10 @@ class _AddSkillState extends State<AddSkill> {
                         await SharedPreferences.getInstance();
                     final token = prefs.getString('token');
                     final Response resp =
-                        await network.addSkillMethod(token: token!, body: {
+                        await netSkill.addSkillMethod(token: token!, body: {
                       "skill": skillController.text,
                     });
-    
+
                     if (resp.statusCode == 200) {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(
@@ -53,8 +54,8 @@ class _AddSkillState extends State<AddSkill> {
                           (Route<dynamic> route) => false);
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          content: Text(
-                              (await jsonDecode(resp.body))["msg"].toString())));
+                          content: Text((await jsonDecode(resp.body))["msg"]
+                              .toString())));
                     }
                   } catch (e) {
                     ScaffoldMessenger.of(context)

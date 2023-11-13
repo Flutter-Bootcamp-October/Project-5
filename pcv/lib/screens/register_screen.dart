@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/screens/verification_screen.dart';
-import 'package:pcv/services/api_services.dart';
+import 'package:pcv/services/auth_api.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 

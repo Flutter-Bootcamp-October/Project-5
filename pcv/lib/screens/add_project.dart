@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/project_screen.dart';
-import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/services/project_api.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +27,8 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
   TextEditingController descripController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Container( decoration: const BoxDecoration(
+    return Container(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.bottomCenter,
               end: Alignment.topCenter,
@@ -78,22 +79,24 @@ class _AddProjectScreenState extends State<AddProjectScreen> {
                           final SharedPreferences prefs =
                               await SharedPreferences.getInstance();
                           final token = prefs.getString('token');
-                          final Response resp = await network
+                          final Response resp = await projectNet
                               .addProjectMethod(token: token!, body: {
                             "name": usernameController.text,
                             "description": descripController.text,
                             "state": dropdownValue,
                           });
-    
+
                           if (resp.statusCode == 200) {
                             Navigator.of(context).pushAndRemoveUntil(
                                 MaterialPageRoute(
-                                    builder: (context) => const ProjectScreen()),
+                                    builder: (context) =>
+                                        const ProjectScreen()),
                                 (Route<dynamic> route) => false);
                           } else {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text((await jsonDecode(resp.body))["msg"]
-                                    .toString())));
+                                content: Text(
+                                    (await jsonDecode(resp.body))["msg"]
+                                        .toString())));
                           }
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(

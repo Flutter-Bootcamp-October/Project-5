@@ -3,9 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
+import 'package:pcv/services/api_about.dart';
+import 'package:pcv/widgets/get_about.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:pcv/screens/home_screen.dart';
-import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 
@@ -17,28 +18,6 @@ class EditAboutScreen extends StatefulWidget {
 }
 
 class _EditAboutScreenState extends State<EditAboutScreen> {
-  Map about = {};
-  @override
-  void initState() {
-    super.initState();
-    _loadingAbout();
-  }
-
-  _loadingAbout() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final Response res = await network.aboutMethod(token: token!);
-    try {
-      if (res.statusCode == 200) {
-        about = (await jsonDecode(res.body))["data"];
-        setState(() {});
-      }
-    } catch (e) {
-      // ScaffoldMessenger.of(context)
-      //     .showSnackBar(SnackBar(content: Text(e.toString())));
-    }
-  }
-
   TextEditingController usernameController = TextEditingController();
   TextEditingController titPoController = TextEditingController();
   TextEditingController locationController = TextEditingController();
@@ -108,7 +87,7 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                               await SharedPreferences.getInstance();
                           final token = prefs.getString('token');
 
-                          final Response resp = await network
+                          final Response resp = await netAbout
                               .editAboutMethod(token: token!, body: {
                             "name": usernameController.text,
                             "phone": phoneController.text,

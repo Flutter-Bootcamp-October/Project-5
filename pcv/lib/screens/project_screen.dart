@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/add_project.dart';
 import 'package:pcv/screens/drawer_screen.dart';
-import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/services/project_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List projects = [];
@@ -15,6 +18,14 @@ class ProjectScreen extends StatefulWidget {
 }
 
 class _ProjectScreenState extends State<ProjectScreen> {
+  @override
+  initState() {
+    super.initState();
+    _loedingProject();
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,7 +67,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 final token = prefs.getString('token');
-                                network.deleteProjectMethod(
+                                projectNet.deleteProjectMethod(
                                     token: token!,
                                     body: {"id_project": e["id"]});
                                 projects.removeWhere(
@@ -77,5 +88,18 @@ class _ProjectScreenState extends State<ProjectScreen> {
         ),
       ),
     );
+  }
+    _loedingProject() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final Response res = await projectNet.projectMethod(token: token!);
+    try {
+      if (res.statusCode == 200) {
+        projects = (await jsonDecode(res.body))["data"];
+        setState(() {});
+      }
+    } catch (error) {
+      //
+    }
   }
 }

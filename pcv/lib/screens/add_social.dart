@@ -5,8 +5,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
-import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/social_screen.dart';
+import 'package:pcv/services/social_network.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -74,7 +74,7 @@ class _AddSocialState extends State<AddSocial> {
                     final SharedPreferences prefs =
                         await SharedPreferences.getInstance();
                     final token = prefs.getString('token');
-                    final Response resp = await network.addsocialMethod(
+                    final Response resp = await socialNetwork.addsocialMethod(
                         token: token!,
                         body: {
                           "username": usernameController.text,

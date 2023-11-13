@@ -8,11 +8,12 @@ import 'package:pcv/screens/edit_about.dart';
 import 'package:pcv/screens/education_screen.dart';
 import 'package:pcv/screens/home_screen.dart';
 import 'package:pcv/screens/project_screen.dart';
-import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/screens/skill_screen.dart';
 import 'package:pcv/screens/social_screen.dart';
 import 'package:pcv/screens/user.dart';
+import 'package:pcv/services/api_about.dart';
+import 'package:pcv/widgets/get_about.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -26,27 +27,9 @@ class DrawerScreens extends StatefulWidget {
 }
 
 class _DrawerScreensState extends State<DrawerScreens> {
-  Map about = {};
   final ImagePicker picker = ImagePicker();
   File? imageFile;
   @override
-  void initState() {
-    super.initState();
-    _loadingAbout();
-  }
-
-  _loadingAbout() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final Response res = await network.aboutMethod(
-      token: token!,
-    );
-    if (res.statusCode == 200) {
-      about = (await jsonDecode(res.body))["data"];
-      setState(() {});
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -67,17 +50,24 @@ class _DrawerScreensState extends State<DrawerScreens> {
                                 await SharedPreferences.getInstance();
                             final token = prefs.getString('token');
                             final Response resp =
-                                await network.aboutUploadMethod(
+                                await netAbout.aboutUploadMethod(
                               token: token!,
                               image: imageFile!,
                             );
 
                             if (resp.statusCode == 200) {
-                              Navigator.of(context).pushAndRemoveUntil(
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SkillScreen()),
-                                  (Route<dynamic> route) => false);
+                              Future.delayed(
+                                Duration(seconds: 3),
+                                () {
+                                  print(resp.body);
+                                  setState(() {});
+                                  Navigator.of(context).pushAndRemoveUntil(
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              const HomeScreen()),
+                                      (Route<dynamic> route) => false);
+                                },
+                              );
                             } else {
                               ScaffoldMessenger.of(context).showSnackBar(
                                   SnackBar(
@@ -206,7 +196,7 @@ class _DrawerScreensState extends State<DrawerScreens> {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         final token = prefs.getString('token');
-                        network.deleteAccountMethod(token: token!);
+                        netAbout.deleteAccountMethod(token: token!);
                       },
                       child: const Text("DELETE"),
                     ),

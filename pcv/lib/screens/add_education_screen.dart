@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/education_screen.dart';
-import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/services/education_api.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -89,7 +89,7 @@ class _AddEducationState extends State<AddEducation> {
                       final SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       final token = prefs.getString('token');
-                      final Response resp = await network
+                      final Response resp = await educationNetwork
                           .addEducationMethod(token: token!, body: {
                         "graduation_date": dateGraduationController.text,
                         "university": universityController.text,

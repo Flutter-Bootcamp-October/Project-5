@@ -1,12 +1,15 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/add_education_screen.dart';
 import 'package:pcv/screens/drawer_screen.dart';
-import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/services/education_api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
- List education = [];
+
+List education = [];
+
 class EducationScreen extends StatefulWidget {
   const EducationScreen({super.key});
 
@@ -15,38 +18,23 @@ class EducationScreen extends StatefulWidget {
 }
 
 class _EducationScreenState extends State<EducationScreen> {
-
-
   @override
-  void initState() {
+  initState() {
     super.initState();
-    _loedingSkill();
-  }
 
-  _loedingSkill() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final Response res = await network.educationMethod(token: token!);
-    try {
-      if (res.statusCode == 200) {
-        education = (await jsonDecode(res.body))["data"];
-        setState(() {});
-        // ignore: empty_catches
-      }
-    } catch (error) {
-      //
-    }
+    _loedingEducation();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Container( decoration: const BoxDecoration(
+    return Container(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [Colors.pink, Colors.lightBlue])),
       child: Scaffold(
-        backgroundColor:  Colors.transparent,
+        backgroundColor: Colors.transparent,
         appBar: appBarMethod(title: "education"),
         floatingActionButton: FloatingActionButton(
           backgroundColor: const Color.fromARGB(255, 176, 165, 186),
@@ -78,7 +66,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 final token = prefs.getString('token');
-                                network.deleteEducationMethod(
+                                educationNetwork.deleteEducationMethod(
                                     token: token!,
                                     body: {"id_education": e["id"]});
                                 education.removeWhere(
@@ -100,5 +88,19 @@ class _EducationScreenState extends State<EducationScreen> {
         ),
       ),
     );
+  }
+   _loedingEducation() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final Response res = await educationNetwork.educationMethod(token: token!);
+    try {
+      if (res.statusCode == 200) {
+        education = (await jsonDecode(res.body))["data"];
+        setState(() {});
+        // ignore: empty_catches
+      }
+    } catch (error) {
+      //
+    }
   }
 }

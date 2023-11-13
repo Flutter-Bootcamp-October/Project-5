@@ -1,8 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/screens/add_social.dart';
 import 'package:pcv/screens/drawer_screen.dart';
-import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/services/project_api.dart';
+import 'package:pcv/services/social_network.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 List social = [];
@@ -15,9 +19,15 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> {
+  initState() {
+    super.initState();
+    _loedingSocial();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container( decoration: const BoxDecoration(
+    return Container(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -55,7 +65,7 @@ class _SocialScreenState extends State<SocialScreen> {
                                 final SharedPreferences prefs =
                                     await SharedPreferences.getInstance();
                                 final token = prefs.getString('token');
-                                network.deleteProjectMethod(
+                                projectNet.deleteProjectMethod(
                                     token: token!, body: {"id_skill": e["id"]});
                                 social.removeWhere(
                                     (element) => element["id"] == e["id"]);
@@ -75,5 +85,21 @@ class _SocialScreenState extends State<SocialScreen> {
         ),
       ),
     );
+  }
+
+  _loedingSocial() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final Response res = await socialNetwork.socialMethod(token: token!);
+    try {
+      if (res.statusCode == 200) {
+        social = (await jsonDecode(res.body))["data"];
+
+        setState(() {});
+        // ignore: empty_catches
+      }
+    } catch (error) {
+      //
+    }
   }
 }
