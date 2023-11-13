@@ -60,7 +60,8 @@ class SignupScreen extends StatelessWidget {
                         emailController.text,
                         passwordController.text);
                     Navigator.pop(context);
-                    if (response['codeStatus'] == 200) {
+
+                    if (response['codeState'] == 200) {
                       // ignore: use_build_context_synchronously
                       Navigator.push(
                           context,
@@ -72,6 +73,7 @@ class SignupScreen extends StatelessWidget {
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text(response['msg'])));
+
                     }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(

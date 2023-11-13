@@ -16,12 +16,12 @@ class Users {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['title_position'] = this.titlePosition;
-    data['phone'] = this.phone;
-    data['image'] = this.image;
+    final Map<String, dynamic> data =  Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['title_position'] = titlePosition;
+    data['phone'] = phone;
+    data['image'] = image;
     return data;
   }
 }

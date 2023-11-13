@@ -36,17 +36,17 @@ class About {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['name'] = this.name;
-    data['email'] = this.email;
-    data['title_position'] = this.titlePosition;
-    data['phone'] = this.phone;
-    data['location'] = this.location;
-    data['birthday'] = this.birthday;
-    data['about'] = this.about;
-    data['image'] = this.image;
-    data['create_at'] = this.createAt;
+    final Map<String, dynamic> data =  Map<String, dynamic>();
+    data['id'] = id;
+    data['name'] = name;
+    data['email'] = email;
+    data['title_position'] = titlePosition;
+    data['phone'] = phone;
+    data['location'] = location;
+    data['birthday'] = birthday;
+    data['about'] = about;
+    data['image'] = image;
+    data['create_at'] = createAt;
     return data;
   }
 }

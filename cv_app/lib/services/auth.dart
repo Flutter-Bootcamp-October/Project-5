@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 import 'package:http/http.dart' as http;
 
 Future registration(
@@ -11,6 +12,7 @@ Future registration(
     "password": password
   };
   final response = await http.post(url, body: jsonEncode(body));
+
   return jsonDecode(response.body);
 }
 
@@ -25,6 +27,7 @@ Future verification(String otp, String email, String type) async {
   final url = Uri.parse("https://bacend-fshi.onrender.com/auth/verification");
   Map body = {"otp": otp, "email": email, "type": type};
   final response = await http.post(url, body: jsonEncode(body));
+  log(response.body.toString());
   return jsonDecode(response.body);
 }
 

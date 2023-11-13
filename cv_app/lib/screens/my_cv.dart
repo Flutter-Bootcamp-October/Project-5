@@ -1,5 +1,4 @@
 import 'package:cv_app/globals/colors.dart';
-import 'package:cv_app/services/about.dart';
 import 'package:flutter/material.dart';
 
 class MyCVScreen extends StatelessWidget {
@@ -9,15 +8,19 @@ class MyCVScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     const TextStyle textStyle =
         TextStyle(color: mainColor, fontSize: 20, fontWeight: FontWeight.bold);
-    return SafeArea(
+    return const SafeArea(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          InkWell(
-              onTap: () async {
-                await showAbout();
-              },
-              child: Text("About Me", style: textStyle)),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Icon(Icons.color_lens, color: mainColor),
+              Icon(Icons.design_services_outlined, color: mainColor),
+              Icon(Icons.save_alt_rounded, color: mainColor)
+            ],
+          ),
+          Divider(),
           Text("Projects", style: textStyle),
           Text("Skills", style: textStyle),
           Text("Socials", style: textStyle),

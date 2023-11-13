@@ -1,10 +1,130 @@
+import 'package:cv_app/globals/colors.dart';
+import 'package:cv_app/services/about.dart';
 import 'package:flutter/material.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+  bool isEditMode = false;
+  @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return SafeArea(
+      child: FutureBuilder(
+        future: showAbout(),
+        builder: ((context, snapshot) {
+          if (snapshot.data != null) {
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ClipOval(
+                      child: Center(
+                        child: snapshot.data!.image == null
+                            ? Image.asset("assets\\defualt_img.png", scale: 4)
+                            : Image.network(snapshot.data!.image.toString()),
+                      ),
+                    ),
+                    const Divider(),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        const Text("About Me",
+                            style: TextStyle(
+                                color: mainColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold)),
+                        const SizedBox(width: 88),
+                        IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.edit_location_sharp,
+                            color: mainColor,
+                          ),
+                        ),
+                        const Icon(
+                          Icons.delete,
+                          color: Colors.redAccent,
+                        )
+                      ],
+                    ),
+                    const Divider(),
+                    AboutMeRow(
+                      icon: Icons.adjust_sharp,
+                      title: "User Id",
+                      value: snapshot.data!.id.toString(),
+                    ),
+                    const Divider(),
+                    AboutMeRow(
+                      icon: Icons.dynamic_feed_rounded,
+                      title: "User name",
+                      value: snapshot.data!.name.toString(),
+                    ),
+                    const Divider(),
+                    AboutMeRow(
+                      icon: Icons.workspace_premium_rounded,
+                      title: "Title Posision",
+                      value: snapshot.data!.titlePosition.toString(),
+                    ),
+                    const Divider(),
+                    AboutMeRow(
+                      icon: Icons.phone_in_talk_rounded,
+                      title: "Phone No",
+                      value: snapshot.data!.phone.toString(),
+                    ),
+                    const Divider(),
+                    AboutMeRow(
+                      icon: Icons.location_on_rounded,
+                      title: "Location",
+                      value: snapshot.data!.location.toString(),
+                    ),
+                    const Divider(),
+                    AboutMeRow(
+                      icon: Icons.cake,
+                      title: "Birthday",
+                      value: snapshot.data!.birthday.toString(),
+                    ),
+                    const Divider(),
+                    AboutMeRow(
+                      icon: Icons.history_edu_sharp,
+                      title: "About",
+                      value: snapshot.data!.about.toString(),
+                    ),
+                  ]),
+            );
+          } else {
+            return const Center(
+                child: CircularProgressIndicator(color: mainColor));
+          }
+        }),
+      ),
+    );
+  }
+}
+
+class AboutMeRow extends StatelessWidget {
+  const AboutMeRow({
+    super.key,
+    required this.icon,
+    required this.title,
+    required this.value,
+  });
+  final IconData icon;
+  final String title;
+  final String value;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Icon(icon, color: mainColor),
+        Text(value == "null" ? " $title:" : " $title:   $value"),
+      ],
+    );
   }
 }

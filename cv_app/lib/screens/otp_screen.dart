@@ -1,6 +1,3 @@
-import 'dart:convert';
-import 'dart:developer';
-
 import 'package:cv_app/globals/app_loading.dart';
 import 'package:cv_app/globals/colors.dart';
 import 'package:cv_app/main.dart';
@@ -72,9 +69,8 @@ class OTPScreen extends StatelessWidget {
                         final response =
                             await verification(otpController.text, email, type);
                         Navigator.pop(context);
-                        if (response['codeStatus'] == 200) {
+                        if (response['codeState'] == 200) {
                           prefs.setString("token", response['data']['token']);
-                          log(response['data']['token']);
                           // ignore: use_build_context_synchronously
                           Navigator.pushAndRemoveUntil(
                               context,
