@@ -5,6 +5,7 @@ import 'package:project_5/models/about_model.dart';
 import 'package:project_5/screens/auth/sign_in_screen.dart';
 import 'package:project_5/screens/profile/components/experience.dart';
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
+import 'package:project_5/screens/reusable_widgets/education_model_sheet.dart';
 import 'package:project_5/screens/settings/components/custom_bottom_modal_sheet.dart';
 import 'package:project_5/services/about_api.dart';
 import 'package:project_5/services/education_api.dart';
@@ -33,7 +34,11 @@ class ProfileScreenState extends State<ProfileScreen> {
   Future? socialModelData;
 
   TextEditingController skillsController = TextEditingController();
-  TextEditingController educationController = TextEditingController();
+
+  TextEditingController gradDateController = TextEditingController();
+  TextEditingController collegeController = TextEditingController();
+  TextEditingController universityController = TextEditingController();
+  TextEditingController specializationController = TextEditingController();
 
   @override
   void initState() {
@@ -86,12 +91,12 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   updateEducationModel() async {
     educationModelData = getEducationData();
-    setState(() {});
+    Future.delayed(const Duration(seconds: 2), () => setState(() {}));
   }
 
   updateSocialModel() async {
     socialModelData = getSocialData();
-    setState(() {});
+    Future.delayed(const Duration(seconds: 2), () => setState(() {}));
   }
 
   @override
@@ -117,8 +122,10 @@ class ProfileScreenState extends State<ProfileScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return ProfileUserInformation(
+                        updateSocialModel: updateSocialModel,
                         aboutModelData: aboutModelData,
-                        imageUrl: snapshot.data.data?.image,
+                        imageUrl: snapshot.data.data?.image ??
+                            "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
                       );
                     } else {
                       updateAboutData();
@@ -137,8 +144,20 @@ class ProfileScreenState extends State<ProfileScreen> {
               SectionTitle(
                 title: "Education 🎓",
                 iconData: Icons.add,
-                onPressedFunc: () {},
+                onPressedFunc: () {
+                  educationModalBottomSheet(
+                    context,
+                    content: "Education",
+                    isSkills: true,
+                    gradDateController: gradDateController,
+                    collegeController: collegeController,
+                    universityController: universityController,
+                    specializationController: specializationController,
+                    updateMethod: updateEducationModel,
+                  );
+                },
               ),
+
               Education(
                   updateMethod: updateEducationModel,
                   educationData: educationModelData),
@@ -178,25 +197,15 @@ class ProfileScreenState extends State<ProfileScreen> {
                 iconData: Icons.add,
                 onPressedFunc: () {},
               ),
-              const Experience(),
+              Experience(educationData: educationModelData),
               //--PlaceHolder--
-              SectionTitle(
-                title: "PlaceHolder 💭󠀠󠀠",
-                iconData: Icons.add,
-                onPressedFunc: () {},
-              ),
+              // SectionTitle(
+              //   title: "PlaceHolder 💭󠀠󠀠",
+              //   iconData: Icons.add,
+              //   onPressedFunc: () {},
+              // ),
             ],
           ),
-
-          // else {
-          //   return Center(
-          //     child: Shimmer.fromColors(
-          //       baseColor: Colors.white,
-          //       highlightColor: Colors.grey,
-          //       child: const Text("waiting"),
-          //     ),
-          //   );
-          // }
         ),
       ),
       floatingActionButton: SelectableText(

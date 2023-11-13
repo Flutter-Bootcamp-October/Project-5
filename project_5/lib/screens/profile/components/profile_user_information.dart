@@ -1,9 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_5/models/about_model.dart';
-import 'package:project_5/screens/settings/components/custom_bottom_modal_sheet.dart';
+import 'package:project_5/screens/reusable_widgets/social_modal_sheet.dart';
 import 'package:project_5/services/about_api.dart';
 import 'package:flutter/services.dart';
 import 'package:project_5/theme/shimmer/shimmer_profile_header_skeleton.dart';
@@ -13,9 +14,11 @@ class ProfileUserInformation extends StatefulWidget {
     super.key,
     this.aboutModelData,
     required this.imageUrl,
+    required this.updateSocialModel,
   });
   final Future? aboutModelData;
   final String imageUrl;
+  final Function? updateSocialModel;
   @override
   State<ProfileUserInformation> createState() => _ProfileUserInformationState();
 }
@@ -55,19 +58,11 @@ class _ProfileUserInformationState extends State<ProfileUserInformation> {
   final ImagePicker _picker = ImagePicker();
   final source = ImageSource.gallery;
   File? filePath;
-  TextEditingController controller = TextEditingController();
+
+  TextEditingController userNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return // RefreshIndicator(
-        // strokeWidth: 3,
-        // onRefresh: () async {
-        //   await _updateImgWidget(url: widget.imageUrl);
-        //   setState(() {});
-        // },
-        //child:
-        Column(
-      // physics: const AlwaysScrollableScrollPhysics(),
-      // shrinkWrap: true,
+    return Column(
       children: [
         //TODO: REMOVE THIS FUTURE
         FutureBuilder(
@@ -92,6 +87,7 @@ class _ProfileUserInformationState extends State<ProfileUserInformation> {
                         } else {
                           filePath = File(file.path);
                           imageCache.clear();
+
                           uploadAboutImageApi(image: filePath!);
                           await _updateImgWidget(url: aboutModel.data!.image);
                           setState(() {});
@@ -117,23 +113,33 @@ class _ProfileUserInformationState extends State<ProfileUserInformation> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                                "${aboutModel.data?.name}  ${aboutModel.data?.titlePosition ?? ""}"),
-                            Text(aboutModel.data?.about ??
-                                "-You have no bio yet-"),
+                              "${aboutModel.data?.name}  ${aboutModel.data?.titlePosition ?? ""}",
+                              style: const TextStyle(fontSize: 24),
+                            ),
+                            Text(
+                              aboutModel.data?.about ?? "-You have no bio yet-",
+                              style: const TextStyle(fontSize: 18),
+                            ),
                           ],
                         ),
                         IconButton(
                             onPressed: () {
-                              //TODO:DO THIS
-                              customModalBottomSheet(
+                              socialModalBottomSheet(
                                 context,
-                                controller: controller,
-                                content: "content",
-                                onPressedFunc: () {},
+                                content: "User Name",
                                 isSkills: true,
-                              ).then((value) {
-                                setState(() {});
-                              });
+                                userNameController: userNameController,
+                                updateMethod: widget.updateSocialModel,
+                              );
+                              // customModalBottomSheet(
+                              //   context,
+                              //   controller: controller,
+                              //   content: "UserName",
+                              //   onPressedFunc: () {},
+                              //   isSkills: true,
+                              // ).then((value) {
+                              //   setState(() {});
+                              // });
                             },
                             icon: const Icon(Icons.edit_outlined)),
                       ],

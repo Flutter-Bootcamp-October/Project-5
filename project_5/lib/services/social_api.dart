@@ -52,12 +52,13 @@ Future<String> addSocial({
 Future deleteSocial({required socialId}) async {
   final url =
       Uri.parse("https://bacend-fshi.onrender.com/user/delete/social_media");
-  final response = await http.delete(url, headers: {
-    "content-Type": "application/json",
-    "authorization": pref.getToken()
-  }, body: {
-    "id_social": socialId
-  });
+  final data = {"id_social": socialId};
+  final response = await http.delete(url,
+      headers: {
+        "content-Type": "application/json",
+        "authorization": pref.getToken()
+      },
+      body: jsonEncode(data));
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return "Account Deleted";
   } else {

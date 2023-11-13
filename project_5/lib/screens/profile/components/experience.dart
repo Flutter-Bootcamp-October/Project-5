@@ -1,19 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:project_5/extensions/size_extension.dart';
+import 'package:project_5/models/education_model.dart';
 import 'package:project_5/theme/shimmer/shimmer_experience_skeleton.dart';
 import 'package:timelines/timelines.dart';
 
 class Experience extends StatelessWidget {
-  const Experience({Key? key}) : super(key: key);
+  const Experience({Key? key, this.educationData}) : super(key: key);
 
+  final Future? educationData;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: null,
+        future: educationData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
+            final EducationModel educationModel = snapshot.data;
             return SizedBox(
-              height: context.getHeight() * .33,
+              height: educationModel.data!.length > 0
+                  ? context.getHeight() * .25
+                  : context.getHeight() * .01,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Timeline.tileBuilder(
@@ -30,20 +35,21 @@ class Experience extends StatelessWidget {
                   builder: TimelineTileBuilder.fromStyle(
                     contentsAlign: ContentsAlign.basic,
                     indicatorStyle: IndicatorStyle.outlined,
-                    itemCount: 10, //TODO: Get user's experience.length
+                    itemCount: educationModel.data!.length,
                     contentsBuilder: (context, index) => Padding(
                       padding: const EdgeInsets.all(24.0),
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            'Experience $index',
+                            '${educationModel.data![index].specialization}',
                             textAlign: TextAlign.start,
                           ),
                           ListTile(
                             contentPadding: EdgeInsets.zero,
-                            title: Text('work $index'),
-                            subtitle: Text('Description $index'),
+                            title: Text(
+                                '${educationModel.data![index].university}'),
+                            subtitle: const Text('Description'),
                           )
                         ],
                       ),

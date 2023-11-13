@@ -29,10 +29,10 @@ Future<String> addEducation({
   required String specialization,
   required String college,
   required String university,
-  required DateTime gradDate,
+  required String gradDate,
 }) async {
   final data = {
-    "graduation_date": "$gradDate",
+    "graduation_date": gradDate,
     "university": university,
     "college": college,
     "specialization": specialization,
@@ -44,7 +44,6 @@ Future<String> addEducation({
     "content-Type": "application/json",
     "authorization": pref.getToken()
   });
-
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return response.body;
   } else if (response.statusCode >= 400) {
@@ -59,12 +58,13 @@ Future<String> addEducation({
 Future deleteEducation({required educationId}) async {
   final url =
       Uri.parse("https://bacend-fshi.onrender.com/user/delete/education");
-  final response = await http.delete(url, headers: {
-    "content-Type": "application/json",
-    "authorization": pref.getToken()
-  }, body: {
-    "id_education": educationId
-  });
+  final data = {"id_education": educationId};
+  final response = await http.delete(url,
+      headers: {
+        "content-Type": "application/json",
+        "authorization": pref.getToken()
+      },
+      body: jsonEncode(data));
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return "Account Deleted";
   } else {

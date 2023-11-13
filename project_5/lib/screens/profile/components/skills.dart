@@ -23,8 +23,8 @@ class Skills extends StatelessWidget {
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 4, // number of items in each row
-                  mainAxisSpacing: 8.0, // spacing between rows
+                  crossAxisCount: 4,
+                  mainAxisSpacing: 8.0,
                   crossAxisSpacing: 8.0,
                 ),
                 itemBuilder: (context, index) {
