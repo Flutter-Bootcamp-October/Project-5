@@ -5,21 +5,14 @@ import 'package:project_5/screens/auth/components/auth_button.dart';
 import 'package:project_5/services/skills_api.dart';
 import 'package:project_5/theme/shimmer/shimmer_card_skeleton.dart';
 
-class Skills extends StatefulWidget {
+class Skills extends StatelessWidget {
   const Skills({Key? key, required this.skillsData, required this.updateMethod})
       : super(key: key);
 
   @override
-  State<Skills> createState() => _SkillsState();
-  final Future? skillsData;
-  final Function updateMethod;
-}
-
-class _SkillsState extends State<Skills> {
-  @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future: widget.skillsData,
+        future: skillsData,
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             final SkillsModel skills = snapshot.data!;
@@ -51,7 +44,7 @@ class _SkillsState extends State<Skills> {
                                         onPressedFunc: () {
                                           deleteSkill(
                                               id: skills.data![index].id!);
-                                          widget.updateMethod.call();
+                                          updateMethod.call();
                                           Navigator.pop(context);
                                         },
                                         isDisabled: false)
@@ -84,4 +77,7 @@ class _SkillsState extends State<Skills> {
           }
         });
   }
+
+  final Future? skillsData;
+  final Function updateMethod;
 }

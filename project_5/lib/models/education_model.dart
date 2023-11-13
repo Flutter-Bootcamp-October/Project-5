@@ -1,13 +1,18 @@
 class EducationModel {
   String? msg;
-  Data? data;
+  List<Data>? data;
   int? codeState;
 
   EducationModel({this.msg, this.data, this.codeState});
 
   EducationModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(Data.fromJson(v));
+      });
+    }
     codeState = json['codeState'];
   }
 
@@ -15,7 +20,7 @@ class EducationModel {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['msg'] = msg;
     if (this.data != null) {
-      data['data'] = this.data!.toJson();
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     data['codeState'] = codeState;
     return data;

@@ -5,7 +5,7 @@ import 'package:project_5/models/education_model.dart';
 import 'package:project_5/models/error_model.dart';
 
 //TODO: TEST THESE
-Future getAboutApi() async {
+Future getEducationData() async {
   final url = Uri.parse("https://bacend-fshi.onrender.com/user/education");
 
   final response = await http.get(url, headers: {
@@ -24,7 +24,7 @@ Future getAboutApi() async {
   }
 }
 
-Future<String> addProjects({
+Future<String> addEducation({
   required String level,
   required String specialization,
   required String college,
@@ -56,7 +56,7 @@ Future<String> addProjects({
   }
 }
 
-Future deleteProject({required educationId}) async {
+Future deleteEducation({required educationId}) async {
   final url =
       Uri.parse("https://bacend-fshi.onrender.com/user/delete/education");
   final response = await http.delete(url, headers: {

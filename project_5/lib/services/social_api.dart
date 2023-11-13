@@ -6,7 +6,7 @@ import 'package:project_5/models/error_model.dart';
 import 'package:project_5/models/social_model.dart';
 
 //TODO: TEST THESE
-Future getAboutApi() async {
+Future getSocialData() async {
   final url = Uri.parse("https://bacend-fshi.onrender.com/user/social_media");
 
   final response = await http.get(url, headers: {
@@ -25,7 +25,7 @@ Future getAboutApi() async {
   }
 }
 
-Future<String> addProjects({
+Future<String> addSocial({
   required String userName,
   required String social,
 }) async {
@@ -49,7 +49,7 @@ Future<String> addProjects({
   }
 }
 
-Future deleteProject({required socialId}) async {
+Future deleteSocial({required socialId}) async {
   final url =
       Uri.parse("https://bacend-fshi.onrender.com/user/delete/social_media");
   final response = await http.delete(url, headers: {

@@ -54,24 +54,10 @@ Future<String> loginApi(
   }
 }
 
-void resetPasswordApi({required String email}) async {
-  final data = {
-    "email": email,
-  };
-  final url = Uri.parse("https://bacend-fshi.onrender.com/auth/rest_password");
-
-  final response = await http.post(url,
-      body: jsonEncode(data), headers: {"content-Type": "application/json"});
-}
-
 Future verificationApi(
     {required String otp, required String email, required String type}) async {
-  //login or registration rest
-  final data = {
-    "otp": otp, // 412958
-    "email": email,
-    "type": type
-  };
+  //type is login or registration or rest
+  final data = {"otp": otp, "email": email, "type": type};
 
   final url = Uri.parse("https://bacend-fshi.onrender.com/auth/verification");
 
@@ -89,3 +75,13 @@ Future verificationApi(
     return err.msg;
   }
 }
+
+// void resetPasswordApi({required String email}) async {
+//   final data = {
+//     "email": email,
+//   };
+//   final url = Uri.parse("https://bacend-fshi.onrender.com/auth/rest_password");
+//
+//   final response = await http.post(url,
+//       body: jsonEncode(data), headers: {"content-Type": "application/json"});
+// }

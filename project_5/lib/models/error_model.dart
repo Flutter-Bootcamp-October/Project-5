@@ -29,7 +29,7 @@ class Data {
   Data.fromJson(Map json);
 
   Map<String, dynamic> toJson() {
-    final _data = <String, dynamic>{};
-    return _data;
+    final data = <String, dynamic>{};
+    return data;
   }
 }
