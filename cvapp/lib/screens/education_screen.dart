@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cvapp/global.dart';
+import 'package:cvapp/models/edcuation_model.dart';
 import 'package:cvapp/models/skills_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
@@ -24,6 +25,7 @@ class EducationScreen extends StatefulWidget {
 
 class _EducationScreenState extends State<EducationScreen> {
   File? selectedimage;
+  List<educationmodel>? educationlist;
   bool isvalid = false;
   TextEditingController graduation_dateController = TextEditingController();
   TextEditingController universityController = TextEditingController();
@@ -62,7 +64,25 @@ class _EducationScreenState extends State<EducationScreen> {
           .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
+Future<void> fetcheducation({required String token}) async {
+  var url = Uri.parse("https://bacend-fshi.onrender.com/user/skills");
 
+  try {
+    var response = await http.get(url, headers: {"Authorization": "Bearer $token"});
+    print(response.body);
+
+    if (response.statusCode == 200) {
+      var data = json.decode(response.body)['data'] ;
+      setState(() {
+        educationlist = data.map((e) => educationmodel.fromJson(e)).toList();
+      });
+    } else {
+      print('Error: ${response.statusCode}');
+    }
+  } catch (e) {
+    print('Caught error: $e');
+  }
+}
   @override
   void initState() {
     super.initState();
@@ -104,7 +124,7 @@ class _EducationScreenState extends State<EducationScreen> {
           ),
           SinUpWedget(
               Controller: graduation_dateController,
-              labelText: " Enter your graduation_date"),
+              labelText: " Enter your graduation date as 02/11/2001"),
           SizedBox(height: 20),
           SinUpWedget(
               Controller: universityController,
@@ -122,11 +142,48 @@ class _EducationScreenState extends State<EducationScreen> {
           ElevatedButton(
               onPressed: () async {
                 await pushproject(token: token.toString());
+                await fetcheducation(token: token.toString());
                 print(token);
                 setState(() {});
               },
               child: Text("push")),
           SizedBox(height: 20),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+           SizedBox(
+             width: 300,height: 250,
+          child: educationlist == null
+            ? Center(child: CircularProgressIndicator())
+            : ListView.builder(
+                itemCount: educationlist!.length,
+                itemBuilder: (context, index) {
+                  return InkWell(
+                    onTap: () async {
+                    
+                      setState(() {});
+                    },
+                    child: Container(
+                      margin: EdgeInsets.all(8),
+                      padding: EdgeInsets.all(16),
+                      color: Colors.blue,
+                      child:Column(children: [Text("your college is ${educationlist![index].college.toString()}",),
+                      Text("you graduate at ${educationlist![index].graduationDate.toString()}"),
+                      Text("you graduate from ${educationlist![index].university.toString()}"),
+                      Text("your specialization is  ${educationlist![index].specialization.toString()}"),
+                      Text("your level is  ${educationlist![index].level.toString()}")
+                        
+                        
+                      ,],) 
+                    ),
+                  );
+                },
+              ),
+        ),
+
+
+            ],
+          ),
         ],
       ),
     );

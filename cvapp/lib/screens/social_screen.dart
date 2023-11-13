@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cvapp/models/skills_model.dart';
+import 'package:cvapp/models/social_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
 import 'package:cvapp/wedgets/profile_image.dart';
@@ -22,6 +23,8 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> {
+    List<SocialMediaModel> socialMediaList = [];
+
   bool isvalid = false;
   TextEditingController usernamecontroller = TextEditingController();
   TextEditingController socialcontroller = TextEditingController();
@@ -33,7 +36,7 @@ class _SocialScreenState extends State<SocialScreen> {
         "social": socialcontroller.text,
       };
       var url = Uri.parse(
-          ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.addsocial);
+          "https://bacend-fshi.onrender.com/user/add/social_media");
       var response = await http.post(url,
           headers: {"authorization": token}, body: json.encode(body));
       print('Response status: ${response.statusCode}');
@@ -67,6 +70,42 @@ class _SocialScreenState extends State<SocialScreen> {
     });
   }
 
+Future<void> _fetchSocialMediaData({required String token}) async {
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/social_media");
+    try {
+      var response = await http.get(url, headers: {"Authorization": "Bearer $token"});
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body)['data'] as List;
+        setState(() {
+          socialMediaList = jsonData.map((e) => SocialMediaModel.fromJson(e)).toList();
+        });
+      } else {
+        print('Error fetching data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
+
+Future<void> removeSocialMedia(int id) async {
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/delete/social_media");
+    try {
+      var response = await http.delete(url,
+          headers: {"Authorization": "Bearer $token"},
+          body: json.encode({"id_social": id}));
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Social media deleted successfully')));
+        _fetchSocialMediaData(token: '$token'); // Refresh the list after deletion
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to delete social media.')));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -91,13 +130,47 @@ class _SocialScreenState extends State<SocialScreen> {
           ElevatedButton(
               onPressed: () async {
                 await pushproject(token: token.toString());
+                await _fetchSocialMediaData(token: token.toString());
                 print(token);
                 setState(() {});
               },
               child: Text("push")),
           SizedBox(height: 20),
+          SizedBox(
+            width: 200,height: 200,
+            child: ListView.builder(
+              itemCount: socialMediaList.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  margin: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(16),
+                  color: Colors.blue,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Username: ${socialMediaList[index].id}\nSocial: ${socialMediaList[index].social}',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                      TextButton(
+                        onPressed: () => removeSocialMedia(socialMediaList[index].id!),
+                        child: Text('Delete', style: TextStyle(color: Colors.red)),
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+          ),
+        
+      
+    
         ],
       ),
     );
   }
 }
+        
+      
+    
+
