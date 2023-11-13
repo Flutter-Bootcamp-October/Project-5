@@ -75,7 +75,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           MaterialPageRoute(
                               builder: (context) => VerificationScreen(
                                     email: emailController.text,
-                                    type: 'ogin',
+                                    type: 'login',
                                   )),
                         );
                       } on FormatException catch (error) {

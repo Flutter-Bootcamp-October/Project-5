@@ -65,6 +65,7 @@ class _SignUpSreenState extends State<SignUpSreen> {
               ),
               const SizedBox(height: 20),
               TextField(
+                obscureText: hidePassword,
                 controller: passwordController,
                 decoration: returnDec(
                     icon: InkWell(

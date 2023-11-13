@@ -23,7 +23,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   late String userToken;
   @override
   void initState() {
-    userToken = getToken() as String;
+    userToken = getToken();
     super.initState();
   }
 
@@ -48,7 +48,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     ]);
   }
 
-  Future<String> getToken() async {
+  String getToken() {
     return prefs.getString("token") ?? "";
   }
 
