@@ -1,10 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
+import 'package:pcv/screens/loading_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:pcv/screens/home_screen.dart';
 import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
@@ -55,7 +55,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                         Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => const HomeScreen(),
+                              builder: (context) => const LoadingPage(),
                             ));
                       } else {
                         Navigator.push(

@@ -35,63 +35,70 @@ class _AddSocialState extends State<AddSocial> {
   TextEditingController usernameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: appBarMethod(title: "Add Social"),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          TextFieldWidget(
-              text: 'username', obscure: false, controller: usernameController),
-          DropdownMenu<String>(
-            width: MediaQuery.of(context).size.width * 0.9,
-            inputDecorationTheme: const InputDecorationTheme(
-                enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.horizontal(
-                        left: Radius.circular(25),
-                        right: Radius.circular(25)))),
-            initialSelection: _socialList.first,
-            onSelected: (String? value) {
-              // This is called when the user selects an item.
-              setState(() {
-                dropdownValue = value!;
-              });
-            },
-            dropdownMenuEntries:
-                _socialList.map<DropdownMenuEntry<String>>((String value) {
-              return DropdownMenuEntry(value: value, label: value);
-            }).toList(),
-          ),
-          ButtonWidget(
-              onPressed: () async {
-                try {
-                  final SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
-                  final token = prefs.getString('token');
-                  final Response resp = await network.addsocialMethod(
-                      token: token!,
-                      body: {
-                        "username": usernameController.text,
-                        "social": dropdownValue
-                      });
-
-                  if (resp.statusCode == 200) {
-                    Navigator.of(context).pushAndRemoveUntil(
-                        MaterialPageRoute(
-                            builder: (context) => const SocialScreen()),
-                        (Route<dynamic> route) => false);
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            (await jsonDecode(resp.body))["msg"].toString())));
-                  }
-                } catch (e) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(e.toString())));
-                }
+    return Container(
+       decoration: const BoxDecoration(
+          gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: [Colors.pink, Colors.lightBlue])),
+      child: Scaffold(
+        appBar: appBarMethod(title: "Add Social"),
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            TextFieldWidget(
+                text: 'username', obscure: false, controller: usernameController),
+            DropdownMenu<String>(
+              width: MediaQuery.of(context).size.width * 0.9,
+              inputDecorationTheme: const InputDecorationTheme(
+                  enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.horizontal(
+                          left: Radius.circular(25),
+                          right: Radius.circular(25)))),
+              initialSelection: _socialList.first,
+              onSelected: (String? value) {
+                // This is called when the user selects an item.
+                setState(() {
+                  dropdownValue = value!;
+                });
               },
-              text: 'Add')
-        ],
+              dropdownMenuEntries:
+                  _socialList.map<DropdownMenuEntry<String>>((String value) {
+                return DropdownMenuEntry(value: value, label: value);
+              }).toList(),
+            ),
+            ButtonWidget(
+                onPressed: () async {
+                  try {
+                    final SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    final token = prefs.getString('token');
+                    final Response resp = await network.addsocialMethod(
+                        token: token!,
+                        body: {
+                          "username": usernameController.text,
+                          "social": dropdownValue
+                        });
+    
+                    if (resp.statusCode == 200) {
+                      Navigator.of(context).pushAndRemoveUntil(
+                          MaterialPageRoute(
+                              builder: (context) => const SocialScreen()),
+                          (Route<dynamic> route) => false);
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                              (await jsonDecode(resp.body))["msg"].toString())));
+                    }
+                  } catch (e) {
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(SnackBar(content: Text(e.toString())));
+                  }
+                },
+                text: 'Add')
+          ],
+        ),
       ),
     );
   }

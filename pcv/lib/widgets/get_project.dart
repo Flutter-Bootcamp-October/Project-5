@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:pcv/screens/project_screen.dart';
+import 'package:pcv/widgets/title_widget.dart';
 
 class GetProjectWidget extends StatefulWidget {
   const GetProjectWidget({super.key});
@@ -14,34 +15,46 @@ class _GetProjectWidgetState extends State<GetProjectWidget> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        if (projects.isNotEmpty) const Text('project'),
-        Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: projects
-                .map((e) => Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 4, vertical: 4),
-                      child: Container(
-                        width: MediaQuery.of(context).size.width * 0.5,
+        const TitlesWidget(
+          titles: 'Project',
+        ),
+        if (projects.isNotEmpty)
+          GridView.count(
+              physics: const NeverScrollableScrollPhysics(),
+              crossAxisCount: 3,
+              childAspectRatio: 1,
+              crossAxisSpacing: 4,
+              mainAxisSpacing: 4,
+              shrinkWrap: true,
+              children: projects
+                  .map((e) => Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 4, vertical: 4),
+                        child: Container(
+                          width: 50,
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(15),
-                          color: Colors.grey.shade100.withOpacity(0.5),
+              color: Colors.grey.shade100.withOpacity(0.2),
+              borderRadius: const BorderRadius.horizontal(
+                  left: Radius.circular(15), right: Radius.circular(15))),
+                          child: Column(children: [
+                            Text(
+                              "${e["name"]}",
+                              style: const TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold),
+                            ),
+                            Text(
+                              "${e["description"]}",
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                            Text(
+                              "${e["state"]}",
+                              style: const TextStyle(color: Colors.black),
+                            ),
+                          ]),
                         ),
-                        child: ListTile(
-                          title: Text("${e["name"]}"),
-                          subtitle: Text(
-                            "${e["description"]}",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                          trailing: Text(
-                            "${e["state"]}",
-                            style: TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      ),
-                    ))
-                .toList())
+                      ))
+                  .toList())
       ],
     );
   }

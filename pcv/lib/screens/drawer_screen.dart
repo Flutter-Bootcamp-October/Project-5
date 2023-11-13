@@ -52,24 +52,57 @@ class _DrawerScreensState extends State<DrawerScreens> {
       child: Column(
         children: [
           DrawerHeader(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.transparent,
             ),
             child: Column(
               children: [
-                Text('Services'),
+                const Text('Services'),
                 if (about.isNotEmpty)
                   ClipOval(
-                      child: Container(
+                      child: SizedBox(
                           height: 120,
                           width: 120,
-                          child: Image.network(about["image"])))
+                          child: InkWell(
+                              onTap: () async {
+                                try {
+                                  XFile? image = await picker.pickImage(
+                                      source: ImageSource.gallery);
+                                  imageFile = File(image!.path);
+                                  final SharedPreferences prefs =
+                                      await SharedPreferences.getInstance();
+                                  final token = prefs.getString('token');
+                                  final Response resp =
+                                      await network.aboutUploadMethod(
+                                    token: token!,
+                                    image: imageFile!,
+                                  );
+
+                                  if (resp.statusCode == 200) {
+                                    Navigator.of(context).pushAndRemoveUntil(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const SkillScreen()),
+                                        (Route<dynamic> route) => false);
+                                  } else {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                            content: Text((await jsonDecode(
+                                                    resp.body))["msg"]
+                                                .toString())));
+                                  }
+                                } catch (e) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(content: Text(e.toString())));
+                                }
+                              },
+                              child: Image.network(about["image"]))))
               ],
             ),
           ),
           ListTile(
             title: const Text('Home'),
-            trailing: Icon(Icons.home_outlined),
+            trailing: const Icon(Icons.home_outlined),
             onTap: () {
               Navigator.push(
                   context,

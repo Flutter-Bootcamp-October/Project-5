@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pcv/screens/home_screen.dart';
+import 'package:pcv/screens/loading_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -12,9 +12,12 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-          textTheme:
-              const TextTheme(bodyLarge: TextStyle(color: Colors.white))),
-      home: const HomeScreen(),
+          textTheme: const TextTheme(
+        bodySmall: TextStyle(color: Colors.white),
+        bodyMedium: TextStyle(color: Colors.white),
+        // titleMedium: TextStyle(color: Colors.white),
+      )),
+      home: const LoadingPage(),
     );
   }
 }

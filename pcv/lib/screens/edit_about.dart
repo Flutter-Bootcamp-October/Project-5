@@ -23,6 +23,7 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
     super.initState();
     _loadingAbout();
   }
+
   _loadingAbout() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
@@ -56,79 +57,87 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
     return Scaffold(
         appBar: appBarMethod(title: "Update Information"),
         resizeToAvoidBottomInset: true,
-        body: SafeArea(
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  TextFieldWidget(
-                    text: 'name',
-                    obscure: false,
-                    controller: usernameController,
-                  ),
-                  TextFieldWidget(
-                    text: 'title Position',
-                    obscure: false,
-                    controller: titPoController,
-                  ),
-                  TextFieldWidget(
-                    text: 'Phone',
-                    obscure: false,
-                    controller: phoneController,
-                  ),
-                  TextFieldWidget(
-                    text: 'location',
-                    obscure: false,
-                    controller: locationController,
-                  ),
-                  TextFieldWidget(
-                    text: 'about',
-                    obscure: false,
-                    controller: aboutController,
-                  ),
-                  TextFieldWidget(
-                    text: 'birthday',
-                    obscure: false,
-                    controller: birthdayController,
-                  ),
-                  ButtonWidget(
-                    onPressed: () async {
-                      try {
-                        final SharedPreferences prefs =
-                            await SharedPreferences.getInstance();
-                        final token = prefs.getString('token');
+        body: Container(
+          decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                  begin: Alignment.bottomCenter,
+                  end: Alignment.topCenter,
+                  colors: [Colors.pink, Colors.lightBlue])),
+          child: SafeArea(
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    TextFieldWidget(
+                      text: 'name',
+                      obscure: false,
+                      controller: usernameController,
+                    ),
+                    TextFieldWidget(
+                      text: 'title Position',
+                      obscure: false,
+                      controller: titPoController,
+                    ),
+                    TextFieldWidget(
+                      text: 'Phone',
+                      obscure: false,
+                      controller: phoneController,
+                    ),
+                    TextFieldWidget(
+                      text: 'location',
+                      obscure: false,
+                      controller: locationController,
+                    ),
+                    TextFieldWidget(
+                      text: 'about',
+                      obscure: false,
+                      controller: aboutController,
+                    ),
+                    TextFieldWidget(
+                      text: 'birthday',
+                      obscure: false,
+                      controller: birthdayController,
+                    ),
+                    ButtonWidget(
+                      onPressed: () async {
+                        try {
+                          final SharedPreferences prefs =
+                              await SharedPreferences.getInstance();
+                          final token = prefs.getString('token');
 
-                        final Response resp =
-                            await network.editAboutMethod(token: token!, body: {
-                          "name": usernameController.text,
-                          "phone": phoneController.text,
-                          "title_position": titPoController.text,
-                          "location": locationController.text,
-                          "about": aboutController.text,
-                          "birthday": birthdayController.text,
-                        });
+                          final Response resp = await network
+                              .editAboutMethod(token: token!, body: {
+                            "name": usernameController.text,
+                            "phone": phoneController.text,
+                            "title_position": titPoController.text,
+                            "location": locationController.text,
+                            "about": aboutController.text,
+                            "birthday": birthdayController.text,
+                          });
 
-                        if (resp.statusCode == 200) {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const HomeScreen()));
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text((await jsonDecode(resp.body))["msg"]
-                                  .toString())));
+                          if (resp.statusCode == 200) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const HomeScreen()));
+                          } else {
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(
+                                    (await jsonDecode(resp.body))["msg"]
+                                        .toString())));
+                          }
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(content: Text(e.toString())));
                         }
-                      } catch (e) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(e.toString())));
-                      }
-                    },
-                    text: 'Register',
-                  ),
-                ],
+                      },
+                      text: 'Register',
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

@@ -65,7 +65,8 @@ class Network {
 
   aboutUploadMethod({required String token, required File image}) async {
     var url = Uri.https(_apiUrl, _upload);
-    var response = await http.post(url, headers: {"Authorization": token},body: {"image": image.readAsBytes()});
+    var response = await http.post(url,
+        headers: {"Authorization": token}, body: await image.readAsBytes());
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     return response;
