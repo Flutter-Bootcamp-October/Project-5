@@ -7,7 +7,7 @@ class Skill {
 
   factory Skill.fromJson(Map<String, dynamic> json) {
     return Skill(
-      id: json['id'],
+      id: json['id']as int ,
       userId: json['user_id'],
       skill: json['skill'],
     );

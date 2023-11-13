@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:cvapp/models/getprjectmodel%20.dart';
 import 'package:cvapp/screens/add_project_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,3 +14,5 @@ Future pickImageFromGallery() async {
     selectedimage = File(returnedimage.path);
   }
 }
+
+  

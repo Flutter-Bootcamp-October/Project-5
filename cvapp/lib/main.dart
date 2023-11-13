@@ -1,6 +1,7 @@
 import 'package:cvapp/screens/add_project_screen.dart';
 import 'package:cvapp/screens/home_screen.dart';
 import 'package:cvapp/screens/register_screen.dart';
+import 'package:cvapp/screens/skills_screen.dart';
 import 'package:cvapp/screens/test.dart';
 import 'package:cvapp/screens/welocme_screen.dart';
 import 'package:flutter/material.dart';
