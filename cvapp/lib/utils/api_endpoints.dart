@@ -7,4 +7,5 @@ class AuthEndPoints {
   final registerEmail = "auth/registration";
   final String verification = "auth/verification";
   final String login = "auth/login";
+    final String project = "user/add/project";
 }
