@@ -50,7 +50,6 @@ class _VerificationScreenState extends State<VerificationScreen> {
                             jsonDecode(resp.body)['data']['token'];
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
-                        print(token);
                         await prefs.setString('token', token);
                         Navigator.push(
                             context,

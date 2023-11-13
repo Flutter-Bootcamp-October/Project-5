@@ -11,6 +11,7 @@ import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/screens/skill_screen.dart';
 import 'package:pcv/screens/social_screen.dart';
+import 'package:pcv/screens/user.dart';
 import 'package:pcv/widgets/get_about.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -30,6 +31,7 @@ class _LoadingPageState extends State<LoadingPage> {
     _loedingProject();
     _loedingSkill();
     _loedingSocial();
+    _loedingUser();
     Future.delayed(const Duration(seconds: 3), () async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
@@ -41,7 +43,6 @@ class _LoadingPageState extends State<LoadingPage> {
             MaterialPageRoute(builder: (context) => const HomeScreen()),
             (route) => false);
         setState(() {});
-        print(token);
       }
       if (res.statusCode == 401) {
         Navigator.pushAndRemoveUntil(
@@ -66,20 +67,6 @@ class _LoadingPageState extends State<LoadingPage> {
     );
   }
 
-  // _loadingAbout() async {
-  //   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  //   final token = prefs.getString('token');
-  //   final Response res = await network.aboutMethod(token: token!);
-  //   if (res.statusCode == 401) {
-  //     Navigator.pushAndRemoveUntil(
-  //         context,
-  //         MaterialPageRoute(
-  //           builder: (context) => const SignInScreen(),
-  //         ),
-  //         (route) => false);
-  //   }
-  // }
-
   _loedingEducation() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
@@ -98,7 +85,7 @@ class _LoadingPageState extends State<LoadingPage> {
   _loedingSkill() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    final Response res = await network.SkillMethod(token: token!);
+    final Response res = await network.skillMethod(token: token!);
     try {
       if (res.statusCode == 200) {
         skills = (await jsonDecode(res.body))["data"];
@@ -130,7 +117,23 @@ class _LoadingPageState extends State<LoadingPage> {
     try {
       if (res.statusCode == 200) {
         social = (await jsonDecode(res.body))["data"];
-        
+
+        setState(() {});
+        // ignore: empty_catches
+      }
+    } catch (error) {
+      //
+    }
+  }
+
+  _loedingUser() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    final token = prefs.getString('token');
+    final Response res = await network.getUserMethod(token: token!);
+    try {
+      if (res.statusCode == 200) {
+        user = (await jsonDecode(res.body))["data"];
+
         setState(() {});
         // ignore: empty_catches
       }

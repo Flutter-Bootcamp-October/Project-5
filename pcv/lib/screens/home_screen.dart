@@ -62,7 +62,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                     if (projects.isNotEmpty) const GetProjectWidget(),
                     if (social.isNotEmpty) const GetSocial(),
-                    SizedBox(
+                    const SizedBox(
                       height: 8,
                     )
                   ]),

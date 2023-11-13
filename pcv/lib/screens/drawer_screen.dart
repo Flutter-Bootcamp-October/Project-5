@@ -12,6 +12,7 @@ import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/screens/skill_screen.dart';
 import 'package:pcv/screens/social_screen.dart';
+import 'package:pcv/screens/user.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -51,55 +52,45 @@ class _DrawerScreensState extends State<DrawerScreens> {
     return SafeArea(
       child: Column(
         children: [
-          DrawerHeader(
-            decoration: const BoxDecoration(
-              color: Colors.transparent,
-            ),
-            child: Column(
-              children: [
-                const Text('Services'),
-                if (about.isNotEmpty)
-                  ClipOval(
-                      child: SizedBox(
-                          height: 120,
-                          width: 120,
-                          child: InkWell(
-                              onTap: () async {
-                                try {
-                                  XFile? image = await picker.pickImage(
-                                      source: ImageSource.gallery);
-                                  imageFile = File(image!.path);
-                                  final SharedPreferences prefs =
-                                      await SharedPreferences.getInstance();
-                                  final token = prefs.getString('token');
-                                  final Response resp =
-                                      await network.aboutUploadMethod(
-                                    token: token!,
-                                    image: imageFile!,
-                                  );
+          if (about.isNotEmpty)
+            ClipOval(
+                child: SizedBox(
+                    height: 120,
+                    width: 120,
+                    child: InkWell(
+                        onTap: () async {
+                          try {
+                            XFile? image = await picker.pickImage(
+                                source: ImageSource.gallery);
+                            imageFile = File(image!.path);
+                            final SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            final token = prefs.getString('token');
+                            final Response resp =
+                                await network.aboutUploadMethod(
+                              token: token!,
+                              image: imageFile!,
+                            );
 
-                                  if (resp.statusCode == 200) {
-                                    Navigator.of(context).pushAndRemoveUntil(
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const SkillScreen()),
-                                        (Route<dynamic> route) => false);
-                                  } else {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
-                                            content: Text((await jsonDecode(
-                                                    resp.body))["msg"]
-                                                .toString())));
-                                  }
-                                } catch (e) {
-                                  ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(content: Text(e.toString())));
-                                }
-                              },
-                              child: Image.network(about["image"]))))
-              ],
-            ),
-          ),
+                            if (resp.statusCode == 200) {
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const SkillScreen()),
+                                  (Route<dynamic> route) => false);
+                            } else {
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                  SnackBar(
+                                      content: Text(
+                                          (await jsonDecode(resp.body))["msg"]
+                                              .toString())));
+                            }
+                          } catch (e) {
+                            ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(content: Text(e.toString())));
+                          }
+                        },
+                        child: Image.network(about["image"])))),
           ListTile(
             title: const Text('Home'),
             trailing: const Icon(Icons.home_outlined),
@@ -173,6 +164,19 @@ class _DrawerScreensState extends State<DrawerScreens> {
                   context,
                   MaterialPageRoute(
                     builder: (context) => const EducationScreen(),
+                  ));
+            },
+          ),
+          const Divider(
+            color: Colors.black45,
+          ),
+          ListTile(
+            title: const Text('User'),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const UserScreen(),
                   ));
             },
           ),

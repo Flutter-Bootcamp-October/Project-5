@@ -18,7 +18,7 @@ class _GetEducationState extends State<GetEducation> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          TitlesWidget(titles: 'Education'),
+          const TitlesWidget(titles: 'Education'),
           if (education.isNotEmpty)
             GridView.count(
                 physics: const NeverScrollableScrollPhysics(),

@@ -23,43 +23,34 @@ class Network {
   final String _education = '/user/education';
   final String _addEducation = '/user/add/education';
   final String _deleteEducation = '/user/delete/education';
+  final String _getUser = '/user/get_users';
   loginMethod(Map body) async {
     var url = Uri.https(_apiUrl, _login);
     var response = await http.post(url, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
   registerMethod(Map body) async {
     var url = Uri.https(_apiUrl, _register);
     var response = await http.post(url, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
   verificationMethod(Map body) async {
     var url = Uri.https(_apiUrl, _verification);
     var response = await http.post(url, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
   restMethod(Map body) async {
     var url = Uri.https(_apiUrl, _rest);
     var response = await http.post(url, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
   aboutMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _about);
     var response = await http.get(url, headers: {"Authorization": token});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -67,8 +58,6 @@ class Network {
     var url = Uri.https(_apiUrl, _upload);
     var response = await http.post(url,
         headers: {"Authorization": token}, body: await image.readAsBytes());
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -76,8 +65,6 @@ class Network {
     var url = Uri.https(_apiUrl, _editAbout);
     var response = await http.put(url,
         headers: {"Authorization": token}, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -89,16 +76,12 @@ class Network {
       url,
       headers: {"Authorization": token},
     );
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
   projectMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _project);
     var response = await http.get(url, headers: {"Authorization": token});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -106,8 +89,6 @@ class Network {
     var url = Uri.https(_apiUrl, _addProject);
     var response = await http.post(url,
         headers: {"Authorization": token}, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -115,16 +96,12 @@ class Network {
     var url = Uri.https(_apiUrl, _deleteProject);
     var response = await http.delete(url,
         headers: {"Authorization": token}, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
-  SkillMethod({required String token}) async {
+  skillMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _skill);
     var response = await http.get(url, headers: {"Authorization": token});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -132,8 +109,6 @@ class Network {
     var url = Uri.https(_apiUrl, _addSkill);
     var response = await http.post(url,
         headers: {"Authorization": token}, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -141,16 +116,12 @@ class Network {
     var url = Uri.https(_apiUrl, _deleteSkill);
     var response = await http.delete(url,
         headers: {"Authorization": token}, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
   socialMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _social);
     var response = await http.get(url, headers: {"Authorization": token});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -158,8 +129,6 @@ class Network {
     var url = Uri.https(_apiUrl, _addSocial);
     var response = await http.post(url,
         headers: {"Authorization": token}, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -167,16 +136,12 @@ class Network {
     var url = Uri.https(_apiUrl, _deleteSocial);
     var response = await http.delete(url,
         headers: {"Authorization": token}, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
   educationMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _education);
     var response = await http.get(url, headers: {"Authorization": token});
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -184,8 +149,6 @@ class Network {
     var url = Uri.https(_apiUrl, _addEducation);
     var response = await http.post(url,
         headers: {"Authorization": token}, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
     return response;
   }
 
@@ -193,8 +156,12 @@ class Network {
     var url = Uri.https(_apiUrl, _deleteEducation);
     var response = await http.delete(url,
         headers: {"Authorization": token}, body: jsonEncode(body));
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+    return response;
+  }
+
+  getUserMethod({required String token}) async {
+    var url = Uri.https(_apiUrl, _getUser);
+    var response = await http.get(url, headers: {"Authorization": token});
     return response;
   }
 }

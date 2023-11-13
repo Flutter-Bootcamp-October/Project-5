@@ -15,7 +15,7 @@ class _GetSkillState extends State<GetSkill> {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        TitlesWidget(titles: 'Skill'),
+        const TitlesWidget(titles: 'Skill'),
         if (skills.isNotEmpty)
           GridView.count(
               physics: const NeverScrollableScrollPhysics(),
