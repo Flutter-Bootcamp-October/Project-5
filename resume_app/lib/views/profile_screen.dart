@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:resume_app/consts/buttons.dart';
 import 'package:resume_app/consts/colors.dart';
@@ -41,9 +43,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           builder: (context, snapshot) {
             if (snapshot.hasData) {
               return const UserDisplay();
-            } else {
-              return const Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasError) {
+              return const Center(child: Text("Error while getting data"));
             }
+            return const Center(child: CircularProgressIndicator());
           })
     ]);
   }
@@ -55,10 +58,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
   _loadInfo() async {
     try {
       userAbout = await AboutServ().getAbout(token: userToken);
+      print("-----------------About Set Successful-----------------");
       userProjects = await ProjectServ().getProjects(token: userToken);
+      print("-----------------project Set Successful-----------------");
       userEducation = await EducationServ().getEducation(token: userToken);
+      print("-----------------education Set Successful-----------------");
       userSkills = await SkillServ().getSkills(token: userToken);
+      print("-----------------skills Set Successful-----------------");
       userSocials = await SocialServ().getSocials(token: userToken);
+      print("-----------------social Set Successful---------------------");
+      return "loaded";
     } on FormatException catch (error) {
       if (error.message.toString().contains("token") ||
           error.message.toString().contains("Token")) {
@@ -94,12 +103,6 @@ class _UserDisplayState extends State<UserDisplay> {
           elevation: 0,
           title: FittedBox(
             child: Row(children: [
-              Container(
-                color: Colors.white,
-                width: 170,
-                height: 180,
-              ),
-              const SizedBox(width: 15),
               Text(
                 "Rafal Abu Eshey",
                 style: TextStyle(
@@ -107,7 +110,13 @@ class _UserDisplayState extends State<UserDisplay> {
                     color: Colors.white,
                     fontWeight: FontWeight.bold,
                     shadows: returnShadows()),
-              )
+              ),
+              const SizedBox(width: 15),
+              Container(
+                color: Colors.white,
+                width: 170,
+                height: 180,
+              ),
             ]),
           ),
           bottom: tabBar,
