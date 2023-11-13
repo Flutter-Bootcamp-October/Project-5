@@ -1,4 +1,5 @@
 import 'package:cv_app/globals/colors.dart';
+import 'package:cv_app/screens/edit_about_screen.dart';
 import 'package:cv_app/services/about.dart';
 import 'package:flutter/material.dart';
 
@@ -41,7 +42,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 fontWeight: FontWeight.bold)),
                         const SizedBox(width: 88),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const EditAboutScreen()));
+                          },
                           icon: const Icon(
                             Icons.edit_location_sharp,
                             color: mainColor,
