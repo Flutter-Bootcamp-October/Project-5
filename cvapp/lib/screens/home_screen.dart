@@ -29,51 +29,30 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   File? selectedimage;
-
-  Future pushproject({required String token}) async {
-    try {
-      var url = Uri.parse("https://bacend-fshi.onrender.com/user/add/project");
-      var response = await http.post(url, headers: {"authorization": token});
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
-      Map body = {
-        'projectname': "my",
-        'description': "sssss",
-        'state': "completed",
-      };
-
-      if (response.statusCode == 200) {
-        return SkillsModel.fromJson(json.decode(response.body));
-      } else {
-        // Handle different responses
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to push project.')));
-      }
-    } catch (e) {
-      // Handle the exception
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
-    }
-  }
-
   Future imageupload({required String token}) async {
     try {
-      var url = Uri.parse("https://bacend-fshi.onrender.com/user/upload");
-      var response = await http.post(url, headers: {"authorization": token});
-      final body = await selectedimage?.readAsBytes();
+      var request = http.MultipartRequest(
+          'POST', Uri.parse("https://bacend-fshi.onrender.com/user/upload"));
+      request.headers.addAll({"authorization": token});
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      if (selectedimage != null) {
+        request.files.add(
+            await http.MultipartFile.fromPath('image', selectedimage!.path));
+      }
 
+      var response = await request.send();
+      print(response.statusCode);
+      print(response.reasonPhrase);
+      print(response.request);
       if (response.statusCode == 200) {
-        return SkillsModel.fromJson(json.decode(response.body));
+        final responseData = await response.stream.bytesToString();
+        return SkillsModel.fromJson(json.decode(responseData));
       } else {
-        // Handle different responses
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to push project.')));
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+            content: Text(
+                'Failed to upload image. Status code: ${response.statusCode}')));
       }
     } catch (e) {
-      // Handle the exception
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
@@ -181,11 +160,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            ElevatedButton(
-                onPressed: () async {
-                  await pushproject(token: token.toString());
-                },
-                child: Text("push"))
           ],
         ),
       ),

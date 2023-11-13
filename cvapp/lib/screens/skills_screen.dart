@@ -24,20 +24,8 @@ class SkillsScreen extends StatefulWidget {
   State<SkillsScreen> createState() => _SkillsScreenState();
 }
 
-class Item {
-  String projectname;
-  String description;
-  String state;
-
-  Item(
-      {required this.projectname,
-      required this.description,
-      required this.state});
-}
-
 class _SkillsScreenState extends State<SkillsScreen> {
   File? selectedimage;
-  List<Item> items = [];
   bool isvalid = false;
   TextEditingController skillcontroller = TextEditingController();
 
@@ -78,6 +66,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
       print("success");
 
       var c = Skill.fromJson(jsonDecode(response.body));
+      skillLsit.add(c);
     } else {
       throw Exception('Failed to load skills');
     }
@@ -87,18 +76,6 @@ class _SkillsScreenState extends State<SkillsScreen> {
   void initState() {
     super.initState();
     _loadToken();
-    fetchSkills(
-            token:
-                "eyJhbGciOiJIUzI1NiIsImtpZCI6Ikc4c2lRbVB5dGw3Vzc2K00iLCJ0eXAiOiJKV1QifQ.eyJhdWQiOiJhdXRoZW50aWNhdGVkIiwiZXhwIjoxNjk5ODc2NDEwLCJpYXQiOjE2OTk4NTg0MTAsImlzcyI6Imh0dHBzOi8vbXpranV5cnZ3eHVsc3d3cmlvcm0uc3VwYWJhc2UuY28vYXV0aC92MSIsInN1YiI6ImUwOWUxOTk1LTgzNDYtNDdjNC1hOGExLWNjYWUwNDM1M2VhMSIsImVtYWlsIjoieGF4ZW05OTQ5OUBtYWlubWlsZS5jb20iLCJwaG9uZSI6IiIsImFwcF9tZXRhZGF0YSI6eyJwcm92aWRlciI6ImVtYWlsIiwicHJvdmlkZXJzIjpbImVtYWlsIl19LCJ1c2VyX21ldGFkYXRhIjp7fSwicm9sZSI6ImF1dGhlbnRpY2F0ZWQiLCJhYWwiOiJhYWwxIiwiYW1yIjpbeyJtZXRob2QiOiJvdHAiLCJ0aW1lc3RhbXAiOjE2OTk4NTg0MTB9XSwic2Vzc2lvbl9pZCI6IjIyMGMzMGI4LWM4YzAtNDQxMy1hZWMyLTRlNTUzZmI2ZDc5NSJ9.FcnDT2kDwjS76tDD5PBdtovSK_1sWwnCGCnUHUtQmkU")
-        .then((skills) {
-      setState(() {
-        // Now 'skills' is a List<Skill> populated with your data
-        for (var skill in skills) {
-          print(
-              'Skill: ${skill.skill}, ID: ${skill.id}, User ID: ${skill.userId}');
-        }
-      });
-    });
   }
 
   Future<void> _loadToken() async {
@@ -142,6 +119,11 @@ class _SkillsScreenState extends State<SkillsScreen> {
                 setState(() {});
               },
               child: Text("get")),
+          ElevatedButton(
+              onPressed: () {
+                print(skillLsit[0].skill);
+              },
+              child: Text("print")),
         ],
       ),
     );
