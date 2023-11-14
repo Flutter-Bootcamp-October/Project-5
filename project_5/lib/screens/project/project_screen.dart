@@ -15,9 +15,8 @@ class ProjectScreen extends StatefulWidget {
 class _ProjectScreenState extends State<ProjectScreen> {
   @override
   void initState() {
-    //get project data
-    //list data in rows then add delete button on the row of project
     super.initState();
+    setState(() {});
   }
 
   List<ProjectModel> projectList = [];
@@ -123,10 +122,10 @@ class _ProjectScreenState extends State<ProjectScreen> {
                   return const Center(child: CircularProgressIndicator());
                 } else {
                   print(snapshot.data?.data);
-                  if (snapshot.data!.data!.isNotEmpty) {
+                  if (snapshot.data!.data.isNotEmpty) {
                     return ListView.builder(
                         shrinkWrap: true,
-                        itemCount: snapshot.data!.data?.length ?? 0,
+                        itemCount: snapshot.data?.data.length,
                         itemBuilder: (BuildContext context, int index) {
                           return Padding(
                             padding: const EdgeInsets.symmetric(
@@ -142,7 +141,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
                                       Row(
                                         children: [
                                           Text(
-                                            "ID: ${snapshot.data!.data![index].id}",
+                                            "ID: ${snapshot.data!.data[index].id}",
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500),
@@ -155,18 +154,18 @@ class _ProjectScreenState extends State<ProjectScreen> {
                                                       .data!.data[index].id
                                                       .toString());
                                               projectList.remove(snapshot
-                                                  .data!.data![index].id);
+                                                  .data!.data[index].id);
                                               setState(() {});
                                             },
                                             child: Icon(
-                                              Icons.edit,
-                                              color: Colors.grey,
+                                              Icons.delete,
+                                              color: Colors.red.shade200,
                                             ),
                                           ),
                                         ],
                                       ),
                                       Text(
-                                        "name: ${snapshot.data!.data![index].name}",
+                                        "name: ${snapshot.data!.data[index].name}",
                                         style: TextStyle(
                                             fontSize: 16,
                                             fontWeight: FontWeight.w500),
@@ -178,22 +177,6 @@ class _ProjectScreenState extends State<ProjectScreen> {
                                             style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.w500),
-                                          ),
-                                          Spacer(),
-                                          InkWell(
-                                            onTap: () async {
-                                              await apimethod.removeProject(
-                                                  idProject: snapshot
-                                                      .data!.data[index].id
-                                                      .toString());
-                                              projectList.remove(snapshot
-                                                  .data!.data![index].id);
-                                              setState(() {});
-                                            },
-                                            child: Icon(
-                                              Icons.delete,
-                                              color: Colors.red.shade200,
-                                            ),
                                           ),
                                         ],
                                       ),

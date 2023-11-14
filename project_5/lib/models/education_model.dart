@@ -1,25 +1,25 @@
-class Education {
-  Education({
+class EducationModel {
+  EducationModel({
     required this.msg,
     required this.data,
     required this.codeState,
   });
   late final String msg;
-  late final Data data;
+  late final List<Data>? data;
   late final int codeState;
 
-  Education.fromJson(Map<String, dynamic> json) {
+  EducationModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
-    data = Data.fromJson(json['data']);
+    data = List.from(json['data']).map((e) => Data.fromJson(e)).toList();
     codeState = json['codeState'];
   }
 
   Map<String, dynamic> toJson() {
-    final vData = <String, dynamic>{};
-    vData['msg'] = msg;
-    vData['data'] = data.toJson();
-    vData['codeState'] = codeState;
-    return vData;
+    final _data = <String, dynamic>{};
+    _data['msg'] = msg;
+    _data['data'] = data?.map((e) => e.toJson()).toList();
+    _data['codeState'] = codeState;
+    return _data;
   }
 }
 
@@ -52,14 +52,14 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final vData = <String, dynamic>{};
-    vData['id'] = id;
-    vData['user_id'] = userId;
-    vData['graduation_date'] = graduationDate;
-    vData['university'] = university;
-    vData['college'] = college;
-    vData['specialization'] = specialization;
-    vData['level'] = level;
-    return vData;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['user_id'] = userId;
+    _data['graduation_date'] = graduationDate;
+    _data['university'] = university;
+    _data['college'] = college;
+    _data['specialization'] = specialization;
+    _data['level'] = level;
+    return _data;
   }
 }

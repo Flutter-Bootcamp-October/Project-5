@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as https;
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/skill_model.dart';
-import 'package:project_5/screens/auth/register_screen.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/button_widget.dart';
 import '../components/input_text_fields.dart';
@@ -51,7 +48,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
             builder: (context) => Builder(builder: (context) {
               return SizedBox(
                 child: Padding(
-                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  padding: const EdgeInsets.only(top: 75, bottom: 10),
                   child: Column(
                     children: [
                       Text(
@@ -147,7 +144,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                           );
                         });
                   } else {
-                    return Text(snapshot.error.toString());
+                    return Center(child: Text("No Skills added"));
                   }
                 }
               },

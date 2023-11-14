@@ -42,6 +42,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
           )),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          const Text(
+            "Create Account",
+            style: TextStyle(
+                fontWeight: FontWeight.bold, fontSize: 25, color: Colors.black),
+          ),
+          SizedBox(
+            height: 50,
+          ),
           InputTextFields(
               controller: nameController, title: "Enter name", lines: 1),
           InputTextFields(

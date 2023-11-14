@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:project_5/models/about_model.dart';
 import 'package:project_5/models/auth_model.dart';
@@ -233,8 +232,25 @@ class ApiMethods {
     return response;
   }
 
-  Future<Education> addEducation({required Map body}) async {
-    final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/project");
+  Future<EducationModel> getEducation() async {
+    final pref = await SharedPreferences.getInstance();
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/education");
+    final response = await https
+        .get(url, headers: {"authorization": pref.getString("token")!});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
+
+    if (response.statusCode == 200 || response.statusCode < 300) {
+      return EducationModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg!);
+    }
+  }
+
+  Future<EducationModel> addEducation({required Map body}) async {
+    final url =
+        Uri.parse("https://bacend-fshi.onrender.com/user/add/education");
     //sharedprefrence
     final pref = await SharedPreferences.getInstance();
     final response = await https.post(url,
@@ -244,10 +260,24 @@ class ApiMethods {
     print("Response status: ${response.statusCode}");
 
     if (response.statusCode == 200 || response.statusCode < 300) {
-      return Education.fromJson(json.decode(response.body));
+      return EducationModel.fromJson(json.decode(response.body));
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg!);
     }
+  }
+
+  removeEducation({required String idEducation}) async {
+    final url =
+        Uri.parse("https://bacend-fshi.onrender.com/user/delete/education");
+    //sharedprefrence
+    final pref = await SharedPreferences.getInstance();
+    final response = await https.delete(url,
+        body: json.encode({"id_education": idEducation}),
+        headers: {"authorization": pref.getString("token")!});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
+
+    return response;
   }
 }

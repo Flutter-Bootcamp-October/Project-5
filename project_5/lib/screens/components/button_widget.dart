@@ -11,12 +11,18 @@ class ButtonWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ElevatedButton(
-      onPressed: onpress,
-      style: ButtonStyle(
-          shape: MaterialStateProperty.all(
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)))),
-      child: Text(textEntry),
+    return SizedBox(
+      width: 245,
+      height: 55,
+      child: ElevatedButton(
+        onPressed: onpress,
+        style: ButtonStyle(
+            backgroundColor:
+                MaterialStatePropertyAll(Color.fromARGB(206, 13, 72, 161)),
+            shape: MaterialStateProperty.all(RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(30)))),
+        child: Text(textEntry),
+      ),
     );
   }
 }
