@@ -44,7 +44,6 @@ Future uploadAboutImageApi({required File image}) async {
   }
 }
 
-//TODO: test [putDataAboutApi] and implement
 Future putDataAboutApi(
     {required String name,
     required String titlePosition,

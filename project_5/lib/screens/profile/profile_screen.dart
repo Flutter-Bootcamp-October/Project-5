@@ -67,7 +67,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   bool checkTokenValidity({required check}) {
-    print(pref.getToken());
+    // print(pref.getToken());
     if (check == "Token is expired or invalid") {
       ScaffoldMessenger.of(context)
           .showSnackBar(const SnackBar(content: Text("Token Has Expired")));

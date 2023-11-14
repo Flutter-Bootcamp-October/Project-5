@@ -27,7 +27,7 @@ class ShimmerExperienceSkeleton extends StatelessWidget {
           builder: TimelineTileBuilder.fromStyle(
             contentsAlign: ContentsAlign.basic,
             indicatorStyle: IndicatorStyle.outlined,
-            itemCount: 5, //TODO: Get user's experience.length
+            itemCount: 5,
             contentsBuilder: (context, index) => Padding(
               padding: const EdgeInsets.all(24.0),
               child: Shimmer.fromColors(

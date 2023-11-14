@@ -25,7 +25,9 @@ class Education extends StatelessWidget {
                 return educationModel.data!.isNotEmpty
                     ? SizedBox(
                         height: educationModel.data!.length > 0
-                            ? context.getHeight() * .25
+                            ? educationModel.data!.length == 1
+                                ? context.getHeight() * .12
+                                : context.getHeight() * .25
                             : context.getHeight() * .1,
                         child: ListView.separated(
                             // shrinkWrap: true,
@@ -51,34 +53,28 @@ class Education extends StatelessWidget {
                                       color: Colors.red,
                                     ),
                                   ),
-                                  child: InkWell(
-                                    onLongPress: () {
-                                      //TODO:Make it show edit icon
-                                    },
-                                    child: SizedBox(
-                                      width: context.getWidth(),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            "${educationModel.data?[index].level!.toUpperCase()} DEGREE IN ${educationModel.data![index].specialization?.toUpperCase()}",
+                                  child: SizedBox(
+                                    width: context.getWidth(),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          "${educationModel.data?[index].level!.toUpperCase()} DEGREE IN ${educationModel.data![index].specialization?.toUpperCase()}",
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 18),
+                                        ),
+                                        Text(
+                                          "Graduated ${educationModel.data?[index].graduationDate!.toUpperCase()}",
+                                          style: const TextStyle(fontSize: 16),
+                                        ),
+                                        Text(
+                                            "${educationModel.data?[index].university}",
                                             style: const TextStyle(
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 18),
-                                          ),
-                                          Text(
-                                            "Graduated ${educationModel.data?[index].graduationDate!.toUpperCase()}",
-                                            style:
-                                                const TextStyle(fontSize: 16),
-                                          ),
-                                          Text(
-                                              "${educationModel.data?[index].university}",
-                                              style: const TextStyle(
-                                                  fontSize: 18,
-                                                  fontWeight: FontWeight.w300)),
-                                        ],
-                                      ),
+                                                fontSize: 18,
+                                                fontWeight: FontWeight.w300)),
+                                      ],
                                     ),
                                   ),
                                 )),

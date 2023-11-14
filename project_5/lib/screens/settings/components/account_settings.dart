@@ -7,8 +7,6 @@ import 'package:project_5/screens/auth/sign_in_screen.dart';
 
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
 import 'package:project_5/services/about_api.dart';
-
-import 'custom_bottom_modal_sheet.dart';
 import 'settings_options.dart';
 
 class AccountInformationScreen extends StatefulWidget {

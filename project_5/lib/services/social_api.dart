@@ -5,7 +5,6 @@ import 'package:project_5/main.dart';
 import 'package:project_5/models/error_model.dart';
 import 'package:project_5/models/social_model.dart';
 
-//TODO: TEST THESE
 Future getSocialData() async {
   final url = Uri.parse("https://bacend-fshi.onrender.com/user/social_media");
 

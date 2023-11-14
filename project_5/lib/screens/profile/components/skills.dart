@@ -9,6 +9,8 @@ class Skills extends StatelessWidget {
   const Skills({Key? key, required this.skillsData, required this.updateMethod})
       : super(key: key);
 
+  final Future? skillsData;
+  final Function updateMethod;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -77,7 +79,4 @@ class Skills extends StatelessWidget {
           }
         });
   }
-
-  final Future? skillsData;
-  final Function updateMethod;
 }
