@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cvapp/global.dart';
 import 'package:cvapp/models/skills_model.dart';
 import 'package:cvapp/screens/add_project_screen.dart';
 import 'package:cvapp/screens/education_screen.dart';
@@ -156,7 +157,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Adddata(
                       img: "lib\\assets\\imges\\img4.png",
                       dataname: "social ",
-                      datanumbers: "0"),
+                      datanumbers: "${socialcounter}"),
                 ),
               ],
             ),

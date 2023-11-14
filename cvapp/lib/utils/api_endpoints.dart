@@ -1,3 +1,9 @@
+import 'dart:convert';
+import 'package:http/http.dart' as http;
+
+import 'package:cvapp/global.dart';
+import 'package:cvapp/models/social_model.dart';
+
 class ApiEndpoints {
   static final String baseUrl = "https://bacend-fshi.onrender.com/";
   static AuthEndPoints authEndPoints = AuthEndPoints();

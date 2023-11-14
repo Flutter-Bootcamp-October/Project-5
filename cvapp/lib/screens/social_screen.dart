@@ -1,6 +1,8 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:cvapp/global.dart';
+import 'package:cvapp/models/about_model.dart';
 import 'package:cvapp/models/skills_model.dart';
 import 'package:cvapp/models/social_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
@@ -24,7 +26,7 @@ class SocialScreen extends StatefulWidget {
 
 class _SocialScreenState extends State<SocialScreen> {
     List<SocialMediaModel> socialMediaList = [];
-
+AboutModel? aboutInfo;
   bool isvalid = false;
   TextEditingController usernamecontroller = TextEditingController();
   TextEditingController socialcontroller = TextEditingController();
@@ -59,6 +61,7 @@ class _SocialScreenState extends State<SocialScreen> {
 
   @override
   void initState() {
+    _fetchSocialMediaData(token: token.toString());
     super.initState();
     _loadToken();
   }
@@ -104,7 +107,22 @@ Future<void> removeSocialMedia(int id) async {
     }
   }
 
-
+Future<void> _fetchAboutData() async {
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
+    try {
+      var response = await http.get(url, headers: {"Authorization": "Bearer $token"});
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body)['data'];
+        setState(() {
+          aboutInfo = AboutModel.fromJson(jsonData);
+        });
+      } else {
+        print('Error fetching about data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching about data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -112,7 +130,7 @@ Future<void> removeSocialMedia(int id) async {
       backgroundColor: Color(0xff8C5CB3),
       body: Column(
         children: [
-          SizedBox(height: 50),
+          SizedBox(height: 200),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [],
@@ -120,31 +138,36 @@ Future<void> removeSocialMedia(int id) async {
           Divider(
             thickness: 1,
           ),
-          SinUpWedget(
-              Controller: usernamecontroller,
-              labelText: "  Enter your username"),
+          Container(width: 300,height: 50,
+            child: SinUpWedget(
+                Controller: usernamecontroller,
+                labelText: "  Enter your username"),
+          ),
           SizedBox(height: 20),
-          SinUpWedget(
-              Controller: socialcontroller, labelText: "  Enter your social"),
+          Container(width: 300,height: 50,
+            child: SinUpWedget(
+                Controller: socialcontroller, labelText: "  facebook or twiiter"),
+          ),
           SizedBox(height: 20),
           ElevatedButton(
               onPressed: () async {
                 await pushproject(token: token.toString());
                 await _fetchSocialMediaData(token: token.toString());
+                socialcounter+=1;
                 print(token);
                 setState(() {});
               },
-              child: Text("push")),
+              child: Text("Add")),
           SizedBox(height: 20),
           SizedBox(
-            width: 200,height: 200,
+            width: 200,height: 350,
             child: ListView.builder(
               itemCount: socialMediaList.length,
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.all(8),
                   padding: EdgeInsets.all(16),
-                  color: Colors.blue,
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),color: Colors.black),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -153,7 +176,10 @@ Future<void> removeSocialMedia(int id) async {
                         style: TextStyle(color: Colors.white),
                       ),
                       TextButton(
-                        onPressed: () => removeSocialMedia(socialMediaList[index].id!),
+                        onPressed: () {
+                          socialcounter+=1;
+                          removeSocialMedia(socialMediaList[index].id!);
+                        } ,
                         child: Text('Delete', style: TextStyle(color: Colors.red)),
                       ),
                     ],
@@ -162,6 +188,7 @@ Future<void> removeSocialMedia(int id) async {
               },
             ),
           ),
+  
         
       
     
