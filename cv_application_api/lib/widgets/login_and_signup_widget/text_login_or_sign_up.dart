@@ -1,5 +1,5 @@
 import 'package:cv_application_api/constant/constant.dart';
-import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title.dart';
+import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title_of_screen.dart';
 import 'package:flutter/material.dart';
 
 class TextLoginorSignUP extends StatelessWidget {

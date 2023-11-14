@@ -48,6 +48,8 @@ const SizedBox height48 = SizedBox(height: 48);
 const SizedBox height50 = SizedBox(height: 50);
 
 const Color appWhite = Color(0xffffffff);
+const Color appWhiteTrans = Color.fromARGB(108, 255, 255, 255);
+
 const Color appcoldGreen = Color(0xff99a678);
 const Color appcoldGreenTrans = Color.fromARGB(116, 153, 166, 120);
 const Color appGreen = Color(0xff687353);

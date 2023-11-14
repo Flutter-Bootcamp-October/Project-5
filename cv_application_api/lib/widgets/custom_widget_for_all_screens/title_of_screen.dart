@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+// this custom widget is title helps my to have same attribute in text widget 
+
 class TitleOfScreen extends StatelessWidget {
   const TitleOfScreen(
       {super.key,

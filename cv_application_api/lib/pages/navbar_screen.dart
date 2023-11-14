@@ -1,11 +1,16 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cv_application_api/constant/constant.dart';
+import 'package:cv_application_api/pages/education_screen.dart';
+import 'package:cv_application_api/pages/login_screen.dart';
 import 'package:cv_application_api/pages/profile_screnn.dart';
-import 'package:cv_application_api/pages/skills_screen.dart';
+import 'package:cv_application_api/pages/qualification_screen.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
 import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';
 import 'package:flutter/material.dart';
 import 'package:rolling_bottom_bar/rolling_bottom_bar.dart';
 import 'package:rolling_bottom_bar/rolling_bottom_bar_item.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class NavBarScreen extends StatelessWidget {
   const NavBarScreen({super.key});
@@ -21,9 +26,29 @@ class NavBarScreen extends StatelessWidget {
         children: [
           const BackgroundImage(),
           const BackgroundWhiteContainer(),
-          PageView(
-              controller: pageControlller,
-              children: const <Widget>[ProfileScreen(), QualificationScreen()]),
+          PageView(controller: pageControlller, children: const <Widget>[
+            ProfileScreen(),
+            QualificationScreen(),
+            EducationScreen()
+          ]),
+          IconButton(
+              onPressed: () async {
+                final SharedPreferences prefs =
+                    await SharedPreferences.getInstance();
+
+                prefs.clear();
+
+                Navigator.push(
+                    context,
+                    (MaterialPageRoute(builder: (context) {
+                      return const LoginScreen();
+                    })));
+              },
+              icon: const Icon(
+                Icons.logout,
+                size: 30,
+                color: app2DarkGreen,
+              ))
         ],
       ),
       extendBody: true,
@@ -35,8 +60,12 @@ class NavBarScreen extends StatelessWidget {
           useActiveColorByDefault: false,
           controller: pageControlller,
           items: const [
-            RollingBottomBarItem(Icons.home, label: "", activeColor: appWhite),
-            RollingBottomBarItem(Icons.home, label: "", activeColor: appWhite)
+            RollingBottomBarItem(Icons.person,
+                label: "", activeColor: appWhite),
+            RollingBottomBarItem(Icons.school,
+                label: "", activeColor: appWhite),
+            RollingBottomBarItem(Icons.my_library_books_outlined,
+                label: "", activeColor: appWhite)
           ],
           onTap: (index) {
             pageControlller.animateToPage(index,

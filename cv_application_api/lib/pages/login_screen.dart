@@ -9,8 +9,8 @@ import 'package:cv_application_api/widgets/background_widget/background_image.da
 import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';
 import 'package:cv_application_api/widgets/custom_widget_for_all_screens/custom_buttom.dart';
 import 'package:cv_application_api/widgets/custom_widget_for_all_screens/custom_text_field.dart';
-import 'package:cv_application_api/widgets/login_andsignup_widget/text_login_or_sign_up.dart';
-import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title.dart';
+import 'package:cv_application_api/widgets/login_and_signup_widget/text_login_or_sign_up.dart';
+import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title_of_screen.dart';
 import 'package:flutter/material.dart';
 
 class LoginScreen extends StatelessWidget {
@@ -59,7 +59,7 @@ class LoginScreen extends StatelessWidget {
                         keyboardType: TextInputType.text,
                         controller: passwordController,
                         hintText: 'Password',
-                        obscureText: false,
+                        obscureText: true,
                       ),
                       height10,
                       TextLoginorSignUP(
@@ -78,16 +78,6 @@ class LoginScreen extends StatelessWidget {
                         onPressed: () async {
                           //--------------------------------------
                           try {
-                            showDialog(
-                              context: context,
-                              barrierColor: appcoldGreenTrans,
-                              builder: (context) => const Center(
-                                child: CircularProgressIndicator(
-                                  color: app2DarkGreen,
-                                ),
-                              ),
-                            );
-
                             //--------------------------------------
 
                             if (emailController.text.isEmpty ||
@@ -98,6 +88,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               );
                             }
+
                             final User response = await login({
                               "email": emailController.text,
                               "password": passwordController.text
@@ -113,6 +104,16 @@ class LoginScreen extends StatelessWidget {
                                   user: response,
                                 );
                               }));
+                            } else {
+                              showDialog(
+                                context: context,
+                                barrierColor: appcoldGreenTrans,
+                                builder: (context) => const Center(
+                                  child: CircularProgressIndicator(
+                                    color: app2DarkGreen,
+                                  ),
+                                ),
+                              );
                             }
                           } catch (error) {
                             print(error);

@@ -1,26 +1,34 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:cv_application_api/constant/constant.dart';
 import 'package:cv_application_api/model/user_info.dart';
+import 'package:cv_application_api/pages/navbar_screen.dart';
 import 'package:cv_application_api/services/api/user_info.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
 import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';
-import 'package:cv_application_api/widgets/custom_widget_for_all_screens/normal_text.dart';
-import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title.dart';
+import 'package:cv_application_api/widgets/custom_widget_for_all_screens/custom_buttom.dart';
+import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title_of_screen.dart';
 import 'package:cv_application_api/widgets/profile_widget/update_info_custom_text_field.dart';
 import 'package:flutter/material.dart';
 
-class UpdateInfoUser extends StatefulWidget {
-  const UpdateInfoUser({super.key});
+class UpdateProfileScreen extends StatefulWidget {
+  const UpdateProfileScreen({super.key});
 
   @override
-  State<UpdateInfoUser> createState() => _UpdateInfoUserState();
+  State<UpdateProfileScreen> createState() => _UpdateProfileScreen();
 }
 
-class _UpdateInfoUserState extends State<UpdateInfoUser> {
+class _UpdateProfileScreen extends State<UpdateProfileScreen> {
   UserInfo? user;
+  TextEditingController nameController = TextEditingController();
+  TextEditingController positionController = TextEditingController();
+  TextEditingController locationController = TextEditingController();
+  TextEditingController phoneController = TextEditingController();
+  TextEditingController birthdayController = TextEditingController();
+  TextEditingController aboutController = TextEditingController();
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     getUserInfoMethode();
   }
@@ -29,17 +37,19 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
     final UserInfo? response = await getUserInfo(context: context);
     print(response!.data!.name);
     user = response;
+
+    nameController = TextEditingController(text: user?.data!.name! ?? '');
+    positionController =
+        TextEditingController(text: user?.data!.titlePosition ?? '');
+    locationController =
+        TextEditingController(text: user?.data!.location ?? '');
+    phoneController = TextEditingController(text: user?.data!.phone ?? '');
+    birthdayController =
+        TextEditingController(text: user?.data!.birthday ?? '');
+    aboutController = TextEditingController(text: user?.data!.about ?? '');
     setState(() {});
     return response;
   }
-
-  TextEditingController nameController = TextEditingController();
-  TextEditingController emailController = TextEditingController();
-  TextEditingController positionController = TextEditingController();
-  TextEditingController locationController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController birthdayController = TextEditingController();
-  TextEditingController aboutController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +60,24 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
         body: Stack(children: [
           const BackgroundImage(),
           const BackgroundWhiteContainer(),
+          Positioned(
+            top: 10,
+            left: 10,
+            child: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: Icon(
+                  Icons.arrow_back_ios_new_rounded,
+                  color: app3DarkGreen,
+                  size: 30,
+                )),
+          ),
           SizedBox(
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             child: Padding(
-              padding: const EdgeInsets.only(top: 100),
+              padding: const EdgeInsets.only(top: 50),
               child: SingleChildScrollView(
                 scrollDirection: Axis.vertical,
                 child: Column(
@@ -89,24 +112,8 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
                             ),
                             height4,
                             UpdateInfoCustomTextField(
-                              controller: nameController,
-                              hintText: user!.data!.name!,
-                              obscureText: false,
-                              keyboardType: TextInputType.name,
-                            ),
-
-                            height14,
-                            const TitleOfScreen(
-                              title: 'Email :',
-                              titleFontSize: 18,
-                              titleletterSpacing: 0,
-                              titlefontWeight: FontWeight.w300,
-                              titleColor: appWhite,
-                            ),
-                            height4,
-                            UpdateInfoCustomTextField(
-                              controller: emailController,
-                              hintText: user!.data!.email!,
+                              textController: nameController,
+                              hintText: 'Name',
                               obscureText: false,
                               keyboardType: TextInputType.name,
                             ),
@@ -120,9 +127,8 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
                             ),
                             height4,
                             UpdateInfoCustomTextField(
-                              controller: positionController,
-                              hintText:
-                                  user!.data!.titlePosition != null ? '' : '',
+                              textController: positionController,
+                              hintText: 'Your title position',
                               obscureText: false,
                               keyboardType: TextInputType.name,
                             ),
@@ -136,10 +142,10 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
                             ),
                             height4,
                             UpdateInfoCustomTextField(
-                              controller: phoneController,
-                              hintText: user!.data!.phone!,
+                              textController: phoneController,
+                              hintText: 'Phone number',
                               obscureText: false,
-                              keyboardType: TextInputType.name,
+                              keyboardType: TextInputType.phone,
                             ),
                             height14,
                             const TitleOfScreen(
@@ -150,10 +156,9 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
                               titleColor: appWhite,
                             ),
                             height4,
-                            // NormalText(
                             UpdateInfoCustomTextField(
-                              controller: locationController,
-                              hintText: user!.data!.location != null ? '' : '',
+                              textController: locationController,
+                              hintText: 'Your location',
                               obscureText: false,
                               keyboardType: TextInputType.name,
                             ),
@@ -167,10 +172,10 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
                             ),
                             height4,
                             UpdateInfoCustomTextField(
-                              controller: birthdayController,
-                              hintText: user!.data!.birthday != null ? '' : '',
+                              textController: birthdayController,
+                              hintText: 'DD/MM/YYYY',
                               obscureText: false,
-                              keyboardType: TextInputType.name,
+                              keyboardType: TextInputType.datetime,
                             ),
                             height14,
                             const TitleOfScreen(
@@ -182,16 +187,16 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
                             ),
                             height4,
                             UpdateInfoCustomTextField(
-                              controller: aboutController,
-                              hintText: user!.data!.birthday != null ? '' : '',
+                              textController: aboutController,
+                              hintText: 'About your self',
                               obscureText: false,
                               keyboardType: TextInputType.name,
                             ),
-
                             Padding(
                                 padding:
-                                    const EdgeInsets.only(top: 5, left: 20),
-                                child: TextButton(
+                                    const EdgeInsets.only(top: 50, left: 78),
+                                child: CustomButtom(
+                                  textButtom: 'Save',
                                   onPressed: () async {
                                     try {
                                       showDialog(
@@ -205,42 +210,34 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
                                       );
 
                                       final UserInfo? response =
-                                          await updateUserInfo({
-                                        "name": nameController.text,
-                                        "phone": phoneController.text,
-                                        "email": emailController.text,
-                                        "titlePosition":
-                                            positionController.text,
-                                        "location": locationController.text,
-                                        "birthday": birthdayController.text,
-                                        "about": aboutController.text
-                                      });
+                                          await updateUserInfo(
+                                              context: context,
+                                              {
+                                            "name": nameController.text,
+                                            "title_position":
+                                                positionController.text,
+                                            "phone": phoneController.text,
+                                            "location": locationController.text,
+                                            "birthday": birthdayController.text,
+                                            "about": aboutController.text
+                                          });
 
-                                      if (user!.codeState == 200) {
-                                        print(user!.msg);
-                                        // Navigator.push(context,
-                                        //     MaterialPageRoute(
-                                        //         builder: (context) {
-                                        //   return OTPScreen(
-                                        //     typeOTP: "registration",
-                                        //     user: response,
-                                        //   );
-                                        // }));
+                                      if (response?.codeState == 200) {
+                                        print(response?.msg);
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                                builder: (context) {
+                                          return const NavBarScreen();
+                                        }));
                                       }
                                     } catch (error) {
+                                      print(error);
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content: Text(error.toString())));
                                     }
                                   },
-                                  child: const NormalText(
-                                    title: 'Save',
-                                    titleFontSize: 15,
-                                    titleletterSpacing: 0,
-                                    titlefontWeight: FontWeight.w300,
-                                    titleColor: appWhite,
-                                  ),
-                                ))
+                                )),
                           ],
                         ),
                       ),
@@ -255,3 +252,51 @@ class _UpdateInfoUserState extends State<UpdateInfoUser> {
     );
   }
 }
+
+
+
+// TextButton(
+//                                   onPressed: () async {
+//                                     try {
+//                                       showDialog(
+//                                         context: context,
+//                                         barrierColor: appcoldGreenTrans,
+//                                         builder: (context) => const Center(
+//                                           child: CircularProgressIndicator(
+//                                             color: app2DarkGreen,
+//                                           ),
+//                                         ),
+//                                       );
+
+//                                       final UserInfo? response =
+//                                           await updateUserInfo(
+//                                               context: context,
+//                                               {
+//                                             "name": nameController.text,
+//                                             "phone": phoneController.text,
+                                          
+//                                             "titlePosition":
+//                                                 positionController.text,
+//                                             "location": locationController.text,
+//                                             "birthday": birthdayController.text,
+//                                             "about": aboutController.text
+//                                           });
+
+//                                       if (response!.codeState == 200) {
+//                                         print(user!.msg);
+                
+//                                       }
+//                                     } catch (error) {
+//                                       ScaffoldMessenger.of(context)
+//                                           .showSnackBar(SnackBar(
+//                                               content: Text(error.toString())));
+//                                     }
+//                                   },
+//                                   child: const NormalText(
+//                                     title: 'Save',
+//                                     titleFontSize: 15,
+//                                     titleletterSpacing: 0,
+//                                     titlefontWeight: FontWeight.w300,
+//                                     titleColor: appWhite,
+//                                   ),
+//                                 )
