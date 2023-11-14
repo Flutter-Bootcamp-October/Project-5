@@ -1,9 +1,17 @@
 import 'dart:convert';
+import 'dart:developer';
+import 'dart:io';
 import 'package:cv_app/main.dart';
 import 'package:cv_app/models/about_model.dart';
 import 'package:http/http.dart' as http;
 
-uploadeImg() {}
+uploadeImg(File image) async {
+  final url = Uri.parse("https://bacend-fshi.onrender.com/user/upload");
+  final response = await http.post(url, body: image.readAsBytes(), headers: {
+    "authorization": "Bearer ${prefs.getString("token").toString()}"
+  });
+  log(response.body);
+}
 
 Future<About> showAbout() async {
   final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
@@ -36,4 +44,10 @@ Future editAbout(
   return jsonDecode(response.body);
 }
 
-deleteAccount() {}
+deleteAccount() async {
+  final url = Uri.parse("https://bacend-fshi.onrender.com/user/delete_account");
+  final response = await http.delete(url, headers: {
+    "authorization": "Bearer ${prefs.getString("token").toString()}"
+  });
+  return response;
+}

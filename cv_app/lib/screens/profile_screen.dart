@@ -1,19 +1,23 @@
+import 'dart:io';
+
 import 'package:cv_app/globals/colors.dart';
 import 'package:cv_app/main.dart';
 import 'package:cv_app/screens/edit_about_screen.dart';
 import 'package:cv_app/screens/login_screen.dart';
 import 'package:cv_app/services/about.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  State<ProfileScreen> createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => ProfileScreenState();
 }
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  bool isEditMode = false;
+class ProfileScreenState extends State<ProfileScreen> {
+  
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -33,11 +37,19 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    ClipOval(
-                      child: Center(
-                        child: snapshot.data!.image == null
-                            ? Image.asset("assets\\defualt_img.png", scale: 4)
-                            : Image.network(snapshot.data!.image.toString()),
+                    InkWell(
+                      onTap: () async {
+                        final ImagePicker picker = ImagePicker();
+                        final XFile? image =
+                            await picker.pickImage(source: ImageSource.gallery);
+                        uploadeImg(File(image!.path));
+                      },
+                      child: ClipOval(
+                        child: Center(
+                          child: snapshot.data!.image == null
+                              ? Image.asset("assets\\defualt_img.png", scale: 5)
+                              : Image.network(snapshot.data!.image.toString()),
+                        ),
                       ),
                     ),
                     const Divider(),
@@ -55,7 +67,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => EditAboutScreen(about: snapshot.data!,),
+                                builder: (context) => EditAboutScreen(
+                                  about: snapshot.data!,
+                                ),
                               ),
                             );
                           },
@@ -64,10 +78,20 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             color: mainColor,
                           ),
                         ),
-                        const Icon(
-                          Icons.delete,
-                          color: Colors.redAccent,
-                        )
+                        IconButton(
+                            onPressed: () {
+                              deleteAccount();
+                              Navigator.pushAndRemoveUntil(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoginScreen()),
+                                  (route) => false);
+                            },
+                            icon: const Icon(
+                              Icons.delete,
+                              color: Colors.redAccent,
+                            ))
                       ],
                     ),
                     const Divider(),
