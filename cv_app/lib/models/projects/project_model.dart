@@ -1,6 +1,5 @@
 import 'package:cv_app/models/projects/project_data_model.dart';
 
-
 class ProjectsModel {
   ProjectsModel({
     required this.msg,

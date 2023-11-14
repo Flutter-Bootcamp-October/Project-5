@@ -1,14 +1,11 @@
-import 'dart:ffi';
-
 import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/constentes/sized_box.dart';
-import 'package:cv_app/models/globals.dart';
 import 'package:cv_app/models/otp/otp_msg_model.dart';
 import 'package:cv_app/screens/authorization_screens/log_in_screen.dart';
+import 'package:cv_app/screens/loading_screen.dart';
 import 'package:cv_app/services/api/networking_methods.dart';
 import 'package:cv_app/widgets/auth_widgets/auth_textfelid.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -42,10 +39,20 @@ class _VerificationScreenState extends State<VerificationScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: richBlack,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
+          height20,
           Expanded(
-            child: Container(),
+            child: Container(
+              child: ImageIcon(
+                AssetImage(
+                  'lib/assets/images/pngkey.com-resume-png-1225289.png',
+                ),
+                color: white,
+                size: 150,
+              ),
+            ),
           ),
           Container(
             padding: const EdgeInsets.only(top: 20),
@@ -73,6 +80,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     children: [
                       AuthTextFelid(
                         text: 'Verification code',
+                        title: 'Verification code',
                         icon: Icons.lock_outline_rounded,
                         isHaveIcon: true,
                         controller: OTPcontroller,
@@ -80,26 +88,41 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       height20,
                       InkWell(
                         onTap: () async {
-                          final network = ConsentNetworking();
-                          final OTPModel respons = await network
-                              .verificationMethod(body: {
-                            "otp": OTPcontroller.text,
-                            "email": widget.email,
-                            "type": widget.type
-                          });
-                          if (respons.codeState == 200) {
+                          if (widget.type == 'login' ||
+                              widget.type == 'registration' ||
+                              widget.type == 'rest_password') {
+                            final network = ConsentNetworking();
+                            final OTPModel respons = await network
+                                .verificationMethod(body: {
+                              "otp": OTPcontroller.text,
+                              "email": widget.email,
+                              "type": widget.type
+                            });
+
                             final token = respons.data.token.toString();
                             prefs.setString('token', token);
                             // ignore: use_build_context_synchronously
+                            if (widget.type == 'registration') {
+                              // ignore: use_build_context_synchronously
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LogInScreen()));
+                            } else if (widget.type == 'login')
+                              // ignore: curly_braces_in_flow_control_structures
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const LoadingScreen()));
+                          } else if (widget.type == 'rest_password')
+                            // ignore: curly_braces_in_flow_control_structures
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const LogInScreen()));
-                          } else {
-                            // ignore: use_build_context_synchronously
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(respons.msg.toString())));
-                          }
+                                    builder: (context) =>
+                                        const LoadingScreen()));
                         },
                         child: Container(
                           width: 290,

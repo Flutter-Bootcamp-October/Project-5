@@ -1,12 +1,9 @@
-
 class SocialMediaData {
   SocialMediaData({
-    required this.id,
-    required this.userId,
     required this.username,
     required this.social,
   });
-  late final int id;
+  late int id;
   late final int userId;
   late final String username;
   late final String social;

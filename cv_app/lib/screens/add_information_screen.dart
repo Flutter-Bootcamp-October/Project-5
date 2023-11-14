@@ -4,6 +4,7 @@ import 'package:cv_app/constentes/sized_box.dart';
 import 'package:cv_app/widgets/information_widget/education_expansiontile_widget.dart';
 import 'package:cv_app/widgets/information_widget/project_expansiontile_widget.dart';
 import 'package:cv_app/widgets/information_widget/skills_ecpansiontile_widget.dart';
+import 'package:cv_app/widgets/information_widget/social_media_expansiontile_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -11,14 +12,12 @@ class AddInformation extends StatefulWidget {
   const AddInformation({
     super.key,
   });
-
   @override
   _AddInformationState createState() => _AddInformationState();
 }
 
 class _AddInformationState extends State<AddInformation> {
   File? selectedImage;
-
   Future pickImage() async {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.gallery);
@@ -33,37 +32,45 @@ class _AddInformationState extends State<AddInformation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
-      backgroundColor: richBlack,
-      body: Stack(
-        children: [
-          Stack(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: richBlack,
+        body: SingleChildScrollView(
+          child: Stack(
             children: [
               Column(
                 children: [
-                  Expanded(child: Container()),
+                  height20,
                   Container(
-                    padding: const EdgeInsets.only(top: 20),
-                    height: 650,
-                    decoration: const BoxDecoration(
-                      color: white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(30),
-                        topRight: Radius.circular(30),
+                    height: 150,
+                  ),
+                  SingleChildScrollView(
+                    physics: NeverScrollableScrollPhysics(),
+                    child: Container(
+                      padding: const EdgeInsets.only(top: 20),
+                      height: 650,
+                      decoration: const BoxDecoration(
+                        color: white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(30),
+                          topRight: Radius.circular(30),
+                        ),
                       ),
-                    ),
-                    child: const SingleChildScrollView(
-                      child: SafeArea(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 16),
-                          child: Column(
-                            children: [
-                              ProjectExpansionTileWidget(),
-                              height20,
-                              EducationExpansionTileWidget(),
-                              height20,
-                              AddSkillsWidget()
-                            ],
+                      child: const SingleChildScrollView(
+                        // physics: NeverScrollableScrollPhysics(),
+                        child: SafeArea(
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(horizontal: 16),
+                            child: Column(
+                              children: [
+                                ProjectExpansionTileWidget(),
+                                height20,
+                                EducationExpansionTileWidget(),
+                                height20,
+                                AddSkillsWidget(),
+                                height20,
+                                AddSocialMediasWidget()
+                              ],
+                            ),
                           ),
                         ),
                       ),
@@ -97,8 +104,6 @@ class _AddInformationState extends State<AddInformation> {
               ),
             ],
           ),
-        ],
-      ),
-    );
+        ));
   }
 }

@@ -2,14 +2,12 @@ import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/constentes/sized_box.dart';
 import 'package:cv_app/models/globals.dart';
 import 'package:cv_app/models/projects/project_data_model.dart';
-import 'package:cv_app/models/projects/project_model.dart';
 import 'package:cv_app/widgets/information_widget/button_widget.dart';
 import 'package:cv_app/widgets/information_widget/textfiled_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ProjectExpansionTileWidget extends StatefulWidget {
-  const ProjectExpansionTileWidget({Key? key});
+  const ProjectExpansionTileWidget({super.key});
 
   @override
   State<ProjectExpansionTileWidget> createState() =>
@@ -20,7 +18,8 @@ class _ProjectExpansionTileWidgetState
     extends State<ProjectExpansionTileWidget> {
   TextEditingController projectNameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
-  late String status = '';
+  late String state = '';
+  List<ProjectData> projectsList = [];
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -52,6 +51,7 @@ class _ProjectExpansionTileWidgetState
                       color: Colors.grey,
                     ),
                     itemBuilder: (context, index) {
+                      final project = projectsList[index];
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -59,9 +59,8 @@ class _ProjectExpansionTileWidgetState
                             title: 'Project name',
                             controller: projectNameController,
                             onChanged: (value) {
-                              setState(() {
-                                projectsList[index].name = value;
-                              });
+                              project.name = value;
+                              projectNameController.text = value;
                             },
                             hintTitle: 'Project name',
                           ),
@@ -70,9 +69,8 @@ class _ProjectExpansionTileWidgetState
                             title: 'Project description',
                             controller: descriptionController,
                             onChanged: (value) {
-                              setState(() {
-                                projectsList[index].description = value;
-                              });
+                              project.description = value;
+                              descriptionController.text = value;
                             },
                             hintTitle: 'Project description',
                           ),
@@ -88,13 +86,11 @@ class _ProjectExpansionTileWidgetState
                           Row(
                             children: [
                               Radio(
-                                value: 'Complete',
-                                groupValue: projectsList[index].state,
+                                value: 'completed',
+                                groupValue: project.state,
                                 onChanged: (String? value) {
-                                  setState(() {
-                                    projectsList[index].state = value!;
-                                    status = value;
-                                  });
+                                  project.state = value!;
+                                  state = 'completed';
                                 },
                               ),
                               const Text(
@@ -103,13 +99,11 @@ class _ProjectExpansionTileWidgetState
                               ),
                               width20,
                               Radio(
-                                value: 'Incomplete',
-                                groupValue: projectsList[index].state,
+                                value: 'processing',
+                                groupValue: project.state,
                                 onChanged: (value) {
-                                  setState(() {
-                                    projectsList[index].state = value!;
-                                    status = value;
-                                  });
+                                  project.state = value!;
+                                  state = 'processing';
                                 },
                               ),
                               const Text('Incomplete',
@@ -121,27 +115,9 @@ class _ProjectExpansionTileWidgetState
                     },
                   ),
                   height20,
-                  ButtonWidget(
-                      onTap: () async {
-                        final result = await network.addProjectMethod(body: {
-                          'name': projectNameController.text,
-                          'state': status,
-                          'description': descriptionController.text
-                        });
-
-                        if (result == 200) {
-                          // ignore: use_build_context_synchronously
-                          showDialog(
-                            context: context,
-                            builder: (BuildContext context) {
-                              return const AlertDialog(
-                                title: Text('send successfuly'),
-                              );
-                            },
-                          );
-                        }
-                        setState(() {});
-
+                  if (projectsList.isEmpty)
+                    ButtonWidget(
+                      onTap: () {
                         setState(() {
                           projectsList.add(ProjectData(
                             name: '',
@@ -150,7 +126,21 @@ class _ProjectExpansionTileWidgetState
                           ));
                         });
                       },
-                      name: 'Add Project')
+                      name: 'Add Project',
+                    ),
+                  if (projectsList.isNotEmpty)
+                    ButtonWidget(
+                      onTap: () async {
+                        final result = await network.addProjectMethod(
+                          body: {
+                            'name': projectNameController.text,
+                            'state': state,
+                            'description': descriptionController.text,
+                          },
+                        );
+                      },
+                      name: 'Send Project',
+                    ),
                 ],
               ),
             ),

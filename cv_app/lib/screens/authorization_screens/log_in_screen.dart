@@ -1,13 +1,12 @@
-import 'dart:convert';
 import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/models/authentiction/authentiction_model.dart';
-import 'package:cv_app/models/globals.dart';
+import 'package:cv_app/screens/authorization_screens/reset_password_screen.dart';
 import 'package:cv_app/screens/authorization_screens/verification_screen.dart';
 import 'package:cv_app/services/api/networking_methods.dart';
 import 'package:cv_app/widgets/auth_widgets/auth_textfelid.dart';
+import 'package:cv_app/widgets/information_widget/button_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:cv_app/constentes/sized_box.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LogInScreen extends StatefulWidget {
   const LogInScreen({
@@ -21,26 +20,25 @@ class LogInScreen extends StatefulWidget {
 class _LogInScreenState extends State<LogInScreen> {
   TextEditingController? emailController = TextEditingController();
   TextEditingController? passwordController = TextEditingController();
-  late SharedPreferences prefs;
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-    inite();
-  }
-
-  Future inite() async {
-    prefs = await SharedPreferences.getInstance();
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: richBlack,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
+          height20,
           Expanded(
-            child: Container(),
+            child: Container(
+              child: ImageIcon(
+                AssetImage(
+                  'lib/assets/images/pngkey.com-resume-png-1225289.png',
+                ),
+                color: white,
+                size: 150,
+              ),
+            ),
           ),
           Container(
             padding: const EdgeInsets.only(top: 20),
@@ -66,19 +64,22 @@ class _LogInScreenState extends State<LogInScreen> {
                     children: [
                       AuthTextFelid(
                         text: 'Email',
+                        title: 'Email',
                         icon: Icons.email_outlined,
                         isHaveIcon: true,
                         controller: emailController,
                       ),
                       AuthTextFelid(
                         text: 'Password',
+                        title: 'Password',
                         icon: Icons.lock_outline_rounded,
                         isHaveIcon: true,
                         controller: passwordController,
                       ),
                       height20,
-                      InkWell(
+                      ButtonWidget(
                         onTap: () async {
+                          setState(() {});
                           final network = ConsentNetworking();
 
                           final AuthentictionModel respons = await network
@@ -86,52 +87,26 @@ class _LogInScreenState extends State<LogInScreen> {
                             "email": emailController!.text,
                             "password": passwordController!.text
                           });
-
-                          if (respons.codeState == 200) {
-                            // ignore: use_build_context_synchronously
-
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => VerificationScreen(
-                                          email: respons.data.email,
-                                          type: "login",
-                                        )));
-                          } else {
-                            // ignore: use_build_context_synchronously
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(respons.msg.toString())));
-                          }
-                          setState(() {});
+                          // ignore: use_build_context_synchronously
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VerificationScreen(
+                                        email: respons.data.email,
+                                        type: "login",
+                                      )));
                         },
-                        child: Container(
-                          width: 300,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: payneGrey,
-                          ),
-                          height: 50,
-                          child: const Center(
-                            child: Text(
-                              'LogIn',
-                              style: TextStyle(
-                                color: eggShell,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ),
+                        name: 'LogIn',
                       ),
                       Align(
                         alignment: Alignment.bottomRight,
                         child: InkWell(
-                          onTap: () {
-                            // Navigator.push(
-                            //     context,
-                            //     MaterialPageRoute(
-                            //         builder: (context) =>
-                            //             const LogInScreen()));
+                          onTap: () async {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        ResetPasswordScreen()));
                           },
                           child: const Text(
                             'Forget Password ?',

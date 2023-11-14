@@ -1,5 +1,6 @@
 import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/screens/add_information_screen.dart';
+import 'package:cv_app/screens/all_user_screen.dart';
 import 'package:cv_app/screens/home_screen.dart';
 import 'package:cv_app/screens/profile_screen.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class _CVNavigationBarState extends State<CVNavigationBar> {
   List screen = [
     const HomeScreen(),
     const AddInformation(),
+    UserListScreen(),
     const ProfileScreen()
   ];
   @override
@@ -47,6 +49,10 @@ class _CVNavigationBarState extends State<CVNavigationBar> {
               selectedColor: richBlack,
             ),
             DotNavigationBarItem(
+              icon: const Icon(Icons.supervised_user_circle_outlined),
+              selectedColor: richBlack,
+            ),
+            DotNavigationBarItem(
               icon: const Icon(Icons.person_2_outlined),
               selectedColor: richBlack,
             ),
@@ -55,4 +61,4 @@ class _CVNavigationBarState extends State<CVNavigationBar> {
   }
 }
 
-enum _SelectedTab { home, addInformation, profail }
+enum _SelectedTab { home, addInformation, users, profail }

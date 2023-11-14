@@ -1,15 +1,19 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:cv_app/models/about/about_model.dart';
+import 'package:cv_app/models/all_users/all_users_model.dart';
 import 'package:cv_app/models/authentiction/authentiction_model.dart';
 import 'package:cv_app/models/delete_account/delete_account_model.dart';
 import 'package:cv_app/models/education/education_model.dart';
 import 'package:cv_app/models/error_model.dart';
-import 'package:cv_app/models/globals.dart';
 import 'package:cv_app/models/otp/otp_msg_model.dart';
 import 'package:cv_app/models/projects/project_model.dart';
 import 'package:cv_app/models/skill/skill_model.dart';
-import 'package:cv_app/models/social_media/social_media_model.dart';
+import 'package:cv_app/models/social_media_model.dart';
+import 'package:cv_app/screens/loading_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ConsentNetworking {
   final String _urlApi = "bacend-fshi.onrender.com";
@@ -33,26 +37,63 @@ class ConsentNetworking {
   final String _getEducation = '/user/education';
   final String _deleteEducation = '/user/delete/education';
   final String _getUpload = '/user/upload';
+  final String _getUsers = '/user/get_users';
 
-  getUploadMethod() async {
+  addUploadMethod(File image) async {
     var url = Uri.https(_urlApi, _getUpload);
-    var response = await http
-        .get(url, headers: {"authorization": prefs.getString('token')!});
+    final prefs = await SharedPreferences.getInstance();
+    List<int> bytes = await image.readAsBytes();
+    var response = await http.post(url,
+        body: bytes, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
-
     return response;
   }
 
-  Future<EducationModel> getEducationMethod() async {
-    var url = Uri.https(_urlApi, _getEducation);
+  Future<AllUsersModel?>? getAllUsersMethod(
+      {required BuildContext context}) async {
+    print("start get");
+    var url = Uri.https(_urlApi, _getUsers);
+    print(url);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
 
     if (response.statusCode == 200) {
+      print(response.body);
+      return AllUsersModel.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 401) {
+      prefs.clear();
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoadingScreen()),
+          (route) => false);
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg.toString());
+    }
+  }
+
+  Future<EducationModel?>? getEducationMethod(
+      {required BuildContext context}) async {
+    print("start get");
+    var url = Uri.https(_urlApi, _getEducation);
+    print(url);
+    final prefs = await SharedPreferences.getInstance();
+    var response = await http
+        .get(url, headers: {"authorization": prefs.getString('token')!});
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+
+    if (response.statusCode == 200) {
+      print(response.body);
       return EducationModel.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 401) {
+      prefs.clear();
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoadingScreen()),
+          (route) => false);
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg.toString());
@@ -61,6 +102,7 @@ class ConsentNetworking {
 
   Future<EducationModel> deleteEducationMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _deleteEducation);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http.delete(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});
@@ -77,6 +119,7 @@ class ConsentNetworking {
 
   Future<EducationModel> addEducationMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _addEducation);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http.post(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});
@@ -93,6 +136,7 @@ class ConsentNetworking {
 
   Future<SocialMediaModel> deleteSocialMediaMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _deleteSocialMedia);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http.delete(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});
@@ -107,14 +151,21 @@ class ConsentNetworking {
     }
   }
 
-  Future<SocialMediaModel> getSocialMediaMethod() async {
+  Future<SocialMediaModel?>? getSocialMediaMethod(
+      {required BuildContext context}) async {
     var url = Uri.https(_urlApi, _getSocialMedia);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
     if (response.statusCode == 200) {
       return SocialMediaModel.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 401) {
+      prefs.clear();
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoadingScreen()),
+          (route) => false);
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg.toString());
@@ -123,6 +174,7 @@ class ConsentNetworking {
 
   Future<SocialMediaModel> addSocialMediaMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _addSocialMedia);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http.post(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});
@@ -138,6 +190,7 @@ class ConsentNetworking {
 
   Future<SkillsModel> addSkillsMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _addSkills);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http.post(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});
@@ -154,6 +207,7 @@ class ConsentNetworking {
 
   Future<ProjectsModel> deleteProjecttMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _deleteProject);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http.delete(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});
@@ -168,8 +222,10 @@ class ConsentNetworking {
     }
   }
 
-  Future<ProjectsModel> getProjectsMethod() async {
+  Future<ProjectsModel?>? getProjectsMethod(
+      {required BuildContext context}) async {
     var url = Uri.https(_urlApi, _getProjects);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
@@ -177,6 +233,11 @@ class ConsentNetworking {
 
     if (response.statusCode == 200) {
       return ProjectsModel.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 401) {
+      prefs.clear();
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoadingScreen()),
+          (route) => false);
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg.toString());
@@ -185,6 +246,7 @@ class ConsentNetworking {
 
   Future<ProjectsModel> addProjectMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _addProject);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http.post(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});
@@ -199,13 +261,14 @@ class ConsentNetworking {
     }
   }
 
-  Future<DeleteAccountModel> deleteAccountMethod({required Map body}) async {
+  Future<DeleteAccountModel> deleteAccountMethod() async {
     var url = Uri.https(_urlApi, _deleteAccount);
-    var response = await http.delete(url,
-        body: json.encode(body),
-        headers: {"authorization": prefs.getString('token')!});
+    final prefs = await SharedPreferences.getInstance();
+    var response = await http
+        .delete(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
+    prefs.remove('token');
 
     if (response.statusCode == 200) {
       return DeleteAccountModel.fromJson(json.decode(response.body));
@@ -217,6 +280,7 @@ class ConsentNetworking {
 
   Future<AboutModel> updateAboutMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _updateAbute);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http.put(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});
@@ -233,12 +297,12 @@ class ConsentNetworking {
 
   Future<AuthentictionModel> loginMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _login);
-    var response = await http.post(url,
-        body: json.encode(body),
-        headers: {"authorization": prefs.getString('token')!});
+    var response = await http.post(
+      url,
+      body: json.encode(body),
+    );
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');
-
     if (response.statusCode == 200) {
       return AuthentictionModel.fromJson(json.decode(response.body));
     } else {
@@ -247,8 +311,9 @@ class ConsentNetworking {
     }
   }
 
-  Future<AboutModel> getAboutMethod({required Map body}) async {
+  Future<AboutModel?>? getAboutMethod({required BuildContext context}) async {
     var url = Uri.https(_urlApi, _getabute);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
@@ -256,6 +321,11 @@ class ConsentNetworking {
 
     if (response.statusCode == 200) {
       return AboutModel.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 401) {
+      prefs.clear();
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoadingScreen()),
+          (route) => false);
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg.toString());
@@ -290,8 +360,9 @@ class ConsentNetworking {
     }
   }
 
-  Future<SkillsModel> getSkillsMethod() async {
+  Future<SkillsModel?>? getSkillsMethod({required BuildContext context}) async {
     var url = Uri.https(_urlApi, _getSkills);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http
         .get(url, headers: {"authorization": prefs.getString('token')!});
     print('Response status: ${response.statusCode}');
@@ -299,6 +370,11 @@ class ConsentNetworking {
 
     if (response.statusCode == 200) {
       return SkillsModel.fromJson(json.decode(response.body));
+    } else if (response.statusCode == 401) {
+      prefs.clear();
+      Navigator.of(context).pushAndRemoveUntil(
+          MaterialPageRoute(builder: (context) => LoadingScreen()),
+          (route) => false);
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg.toString());
@@ -307,6 +383,7 @@ class ConsentNetworking {
 
   Future<SkillsModel> removeSkillsMethod({required Map body}) async {
     var url = Uri.https(_urlApi, _deleteSkills);
+    final prefs = await SharedPreferences.getInstance();
     var response = await http.delete(url,
         body: json.encode(body),
         headers: {"authorization": prefs.getString('token')!});

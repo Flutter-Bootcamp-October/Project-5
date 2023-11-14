@@ -2,17 +2,18 @@ import 'package:cv_app/constentes/colors.dart';
 import 'package:flutter/material.dart';
 
 class AuthTextFelid extends StatelessWidget {
-   AuthTextFelid({
-    super.key,
-    required this.text,
-    required this.icon,
-    required this.isHaveIcon,required this.controller
-  });
+  AuthTextFelid(
+      {super.key,
+      required this.text,
+      required this.icon,
+      required this.isHaveIcon,
+      required this.controller, required this.title});
 
   final String text;
+  final String title;
   final IconData? icon;
   final bool isHaveIcon;
-   TextEditingController? controller = TextEditingController();
+  TextEditingController? controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class AuthTextFelid extends StatelessWidget {
         Padding(
           padding: const EdgeInsets.all(8.0),
           child: Text(
-            text,
+            title,
             style: const TextStyle(
               color: payneGrey,
               fontSize: 18,

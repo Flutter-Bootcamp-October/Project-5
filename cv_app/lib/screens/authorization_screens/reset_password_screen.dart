@@ -1,24 +1,43 @@
 import 'package:cv_app/constentes/colors.dart';
 import 'package:cv_app/constentes/sized_box.dart';
 import 'package:cv_app/models/authentiction/authentiction_model.dart';
+import 'package:cv_app/models/globals.dart';
 import 'package:cv_app/screens/authorization_screens/verification_screen.dart';
 import 'package:cv_app/services/api/networking_methods.dart';
 import 'package:cv_app/widgets/auth_widgets/auth_textfelid.dart';
+import 'package:cv_app/widgets/information_widget/button_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class ResetPasswordScreen extends StatelessWidget {
+class ResetPasswordScreen extends StatefulWidget {
   ResetPasswordScreen({
     super.key,
   });
+
+  @override
+  State<ResetPasswordScreen> createState() => _ResetPasswordScreenState();
+}
+
+class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
   TextEditingController emailController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: richBlack,
+      resizeToAvoidBottomInset: false,
       body: Column(
         children: [
+         height20,
           Expanded(
-            child: Container(),
+            child: Container(
+              child: ImageIcon(
+                AssetImage(
+                  'lib/assets/images/pngkey.com-resume-png-1225289.png',
+                ),
+                color: white,
+                size: 150,
+              ),
+            ),
           ),
           Container(
             padding: const EdgeInsets.only(top: 20),
@@ -44,12 +63,14 @@ class ResetPasswordScreen extends StatelessWidget {
                     children: [
                       AuthTextFelid(
                         text: 'Email',
+                        title: 'Email',
                         icon: Icons.email_outlined,
                         isHaveIcon: true,
                         controller: emailController,
                       ),
                       height20,
-                      InkWell(
+                      ButtonWidget(
+                        name: 'Submit',
                         onTap: () async {
                           final network = ConsentNetworking();
 
@@ -71,25 +92,8 @@ class ResetPasswordScreen extends StatelessWidget {
                             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                                 content: Text(respons.msg.toString())));
                           }
+                          Navigator.pop(context);
                         },
-                        child: Container(
-                          width: 300,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(20),
-                            color: payneGrey,
-                          ),
-                          height: 50,
-                          child: const Center(
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(
-                                color: eggShell,
-                                fontSize: 24,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                          ),
-                        ),
                       ),
                     ],
                   ),

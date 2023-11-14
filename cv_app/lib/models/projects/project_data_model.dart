@@ -1,6 +1,5 @@
 class ProjectData {
   ProjectData({
-   
     required this.name,
     required this.description,
     required this.state,

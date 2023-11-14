@@ -5,19 +5,24 @@ import 'package:flutter/material.dart';
 
 class GridViewSkills extends StatelessWidget {
   const GridViewSkills({
-    super.key, required SkillData skill,
+    super.key,
+    required this.skill,
   });
-
+  final SkillData skill;
   @override
   Widget build(BuildContext context) {
     return GridView.count(
       padding: const EdgeInsets.only(top: 12),
-      crossAxisCount: 4,
+      crossAxisCount: 3,
+      shrinkWrap: true,
+      childAspectRatio: 9 / 13,
       children: [
         Container(
           decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(20), color: eggShell),
-          child:  SkillWidget(),
+          child: SkillWidget(
+            skill: skill,
+          ),
         ),
       ],
     );

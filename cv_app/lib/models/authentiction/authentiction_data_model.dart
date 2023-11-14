@@ -1,4 +1,3 @@
-
 class AuthentictionData {
   AuthentictionData({required this.email, required this.password});
   late final String email;

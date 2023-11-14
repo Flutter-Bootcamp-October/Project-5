@@ -27,6 +27,7 @@ class _EducationExpansionTileWidgetState
   TextEditingController collegeController = TextEditingController();
   TextEditingController specializationController = TextEditingController();
   TextEditingController levelController = TextEditingController();
+  String level = '';
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -68,10 +69,8 @@ class _EducationExpansionTileWidgetState
                             title: 'University name',
                             hintTitle: 'University name',
                             onChanged: (value) {
-                              setState(() {
-                                educationList[index].university = value;
-                                university = value;
-                              });
+                              educationList[index].university = value;
+                              university = value;
                             },
                           ),
                           height10,
@@ -80,9 +79,8 @@ class _EducationExpansionTileWidgetState
                             title: 'College name',
                             controller: collegeController,
                             onChanged: (value) {
-                              setState(() {
-                                educationList[index].college = value;
-                              });
+                              educationList[index].college = value;
+                              collegeController.text = value;
                             },
                           ),
                           height10,
@@ -91,9 +89,8 @@ class _EducationExpansionTileWidgetState
                             title: 'Specialization',
                             controller: specializationController,
                             onChanged: (value) {
-                              setState(() {
-                                educationList[index].specialization = value;
-                              });
+                              educationList[index].specialization = value;
+                              specializationController.text = value;
                             },
                           ),
                           height10,
@@ -102,9 +99,8 @@ class _EducationExpansionTileWidgetState
                             title: 'Level',
                             controller: levelController,
                             onChanged: (value) {
-                              setState(() {
-                                educationList[index].level = value;
-                              });
+                              educationList[index].level = value;
+                              levelController.text = value;
                             },
                           ),
                           height10,
@@ -117,44 +113,41 @@ class _EducationExpansionTileWidgetState
                     },
                   ),
                   const SizedBox(height: 20),
-                  ButtonWidget(
-                    onTap: () async {
-                      String month = monthController.text;
-                      String day = dayController.text;
-                      String year = yearController.text;
-
-                      final result = await network.addEducationMethod(body: {
-                        "graduation_date": '$month/$day/$year',
-                        "university": university,
-                        "college": collegeController.text,
-                        "specialization": specializationController.text,
-                        "level": levelController.text
-                      });
-
-                      if (result == 200) {
-                        // ignore: use_build_context_synchronously
-                        showDialog(
-                          context: context,
-                          builder: (BuildContext context) {
-                            return const AlertDialog(
-                              title: Text('send successfuly'),
-                            );
-                          },
-                        );
-                      }
-
-                      setState(() {
-                        educationList.add(EducationData(
-                          graduationDate: '$month/$day/$year',
-                          university: '',
-                          college: '',
-                          specialization: '',
-                          level: '',
-                        ));
-                      });
-                    },
-                    name: 'Add Education',
-                  ),
+                  if (educationList.isEmpty)
+                    ButtonWidget(
+                      onTap: () async {
+                        String month = monthController.text;
+                        String day = dayController.text;
+                        String year = yearController.text;
+                        setState(() {
+                          educationList.add(EducationData(
+                            graduationDate: '',
+                            university: '',
+                            college: '',
+                            specialization: '',
+                            level: '',
+                          ));
+                        });
+                      },
+                      name: 'Add Education',
+                    ),
+                  if (educationList.isNotEmpty)
+                    ButtonWidget(
+                        onTap: () async {
+                          String month = monthController.text;
+                          String day = dayController.text;
+                          String year = yearController.text;
+                          final result = await network.addEducationMethod(
+                            body: {
+                              "graduation_date": '$month/$day/$year',
+                              "university": university,
+                              "college": collegeController.text,
+                              "specialization": specializationController.text,
+                              "level": levelController.text
+                            },
+                          );
+                        },
+                        name: 'Send Education')
                 ],
               ),
             ),
