@@ -8,6 +8,7 @@ class SocialServ {
   final String _get = '/user/social_media';
   final String _add = '/user/add/social_media';
   final String _delete = '/user/delete/social_media';
+  final String _getUsers = '/user/get_users';
 
   getSocials({required String token}) async {
     var url = Uri.https(_api, _get);
@@ -19,6 +20,19 @@ class SocialServ {
           .map((item) => Social.fromJson(item))
           .toList();
       return temp;
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg);
+    }
+  }
+
+  getUsers({required String token}) async {
+    var url = Uri.https(_api, _getUsers);
+    var response = await http.get(url, headers: {"authorization": token});
+    print('Response status: ${response.statusCode}');
+    print('Response body: ${response.body}');
+    if (response.statusCode == 200) {
+      return json.decode(response.body)["data"];
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg);
