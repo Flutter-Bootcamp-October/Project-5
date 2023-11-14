@@ -189,9 +189,6 @@ class AboutScreenState extends State<AboutScreen> {
                   },
                   child: const Text("Update Info")),
               ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
-                  ),
                   onPressed: () {
                     Navigator.pushAndRemoveUntil(
                         context,
@@ -199,7 +196,20 @@ class AboutScreenState extends State<AboutScreen> {
                             builder: (context) => const SignInScreen()),
                         ModalRoute.withName("/screen"));
                   },
-                  child: const Text("Sign Out"))
+                  child: const Text("Sign Out")),
+              ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
+                  onPressed: () async {
+                    await AboutServ().deleteAccount(token: getToken());
+                    Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SignInScreen()),
+                        ModalRoute.withName("/screen"));
+                  },
+                  child: const Text("Delete Account"))
             ]),
           ),
         ),
