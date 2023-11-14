@@ -18,11 +18,18 @@ class EducationScreen extends StatefulWidget {
 }
 
 class _EducationScreenState extends State<EducationScreen> {
+  bool empty = education.isEmpty;
   @override
   initState() {
     super.initState();
-
     _loedingEducation();
+     Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        empty = false;
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -54,7 +61,7 @@ class _EducationScreenState extends State<EducationScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (education.isEmpty)
+              if (empty == true)
                 const Center(child: CircularProgressIndicator()),
               if (education.isNotEmpty)
                 Column(

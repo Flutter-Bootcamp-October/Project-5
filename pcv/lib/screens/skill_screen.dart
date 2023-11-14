@@ -18,11 +18,18 @@ class SkillScreen extends StatefulWidget {
 }
 
 class _SkillScreenState extends State<SkillScreen> {
+  bool empty = skills.isEmpty;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _loedingSkill();
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        empty = false;
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -54,7 +61,7 @@ class _SkillScreenState extends State<SkillScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (skills.isEmpty)
+              if (empty == true)
                 const Center(child: CircularProgressIndicator()),
               if (skills.isNotEmpty)
                 Column(

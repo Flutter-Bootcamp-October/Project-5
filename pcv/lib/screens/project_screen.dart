@@ -18,13 +18,19 @@ class ProjectScreen extends StatefulWidget {
 }
 
 class _ProjectScreenState extends State<ProjectScreen> {
+  bool empty = projects.isEmpty;
   @override
   initState() {
     super.initState();
     _loedingProject();
+    Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        empty = false;
+        setState(() {});
+      },
+    );
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +61,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (projects.isEmpty)
+              if (empty == true)
                 const Center(child: CircularProgressIndicator()),
               if (projects.isNotEmpty)
                 Column(
@@ -89,7 +95,8 @@ class _ProjectScreenState extends State<ProjectScreen> {
       ),
     );
   }
-    _loedingProject() async {
+
+  _loedingProject() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
     final Response res = await projectNet.projectMethod(token: token!);

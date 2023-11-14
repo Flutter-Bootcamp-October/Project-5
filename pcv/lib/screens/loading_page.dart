@@ -1,7 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/screens/education_screen.dart';
@@ -30,7 +29,7 @@ class _LoadingPageState extends State<LoadingPage> {
   @override
   initState() {
     super.initState();
-    
+
     _loedingEducation();
     _loedingProject();
     _loedingSkill();
@@ -47,8 +46,7 @@ class _LoadingPageState extends State<LoadingPage> {
             MaterialPageRoute(builder: (context) => const HomeScreen()),
             (route) => false);
         setState(() {});
-      }
-      if (res.statusCode == 401) {
+      } else {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(
@@ -79,7 +77,6 @@ class _LoadingPageState extends State<LoadingPage> {
       if (res.statusCode == 200) {
         education = (await jsonDecode(res.body))["data"];
         setState(() {});
-        // ignore: empty_catches
       }
     } catch (error) {
       //

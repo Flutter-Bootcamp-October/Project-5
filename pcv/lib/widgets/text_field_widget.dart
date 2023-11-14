@@ -17,9 +17,8 @@ class TextFieldWidget extends StatelessWidget {
       child: TextField(
         obscureText: obscure,
         controller: controller,
-        
+        style: const TextStyle(color: Colors.black),
         decoration: InputDecoration(
-          
             label: Text(text),
             labelStyle: const TextStyle(
                 fontWeight: FontWeight.bold, fontSize: 18, color: Colors.black),

@@ -1,21 +1,17 @@
 // ignore_for_file: use_build_context_synchronously
-
-import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/screens/edit_about.dart';
 import 'package:pcv/screens/education_screen.dart';
 import 'package:pcv/screens/home_screen.dart';
 import 'package:pcv/screens/project_screen.dart';
+import 'package:pcv/screens/register_screen.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
 import 'package:pcv/screens/skill_screen.dart';
 import 'package:pcv/screens/social_screen.dart';
 import 'package:pcv/screens/user.dart';
 import 'package:pcv/services/api_about.dart';
-import 'package:pcv/widgets/get_about.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:image_picker/image_picker.dart';
 
 class DrawerScreens extends StatefulWidget {
   const DrawerScreens({
@@ -27,60 +23,12 @@ class DrawerScreens extends StatefulWidget {
 }
 
 class _DrawerScreensState extends State<DrawerScreens> {
-  final ImagePicker picker = ImagePicker();
-  File? imageFile;
   @override
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Column(
         children: [
-          if (about.isNotEmpty)
-            ClipOval(
-                child: SizedBox(
-                    height: 120,
-                    width: 120,
-                    child: InkWell(
-                        onTap: () async {
-                          try {
-                            XFile? image = await picker.pickImage(
-                                source: ImageSource.gallery);
-                            imageFile = File(image!.path);
-                            final SharedPreferences prefs =
-                                await SharedPreferences.getInstance();
-                            final token = prefs.getString('token');
-                            final Response resp =
-                                await netAbout.aboutUploadMethod(
-                              token: token!,
-                              image: imageFile!,
-                            );
-
-                            if (resp.statusCode == 200) {
-                              Future.delayed(
-                                Duration(seconds: 3),
-                                () {
-                                  print(resp.body);
-                                  setState(() {});
-                                  Navigator.of(context).pushAndRemoveUntil(
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              const HomeScreen()),
-                                      (Route<dynamic> route) => false);
-                                },
-                              );
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(
-                                          (await jsonDecode(resp.body))["msg"]
-                                              .toString())));
-                            }
-                          } catch (e) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                SnackBar(content: Text(e.toString())));
-                          }
-                        },
-                        child: Image.network(about["image"])))),
           ListTile(
             title: const Text('Home'),
             trailing: const Icon(Icons.home_outlined),
@@ -196,7 +144,16 @@ class _DrawerScreensState extends State<DrawerScreens> {
                         final SharedPreferences prefs =
                             await SharedPreferences.getInstance();
                         final token = prefs.getString('token');
-                        netAbout.deleteAccountMethod(token: token!);
+                        final Response res =
+                            await netAbout.deleteAccountMethod(token: token!);
+                        if (res.statusCode == 200) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => const RegisterScreen(),
+                              ),
+                              (route) => false);
+                        }
                       },
                       child: const Text("DELETE"),
                     ),

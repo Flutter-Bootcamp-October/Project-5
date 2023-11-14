@@ -17,32 +17,35 @@ class _GetAboutState extends State<GetAbout> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          ClipOval(
-            child: Container(
-              height: 100,
-              width: 100,
-              decoration: const BoxDecoration(shape: BoxShape.circle),
-              child: Image.network(about["image"]),
+          if (about["image"] != null)
+            ClipOval(
+              child: Container(
+                height: 100,
+                width: 100,
+                decoration: const BoxDecoration(shape: BoxShape.circle),
+                child: Image.network(about["image"]),
+              ),
             ),
-          ),
           Column(
             children: [
               Text(
                 ' ${about["name"].toString()}',
                 style: const TextStyle(fontSize: 28),
               ),
-              Text(
-                about["title_position"].toString(),
-                style: TextStyle(fontSize: 16, color: Colors.grey[400]),
-              ),
+              if (about["title_position"] != null)
+                Text(
+                  about["title_position"].toString(),
+                  style: TextStyle(fontSize: 16, color: Colors.grey[400]),
+                ),
             ],
           ),
         ],
       ),
-      Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Text(about["about"].toString()),
-      ),
+      if (about["about"] != null)
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Text(about["about"].toString()),
+        ),
       const SizedBox(
         height: 24,
       ),
@@ -54,14 +57,16 @@ class _GetAboutState extends State<GetAbout> {
         icon: Icons.phone,
         text: about["phone"].toString(),
       ),
-      ContaHomeWidget(
-        icon: Icons.location_on,
-        text: about["location"].toString(),
-      ),
-      ContaHomeWidget(
-        icon: Icons.email,
-        text: about["birthday"].toString(),
-      ),
+      if (about["location"] != null)
+        ContaHomeWidget(
+          icon: Icons.location_on,
+          text: about["location"].toString(),
+        ),
+      if (about["birthday"] != null)
+        ContaHomeWidget(
+          icon: Icons.email,
+          text: about["birthday"].toString(),
+        ),
     ]);
   }
 }

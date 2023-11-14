@@ -1,7 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 import 'dart:convert';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:pcv/method/app_bar_mathod.dart';
 import 'package:pcv/services/api_about.dart';
 import 'package:pcv/widgets/get_about.dart';
@@ -18,6 +20,8 @@ class EditAboutScreen extends StatefulWidget {
 }
 
 class _EditAboutScreenState extends State<EditAboutScreen> {
+  final ImagePicker picker = ImagePicker();
+  File? imageFile;
   TextEditingController usernameController = TextEditingController();
   TextEditingController titPoController = TextEditingController();
   TextEditingController locationController = TextEditingController();
@@ -48,8 +52,51 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    if (about.isNotEmpty)
+                      ClipOval(
+                          child: SizedBox(
+                              height: 120,
+                              width: 120,
+                              child: InkWell(
+                                  onTap: () async {
+                                    try {
+                                      XFile? image = await picker.pickImage(
+                                          source: ImageSource.gallery);
+                                      imageFile = File(image!.path);
+                                      final SharedPreferences prefs =
+                                          await SharedPreferences.getInstance();
+                                      final token = prefs.getString('token');
+                                      final Response resp =
+                                          await netAbout.aboutUploadMethod(
+                                        token: token!,
+                                        image: imageFile!,
+                                      );
+                                      if (resp.statusCode == 200) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(const SnackBar(
+                                                content: Text(
+                                                    'image it\'s update')));
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text((await jsonDecode(
+                                                        resp.body))["msg"]
+                                                    .toString())));
+                                      }
+                                    } catch (e) {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(e.toString())));
+                                    }
+                                  },
+                                  child: Column(
+                                    children: [
+                                      if (about["image"] != null)
+                                        Image.network(about["image"]),
+                                    ],
+                                  )))),
                     TextFieldWidget(
                       text: 'name',
                       obscure: false,
@@ -96,8 +143,11 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                             "about": aboutController.text,
                             "birthday": birthdayController.text,
                           });
-
+                          about = (await jsonDecode(resp.body))["data"];
                           if (resp.statusCode == 200) {
+                            setState(() {
+                              about;
+                            });
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(

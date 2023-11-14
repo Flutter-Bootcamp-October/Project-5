@@ -14,9 +14,8 @@ class _GetSkillState extends State<GetSkill> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      children: [if (skills.isNotEmpty)
         const TitlesWidget(titles: 'Skill'),
-        if (skills.isNotEmpty)
           GridView.count(
               physics: const NeverScrollableScrollPhysics(),
               childAspectRatio: 2,
@@ -39,7 +38,6 @@ class _GetSkillState extends State<GetSkill> {
                         child: Center(
                           child: Text(
                             "${e["skill"]}",
-                            style: const TextStyle(color: Colors.black),
                           ),
                         ),
                       ),

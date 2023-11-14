@@ -46,7 +46,6 @@ class _AddSkillState extends State<AddSkill> {
                         await netSkill.addSkillMethod(token: token!, body: {
                       "skill": skillController.text,
                     });
-
                     if (resp.statusCode == 200) {
                       Navigator.of(context).pushAndRemoveUntil(
                           MaterialPageRoute(

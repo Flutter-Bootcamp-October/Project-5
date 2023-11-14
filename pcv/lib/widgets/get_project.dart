@@ -14,11 +14,11 @@ class _GetProjectWidgetState extends State<GetProjectWidget> {
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
-      children: [
+      children: [ if (projects.isNotEmpty)
         const TitlesWidget(
           titles: 'Project',
         ),
-        if (projects.isNotEmpty)
+       
           GridView.count(
               physics: const NeverScrollableScrollPhysics(),
               crossAxisCount: 3,
@@ -32,24 +32,22 @@ class _GetProjectWidgetState extends State<GetProjectWidget> {
                             horizontal: 4, vertical: 4),
                         child: Container(
                           width: 50,
-                        decoration: BoxDecoration(
-              color: Colors.grey.shade100.withOpacity(0.2),
-              borderRadius: const BorderRadius.horizontal(
-                  left: Radius.circular(15), right: Radius.circular(15))),
+                          decoration: BoxDecoration(
+                              color: Colors.grey.shade100.withOpacity(0.2),
+                              borderRadius: const BorderRadius.horizontal(
+                                  left: Radius.circular(15),
+                                  right: Radius.circular(15))),
                           child: Column(children: [
                             Text(
                               "${e["name"]}",
-                              style: const TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold),
+                              style:
+                                  const TextStyle(fontWeight: FontWeight.bold),
                             ),
                             Text(
                               "${e["description"]}",
-                              style: const TextStyle(color: Colors.black),
                             ),
                             Text(
                               "${e["state"]}",
-                              style: const TextStyle(color: Colors.black),
                             ),
                           ]),
                         ),

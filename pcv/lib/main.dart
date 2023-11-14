@@ -15,7 +15,7 @@ class MainApp extends StatelessWidget {
           textTheme: const TextTheme(
         bodySmall: TextStyle(color: Colors.white),
         bodyMedium: TextStyle(color: Colors.white),
-        // titleMedium: TextStyle(color: Colors.white),
+        titleMedium: TextStyle(color: Colors.white),
       )),
       home: const LoadingPage(),
     );

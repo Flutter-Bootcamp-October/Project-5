@@ -19,9 +19,18 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> {
+  bool empty = social.isEmpty;
+  @override
   initState() {
     super.initState();
     _loedingSocial();
+     Future.delayed(
+      const Duration(seconds: 3),
+      () {
+        empty = false;
+        setState(() {});
+      },
+    );
   }
 
   @override
@@ -53,7 +62,7 @@ class _SocialScreenState extends State<SocialScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              if (social.isEmpty)
+              if (empty == true)
                 const Center(child: CircularProgressIndicator()),
               if (social.isNotEmpty)
                 Column(
@@ -75,7 +84,11 @@ class _SocialScreenState extends State<SocialScreen> {
                                 color: Colors.grey.shade100.withOpacity(0.6),
                                 child: ListTile(
                                   title: Text("${e["username"]}"),
-                                  subtitle: Text(e["social"]),
+                                  leading: ClipOval(
+                                      child: Image.asset(
+                                    "assets/${e["social"]}.png",
+                                    fit: BoxFit.contain,
+                                  )),
                                 ),
                               ),
                             ))

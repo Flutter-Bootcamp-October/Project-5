@@ -10,6 +10,8 @@ class AboutNet {
   final String _about = '/user/about';
   final String _editAbout = '/user/edit/about';
   final String _upload = '/user/upload';
+  final String _delete = '/user/delete_account';
+
   final String _getUser = '/user/get_users';
 
   aboutMethod({required String token}) async {
@@ -32,14 +34,10 @@ class AboutNet {
     return response;
   }
 
-  deleteAccountMethod({
-    required String token,
-  }) async {
-    var url = Uri.https(_apiUrl, _editAbout);
-    var response = await http.delete(
-      url,
-      headers: {"Authorization": token},
-    );
+  deleteAccountMethod({required String token}) async {
+    var url = Uri.https(_apiUrl, _delete);
+    var response = await http
+        .delete(url, headers: {"Authorization": token},);
     return response;
   }
 
