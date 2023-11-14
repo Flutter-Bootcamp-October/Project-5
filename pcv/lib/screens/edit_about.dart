@@ -91,11 +91,23 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                                               content: Text(e.toString())));
                                     }
                                   },
-                                  child: Column(
-                                    children: [
-                                      if (about["image"] != null)
-                                        Image.network(about["image"]),
-                                    ],
+                                  child: Container(
+                                    height: 40,
+                                    width: 40,
+                                    color: Colors.grey,
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: [
+                                        if (about["image"] == null)
+                                          const Icon(
+                                            Icons.person_outline,
+                                            size: 50,
+                                          ),
+                                        if (about["image"] != null)
+                                          Image.network(about["image"]),
+                                      ],
+                                    ),
                                   )))),
                     TextFieldWidget(
                       text: 'name',
