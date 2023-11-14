@@ -24,7 +24,7 @@ class _SocialScreenState extends State<SocialScreen> {
   initState() {
     super.initState();
     _loedingSocial();
-     Future.delayed(
+    Future.delayed(
       const Duration(seconds: 3),
       () {
         empty = false;
