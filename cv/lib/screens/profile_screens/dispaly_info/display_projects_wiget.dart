@@ -24,13 +24,13 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 18.0),
                         child: Text(
                           "Projects:",
                           style: TextStyle(
                               fontSize: 18,
-                              color: blue,
+                              color: Colors.teal,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -104,8 +104,9 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                                                   const Text(
                                                     "Project Name:",
                                                     style: TextStyle(
-                                                        fontWeight:
-                                                            FontWeight.w500),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
                                                   ),
                                                   Text(
                                                       snapshot.data![index]
@@ -124,8 +125,9 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                                                   const Text(
                                                       "Project Description: ",
                                                       style: TextStyle(
-                                                          fontWeight:
-                                                              FontWeight.w500)),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      )),
                                                   Text(
                                                       snapshot.data![index]
                                                               .description ??

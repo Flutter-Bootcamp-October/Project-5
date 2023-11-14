@@ -24,13 +24,13 @@ class _DisplayAllEducationState extends State<DisplayAllEducation> {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 18.0),
                         child: Text(
                           "Educations:",
                           style: TextStyle(
                               fontSize: 16,
-                              color: blue,
+                              color: Colors.teal,
                               fontWeight: FontWeight.bold),
                         ),
                       ),

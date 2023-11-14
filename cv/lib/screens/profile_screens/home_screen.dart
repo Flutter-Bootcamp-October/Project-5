@@ -23,7 +23,7 @@ class HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: const Color(0xffF8FAFD),
       appBar: AppBar(
-        backgroundColor: lightBlue,
+        backgroundColor: Colors.teal,
         elevation: 0,
         title: const Text(
           "",
@@ -41,57 +41,61 @@ class HomeScreenState extends State<HomeScreen> {
               size: 30,
             )),
       ),
-      body: ListView(
-        children: [
-          Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width,
-                height: 230,
-                decoration: BoxDecoration(
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5), // Shadow color
-                      spreadRadius: 5, // Spread radius
-                      blurRadius: 7, // Blur radius
-                      offset: const Offset(0, 3), // Changes position of shadow
-                    ),
-                  ],
-                  shape: BoxShape.rectangle,
-                  border: const Border(
-                    bottom: BorderSide(
-                      style: BorderStyle.none, // Color of the bottom border
-                      width: 5.0, // Width of the bottom border
-                    ),
+      body: SingleChildScrollView(
+        child: Stack(children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 230,
+            decoration: BoxDecoration(
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5), // Shadow color
+                    spreadRadius: 5, // Spread radius
+                    blurRadius: 7, // Blur radius
+                    offset: const Offset(0, 3), // Changes position of shadow
                   ),
-                  borderRadius: BorderRadius.circular(10),
-                  color: lightBlue,
+                ],
+                shape: BoxShape.rectangle,
+                border: const Border(
+                  bottom: BorderSide(
+                    style: BorderStyle.none, // Color of the bottom border
+                    width: 5.0, // Width of the bottom border
+                  ),
                 ),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(
-                  left: 24.0,
-                ),
-                child: DisplayUserInfo(),
-              ),
-            ],
+                //borderRadius: BorderRadius.circular(2),
+                color: Colors.teal),
           ),
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              hight14(),
-              const DisplayAllSkills(),
-              hight14(),
-              const DisplayAllSocials(),
-              hight14(),
-              const DisplayAllProject(),
-              hight14(),
-              const DisplayAllEducation(),
-              hight14(),
-            ],
+          const Positioned(
+            top: -30,
+            child: Padding(
+              padding: EdgeInsets.only(
+                left: 24.0,
+              ),
+              child: DisplayUserInfo(),
+            ),
           ),
-        ],
+          Padding(
+            padding: const EdgeInsets.only(top: 300.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                hight14(),
+                const DisplayAllSkills(),
+                hight14(),
+                const DisplayAllSocials(),
+                hight14(),
+                const DisplayAllProject(),
+                hight14(),
+                const DisplayAllEducation(),
+                hight40(),
+              ],
+            ),
+          ),
+        ]),
       ),
     );
   }

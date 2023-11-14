@@ -27,13 +27,13 @@ class _DisplayAllSocialsState extends State<DisplayAllSocials> {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 18.0),
                         child: Text(
                           "Scoial Media:",
                           style: TextStyle(
                               fontSize: 16,
-                              color: blue,
+                              color: Colors.teal,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -104,6 +104,8 @@ class _DisplayAllSocialsState extends State<DisplayAllSocials> {
                                     avatar: logo,
                                     label: Text(
                                       socialsList[index].username ?? "",
+                                      // style:
+                                      //     const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                   width14(),

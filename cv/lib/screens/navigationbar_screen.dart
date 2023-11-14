@@ -31,7 +31,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.home),
             title: const Text("Profile"),
-            selectedColor: const Color(0xff80CED7),
+            selectedColor: Colors.teal,
           ),
 
           /// Add
@@ -45,7 +45,7 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.people_alt_outlined),
             title: const Text("Community"),
-            selectedColor: Colors.teal,
+            selectedColor: orange,
           ),
         ],
       ),

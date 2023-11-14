@@ -22,12 +22,12 @@ class SettingScreen extends StatelessWidget {
           },
           child: const Icon(
             Icons.arrow_back_ios,
-            color: Colors.black,
+            color: Colors.teal,
           ),
         ),
         title: const Text(
           "Settings",
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: Colors.teal),
         ),
       ),
       body: Center(

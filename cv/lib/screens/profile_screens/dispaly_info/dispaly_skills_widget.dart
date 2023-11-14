@@ -27,13 +27,13 @@ class _DisplayAllSkillsState extends State<DisplayAllSkills> {
                 ? Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
+                      const Padding(
+                        padding: EdgeInsets.only(left: 18.0),
                         child: Text(
                           "Skills:",
                           style: TextStyle(
                               fontSize: 16,
-                              color: blue,
+                              color: Colors.teal,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
@@ -81,6 +81,8 @@ class _DisplayAllSkillsState extends State<DisplayAllSkills> {
                                     // avatar: logo,
                                     label: Text(
                                       skillsList[index].skill ?? "",
+                                      // style:
+                                      //     const TextStyle(color: Colors.white),
                                     ),
                                   ),
                                   width14(),
