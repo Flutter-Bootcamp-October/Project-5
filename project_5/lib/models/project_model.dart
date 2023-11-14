@@ -1,5 +1,5 @@
-class Project {
-  Project({
+class ProjectModel {
+  ProjectModel({
     required this.msg,
     required this.data,
     required this.codeState,
@@ -8,7 +8,7 @@ class Project {
   late final List<Data> data;
   late final int codeState;
 
-  Project.fromJson(Map<String, dynamic> json) {
+  ProjectModel.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     data = List.from(json['data']).map((e) => Data.fromJson(e)).toList();
 
@@ -16,11 +16,11 @@ class Project {
   }
 
   Map<String, dynamic> toJson() {
-    final vData = <String, dynamic>{};
-    vData['msg'] = msg;
-    vData['data'] = data.map((e) => e.toJson()).toList();
-    vData['codeState'] = codeState;
-    return vData;
+    final _data = <String, dynamic>{};
+    _data['msg'] = msg;
+    _data['data'] = data.map((e) => e.toJson()).toList();
+    _data['codeState'] = codeState;
+    return _data;
   }
 }
 
@@ -39,20 +39,20 @@ class Data {
   late final String state;
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? "";
-    userId = json['user_id'] ?? "";
-    name = json['name'] ?? "";
-    description = json['description'] ?? "";
-    state = json['state'] ?? "";
+    id = json['id'];
+    userId = json['user_id'];
+    name = json['name'];
+    description = json['description'];
+    state = json['state'];
   }
 
   Map<String, dynamic> toJson() {
-    final vData = <String, dynamic>{};
-    vData['id'] = id;
-    vData['user_id'] = userId;
-    vData['name'] = name;
-    vData['description'] = description;
-    vData['state'] = state;
-    return vData;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['user_id'] = userId;
+    _data['name'] = name;
+    _data['description'] = description;
+    _data['state'] = state;
+    return _data;
   }
 }

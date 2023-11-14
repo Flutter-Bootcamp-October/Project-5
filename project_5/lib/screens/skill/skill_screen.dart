@@ -5,6 +5,7 @@ import 'package:project_5/models/skill_model.dart';
 import 'package:project_5/screens/auth/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../components/button_widget.dart';
 import '../components/input_text_fields.dart';
 
 class SkillsScreen extends StatefulWidget {
@@ -24,7 +25,24 @@ class _SkillsScreenState extends State<SkillsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "Skills",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        ),
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.blue.shade900,
+          ),
+        ),
+      ),
       floatingActionButton: FloatingActionButton(
+        backgroundColor: Color.fromARGB(206, 13, 72, 161),
         child: Icon(Icons.add),
         onPressed: () {
           // show model bottom sheet to add new skils
@@ -49,10 +67,10 @@ class _SkillsScreenState extends State<SkillsScreen> {
                         controller: skillController,
                         lines: 1,
                       ),
-                      ElevatedButton(
-                        // style: ,
-                        onPressed: () async {
-                          // add skill function
+                      ButtonWidget(
+                        textEntry: 'Add Skill',
+                        onpress: () async {
+                          // add skill api function
                           try {
                             final element = await apimethod.addSkill(body: {
                               "skill": skillController.text,
@@ -66,7 +84,6 @@ class _SkillsScreenState extends State<SkillsScreen> {
                                 content: Text(error.message.toString())));
                           }
                         },
-                        child: const Text("add skill"),
                       ),
                     ],
                   ),
@@ -75,22 +92,6 @@ class _SkillsScreenState extends State<SkillsScreen> {
             }),
           ).then((value) => Future.delayed(const Duration(seconds: 1)));
         },
-      ),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Skills",
-          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
-        ),
-        leading: InkWell(
-          onTap: () => Navigator.pop(context),
-          child: Icon(
-            Icons.arrow_back_ios_new,
-            color: Colors.black,
-          ),
-        ),
       ),
       body: SingleChildScrollView(
         scrollDirection: Axis.vertical,
@@ -110,40 +111,43 @@ class _SkillsScreenState extends State<SkillsScreen> {
                         shrinkWrap: true,
                         itemCount: snapshot.data!.data?.length ?? 0,
                         itemBuilder: (BuildContext context, int index) {
-                          // "ID: ${snapshot.data!.data![index].id}"
-                          // "${snapshot.data!.data![index].skill}"
-                          return Card(
-                            color: Colors.blue.shade50,
-                            child: ListTile(
-                              leading: Text(
-                                "ID: ${snapshot.data!.data![index].id}",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                              title: Text(
-                                "${snapshot.data!.data![index].skill}",
-                                style: TextStyle(
-                                    fontSize: 16, fontWeight: FontWeight.w500),
-                              ),
-                              trailing: InkWell(
-                                onTap: () async {
-                                  await apimethod.removeSkill(
-                                      idSkill: snapshot.data!.data![index].id
-                                          .toString());
-                                  skilList
-                                      .remove(snapshot.data!.data![index].id);
-                                  setState(() {});
-                                },
-                                child: Icon(
-                                  Icons.delete,
-                                  color: Colors.red.shade200,
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(horizontal: 30),
+                            child: Card(
+                              color: Colors.blue.shade50,
+                              child: ListTile(
+                                leading: Text(
+                                  "ID: ${snapshot.data!.data![index].id}",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                title: Text(
+                                  "${snapshot.data!.data![index].skill}",
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w500),
+                                ),
+                                trailing: InkWell(
+                                  onTap: () async {
+                                    await apimethod.removeSkill(
+                                        idSkill: snapshot.data!.data![index].id
+                                            .toString());
+                                    skilList
+                                        .remove(snapshot.data!.data![index].id);
+                                    setState(() {});
+                                  },
+                                  child: Icon(
+                                    Icons.delete,
+                                    color: Colors.red.shade200,
+                                  ),
                                 ),
                               ),
                             ),
                           );
                         });
                   } else {
-                    return Text("data");
+                    return Text(snapshot.error.toString());
                   }
                 }
               },

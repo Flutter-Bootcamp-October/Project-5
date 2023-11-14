@@ -184,9 +184,24 @@ class ApiMethods {
   }
 
 // https://bacend-fshi.onrender.com/user/add/project
-// https://bacend-fshi.onrender.com/user/projects
-// https://bacend-fshi.onrender.com/user/delete/project
-  Future<Project> addProject({required Map body}) async {
+
+  Future<ProjectModel> getProject() async {
+    final pref = await SharedPreferences.getInstance();
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/projects");
+    final response = await https
+        .get(url, headers: {"authorization": pref.getString("token")!});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
+
+    if (response.statusCode == 200 || response.statusCode < 300) {
+      return ProjectModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg!);
+    }
+  }
+
+  Future<ProjectModel> addProject({required Map body}) async {
     final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/project");
     //sharedprefrence
     final pref = await SharedPreferences.getInstance();
@@ -197,11 +212,25 @@ class ApiMethods {
     print("Response status: ${response.statusCode}");
 
     if (response.statusCode == 200 || response.statusCode < 300) {
-      return Project.fromJson(json.decode(response.body));
+      return ProjectModel.fromJson(json.decode(response.body));
     } else {
       final error = ErrorModel.fromJson(json.decode(response.body));
       throw FormatException(error.msg!);
     }
+  }
+
+  removeProject({required String idProject}) async {
+    final url =
+        Uri.parse("https://bacend-fshi.onrender.com/user/delete/project");
+    //sharedprefrence
+    final pref = await SharedPreferences.getInstance();
+    final response = await https.delete(url,
+        body: json.encode({"id_project": idProject}),
+        headers: {"authorization": pref.getString("token")!});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
+
+    return response;
   }
 
   Future<Education> addEducation({required Map body}) async {
