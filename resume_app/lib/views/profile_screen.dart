@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:resume_app/consts/colors.dart';
 import 'package:resume_app/globals/global.dart';
 import 'package:resume_app/main.dart';
 import 'package:resume_app/services/about_services.dart';
@@ -6,10 +7,10 @@ import 'package:resume_app/services/education_services.dart';
 import 'package:resume_app/services/project_services.dart';
 import 'package:resume_app/services/skill_services.dart';
 import 'package:resume_app/services/social_services.dart';
+import 'package:resume_app/views/Navigation_bar.dart';
 import 'package:resume_app/views/signin_screen.dart';
-import 'package:resume_app/widgets/app_bg.dart';
-import 'package:resume_app/widgets/app_container.dart';
-import 'package:resume_app/widgets/user_display.dart';
+
+bool isLoading = true;
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -27,28 +28,21 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: [
-      const BackgroundContainer(),
-      const Positioned(
-        top: -199,
-        right: 99,
-        child: BlueContainer(),
-      ),
-      FutureBuilder(
-          future: _loadInfo(),
-          builder: (context, snapshot) {
-            if (snapshot.hasData) {
-              return const UserDisplay();
-            } else if (snapshot.hasError) {
-              return const Center(child: Text("Error while getting data"));
-            }
-            return const Center(child: CircularProgressIndicator());
-          })
-    ]);
+    return FutureBuilder(
+        future: _loadInfo(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return const NavigationScreen();
+          } else if (snapshot.hasError) {
+            return const Center(child: Text("Error while getting data"));
+          }
+          return const Scaffold(
+              backgroundColor: appBlue,
+              body: Center(child: CircularProgressIndicator()));
+        });
   }
 
   String getToken() {
-    print(prefs.getString("token"));
     return prefs.getString("token") ?? "";
   }
 

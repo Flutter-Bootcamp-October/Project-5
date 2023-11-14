@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:io';
-import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:resume_app/models/about_model.dart';
 import 'package:resume_app/models/error_model.dart';
@@ -29,7 +28,7 @@ class AboutServ {
     var response = await http.post(url,
         headers: {"authorization": token}, body: image.readAsBytesSync());
     if (response.statusCode == 200) {
-      return json.decode(response.body)["data"];
+      return json.decode(response.body)["data"]["email"];
     } else {
       final error =
           ErrorModel(msg: response.body, codeState: response.statusCode);

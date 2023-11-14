@@ -5,41 +5,25 @@ import 'package:resume_app/globals/global.dart';
 import 'package:resume_app/main.dart';
 import 'package:resume_app/services/about_services.dart';
 import 'package:resume_app/views/signin_screen.dart';
-import 'package:resume_app/views/signup_screen.dart';
 import 'package:resume_app/widgets/user_display.dart';
 
 class UpperDisplay extends StatefulWidget {
   const UpperDisplay({super.key});
 
   @override
-  State<UpperDisplay> createState() => _UpperDisplayState();
+  State<UpperDisplay> createState() => UpperDisplayState();
 }
 
-class _UpperDisplayState extends State<UpperDisplay> {
+class UpperDisplayState extends State<UpperDisplay> {
   @override
   Widget build(BuildContext context) {
     return FittedBox(
       child: Row(children: [
-        Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-          Text(
-            userAbout.name!,
-            style: const TextStyle(
-                fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
-          ),
-          IconButton(
-              onPressed: () {
-                Navigator.pushAndRemoveUntil(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const SignUpSreen()),
-                    ModalRoute.withName("/screen"));
-              },
-              icon: const Icon(
-                size: 40,
-                Icons.exit_to_app_sharp,
-                color: Colors.red,
-              ))
-        ]),
+        Text(
+          userAbout.name!,
+          style: const TextStyle(
+              fontSize: 40, color: Colors.white, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(width: 20),
         InkWell(
           onTap: () async {
@@ -50,9 +34,8 @@ class _UpperDisplayState extends State<UpperDisplay> {
             if (image != null) {
               try {
                 imageFile = File(image.path);
-                await AboutServ()
-                    .uploadImage(token: getToken(), image: imageFile);
-
+                userAbout.image = await AboutServ()
+                    .uploadImage(token: getToken(), image: imageFile)!;
                 context
                     .findAncestorStateOfType<UserDisplayState>()!
                     .setState(() {});
