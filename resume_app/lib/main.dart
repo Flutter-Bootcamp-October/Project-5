@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:resume_app/views/profile_screen.dart';
+import 'package:resume_app/views/loading_screen.dart';
 import 'package:resume_app/views/signin_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -17,21 +17,11 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (token != null) {
-      print("Yay token saved");
-      return MaterialApp(
-          theme: ThemeData(
-            fontFamily: 'Oswald',
-          ),
-          debugShowCheckedModeBanner: false,
-          home: const ProfileScreen());
-    } else {
-      return MaterialApp(
-          theme: ThemeData(
-            fontFamily: 'Oswald',
-          ),
-          debugShowCheckedModeBanner: false,
-          home: const SignInScreen());
-    }
+    return MaterialApp(
+        theme: ThemeData(
+          fontFamily: 'Oswald',
+        ),
+        debugShowCheckedModeBanner: false,
+        home: token != null ? const LoadingScreen() : const SignInScreen());
   }
 }

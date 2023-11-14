@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resume_app/main.dart';
 import 'package:resume_app/services/authorization.dart';
-import 'package:resume_app/views/profile_screen.dart';
+import 'package:resume_app/views/loading_screen.dart';
 import 'package:resume_app/views/signin_screen.dart';
 
 class VerificationScreen extends StatefulWidget {
@@ -68,7 +68,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const ProfileScreen()),
+                              builder: (context) => const LoadingScreen()),
                           ModalRoute.withName("/screen"));
                     }
                   } on FormatException catch (error) {

@@ -48,7 +48,7 @@ class SkillServ {
   deleteSkill({required String token, required String skillID}) async {
     var url = Uri.https(_api, _delete);
     var response = await http.delete(url,
-        body: json.encode({"id_project": skillID}),
+        body: json.encode({"id_skill": skillID}),
         headers: {"authorization": token});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');

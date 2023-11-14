@@ -7,18 +7,17 @@ import 'package:resume_app/services/education_services.dart';
 import 'package:resume_app/services/project_services.dart';
 import 'package:resume_app/services/skill_services.dart';
 import 'package:resume_app/services/social_services.dart';
-import 'package:resume_app/views/Navigation_bar.dart';
+import 'package:resume_app/views/navigation_bar.dart';
 import 'package:resume_app/views/signin_screen.dart';
 
-bool isLoading = true;
 
-class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+class LoadingScreen extends StatefulWidget {
+  const LoadingScreen({super.key});
   @override
-  State<ProfileScreen> createState() => ProfileScreenState();
+  State<LoadingScreen> createState() => ProfileScreenState();
 }
 
-class ProfileScreenState extends State<ProfileScreen> {
+class ProfileScreenState extends State<LoadingScreen> {
   late String userToken;
   @override
   void initState() {

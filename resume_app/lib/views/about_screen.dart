@@ -11,16 +11,16 @@ import 'package:resume_app/views/signin_screen.dart';
 import 'package:resume_app/widgets/app_bg.dart';
 import 'package:resume_app/widgets/app_container.dart';
 
-class UserDisplay extends StatefulWidget {
-  const UserDisplay({
+class AboutScreen extends StatefulWidget {
+  const AboutScreen({
     super.key,
   });
 
   @override
-  State<UserDisplay> createState() => UserDisplayState();
+  State<AboutScreen> createState() => AboutScreenState();
 }
 
-class UserDisplayState extends State<UserDisplay> {
+class AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     TextEditingController nameController =
