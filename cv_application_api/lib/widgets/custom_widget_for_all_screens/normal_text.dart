@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
+// this custom widget is text help my to have same attribute in text widget
+
 class NormalText extends StatelessWidget {
   const NormalText(
       {super.key,
-      required this.title,
+       required this.title,
       required this.titleFontSize,
       required this.titleletterSpacing,
       required this.titlefontWeight,

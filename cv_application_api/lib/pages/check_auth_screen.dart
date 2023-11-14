@@ -16,19 +16,40 @@ class CheckAuthScreen extends StatefulWidget {
 class _CheckAuthScreenState extends State<CheckAuthScreen> {
   @override
   void initState() {
-    super.initState();
     _check();
+    super.initState();
   }
 
   _check() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     print(prefs.getString("token"));
-    if (prefs.getString("token")!.isNotEmpty) {
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(builder: (context) => const NavBarScreen()),
-          (route) => false);
+    if (prefs.containsKey("token")) {
+      final String token = prefs.getString("token")!;
+      if (token.isNotEmpty) {
+        showDialog(
+          context: context,
+          barrierColor: appcoldGreenTrans,
+          builder: (context) => const Center(
+            child: CircularProgressIndicator(
+              color: app2DarkGreen,
+            ),
+          ),
+        );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const NavBarScreen()),
+            (route) => false);
+      }
     } else {
+      showDialog(
+        context: context,
+        barrierColor: appcoldGreenTrans,
+        builder: (context) => const Center(
+          child: CircularProgressIndicator(
+            color: app2DarkGreen,
+          ),
+        ),
+      );
       Navigator.pushAndRemoveUntil(
           context,
           MaterialPageRoute(builder: (context) => const LoginScreen()),
@@ -38,24 +59,18 @@ class _CheckAuthScreenState extends State<CheckAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
-        child: Scaffold(
-            resizeToAvoidBottomInset: false,
-            body: SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: const Center(
-                            child: CircularProgressIndicator(
-                              color: app2DarkGreen,
-                            ),
-                          ),
-            )
-            
-            
-            
-            
-
-                        ),);
+    return SafeArea(
+      child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SizedBox(
+            height: MediaQuery.of(context).size.height,
+            width: MediaQuery.of(context).size.width,
+            child: const Center(
+              child: CircularProgressIndicator(
+                color: app2DarkGreen,
+              ),
+            ),
+          )),
+    );
   }
 }
-
