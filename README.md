@@ -1,82 +1,70 @@
-# Project-5
+# CV App
+
+A CV  app that helps users create and manage their professional profiles. The app provides features for user authentication, profile management, and adding personal information .
+
+## Screenshotes
+
+### Splash Screen
+![Screenshot_1699993958](https://github.com/Wadha21/Project-5/assets/143879896/bf21953f-c15d-44e0-a639-00202bf97f0b)
 
 
-## Description
-
-Your task is to create a functional and user-friendly CV app using Flutter. This app will allow users to create their own CVs, including creating an account, writing their resume, inserting their projects and skills, and adding their educational data. The app will be easy to use and will provide users with a professional-looking CV that they can use to apply for jobs.
-
-## Minimum Requirements
-
-- **Correct Structure:** Ensure that the application is built with the appropriate structure. Follow Flutter's best practices for organizing code and project files.
-- **Clean Code:** Write code that is clear, well-organized, and scalable. Use meaningful variable and function names and follow standard coding conventions to improve code readability.
-- **User account creation:** Users will be able to create an account with the app using their email address and a password.
-- **verification:** Users should be able to verify their emails after creating their accounts. also should be able to reset their password.
-- **User Information:** Users will be able to write their information using the app in the (About) screen, users should able to view and edit their information. And be able to delete their account.
-- **Project and skills:** Users will be able to insert, view, and delete their projects and skills. They will be able to add a description of each project in the (Projects) screen, and Also, be able to add their skills in the (Skill) screen
-- **Educational data:** Users will be able to add their educational data to the app. They will be able to add the name of their university, the degree they earned, and the dates they graduated.
-- **Social Media:** Users will be able to insert, view, and delete their Social Media accounts.
-- **Display all Users:** Users will be able to view all other users' details.
+### Login Screen
+![Screenshot_1699994397](https://github.com/Wadha21/Project-5/assets/143879896/73c04f66-7027-45ed-8562-75dcadd9ea95)
 
 
-## Delivery Requirements
+### Sign Up Screen
 
-- **Upload the Entire Project:** Ensure that you upload the complete project, which includes all necessary code files, assets, and configurations, to the repository on GitHub.
-- **Readme File:**
-  - Create a README.md file in the root directory of your GitHub repository.
-  - Provide a detailed and well-structured description of the project in the README file, including the following sections:
-    - **Project Overview:** Briefly describe what the shopping list app is about and its main features. Give readers a clear idea of the purpose and functionality of the app.
-    - **Screenshots:** Include relevant screenshots of the app to showcase its appearance and functionalities. Visuals can help users understand the app's design and layout.
+![Screenshot_1699994393](https://github.com/Wadha21/Project-5/assets/143879896/64df51e6-57e7-43f5-b2c1-7c9771924e2b)
+
+### OTP Screen
+![Screenshot_1699994502](https://github.com/Wadha21/Project-5/assets/143879896/a080102f-20b6-4eb3-a25d-4722a4530508)
 
 
-## Rules & Guidelines
+### Reset Password Screen
+![Screenshot_1699994411](https://github.com/Wadha21/Project-5/assets/143879896/a6228656-f7a1-40cf-8a68-09baf2c5de9f)
 
-1. **Version Control (Git):**
-   - Create a Fork from the exam’s GitHub repository.
-   - Create a new branch with your name.
-   - Commit frequently with descriptive messages to show your progress.
-   - Finally, create a Pull Request to the exam’s original repository containing your solution.
-2. **Academic Integrity:** Do not copy or reuse code from previous modules or external sources. The exam is a showcase of your learning progress.
-3. **Learning References:** You may refer to course materials and code examples as learning references, but implement your solutions independently.
-4. **Instructor Support:** The instructor will be available for general questions and guidance throughout the exam.
 
-## Schedule & Deadlines
+### home Home Screen
 
-- **Project Start Date:** 9/11/2023 - 3:00 PM
-- **Project Submission Deadline:** 15/11/2023 – 9:59 PM
+![Screenshot_1699993963](https://github.com/Wadha21/Project-5/assets/143879896/8281961e-3a55-4d21-93d0-5b77d33c5af6)
+![Screenshot_1699993997](https://github.com/Wadha21/Project-5/assets/143879896/99c3fc6b-30a4-4318-a708-c79723fc20c2)
+![Screenshot_1699993967](https://github.com/Wadha21/Project-5/assets/143879896/26e5e052-efb0-41a4-a118-5be9e68553ee)
+![Screenshot_1699994002](https://github.com/Wadha21/Project-5/assets/143879896/35121977-1129-47c2-9f5b-115fb0076edf)
 
-## EndPoints
-**Auth** 
-  - **Post:** https://bacend-fshi.onrender.com/auth/registration 
-  - **Post:** https://bacend-fshi.onrender.com/auth/verification 
-  - **Post:** https://bacend-fshi.onrender.com/auth/login
+### Add Info Screen
+![Screenshot_1699994007](https://github.com/Wadha21/Project-5/assets/143879896/2e263028-182a-40ac-9014-9a5b2a383dd9)
+![Screenshot_1699994012](https://github.com/Wadha21/Project-5/assets/143879896/abcea37e-6b36-468b-b533-26fcf3a03d16)
+![Screenshot_1699994027](https://github.com/Wadha21/Project-5/assets/143879896/adf45ba2-074e-451f-ad89-9ee5b418659c)
+![Screenshot_1699994040](https://github.com/Wadha21/Project-5/assets/143879896/7f57cbe1-92bd-44fd-8124-dac17b35c72c)
 
-**About** 
-  - **Get:** https://bacend-fshi.onrender.com/user/about
-  - **Put:** https://bacend-fshi.onrender.com/user/edit/about
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete_account
 
-**Project** 
-  - **Get:** https://bacend-fshi.onrender.com/user/projects
-  - **Post:** https://bacend-fshi.onrender.com/user/add/project
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/project
+### All Users Screen
 
-**Skills** 
-  - **Get:** https://bacend-fshi.onrender.com/user/skills 
-  - **Post:** https://bacend-fshi.onrender.com/user/add/skills 
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/skills
+![Screenshot_1699994109](https://github.com/Wadha21/Project-5/assets/143879896/18c53b17-dde8-4449-a4cf-be531aa8fec6)
 
-**Education** 
-  - **Get:** https://bacend-fshi.onrender.com/user/education
-  - **Post:** https://bacend-fshi.onrender.com/user/add/education
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/education
+### Profile Screen
+![Screenshot_1699994116](https://github.com/Wadha21/Project-5/assets/143879896/73483880-d44e-415f-a94a-bf407fc0af58)
+![Screenshot_1699995669](https://github.com/Wadha21/Project-5/assets/143879896/d1530594-1de7-49b9-ad3d-8ac95a5c9b85)
 
-**Social Media** 
-  - **Get:** https://bacend-fshi.onrender.com/user/social_media
-  - **Post:** https://bacend-fshi.onrender.com/user/add/social_media
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/social_media
 
-**Get All users**
-  - **Get:** https://bacend-fshi.onrender.com/user/get_users
+## Features
 
-<br>
-Good luck with your exam project! If you have any general questions or need guidance, don't hesitate to reach out to the instructor. Happy coding!
+- **Splash Screen**: Displays an app logo while the app initializes.
+- **Login Screen**: Allows users to log in to their accounts using their credentials.
+- **Sign Up Screen**: Enables users to create new accounts by providing necessary information.
+- **OTP Screen**: Prompts users to enter a One-Time Password (OTP) sent to their registered email for verification.
+- **Reset Password Screen**: Allows users to reset their account password by providing their registered email.
+- **Home Screen**: Displays the user's profile information, including personal details, projects, education history, and skills.
+- **Add Info Screen**: Enables users to add their information.
+- **All Users Screen**: Shows a list of all registered users' profiles.
+- **Profile Screen**: Displays the user's own profile with detailed information and update their profile information.
+
+## Technologies Used
+
+- Flutter: A cross-platform UI toolkit for building natively compiled applications for mobile, web, and desktop from a single codebase.
+
+##Librariy used
+
+- dot_navigation_bar
+
+- SharedPreferences
