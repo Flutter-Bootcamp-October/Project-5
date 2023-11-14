@@ -29,7 +29,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  File? selectedimage;
+  File selectedimage = File(
+      '/data/user/0/com.example.cvapp/cache/5e77d3d0-8b34-4d33-996a-0a4f438a92c3/1000000033.jpg');
   Future imageupload({required String token}) async {
     try {
       var request = http.MultipartRequest(
@@ -38,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       if (selectedimage != null) {
         request.files.add(
-            await http.MultipartFile.fromPath('image', selectedimage!.path));
+            await http.MultipartFile.fromPath('image', selectedimage.path));
       }
 
       var response = await request.send();
@@ -137,7 +138,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => EducationScreen()));
+                            builder: (context) => EducationScreen(
+                                  imgpath1: selectedimage,
+                                )));
                   },
                   child: Adddata(
                       img: "lib\\assets\\imges\\img6.png",
@@ -149,10 +152,13 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 InkWell(
                   onTap: () {
+                    print(selectedimage.toString());
                     Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => SocialScreen()));
+                            builder: (context) => SocialScreen(
+                                  imgpath: selectedimage,
+                                )));
                   },
                   child: Adddata(
                       img: "lib\\assets\\imges\\img4.png",

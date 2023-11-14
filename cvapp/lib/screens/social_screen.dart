@@ -18,7 +18,8 @@ final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 String? token;
 
 class SocialScreen extends StatefulWidget {
-  const SocialScreen({super.key});
+  const SocialScreen({super.key, required, required this.imgpath});
+  final File imgpath;
 
   @override
   State<SocialScreen> createState() => _SocialScreenState();
@@ -49,14 +50,8 @@ class _SocialScreenState extends State<SocialScreen> {
         isvalid = true;
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Success!')));
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to push project.')));
-      }
-    } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
-    }
+      } else {}
+    } catch (e) {}
   }
 
   @override
@@ -139,10 +134,13 @@ class _SocialScreenState extends State<SocialScreen> {
       backgroundColor: Color(0xff8C5CB3),
       body: Column(
         children: [
-          SizedBox(height: 200),
+          SizedBox(height: 100),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [],
+            children: [
+              Container(
+                  width: 200, height: 200, child: Image.file(widget.imgpath))
+            ],
           ),
           Divider(
             thickness: 1,
@@ -174,8 +172,8 @@ class _SocialScreenState extends State<SocialScreen> {
               child: Text("Add")),
           SizedBox(height: 20),
           SizedBox(
-            width: 200,
-            height: 350,
+            width: 400,
+            height: 200,
             child: ListView.builder(
               itemCount: socialMediaList.length,
               itemBuilder: (context, index) {
@@ -185,13 +183,25 @@ class _SocialScreenState extends State<SocialScreen> {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(16),
                       color: Colors.black),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
+                      if (socialMediaList[index].social == "facebook")
+                        Container(
+                            width: 60,
+                            height: 60,
+                            child: Image.asset("lib\\assets\\imges\\img8.png")),
+                      if (socialMediaList[index].social == "twitter")
+                        Container(
+                            width: 60,
+                            height: 60,
+                            child: Image.asset("lib\\assets\\imges\\img7.png")),
                       Text(
-                        'Username: ${socialMediaList[index].id}\nSocial: ${socialMediaList[index].social}',
+                        'Username: ${socialMediaList[index].username}',
                         style: TextStyle(color: Colors.white),
                       ),
+                      Text("Social : ${socialMediaList[index].social}",
+                          style: TextStyle(color: Colors.white)),
                       TextButton(
                         onPressed: () {
                           socialcounter += 1;

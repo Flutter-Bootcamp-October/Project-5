@@ -17,7 +17,8 @@ final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 String? token;
 
 class EducationScreen extends StatefulWidget {
-  const EducationScreen({super.key});
+  const EducationScreen({super.key, required this.imgpath1});
+  final File imgpath1;
 
   @override
   State<EducationScreen> createState() => _EducationScreenState();
@@ -54,14 +55,9 @@ class _EducationScreenState extends State<EducationScreen> {
         isvalid = true;
         ScaffoldMessenger.of(context)
             .showSnackBar(SnackBar(content: Text('Success!')));
-      } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to push project.')));
-      }
+      } else {}
     } catch (e) {
       // Handle the exception
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 
@@ -132,24 +128,24 @@ class _EducationScreenState extends State<EducationScreen> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (selectedimage != null)
-                ProfileImage(selectedimage: selectedimage),
-              SizedBox(
-                height: 20,
-              ),
-              Text("welcome conan"),
-              TextButton(
-                onPressed: pickImageFromGallery,
-                child: Text("chane image"),
-              ),
+              Container(
+                  width: 100, height: 100, child: Image.file(widget.imgpath1))
             ],
           ),
           Divider(
             thickness: 1,
           ),
           SinUpWedget(
-              Controller: graduation_dateController,
-              labelText: " Enter your graduation date as 02/11/2001"),
+            Controller: graduation_dateController,
+            labelText: " Enter your graduation date as 02/11/2001",
+            validator: (p0) {
+              if (p0!.isEmpty) {
+                return "please enter your graduation date";
+              } else if (p0.contains("/")) {
+                return "please enter your graduation date as 02/11/2001";
+              }
+            },
+          ),
           SizedBox(height: 20),
           SinUpWedget(
               Controller: universityController,
@@ -174,7 +170,7 @@ class _EducationScreenState extends State<EducationScreen> {
               child: Text("Add")),
           SizedBox(
             width: 300,
-            height: 300,
+            height: 170,
             child: ListView.builder(
               itemCount: educationlist.length,
               itemBuilder: (context, index) {
@@ -190,43 +186,41 @@ class _EducationScreenState extends State<EducationScreen> {
                       Text(
                         "you graduate at :${educationlist[index].graduationDate}",
                         style: TextStyle(
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Text(
                         "you graduate from: ${educationlist[index].university}",
                         style: TextStyle(
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Text(
                         "your specialization is : ${educationlist[index].specialization}",
                         style: TextStyle(
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 5,
                       ),
                       Text(
                         "your level is : ${educationlist[index].level}",
                         style: TextStyle(
-                            fontSize: 19,
+                            fontSize: 16,
                             fontWeight: FontWeight.bold,
                             color: Colors.white),
                       ),
-                      SizedBox(
-                        height: 20,
-                      ),
+                      SizedBox(),
                       TextButton(
                         onPressed: () {
                           socialcounter += 1;
@@ -247,9 +241,8 @@ class _EducationScreenState extends State<EducationScreen> {
   }
 }
 
-
-                      // child:Column(children: [Text("your college is ${educationlist![index].college.toString()}",),
-                      // Text("you graduate at ${educationlist![index].graduationDate.toString()}"),
-                      // Text("you graduate from ${educationlist![index].university.toString()}"),
-                      // Text("your specialization is  ${educationlist![index].specialization.toString()}"),
-                      // Text("your level is  ${educationlist![index].level.toString()}")
+// child:Column(children: [Text("your college is ${educationlist![index].college.toString()}",),
+// Text("you graduate at ${educationlist![index].graduationDate.toString()}"),
+// Text("you graduate from ${educationlist![index].university.toString()}"),
+// Text("your specialization is  ${educationlist![index].specialization.toString()}"),
+// Text("your level is  ${educationlist![index].level.toString()}")

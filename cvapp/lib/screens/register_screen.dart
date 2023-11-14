@@ -32,7 +32,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
 
   Future<void> _register() async {
     if (!_formKey.currentState!.validate()) {
-      // Invalid!
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Invalid Input'),
+            content: Text('Please correct the errors in the form.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop(); // Close the dialog
+                },
+              ),
+            ],
+          );
+        },
+      );
       return;
     }
     setState(() {
@@ -42,23 +58,23 @@ class _RegisterScreenState extends State<RegisterScreen> {
       var headers = {'Content-Type': 'application/json'};
       var url = Uri.parse(
           ApiEndpoints.baseUrl + ApiEndpoints.authEndPoints.registerEmail);
-
       Map body = {
         "name": nameController.text,
         "phone": phoneController.text,
         "password": passwordController.text,
         "email": emailController.text
       };
-
       http.Response response =
           await http.post(url, headers: headers, body: jsonEncode(body));
       print(response.body);
       if (response.statusCode == 200) {
-        // Success
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => VerificationScreen()));
+        Navigator.push(
+            context,
+            MaterialPageRoute(
+                builder: (context) => VerificationScreen(
+                      mycontroller: emailController.text,
+                    ))); // Ensure this is the correct navigation
       } else {
-        // Handle error
         setState(() {
           errorMessage = "Registration failed. Please try again.";
         });
@@ -93,20 +109,52 @@ class _RegisterScreenState extends State<RegisterScreen> {
               child: Column(
                 children: [
                   SinUpWedget(
-                      Controller: nameController,
-                      labelText: "   Enter your name"),
+                    Controller: nameController,
+                    labelText: "   Enter your name",
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "please enter your name";
+                      }
+                    },
+                  ),
                   SizedBox(height: 20),
                   SinUpWedget(
-                      Controller: phoneController,
-                      labelText: "  Enter your phone"),
+                    Controller: phoneController,
+                    labelText: "  Enter your phone",
+                    validator: (p0) {
+                      if (p0!.isEmpty) {
+                        return "please enter your phone";
+                      } else if (p0.length > 11 || p0.length < 10) {
+                        return "it should be 10 numbers";
+                      } else if (!p0.startsWith("05")) {
+                        return "it should start with 05";
+                      }
+                    },
+                  ),
                   SizedBox(height: 20),
                   SinUpWedget(
-                      Controller: emailController,
-                      labelText: "  Enter your email"),
+                    Controller: emailController,
+                    labelText: "  Enter your email",
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return "please enter your email";
+                      } else if (!value.contains("@")) {
+                        return "please enter valid email";
+                      }
+                    },
+                  ),
                   SizedBox(height: 20),
                   SinUpWedget(
-                      Controller: passwordController,
-                      labelText: "  Enter your password"),
+                    Controller: passwordController,
+                    labelText: "  Enter your password",
+                    validator: (p0) {
+                      if (p0!.isEmpty) {
+                        return "please enter your password";
+                      } else if (p0.length < 1) {
+                        return "please enter your password";
+                      }
+                    },
+                  ),
                 ],
               ),
             ),

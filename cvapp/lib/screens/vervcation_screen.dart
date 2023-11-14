@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:convert';
 
 import 'package:cvapp/screens/login_screen.dart';
@@ -10,7 +11,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 bool isvalid = false;
 
 class VerificationScreen extends StatefulWidget {
-  const VerificationScreen({super.key});
+  const VerificationScreen({super.key, required this.mycontroller});
+  final mycontroller;
 
   @override
   State<VerificationScreen> createState() => _VerificationScreenState();
@@ -29,7 +31,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
 
       Map body = {
         'otp': otpcontroller.text,
-        'email': emaiilcontroller.text,
+        'email': widget.mycontroller,
         'type': 'registration',
       };
 
@@ -68,10 +70,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
             SizedBox(
               height: 20,
             ),
-            SinUpWedget(
-              Controller: emaiilcontroller,
-              labelText: "email",
-            ),
+            // SinUpWedget(
+            //   Controller: emaiilcontroller,
+            //   labelText: widget.mycontroller,
+            // ),
             ElevatedButton(
               onPressed: () async {
                 await verifyOtp();

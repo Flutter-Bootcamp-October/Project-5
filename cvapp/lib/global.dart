@@ -16,5 +16,6 @@ Future pickImageFromGallery() async {
   }
 }
 
-int socialcounter=0;
-    List<SocialMediaModel> socialMediaList = [];
+int socialcounter = 0;
+List<SocialMediaModel> socialMediaList = [];
+String twitter = "lib\\assets\\imges\\img7.png";
