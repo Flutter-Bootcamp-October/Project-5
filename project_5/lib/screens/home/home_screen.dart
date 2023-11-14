@@ -1,5 +1,3 @@
-import 'dart:convert';
-import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
@@ -20,7 +18,7 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-List<About> aboutList = [];
+
 final apimethod = ApiMethods();
 
 class _HomeScreenState extends State<HomeScreen> {
@@ -72,42 +70,40 @@ class _HomeScreenState extends State<HomeScreen> {
             // add refresh library to update
             // show all about data here then navigate to each screen (skills, projects, social, education)
             // using a container button and make editing and deleting in these screens
-            if (aboutList.isEmpty)
-              Text("No about data adde information about you"),
-            if (aboutList.isNotEmpty)
-              Row(
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Hello! 👋",
-                        style: TextStyle(
-                            fontSize: 25, fontWeight: FontWeight.w600),
-                      ),
-                      Text(
-                        "created date",
-                        style: TextStyle(
-                            fontSize: 20, fontWeight: FontWeight.w600),
-                      ),
-                    ],
-                  ),
-                  const Spacer(),
 
-                  Image.asset(
-                    "assets/user.png",
-                    height: 55,
-                  ),
-                  // Image.file(
-                  //   imageGet?.readAsBytes() as File,
-                  //   width: 85,
-                  //   height: 85,
-                  // ),
-                ],
-              ),
+            Row(
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Hello! 👋",
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
+                    ),
+                    Text(
+                      "Welcome to CV APP",
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
+                    ),
+                  ],
+                ),
+                const Spacer(),
+
+                Image.asset(
+                  "assets/user.png",
+                  height: 55,
+                ),
+                // Image.file(
+                //   imageGet?.readAsBytes() as File,
+                //   width: 85,
+                //   height: 85,
+                // ),
+              ],
+            ),
 
             const SizedBox(
-              height: 50,
+              height: 115,
             ),
 
             Row(
@@ -123,7 +119,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   },
                   child: CategoryContainers(
                     title: 'about me',
-                    backgroundColor: Color.fromARGB(176, 68, 137, 255),
+                    backgroundColor: Color.fromARGB(148, 68, 137, 255),
                     emoji: "👩🏻",
                   ),
                 ),
@@ -134,7 +130,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: CategoryContainers(
                     title: 'Education',
-                    backgroundColor: Color.fromARGB(176, 68, 137, 255),
+                    backgroundColor: Color.fromARGB(212, 126, 72, 53),
                     emoji: "🏬",
                   ),
                 ),
@@ -153,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: CategoryContainers(
                     title: 'skills',
-                    backgroundColor: Color.fromARGB(176, 68, 137, 255),
+                    backgroundColor: Color.fromARGB(186, 244, 67, 54),
                     emoji: '⚒',
                   ),
                 ),
@@ -164,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   child: CategoryContainers(
                     title: 'projects',
-                    backgroundColor: Color.fromARGB(176, 68, 137, 255),
+                    backgroundColor: Color.fromARGB(179, 3, 191, 22),
                     emoji: "📚",
                   ),
                 ),

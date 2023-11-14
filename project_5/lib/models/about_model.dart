@@ -5,21 +5,21 @@ class About {
     required this.codeState,
   });
   late final String msg;
-  late final Data data;
+  late final List<Data> data;
   late final int codeState;
 
   About.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
-    data = Data.fromJson(json['data']);
+    data = List.from(json['data']).map((e) => Data.fromJson(e)).toList();
     codeState = json['codeState'];
   }
 
   Map<String, dynamic> toJson() {
-    final vData = <String, dynamic>{};
-    vData['msg'] = msg;
-    vData['data'] = data.toJson();
-    vData['codeState'] = codeState;
-    return vData;
+    final _data = <String, dynamic>{};
+    _data['msg'] = msg;
+    _data['data'] = data.map((e) => e.toJson()).toList();
+    _data['codeState'] = codeState;
+    return _data;
   }
 }
 
@@ -48,11 +48,11 @@ class Data {
   late final String createAt;
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    email = json['email'];
+    id = json['id'] ?? "";
+    name = json['name'] ?? "";
+    email = json['email'] ?? "";
     titlePosition = json['title_position'] ?? "";
-    phone = json['phone'];
+    phone = json['phone'] ?? "";
     location = json["location"] ?? "";
     birthday = json["birthday"] ?? "";
     about = json["about"] ?? "";
@@ -61,17 +61,17 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final vData = <String, dynamic>{};
-    vData['id'] = id;
-    vData['name'] = name;
-    vData['email'] = email;
-    vData['title_position'] = titlePosition;
-    vData['phone'] = phone;
-    vData['location'] = location;
-    vData['birthday'] = birthday;
-    vData['about'] = about;
-    vData['image'] = image;
-    vData['create_at'] = createAt;
-    return vData;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['name'] = name;
+    _data['email'] = email;
+    _data['title_position'] = titlePosition;
+    _data['phone'] = phone;
+    _data['location'] = location;
+    _data['birthday'] = birthday;
+    _data['about'] = about;
+    _data['image'] = image;
+    _data['create_at'] = createAt;
+    return _data;
   }
 }

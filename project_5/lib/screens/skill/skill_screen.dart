@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
+import 'package:project_5/global/globally.dart';
 import 'package:project_5/models/skill_model.dart';
 
 import '../components/button_widget.dart';
@@ -13,7 +14,7 @@ class SkillsScreen extends StatefulWidget {
 }
 
 class _SkillsScreenState extends State<SkillsScreen> {
-  List<SkillModel> skilList = [];
+  
   final apimethod = ApiMethods();
 
   TextEditingController skillController = TextEditingController();
@@ -72,7 +73,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                             final element = await apimethod.addSkill(body: {
                               "skill": skillController.text,
                             });
-                            skilList.add(element);
+                            skillList.add(element);
                             Navigator.pop(context);
                             setState(() {});
                           } on FormatException catch (error) {
@@ -130,7 +131,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                                     await apimethod.removeSkill(
                                         idSkill: snapshot.data!.data![index].id
                                             .toString());
-                                    skilList
+                                    skillList
                                         .remove(snapshot.data!.data![index].id);
                                     setState(() {});
                                   },

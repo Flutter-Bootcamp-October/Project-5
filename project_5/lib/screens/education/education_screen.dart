@@ -90,7 +90,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                                       .data!.data![index].id
                                                       .toString());
                                               educationList.remove(snapshot
-                                                  .data!.data?[index].id);
+                                                  .data!.data![index].id);
                                               setState(() {});
                                             },
                                             child: Icon(

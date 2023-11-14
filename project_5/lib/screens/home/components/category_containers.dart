@@ -23,7 +23,7 @@ class CategoryContainers extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
-            "$title",
+            title,
             style: const TextStyle(
                 fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white),
           ),

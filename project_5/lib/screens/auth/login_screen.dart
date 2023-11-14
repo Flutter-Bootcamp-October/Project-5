@@ -3,8 +3,7 @@ import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/auth_model.dart';
 import 'package:project_5/screens/auth/create_verification.dart';
 import 'package:project_5/screens/auth/register_screen.dart';
-import 'package:project_5/screens/home/home_screen.dart';
-import 'package:project_5/screens/skill/skill_screen.dart';
+import 'package:project_5/screens/components/button_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../components/input_text_fields.dart';
@@ -44,7 +43,6 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 50,
           ),
-          
           InputTextFields(
             controller: emailController,
             title: "Enter email",
@@ -69,43 +67,44 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   child: const Text("create account"),
                 ),
-                ElevatedButton(
-                    onPressed: () async {
-                      final apiMethod = ApiMethods();
-                      // add login method and conditions
-                      if (emailController.text.isNotEmpty &&
-                          passwordController.text.isNotEmpty) {
-                        try {
-                          final Auth res = await apiMethod.login(body: {
-                            "email": emailController.text,
-                            "password": passwordController.text,
-                          });
-                          if (res.codeState == 200) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => AccountVerification(
-                                        email: res.data.email,
-                                        type: "login",
-                                      )),
-                            );
-                          }
-                        } on FormatException catch (error) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                            content: Text(
-                              error.message.toString(),
-                            ),
-                          ));
+                ButtonWidget(
+                  textEntry: "Login",
+                  onpress: () async {
+                    final apiMethod = ApiMethods();
+                    // add login method and conditions
+                    if (emailController.text.isNotEmpty &&
+                        passwordController.text.isNotEmpty) {
+                      try {
+                        final Auth res = await apiMethod.login(body: {
+                          "email": emailController.text,
+                          "password": passwordController.text,
+                        });
+                        if (res.codeState == 200) {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AccountVerification(
+                                      email: res.data.email,
+                                      type: "login",
+                                    )),
+                          );
                         }
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Enter all text fields"),
+                      } on FormatException catch (error) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text(
+                            error.message.toString(),
                           ),
-                        );
+                        ));
                       }
-                    },
-                    child: const Text("Login")),
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text("Enter all text fields"),
+                        ),
+                      );
+                    }
+                  },
+                )
               ],
             ),
           ),

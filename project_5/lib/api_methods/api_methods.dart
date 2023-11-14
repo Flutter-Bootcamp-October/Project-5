@@ -88,7 +88,7 @@ class ApiMethods {
     }
   }
 
-  Future getAbout() async {
+  Future<About> getAbout() async {
     final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
     //sharedprefrence
     final pref = await SharedPreferences.getInstance();
