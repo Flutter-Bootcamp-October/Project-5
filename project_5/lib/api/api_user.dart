@@ -1,10 +1,16 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiUser {
   final String _urlApi = "bacend-fshi.onrender.com";
   final String getSkills = '/user/skills';
   final String deleteSkills = '/user/delete/skills';
+
+  Future<String> getUserToken() async {
+    final prefs = await SharedPreferences.getInstance();
+    return prefs.getString('userToken') ?? '';
+  }
 
   Future<http.Response> postMethod({
     required Map<String, dynamic> body,

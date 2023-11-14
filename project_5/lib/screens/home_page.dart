@@ -1,7 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:project_5/api/about.dart';
+import 'package:project_5/model/user_model.dart';
+import 'package:project_5/widgets/delete.dart';
+import 'package:project_5/widgets/user_dataa.dart';
 
-class ProfilePage extends StatelessWidget {
-  const ProfilePage({super.key});
+class ProfilePage extends StatefulWidget {
+  const ProfilePage({Key? key}) : super(key: key);
+
+  @override
+  _ProfilePageState createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfilePage> {
+  late Future<UserData> user;
+
+  @override
+  void initState() {
+    super.initState();
+    user = About().getUserAbout();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -18,58 +36,29 @@ class ProfilePage extends StatelessWidget {
                       child: Text(
                         "My Profile ",
                         style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.bold),
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,
+                        ),
                       ),
                     ),
                   ),
                 ],
               ),
-              Container(
-                width: double.infinity,
-                height: 200,
-                decoration: const BoxDecoration(
-                  color: Color.fromARGB(255, 29, 29, 39),
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(40),
-                  ),
-                ),
-                child: const Row(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: CircleAvatar(
-                        maxRadius: 50,
-                        minRadius: 50,
-                        backgroundColor: Color.fromARGB(118, 255, 193, 7),
-                        backgroundImage: AssetImage("assets/images/User.png"),
-                      ),
-                    ),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Name : Bader",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          "Email : Badrsh980@gmail.com",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        ),
-                        SizedBox(height: 20),
-                        Text(
-                          "Phone : 0535812047",
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.bold),
-                        )
-                      ],
-                    )
-                  ],
-                ),
-              )
+              FutureBuilder<UserData>(
+                future: user,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return CircularProgressIndicator();
+                  } else if (snapshot.hasError) {
+                    return Text('Error: ${snapshot.error}');
+                  } else {
+                    UserData userData = snapshot.data!;
+                    return UserProfileWidget(
+                      userData: userData,
+                    );
+                  }
+                },
+              ),
             ],
           ),
         ),

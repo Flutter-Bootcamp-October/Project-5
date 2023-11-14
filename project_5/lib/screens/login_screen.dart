@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:project_5/model/Auth.dart';
+import 'package:project_5/api/auth.dart';
 import 'package:project_5/screens/home_page.dart';
 import 'package:project_5/screens/registration_screen%20.dart';
+import 'package:project_5/widgets/delete.dart';
 import 'package:project_5/widgets/login_button.dart';
 import 'package:project_5/widgets/login_field.dart';
 import 'package:project_5/widgets/social_button.dart';
@@ -91,7 +92,7 @@ class LoginScreen extends StatelessWidget {
                   showDialog(
                       context: context,
                       builder: (context) {
-                        return Center(
+                        return const Center(
                           child: CircularProgressIndicator(),
                         );
                       });
