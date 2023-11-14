@@ -31,13 +31,15 @@ In this app you can add your CV information such as name, email, education, skil
 
 ## Dark theme screens:
 
-* Sign-in & sign-up & OTP:
-
-![Screenshot_1699994302](https://github.com/AliArafat4/Project-5/assets/84300173/daffc2b6-d61b-4233-94e4-695666421e3a)
+* Sign-in & sign-up:
 
 ![Screenshot_1699994292](https://github.com/AliArafat4/Project-5/assets/84300173/31e0283c-409a-4d2b-a73a-9fd68f8b5c5d)
 
 ![Screenshot_1699994290](https://github.com/AliArafat4/Project-5/assets/84300173/64c67e14-1cdf-4aa7-928e-0fc64adc225f)
+
+* OTP:
+
+![Screenshot_1699994302](https://github.com/AliArafat4/Project-5/assets/84300173/daffc2b6-d61b-4233-94e4-695666421e3a)
 
 * Profile & settings:
 
