@@ -45,7 +45,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     child: Center(
                       child: Text(
                         'Register',
-                        style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff7052ff)),
                       ),
                     ),
                   ),
@@ -78,12 +81,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           "password": passwordController.text,
                           "email": emailController.text
                         });
-          
+
                         if (resp.statusCode == 200) {
                           Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>  VerificationScreen(type: 'registration', email: emailController.text,),
+                                builder: (context) => VerificationScreen(
+                                  type: 'registration',
+                                  email: emailController.text,
+                                ),
                               ));
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -91,8 +97,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   .toString())));
                         }
                       } catch (e) {
-                        ScaffoldMessenger.of(context)
-                            .showSnackBar(SnackBar(content: Text(e.toString())));
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(e.toString())));
                       }
                     },
                     text: 'Register',
@@ -100,7 +106,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   Center(
                     child: RichText(
                       text: TextSpan(
-                        style: const TextStyle(color: Colors.black, fontSize: 16),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
                         children: [
                           const TextSpan(text: 'Already Register?'),
                           TextSpan(
@@ -108,7 +115,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ..onTap = () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const SignInScreen(),
+                                      builder: (context) =>
+                                          const SignInScreen(),
                                     )),
                               text: ' Log In',
                               style: const TextStyle(color: Color(0xff7052ff)))

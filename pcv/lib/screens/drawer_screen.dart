@@ -155,7 +155,10 @@ class _DrawerScreensState extends State<DrawerScreens> {
                               (route) => false);
                         }
                       },
-                      child: const Text("DELETE"),
+                      child: const Text(
+                        "DELETE",
+                        style: TextStyle(color: Colors.red),
+                      ),
                     ),
                   ],
                 ),

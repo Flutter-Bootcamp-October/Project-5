@@ -37,7 +37,9 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: Text(
                         'Sign In',
                         style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.bold),
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                            color: Color(0xff7052ff)),
                       ),
                     ),
                   ),
