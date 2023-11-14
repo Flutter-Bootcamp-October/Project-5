@@ -30,7 +30,13 @@ In this app you can add your CV information such as name, email, education, skil
 
 
 * Dark theme screens:
-  
+
+![Screenshot_1699993921](https://github.com/AliArafat4/Project-5/assets/84300173/25cbe22c-606b-4681-bf63-61a60db2cc15)
+
+![Screenshot_1699993909](https://github.com/AliArafat4/Project-5/assets/84300173/4196d521-fc77-432d-b66b-82acf2f4abbb)
+
+![Screenshot_1699993765](https://github.com/AliArafat4/Project-5/assets/84300173/74d89914-6c59-47eb-9d74-dbe840bdfd5d)
+
 ![Screenshot_1699994290](https://github.com/AliArafat4/Project-5/assets/84300173/123315ae-baeb-4350-9868-51146e7242a6)
 
 ![Screenshot_1699994292](https://github.com/AliArafat4/Project-5/assets/84300173/96bb17d5-d3d0-464a-850f-897f3c44dff3)
@@ -39,11 +45,10 @@ In this app you can add your CV information such as name, email, education, skil
 
 ![Screenshot_1699993891](https://github.com/AliArafat4/Project-5/assets/84300173/626bb012-a435-4c0d-b21c-fe5157f12610)
 
-![Screenshot_1699993765](https://github.com/AliArafat4/Project-5/assets/84300173/74d89914-6c59-47eb-9d74-dbe840bdfd5d)
 
-![Screenshot_1699993909](https://github.com/AliArafat4/Project-5/assets/84300173/4196d521-fc77-432d-b66b-82acf2f4abbb)
 
-![Screenshot_1699993921](https://github.com/AliArafat4/Project-5/assets/84300173/25cbe22c-606b-4681-bf63-61a60db2cc15)
+
+
 
 
 * have fun exploring the rest of the app :b
