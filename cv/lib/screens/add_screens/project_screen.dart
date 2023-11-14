@@ -7,6 +7,7 @@ import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class ProjectsScreen extends StatefulWidget {
   const ProjectsScreen({super.key});
@@ -24,7 +25,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: const EdgeInsets.only(top: 50.0),
+        padding: const EdgeInsets.only(top: 60.0),
         child: Center(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
@@ -35,7 +36,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                     fontSize: 25, color: blue, fontWeight: FontWeight.bold),
               ),
               const SizedBox(
-                height: 60,
+                height: 40,
               ),
               AddTextField(
                 label: 'Name',
@@ -50,7 +51,7 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                 hint: 'Enter project description',
                 isPassword: false,
                 controller: descriptionController,
-                icon: Icons.description,
+                icon: HeroIcons.document_magnifying_glass,
               ),
               hight30(),
               Padding(

@@ -8,6 +8,7 @@ import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:group_radio_button/group_radio_button.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class EducationsScreen extends StatefulWidget {
   const EducationsScreen({super.key});
@@ -51,7 +52,7 @@ class _EducationsScreenState extends State<EducationsScreen> {
                           hint: 'Enter your university',
                           isPassword: false,
                           controller: universityController,
-                          icon: Icons.house_outlined,
+                          icon: HeroIcons.building_library,
                         ),
                       ),
                       hight30(),
@@ -60,7 +61,7 @@ class _EducationsScreenState extends State<EducationsScreen> {
                         hint: 'Enter your college',
                         isPassword: false,
                         controller: collegeController,
-                        icon: Icons.verified_user_rounded,
+                        icon: HeroIcons.academic_cap,
                       ),
                       hight30(),
                       AddTextField(

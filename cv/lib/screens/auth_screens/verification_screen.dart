@@ -3,7 +3,6 @@
 import 'dart:convert';
 
 import 'package:cv/screens/auth_screens/loding_screen.dart';
-import 'package:cv/screens/auth_screens/signin_screen.dart';
 import 'package:cv/services/auth/verification.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/widgets/text_field.dart';
@@ -64,19 +63,13 @@ class VerificationScreen extends StatelessWidget {
                           'token', jsonDecode(response.body)["data"]["token"]);
                       ScaffoldMessenger.of(context)
                           .showSnackBar(const SnackBar(content: Text("done")));
-                      type == "login"
-                          ? Navigator.pushAndRemoveUntil(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const LodingScreen(),
-                              ),
-                              (route) => false,
-                            )
-                          : Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => const SigninScreen(),
-                              ));
+                      Navigator.pushAndRemoveUntil(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LodingScreen(),
+                        ),
+                        (route) => false,
+                      );
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(jsonDecode(response.body)["msg"])));

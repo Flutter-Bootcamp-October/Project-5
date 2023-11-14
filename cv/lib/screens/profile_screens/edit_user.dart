@@ -8,6 +8,7 @@ import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class EditUserScreen extends StatefulWidget {
   const EditUserScreen({super.key, required this.user});
@@ -67,7 +68,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                           hint: 'Enter your name',
                           isPassword: false,
                           controller: nameController,
-                          icon: Icons.text_decrease,
+                          icon: HeroIcons.newspaper,
                         ),
                       ),
                       hight30(),
@@ -76,7 +77,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                         hint: 'Enter your title position',
                         isPassword: false,
                         controller: titleController,
-                        icon: Icons.verified_user_rounded,
+                        icon: HeroIcons.ticket,
                       ),
                       hight30(),
                       AddTextField(
@@ -108,7 +109,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                         hint: 'Enter about your selfe ',
                         isPassword: false,
                         controller: aboutController,
-                        icon: Icons.text_fields_outlined,
+                        icon: HeroIcons.document_plus,
                       ),
                       hight30(),
                     ]),
@@ -134,9 +135,7 @@ class _EditUserScreenState extends State<EditUserScreen> {
                             if (response.statusCode >= 200 &&
                                 response.statusCode < 300) {
                               setState(() {});
-                              // context
-                              //     .findAncestorStateOfType<HomeScreenState>()!
-                              //     .setState(() {});
+
                               ScaffoldMessenger.of(context).showSnackBar(
                                   const SnackBar(
                                       content: Text(

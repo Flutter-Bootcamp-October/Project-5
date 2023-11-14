@@ -6,6 +6,7 @@ import 'package:cv/screens/profile_screens/dispaly_info/display_educations_widge
 import 'package:cv/screens/profile_screens/dispaly_info/display_projects_wiget.dart';
 import 'package:cv/screens/profile_screens/dispaly_info/display_social_widget.dart';
 import 'package:cv/screens/profile_screens/settings_screen.dart';
+import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
 
@@ -18,16 +19,15 @@ class HomeScreen extends StatefulWidget {
 
 class HomeScreenState extends State<HomeScreen> {
   @override
-  void initState() {
-    super.initState();
-    const DisplayUserInfo();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xffF8FAFD),
       appBar: AppBar(
-        title: const Text("Home"),
+        backgroundColor: lightBlue,
+        elevation: 0,
+        title: const Text(
+          "",
+        ),
         leading: InkWell(
             onTap: () {
               Navigator.push(
@@ -35,29 +35,63 @@ class HomeScreenState extends State<HomeScreen> {
                   MaterialPageRoute(
                       builder: (context) => const SettingScreen()));
             },
-            child: const Icon(Icons.settings)),
+            child: Icon(
+              Icons.settings,
+              color: pink,
+              size: 30,
+            )),
       ),
-      body: Center(
-        child: ListView(
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                hight14(),
-                const DisplayUserInfo(),
-                const DisplayAllSkills(),
-                hight14(),
-                const DisplayAllSocials(),
-                hight14(),
-                const DisplayAllProject(),
-                hight14(),
-                const DisplayAllEducation(),
-                hight14(),
-              ],
-            ),
-          ],
-        ),
+      body: ListView(
+        children: [
+          Stack(
+            children: [
+              Container(
+                width: MediaQuery.of(context).size.width,
+                height: 230,
+                decoration: BoxDecoration(
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.5), // Shadow color
+                      spreadRadius: 5, // Spread radius
+                      blurRadius: 7, // Blur radius
+                      offset: const Offset(0, 3), // Changes position of shadow
+                    ),
+                  ],
+                  shape: BoxShape.rectangle,
+                  border: const Border(
+                    bottom: BorderSide(
+                      style: BorderStyle.none, // Color of the bottom border
+                      width: 5.0, // Width of the bottom border
+                    ),
+                  ),
+                  borderRadius: BorderRadius.circular(10),
+                  color: lightBlue,
+                ),
+              ),
+              const Padding(
+                padding: EdgeInsets.only(
+                  left: 24.0,
+                ),
+                child: DisplayUserInfo(),
+              ),
+            ],
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              hight14(),
+              const DisplayAllSkills(),
+              hight14(),
+              const DisplayAllSocials(),
+              hight14(),
+              const DisplayAllProject(),
+              hight14(),
+              const DisplayAllEducation(),
+              hight14(),
+            ],
+          ),
+        ],
       ),
     );
   }

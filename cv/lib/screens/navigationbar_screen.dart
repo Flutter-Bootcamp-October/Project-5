@@ -1,6 +1,7 @@
 import 'package:cv/screens/add_screens/tabs_screen.dart';
 import 'package:cv/screens/communty_screen.dart';
 import 'package:cv/screens/profile_screens/home_screen.dart';
+import 'package:cv/style/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:salomon_bottom_bar/salomon_bottom_bar.dart';
 
@@ -30,14 +31,14 @@ class _NavigationBarScreenState extends State<NavigationBarScreen> {
           SalomonBottomBarItem(
             icon: const Icon(Icons.home),
             title: const Text("Profile"),
-            selectedColor: Colors.purple,
+            selectedColor: const Color(0xff80CED7),
           ),
 
           /// Add
           SalomonBottomBarItem(
             icon: const Icon(Icons.add_circle_outline_sharp),
             title: const Text("Add"),
-            selectedColor: Colors.pink,
+            selectedColor: pink,
           ),
 
           /// Community

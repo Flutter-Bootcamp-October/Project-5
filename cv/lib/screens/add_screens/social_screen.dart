@@ -7,6 +7,7 @@ import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:icons_plus/icons_plus.dart';
 
 class SocilaScreen extends StatefulWidget {
   const SocilaScreen({super.key});
@@ -22,11 +23,11 @@ class _SocilaScreenState extends State<SocilaScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.only(top: 40.0),
-        child: Center(
-          child: Column(
+      body: ListView(
+        children: [
+          Column(
             crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,7 +46,7 @@ class _SocilaScreenState extends State<SocilaScreen> {
                       hint: 'Enter Username',
                       isPassword: false,
                       controller: socialController,
-                      icon: Icons.phone_android_rounded,
+                      icon: HeroIcons.device_phone_mobile,
                     ),
                   ),
                 ],
@@ -201,7 +202,7 @@ class _SocilaScreenState extends State<SocilaScreen> {
               ),
             ],
           ),
-        ),
+        ],
       ),
     );
   }

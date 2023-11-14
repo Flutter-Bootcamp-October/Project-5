@@ -29,119 +29,180 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                         child: Text(
                           "Projects:",
                           style: TextStyle(
-                              fontSize: 16,
+                              fontSize: 18,
                               color: blue,
                               fontWeight: FontWeight.bold),
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
-                        child: SizedBox(
-                          height: 150,
-                          width: MediaQuery.of(context).size.width,
+                      SizedBox(
+                        height: 190,
+                        width: MediaQuery.of(context).size.width,
+                        child: Padding(
+                          padding: const EdgeInsets.only(left: 10.0),
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
                             itemCount: snapshot.data!.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
+                              // if (snapshot.data![index].state == "completed") {
+                              //   borderColor = const Color(0xff1C7C54);
+                              // }
+                              // if (snapshot.data![index].state == "processing") {
+                              //   borderColor = const Color(0xffFEC086);
+                              // }
+                              // if (snapshot.data![index].state == "other") {
+                              //   borderColor = const Color(0xffCC444B);
+                              // }
                               return Row(
                                 children: [
                                   Stack(
                                     children: [
                                       SizedBox(
-                                        height: 150,
+                                        height: 180,
                                         width: 180,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: const Color.fromARGB(
-                                                    69, 0, 0, 0)),
-                                            shape: BoxShape.rectangle,
-                                            borderRadius:
-                                                BorderRadius.circular(35),
-                                            color: const Color.fromARGB(
-                                                22, 0, 0, 0),
-                                          ),
-                                          child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
-                                              children: [
-                                                const Text(
-                                                  "Project Name:",
-                                                  style: TextStyle(
-                                                      fontWeight:
-                                                          FontWeight.w500),
-                                                ),
-                                                Text(
-                                                  snapshot.data![index].name ??
-                                                      "",
-                                                  overflow: TextOverflow.clip,
-                                                  maxLines: 1,
-                                                ),
-                                                hight14(),
-                                                const Text(
-                                                    "Project Description: ",
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(8.0),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              // gradient: const RadialGradient(
+                                              //   center: Alignment.center,
+                                              //   radius: 0.5,
+                                              //   colors: [
+                                              //     Color.fromARGB(
+                                              //         164, 107, 128, 131),
+                                              //     Color(0xffE3F0F3),
+                                              //   ],
+                                              // ),
+
+                                              // border: Border.all(
+                                              //     color: borderColor),
+                                              // boxShadow: [
+                                              //   BoxShadow(
+                                              //     color: lightBlue.withOpacity(
+                                              //         0.5), // Shadow color
+                                              //     spreadRadius:
+                                              //         2, // Spread radius
+                                              //     blurRadius: 2, // Blur radius
+                                              //     offset: const Offset(0,
+                                              //         2), // Changes position of shadow
+                                              //   ),
+                                              // ],
+                                              shape: BoxShape.rectangle,
+                                              borderRadius:
+                                                  BorderRadius.circular(25),
+                                              color: lightBlue,
+                                            ),
+                                            child: Padding(
+                                              padding: const EdgeInsets.only(
+                                                  left: 18.0),
+                                              child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.center,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  const Text(
+                                                    "Project Name:",
                                                     style: TextStyle(
                                                         fontWeight:
-                                                            FontWeight.w500)),
-                                                Text(
-                                                  snapshot.data![index]
-                                                          .description ??
-                                                      "",
-                                                  overflow: TextOverflow.clip,
-                                                  maxLines: 1,
-                                                ),
-                                                hight14(),
-                                                const Text("Project State: ",
-                                                    style: TextStyle(
+                                                            FontWeight.w500),
+                                                  ),
+                                                  Text(
+                                                      snapshot.data![index]
+                                                              .name ??
+                                                          "",
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      maxLines: 1,
+                                                      style: const TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              97,
+                                                              96,
+                                                              96))),
+                                                  hight14(),
+                                                  const Text(
+                                                      "Project Description: ",
+                                                      style: TextStyle(
+                                                          fontWeight:
+                                                              FontWeight.w500)),
+                                                  Text(
+                                                      snapshot.data![index]
+                                                              .description ??
+                                                          "",
+                                                      overflow:
+                                                          TextOverflow.clip,
+                                                      maxLines: 1,
+                                                      style: const TextStyle(
+                                                          color: Color.fromARGB(
+                                                              255,
+                                                              97,
+                                                              96,
+                                                              96))),
+                                                  hight14(),
+                                                  const Text("Project State: ",
+                                                      style: TextStyle(
                                                         fontWeight:
-                                                            FontWeight.w500)),
-                                                Text(
-                                                  snapshot.data![index].state ??
-                                                      "",
-                                                ),
-                                              ],
+                                                            FontWeight.w500,
+                                                      )),
+                                                  Text(
+                                                    snapshot.data![index]
+                                                            .state ??
+                                                        "",
+                                                    style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 97, 96, 96)),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                      IconButton(
-                                          onPressed: () async {
-                                            try {
-                                              final response =
-                                                  await deleteProject(context, {
-                                                "id_project":
-                                                    snapshot.data![index].id
-                                              });
-                                              if (response != null &&
-                                                  response.statusCode >= 200 &&
-                                                  response.statusCode < 300) {
-                                                setState(() {});
+                                      Positioned(
+                                        left: 125,
+                                        top: 3,
+                                        child: IconButton(
+                                            onPressed: () async {
+                                              try {
+                                                final response =
+                                                    await deleteProject(
+                                                        context, {
+                                                  "id_project":
+                                                      snapshot.data![index].id
+                                                });
+                                                if (response != null &&
+                                                    response.statusCode >=
+                                                        200 &&
+                                                    response.statusCode < 300) {
+                                                  setState(() {});
 
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(const SnackBar(
-                                                        content: Text(
-                                                            "deleted successfully")));
-                                              } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(const SnackBar(
+                                                          content: Text(
+                                                              "deleted successfully")));
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              jsonDecode(
+                                                                      response!
+                                                                          .body)[
+                                                                  "msg"])));
+                                                }
+                                              } catch (error) {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(SnackBar(
                                                         content: Text(
-                                                            jsonDecode(response!
-                                                                    .body)[
-                                                                "msg"])));
+                                                            error.toString())));
                                               }
-                                            } catch (error) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                      content: Text(
-                                                          error.toString())));
-                                            }
-                                          },
-                                          icon: const Icon(Icons.delete))
+                                            },
+                                            icon: const Icon(
+                                              Icons.cancel_sharp,
+                                              // color: pink,
+                                              size: 20,
+                                            )),
+                                      )
                                     ],
                                   ),
                                   width10()

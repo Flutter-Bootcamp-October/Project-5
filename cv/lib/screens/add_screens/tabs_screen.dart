@@ -25,11 +25,12 @@ class _TabsScreenState extends State<TabsScreen>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.only(top: 90.0),
-            child: CustomSlidingSegmentedControl<int>(
+      backgroundColor: const Color(0xffF8FAFD),
+      body: Padding(
+        padding: const EdgeInsets.only(top: 90.0),
+        child: Column(
+          children: [
+            CustomSlidingSegmentedControl<int>(
               initialValue: 1,
               padding: 25,
               children: const {
@@ -53,11 +54,11 @@ class _TabsScreenState extends State<TabsScreen>
                 ),
               },
               decoration: BoxDecoration(
-                color: lightBlue,
+                color: pink,
                 borderRadius: BorderRadius.circular(8),
               ),
               thumbDecoration: BoxDecoration(
-                color: const Color(0xffFCB85F),
+                color: const Color.fromARGB(185, 244, 167, 161),
                 borderRadius: BorderRadius.circular(6),
               ),
               duration: const Duration(milliseconds: 300),
@@ -66,19 +67,19 @@ class _TabsScreenState extends State<TabsScreen>
                 _tabController.animateTo(v - 1);
               },
             ),
-          ),
-          Expanded(
-            child: TabBarView(
-              controller: _tabController,
-              children: const [
-                ProjectsScreen(),
-                EducationsScreen(),
-                SkillsScreen(),
-                SocilaScreen()
-              ],
+            Expanded(
+              child: TabBarView(
+                controller: _tabController,
+                children: const [
+                  ProjectsScreen(),
+                  EducationsScreen(),
+                  SkillsScreen(),
+                  SocilaScreen()
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -35,7 +35,7 @@ class _DisplayAllEducationState extends State<DisplayAllEducation> {
                         ),
                       ),
                       Padding(
-                        padding: const EdgeInsets.only(left: 18.0),
+                        padding: const EdgeInsets.only(left: 18.0, top: 8),
                         child: SizedBox(
                           height: 250,
                           width: MediaQuery.of(context).size.width,
@@ -53,22 +53,42 @@ class _DisplayAllEducationState extends State<DisplayAllEducation> {
                                         width: 180,
                                         child: Container(
                                           decoration: BoxDecoration(
-                                            border: Border.all(
-                                                color: const Color.fromARGB(
-                                                    69, 0, 0, 0)),
+                                            // gradient: const RadialGradient(
+                                            //   center: Alignment.center,
+                                            //   radius: 0.5,
+                                            //   colors: [
+                                            //     Color.fromARGB(
+                                            //         164, 107, 128, 131),
+                                            //     Color(0xffE3F0F3),
+                                            //   ],
+                                            // ),
+
+                                            // border: Border.all(
+                                            //     color: borderColor),
+                                            // boxShadow: [
+                                            //   BoxShadow(
+                                            //     color: lightBlue.withOpacity(
+                                            //         0.5), // Shadow color
+                                            //     spreadRadius:
+                                            //         2, // Spread radius
+                                            //     blurRadius: 2, // Blur radius
+                                            //     offset: const Offset(0,
+                                            //         2), // Changes position of shadow
+                                            //   ),
+                                            // ],
                                             shape: BoxShape.rectangle,
                                             borderRadius:
-                                                BorderRadius.circular(35),
-                                            color: const Color.fromARGB(
-                                                22, 0, 0, 0),
+                                                BorderRadius.circular(25),
+                                            color: lightBlue,
                                           ),
                                           child: Padding(
-                                            padding: const EdgeInsets.all(8.0),
+                                            padding: const EdgeInsets.only(
+                                                top: 8.0, left: 18),
                                             child: Column(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.center,
+                                                  MainAxisAlignment.start,
                                               crossAxisAlignment:
-                                                  CrossAxisAlignment.center,
+                                                  CrossAxisAlignment.start,
                                               children: [
                                                 const Text(
                                                   "University:",
@@ -77,92 +97,112 @@ class _DisplayAllEducationState extends State<DisplayAllEducation> {
                                                           FontWeight.w500),
                                                 ),
                                                 Text(
-                                                  snapshot.data![index]
-                                                          .university ??
-                                                      "",
-                                                  overflow: TextOverflow.clip,
-                                                  maxLines: 1,
-                                                ),
+                                                    snapshot.data![index]
+                                                            .university ??
+                                                        "",
+                                                    overflow: TextOverflow.clip,
+                                                    maxLines: 1,
+                                                    style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 97, 96, 96))),
                                                 hight14(),
                                                 const Text("College: ",
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500)),
                                                 Text(
-                                                  snapshot.data![index]
-                                                          .college ??
-                                                      "",
-                                                  overflow: TextOverflow.clip,
-                                                  maxLines: 1,
-                                                ),
+                                                    snapshot.data![index]
+                                                            .college ??
+                                                        "",
+                                                    overflow: TextOverflow.clip,
+                                                    maxLines: 1,
+                                                    style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 97, 96, 96))),
                                                 hight14(),
                                                 const Text("Specialization: ",
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500)),
                                                 Text(
-                                                  snapshot.data![index]
-                                                          .specialization ??
-                                                      "",
-                                                ),
+                                                    snapshot.data![index]
+                                                            .specialization ??
+                                                        "",
+                                                    style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 97, 96, 96))),
                                                 hight14(),
                                                 const Text("Level: ",
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500)),
                                                 Text(
-                                                  snapshot.data![index].level ??
-                                                      "",
-                                                ),
+                                                    snapshot.data![index]
+                                                            .level ??
+                                                        "",
+                                                    style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 97, 96, 96))),
                                                 hight14(),
                                                 const Text("Graduation Date: ",
                                                     style: TextStyle(
                                                         fontWeight:
                                                             FontWeight.w500)),
                                                 Text(
-                                                  snapshot.data![index]
-                                                          .graduationDate ??
-                                                      "",
-                                                ),
+                                                    snapshot.data![index]
+                                                            .graduationDate ??
+                                                        "",
+                                                    style: const TextStyle(
+                                                        color: Color.fromARGB(
+                                                            255, 97, 96, 96))),
                                               ],
                                             ),
                                           ),
                                         ),
                                       ),
-                                      IconButton(
-                                          onPressed: () async {
-                                            try {
-                                              final response =
-                                                  await deleteEducation(
-                                                      context, {
-                                                "id_education":
-                                                    snapshot.data![index].id
-                                              });
-                                              if (response != null &&
-                                                  response.statusCode >= 200 &&
-                                                  response.statusCode < 300) {
-                                                setState(() {});
+                                      Positioned(
+                                        left: 130,
+                                        child: IconButton(
+                                            onPressed: () async {
+                                              try {
+                                                final response =
+                                                    await deleteEducation(
+                                                        context, {
+                                                  "id_education":
+                                                      snapshot.data![index].id
+                                                });
+                                                if (response != null &&
+                                                    response.statusCode >=
+                                                        200 &&
+                                                    response.statusCode < 300) {
+                                                  setState(() {});
 
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(const SnackBar(
-                                                        content: Text(
-                                                            "deleted successfully")));
-                                              } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(const SnackBar(
+                                                          content: Text(
+                                                              "deleted successfully")));
+                                                } else {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(SnackBar(
+                                                          content: Text(
+                                                              jsonDecode(
+                                                                      response!
+                                                                          .body)[
+                                                                  "msg"])));
+                                                }
+                                              } catch (error) {
                                                 ScaffoldMessenger.of(context)
                                                     .showSnackBar(SnackBar(
                                                         content: Text(
-                                                            jsonDecode(response!
-                                                                    .body)[
-                                                                "msg"])));
+                                                            error.toString())));
                                               }
-                                            } catch (error) {
-                                              ScaffoldMessenger.of(context)
-                                                  .showSnackBar(SnackBar(
-                                                      content: Text(
-                                                          error.toString())));
-                                            }
-                                          },
-                                          icon: const Icon(Icons.delete))
+                                            },
+                                            icon: const Icon(
+                                              Icons.cancel_sharp,
+                                              // color: pink,
+                                              size: 20,
+                                            )),
+                                      )
                                     ],
                                   ),
                                   width10()

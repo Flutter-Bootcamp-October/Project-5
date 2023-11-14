@@ -1,4 +1,6 @@
 import 'package:cv/services/user/get_all_users.dart';
+import 'package:cv/style/colors.dart';
+import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
 
 class CommunityScreen extends StatelessWidget {
@@ -15,26 +17,41 @@ class CommunityScreen extends StatelessWidget {
                 itemCount: snapshot.data!.length,
                 shrinkWrap: true,
                 itemBuilder: (context, index) {
-                  return SizedBox(
-                    height: 120,
-                    width: 50,
-                    child: Card(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              snapshot.data![index].name ?? "",
-                              overflow: TextOverflow.fade,
-                              maxLines: 3,
-                            ),
+                  return Column(
+                    children: [
+                      SizedBox(
+                        height: 180,
+                        width: 180,
+                        child: Container(
+                          decoration: BoxDecoration(
+                            shape: BoxShape.rectangle,
+                            borderRadius: BorderRadius.circular(25),
+                            color: lightBlue,
                           ),
-                          Text(snapshot.data![index].id.toString()),
-                        ],
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(snapshot.data![index].id.toString()),
+                              Text(snapshot.data![index].name.toString()),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  snapshot.data![index].phone ?? "",
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  snapshot.data![index].titlePosition ?? "",
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
-                    ),
+                      hight14()
+                    ],
                   );
                 },
               );

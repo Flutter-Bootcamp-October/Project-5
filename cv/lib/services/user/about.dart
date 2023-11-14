@@ -14,10 +14,13 @@ Future<User?> aboutAPI(BuildContext context) async {
     final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
     final response =
         await get(url, headers: {"authorization": prefs.getString("token")!});
+    print("%%%%%%%%%%%");
     print(response.body);
 
     if (response.statusCode >= 200 && response.statusCode < 300) {
-      return User.fromJson(jsonDecode(response.body)["data"]);
+      User user = User.fromJson(jsonDecode(response.body)["data"]);
+      print(user.image);
+      return user;
     } else if (jsonDecode(response.body)["msg"] ==
         "Token is expired or invalid") {
       prefs.remove("token");
@@ -36,5 +39,3 @@ Future<User?> aboutAPI(BuildContext context) async {
     return null;
   }
 }
-
-
