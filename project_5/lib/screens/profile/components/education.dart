@@ -26,7 +26,7 @@ class Education extends StatelessWidget {
                     ? SizedBox(
                         height: educationModel.data!.length > 0
                             ? educationModel.data!.length == 1
-                                ? context.getHeight() * .12
+                                ? context.getHeight() * .17
                                 : context.getHeight() * .25
                             : context.getHeight() * .1,
                         child: ListView.separated(
