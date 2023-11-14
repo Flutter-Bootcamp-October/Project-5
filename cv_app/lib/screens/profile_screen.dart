@@ -1,5 +1,7 @@
 import 'package:cv_app/globals/colors.dart';
+import 'package:cv_app/main.dart';
 import 'package:cv_app/screens/edit_about_screen.dart';
+import 'package:cv_app/screens/login_screen.dart';
 import 'package:cv_app/services/about.dart';
 import 'package:flutter/material.dart';
 
@@ -19,6 +21,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
         future: showAbout(),
         builder: ((context, snapshot) {
           if (snapshot.data != null) {
+            if (snapshot.data!.id == null) {
+              prefs.remove("token");
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const LoginScreen()),
+                  (route) => false);
+            }
             return Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Column(
@@ -44,10 +53,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         IconButton(
                           onPressed: () {
                             Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const EditAboutScreen()));
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => EditAboutScreen(about: snapshot.data!,),
+                              ),
+                            );
                           },
                           icon: const Icon(
                             Icons.edit_location_sharp,
@@ -101,6 +111,24 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       icon: Icons.history_edu_sharp,
                       title: "About",
                       value: snapshot.data!.about.toString(),
+                    ),
+                    const Divider(),
+                    InkWell(
+                      onTap: () {
+                        prefs.remove("token");
+                        Navigator.pushAndRemoveUntil(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginScreen()),
+                            (route) => false);
+                      },
+                      child: const Row(
+                        children: [
+                          Icon(Icons.login_rounded, color: Colors.redAccent),
+                          Text(" Logout",
+                              style: TextStyle(color: Colors.redAccent))
+                        ],
+                      ),
                     ),
                   ]),
             );
