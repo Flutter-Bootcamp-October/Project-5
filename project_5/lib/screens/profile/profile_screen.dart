@@ -3,12 +3,14 @@ import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/main.dart';
 import 'package:project_5/models/about_model.dart';
 import 'package:project_5/screens/auth/sign_in_screen.dart';
-import 'package:project_5/screens/profile/components/experience.dart';
+import 'package:project_5/screens/profile/components/projects.dart';
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
 import 'package:project_5/screens/reusable_widgets/education_model_sheet.dart';
+import 'package:project_5/screens/reusable_widgets/projectsModalBottomSheet.dart';
 import 'package:project_5/screens/settings/components/custom_bottom_modal_sheet.dart';
 import 'package:project_5/services/about_api.dart';
 import 'package:project_5/services/education_api.dart';
+import 'package:project_5/services/projects_api.dart';
 import 'package:project_5/services/skills_api.dart';
 import 'package:project_5/services/social_api.dart';
 import 'package:project_5/theme/shimmer/shimmer_profile_header_skeleton.dart';
@@ -32,6 +34,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   Future? skillsModelData;
   Future? educationModelData;
   Future? socialModelData;
+  Future? projectsModelData;
 
   TextEditingController skillsController = TextEditingController();
 
@@ -39,6 +42,9 @@ class ProfileScreenState extends State<ProfileScreen> {
   TextEditingController collegeController = TextEditingController();
   TextEditingController universityController = TextEditingController();
   TextEditingController specializationController = TextEditingController();
+
+  TextEditingController projectNameController = TextEditingController();
+  TextEditingController projectDescriptionController = TextEditingController();
 
   @override
   void initState() {
@@ -54,6 +60,7 @@ class ProfileScreenState extends State<ProfileScreen> {
       skillsModelData = getSkillsData();
       educationModelData = getEducationData();
       socialModelData = getSocialData();
+      projectsModelData = getProjectsData();
       setState(() {});
     }
   }
@@ -81,7 +88,8 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   updateAboutData() async {
     aboutModel = await aboutModelData;
-    setState(() {});
+    aboutModelData = getAboutApi();
+    Future.delayed(const Duration(seconds: 2), () => setState(() {}));
   }
 
   updateSkillsModel() async {
@@ -96,6 +104,11 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   updateSocialModel() async {
     socialModelData = getSocialData();
+    Future.delayed(const Duration(seconds: 2), () => setState(() {}));
+  }
+
+  updateProjectsModel() async {
+    projectsModelData = getProjectsData();
     Future.delayed(const Duration(seconds: 2), () => setState(() {}));
   }
 
@@ -122,7 +135,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
                       return ProfileUserInformation(
-                        updateSocialModel: updateSocialModel,
+                        updateAboutData: updateAboutData,
                         aboutModelData: aboutModelData,
                         imageUrl: snapshot.data.data?.image ??
                             "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
@@ -135,6 +148,7 @@ class ProfileScreenState extends State<ProfileScreen> {
               //Social
               Social(
                   updateMethod: updateSocialModel, socialData: socialModelData),
+
               const Divider(
                   thickness: .8,
                   indent: 16,
@@ -193,17 +207,21 @@ class ProfileScreenState extends State<ProfileScreen> {
                   skillsData: skillsModelData, updateMethod: updateSkillsModel),
               //--Experiences--
               SectionTitle(
-                title: "Experiences 💼",
+                title: "Projects 💼",
                 iconData: Icons.add,
-                onPressedFunc: () {},
+                onPressedFunc: () {
+                  projectsModalBottomSheet(context,
+                      projectNameController: projectNameController,
+                      projectDescriptionController:
+                          projectDescriptionController,
+                      content: "Project",
+                      updateMethod: updateProjectsModel);
+                },
               ),
-              Experience(educationData: educationModelData),
-              //--PlaceHolder--
-              // SectionTitle(
-              //   title: "PlaceHolder 💭󠀠󠀠",
-              //   iconData: Icons.add,
-              //   onPressedFunc: () {},
-              // ),
+              Projects(
+                projectsData: projectsModelData,
+                updateProjects: updateProjectsModel,
+              ),
             ],
           ),
         ),

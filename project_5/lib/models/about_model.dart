@@ -29,7 +29,7 @@ class Data {
   String? titlePosition;
   String? phone;
   String? location;
-  DateTime? birthday;
+  String? birthday;
   String? about;
   dynamic image;
   String? createAt;

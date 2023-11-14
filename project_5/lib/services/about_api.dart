@@ -53,18 +53,23 @@ Future putDataAboutApi(
     required String birthday,
     required String about}) async {
   final url = Uri.parse("https://bacend-fshi.onrender.com/user/edit/about");
-
-  final response = await http.put(url, headers: {
-    "content-Type": "application/json",
-    "authorization": pref.getToken()
-  }, body: {
+  final bday = DateTime.now();
+  final data = {
     "name": name,
     "title_position": titlePosition,
     "phone": phone,
     "location": location,
-    "birthday": birthday,
+    "birthday": "$bday",
     "about": about,
-  });
+  };
+  final response = await http.put(
+    url,
+    headers: {
+      "content-Type": "application/json",
+      "authorization": pref.getToken()
+    },
+    body: jsonEncode(data),
+  );
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return AboutModel.fromJson(json.decode(response.body));
   } else if (response.statusCode >= 400) {

@@ -14,7 +14,7 @@ final List<Map> socialMediaICons = [
   },
   {
     "instagram":
-        "https://upload.wikimedia.org/wikipedia/commons/9/95/Instagram_logo_2022.svg"
+        "https://www.unipile.com/wp-content/uploads/2022/09/logo_instagram.png"
   },
   {
     "twitter":

@@ -5,15 +5,13 @@ import 'package:project_5/main.dart';
 import 'package:project_5/models/error_model.dart';
 import 'package:project_5/models/projects_model.dart';
 
-//TODO: TEST THESE
-Future getAboutApi() async {
+Future getProjectsData() async {
   final url = Uri.parse("https://bacend-fshi.onrender.com/user/projects");
 
   final response = await http.get(url, headers: {
     "content-Type": "application/json",
     "authorization": pref.getToken()
   });
-
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return ProjectsModel.fromJson(json.decode(response.body));
   } else if (response.statusCode >= 400) {
@@ -31,13 +29,12 @@ Future<String> addProjects({
   required String state,
 }) async {
   final data = {"name": name, "description": description, "state": state};
-  final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/skills");
+  final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/project");
 
   final response = await http.post(url, body: jsonEncode(data), headers: {
     "content-Type": "application/json",
     "authorization": pref.getToken()
   });
-
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return response.body;
   } else if (response.statusCode >= 400) {
@@ -51,12 +48,13 @@ Future<String> addProjects({
 
 Future deleteProject({required projectId}) async {
   final url = Uri.parse("https://bacend-fshi.onrender.com/user/delete/project");
-  final response = await http.delete(url, headers: {
-    "content-Type": "application/json",
-    "authorization": pref.getToken()
-  }, body: {
-    "id_project": projectId
-  });
+  final data = {"id_project": projectId};
+  final response = await http.delete(url,
+      headers: {
+        "content-Type": "application/json",
+        "authorization": pref.getToken()
+      },
+      body: jsonEncode(data));
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return "Account Deleted";
   } else {

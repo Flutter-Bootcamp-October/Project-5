@@ -42,8 +42,6 @@ class ShimmerProfileHeaderSkeleton extends StatelessWidget {
                     const SizedBox(height: 5),
                   ],
                 ),
-                IconButton(
-                    onPressed: () {}, icon: const Icon(Icons.edit_outlined)),
               ],
             ),
           ),

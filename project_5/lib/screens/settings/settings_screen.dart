@@ -5,34 +5,30 @@ import 'package:project_5/screens/auth/components/auth_button.dart';
 import 'package:project_5/screens/auth/sign_in_screen.dart';
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
 import 'package:project_5/screens/settings/components/theme_settings.dart';
-
 import 'components/account_settings.dart';
 import 'components/profile_settings.dart';
 import 'components/settings_options.dart';
 
-class SettingsScreen extends StatelessWidget {
+class SettingsScreen extends StatefulWidget {
   const SettingsScreen({Key? key}) : super(key: key);
 
   @override
+  State<SettingsScreen> createState() => _SettingsScreenState();
+}
+
+class _SettingsScreenState extends State<SettingsScreen> {
+  @override
   Widget build(BuildContext context) {
     final List<Map> settingsOptionsList = [
-      {
-        "title": "Profile",
-        "subTitle": "Edit Your Profile",
-        "iconData": Icons.person,
-        "onTapFunc": () {
-          navigationPush(
-              context: context, screen: const ProfileSettingsScreen());
-        },
-      },
-      {
-        "title": "Theme",
-        "subTitle": "Set Your Theme",
-        "iconData": Icons.color_lens,
-        "onTapFunc": () {
-          navigationPush(context: context, screen: const ThemeSettingsScreen());
-        },
-      },
+      // {
+      //   "title": "Profile",
+      //   "subTitle": "Edit Your Profile",
+      //   "iconData": Icons.person,
+      //   "onTapFunc": () {
+      //     navigationPush(
+      //         context: context, screen: const ProfileSettingsScreen());
+      //   },
+      // },
       {
         "title": "Account",
         "subTitle": "Login & Account Information",
@@ -40,6 +36,20 @@ class SettingsScreen extends StatelessWidget {
         "onTapFunc": () {
           navigationPush(
               context: context, screen: const AccountInformationScreen());
+        },
+      },
+      {
+        "title": "Theme",
+        "subTitle": "Set Your Theme",
+        "iconData": Icons.color_lens,
+        "onTapFunc": () {
+          Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ThemeSettingsScreen()))
+              .then((value) {
+            setState(() {});
+          });
         },
       },
     ];
