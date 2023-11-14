@@ -22,7 +22,7 @@ class _CheckAuthScreenState extends State<CheckAuthScreen> {
 
   _check() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    print(prefs.getString("token"));
+   // print(prefs.getString("token"));
     if (prefs.containsKey("token")) {
       final String token = prefs.getString("token")!;
       if (token.isNotEmpty) {

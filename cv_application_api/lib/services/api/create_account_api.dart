@@ -7,8 +7,8 @@ Future<User> createAccount(Map body, {required}) async {
   final url = Uri.parse('https://bacend-fshi.onrender.com/auth/registration');
   final response = await http.post(url, body: jsonEncode(body));
 
-  print('Response status: ${response.statusCode}');
-  print('Response body: ${response.body}');
+  // print('Response status: ${response.statusCode}');
+  // print('Response body: ${response.body}');
 
   if (response.statusCode == 200) {
     return User.fromJson(json.decode(response.body));

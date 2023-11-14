@@ -97,9 +97,9 @@ class OTPScreen extends StatelessWidget {
                           await SharedPreferences.getInstance();
                       prefs.setString("token", token);
 
-                      print(response.msg);
-                      print(response.otpData!.token.toString());
-                      print('prefs ${prefs.setString("token", token)}');
+                      // print(response.msg);
+                      // print(response.otpData!.token.toString());
+                      // print('prefs ${prefs.setString("token", token)}');
                       Navigator.push(
                         context,
                         MaterialPageRoute(
