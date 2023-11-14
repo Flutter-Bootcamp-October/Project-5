@@ -3,80 +3,49 @@
 
 ## Description
 
-Your task is to create a functional and user-friendly CV app using Flutter. This app will allow users to create their own CVs, including creating an account, writing their resume, inserting their projects and skills, and adding their educational data. The app will be easy to use and will provide users with a professional-looking CV that they can use to apply for jobs.
+Create a fully functional and user-friendly CV application using Flutter. The app's primary purpose is to empower users to effortlessly generate their professional resumes, enhancing their job application process.
 
-## Minimum Requirements
+### Key Features:
 
-- **Correct Structure:** Ensure that the application is built with the appropriate structure. Follow Flutter's best practices for organizing code and project files.
-- **Clean Code:** Write code that is clear, well-organized, and scalable. Use meaningful variable and function names and follow standard coding conventions to improve code readability.
-- **User account creation:** Users will be able to create an account with the app using their email address and a password.
-- **verification:** Users should be able to verify their emails after creating their accounts. also should be able to reset their password.
-- **User Information:** Users will be able to write their information using the app in the (About) screen, users should able to view and edit their information. And be able to delete their account.
-- **Project and skills:** Users will be able to insert, view, and delete their projects and skills. They will be able to add a description of each project in the (Projects) screen, and Also, be able to add their skills in the (Skill) screen
-- **Educational data:** Users will be able to add their educational data to the app. They will be able to add the name of their university, the degree they earned, and the dates they graduated.
-- **Social Media:** Users will be able to insert, view, and delete their Social Media accounts.
-- **Display all Users:** Users will be able to view all other users' details.
+Account Creation: Implement a user-friendly account creation process for individuals to establish their profiles within the app.
+Resume Composition: Enable users to compose and customize their resumes, ensuring a seamless and intuitive writing experience.
+Project and Skills Inclusion: Provide functionalities for users to insert details about their projects and skills, allowing for a comprehensive representation of their professional capabilities.
+Educational Data Input: Implement a feature for users to add and edit their educational information, ensuring the CV reflects their academic background accurately.
+User Interface Design: Design an intuitive and aesthetically pleasing interface to enhance user experience. The goal is to make the app easy to navigate, ensuring a smooth and efficient CV creation process.
 
 
-## Delivery Requirements
+#### signup screen
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 04 54](https://github.com/juman-m/Project-5/assets/78266559/e33d7eae-3f5d-4a7b-886e-e24942c660b2)
 
-- **Upload the Entire Project:** Ensure that you upload the complete project, which includes all necessary code files, assets, and configurations, to the repository on GitHub.
-- **Readme File:**
-  - Create a README.md file in the root directory of your GitHub repository.
-  - Provide a detailed and well-structured description of the project in the README file, including the following sections:
-    - **Project Overview:** Briefly describe what the shopping list app is about and its main features. Give readers a clear idea of the purpose and functionality of the app.
-    - **Screenshots:** Include relevant screenshots of the app to showcase its appearance and functionalities. Visuals can help users understand the app's design and layout.
+#### Verification screen
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 05 23](https://github.com/juman-m/Project-5/assets/78266559/bfb87d43-3e68-45f6-8035-209156258c25)
+
+#### signin screen
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 11 31](https://github.com/juman-m/Project-5/assets/78266559/03cc6dcd-5a0b-467c-aeef-381fbbf625df)
+
+#### setting screen
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 05 44](https://github.com/juman-m/Project-5/assets/78266559/ac6d0197-d403-4833-bc49-df8d4076fd3f)
+
+#### edit profile screen 
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 05 40](https://github.com/juman-m/Project-5/assets/78266559/71514b75-53ea-41ba-97d9-8dfedac00b30)
+
+#### add projects screen
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 06 07](https://github.com/juman-m/Project-5/assets/78266559/f58d9af7-2252-46fa-a868-24e36f0785fa)
+
+#### add educations screen
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 06 09](https://github.com/juman-m/Project-5/assets/78266559/6d776988-8aa6-4ad7-a3b3-3ac0ab4715cf)
 
 
-## Rules & Guidelines
+#### add skills screen
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 06 10](https://github.com/juman-m/Project-5/assets/78266559/358f9ef7-6219-4cde-b641-a4501b86198f)
 
-1. **Version Control (Git):**
-   - Create a Fork from the exam’s GitHub repository.
-   - Create a new branch with your name.
-   - Commit frequently with descriptive messages to show your progress.
-   - Finally, create a Pull Request to the exam’s original repository containing your solution.
-2. **Academic Integrity:** Do not copy or reuse code from previous modules or external sources. The exam is a showcase of your learning progress.
-3. **Learning References:** You may refer to course materials and code examples as learning references, but implement your solutions independently.
-4. **Instructor Support:** The instructor will be available for general questions and guidance throughout the exam.
+#### add Social media screen
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 06 12](https://github.com/juman-m/Project-5/assets/78266559/a72947e1-08d1-4af0-b239-e4707b80d183)
 
-## Schedule & Deadlines
+#### community screen
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 06 16](https://github.com/juman-m/Project-5/assets/78266559/61724cda-03b5-4f5c-9e86-7ecec6e5ffee)
 
-- **Project Start Date:** 9/11/2023 - 3:00 PM
-- **Project Submission Deadline:** 15/11/2023 – 9:59 PM
+#### home screen 
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 09 50](https://github.com/juman-m/Project-5/assets/78266559/c4ac3a36-1cf6-4f4e-807f-c41fd595af60)
 
-## EndPoints
-**Auth** 
-  - **Post:** https://bacend-fshi.onrender.com/auth/registration 
-  - **Post:** https://bacend-fshi.onrender.com/auth/verification 
-  - **Post:** https://bacend-fshi.onrender.com/auth/login
-
-**About** 
-  - **Get:** https://bacend-fshi.onrender.com/user/about
-  - **Put:** https://bacend-fshi.onrender.com/user/edit/about
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete_account
-
-**Project** 
-  - **Get:** https://bacend-fshi.onrender.com/user/projects
-  - **Post:** https://bacend-fshi.onrender.com/user/add/project
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/project
-
-**Skills** 
-  - **Get:** https://bacend-fshi.onrender.com/user/skills 
-  - **Post:** https://bacend-fshi.onrender.com/user/add/skills 
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/skills
-
-**Education** 
-  - **Get:** https://bacend-fshi.onrender.com/user/education
-  - **Post:** https://bacend-fshi.onrender.com/user/add/education
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/education
-
-**Social Media** 
-  - **Get:** https://bacend-fshi.onrender.com/user/social_media
-  - **Post:** https://bacend-fshi.onrender.com/user/add/social_media
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/social_media
-
-**Get All users**
-  - **Get:** https://bacend-fshi.onrender.com/user/get_users
-
-<br>
-Good luck with your exam project! If you have any general questions or need guidance, don't hesitate to reach out to the instructor. Happy coding!
+![Simulator Screen Shot - iPhone 14 Pro - 2023-11-15 at 00 10 16](https://github.com/juman-m/Project-5/assets/78266559/4947e946-786e-4fdb-8e2a-f08945460b85)
