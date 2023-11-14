@@ -6,14 +6,15 @@ import 'package:project_5/screens/auth/sign_in_screen.dart';
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
 import 'package:project_5/screens/settings/components/theme_settings.dart';
 import 'components/account_settings.dart';
-import 'components/profile_settings.dart';
 import 'components/settings_options.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key}) : super(key: key);
+  const SettingsScreen({Key? key, required this.currentUserInfo})
+      : super(key: key);
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
+  final currentUserInfo;
 }
 
 class _SettingsScreenState extends State<SettingsScreen> {
@@ -35,7 +36,10 @@ class _SettingsScreenState extends State<SettingsScreen> {
         "iconData": Icons.account_circle_rounded,
         "onTapFunc": () {
           navigationPush(
-              context: context, screen: const AccountInformationScreen());
+              context: context,
+              screen: AccountInformationScreen(
+                currentUserInfo: widget.currentUserInfo,
+              ));
         },
       },
       {

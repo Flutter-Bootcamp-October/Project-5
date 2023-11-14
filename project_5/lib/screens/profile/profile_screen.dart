@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:project_5/data/global_data.dart';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/main.dart';
 import 'package:project_5/models/about_model.dart';
@@ -117,6 +118,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     return Scaffold(
       appBar: CustomAppBar(
         hasAction: true,
+        currentUser: aboutModel,
         title: "Profile ${aboutModel?.data?.name?.toUpperCase() ?? "..."}",
       ),
       body: RefreshIndicator(
@@ -137,8 +139,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                       return ProfileUserInformation(
                         updateAboutData: updateAboutData,
                         aboutModelData: aboutModelData,
-                        imageUrl: snapshot.data.data?.image ??
-                            "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png",
+                        imageUrl: snapshot.data.data?.image ?? placeHolderImage,
                       );
                     } else {
                       updateAboutData();
@@ -207,7 +208,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                   skillsData: skillsModelData, updateMethod: updateSkillsModel),
               //--Experiences--
               SectionTitle(
-                title: "Projects 💼",
+                title: "Projects 📝",
                 iconData: Icons.add,
                 onPressedFunc: () {
                   projectsModalBottomSheet(context,

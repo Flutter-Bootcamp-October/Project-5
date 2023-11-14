@@ -1,7 +1,8 @@
 import 'package:project_5/main.dart';
 
 bool isDarkTheme = pref.getTheme();
-
+String placeHolderImage =
+    "https://upload.wikimedia.org/wikipedia/commons/9/99/Sample_User_Icon.png";
 final List<Map> socialMediaICons = [
   {"facebook": "https://www.facebook.com/images/fb_icon_325x325.png"},
   {

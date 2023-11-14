@@ -87,6 +87,7 @@ Future deleteAccount() async {
     "content-Type": "application/json",
     "authorization": pref.getToken()
   });
+
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return "Account Deleted";
   } else {
