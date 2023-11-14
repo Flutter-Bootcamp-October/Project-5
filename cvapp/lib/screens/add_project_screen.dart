@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cvapp/global.dart';
+import 'package:cvapp/models/edcuation_model.dart';
+import 'package:cvapp/models/getprjectmodel%20.dart';
 import 'package:cvapp/models/skills_model.dart';
+import 'package:cvapp/models/social_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
 import 'package:cvapp/wedgets/profile_image.dart';
@@ -35,6 +38,7 @@ class Item {
 
 class _ProjectScreenState extends State<ProjectScreen> {
   List<Item> items = [];
+  List<getprjectmodel> projectlist = [];
   bool isvalid = false;
   TextEditingController projectnameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
@@ -106,6 +110,23 @@ class _ProjectScreenState extends State<ProjectScreen> {
       token = prefs.getString("token");
     });
   }
+  
+Future<void> feachproject({required String token}) async {
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/social_media");
+    try {
+      var response = await http.get(url, headers: {"Authorization": "Bearer $token"});
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body)['data'] as List;
+        setState(() {
+          projectlist = jsonData.map((e) => getprjectmodel.fromJson(e)).toList();
+        });
+      } else {
+        print('Error fetching data: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -148,18 +169,38 @@ class _ProjectScreenState extends State<ProjectScreen> {
           ElevatedButton(
               onPressed: () async {
                 await pushproject(token: token.toString());
+                await feachproject(token: token.toString());
                 print(token);
                 setState(() {});
               },
               child: Text("push")),
-          SizedBox(height: 20),
+       
           SizedBox(
-            width: 100,
-            height: 100,
+            width: 200,height: 400,
             child: ListView.builder(
-              itemCount: items.length,
+              itemCount: projectlist.length,
               itemBuilder: (context, index) {
-                return Text(items[index].projectname);
+                return Container(
+                  margin: EdgeInsets.all(8),
+                  padding: EdgeInsets.all(16),
+                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),color: Colors.green),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'your project name : ${projectlist[index].name.toString()}\Description : ${projectlist[index].description}\State : ${projectlist[index].state}',
+                        style: TextStyle(color: const Color.fromARGB(255, 8, 7, 7)),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          socialcounter+=1;
+                          // removeSocialMedia(socialMediaList[index].id!);
+                        } ,
+                        child: Text('Delete', style: TextStyle(color: Colors.red)),
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           ),

@@ -140,27 +140,14 @@ Future<void> removeSkillsMethod({required String token, required String idSkill}
                 print(token);
                 setState(() {});
               },
-              child: Text("push")),
-          SizedBox(
-            height: 30,
-          ),
-          ElevatedButton(
-              onPressed: () async {
-                await fetchSkills(token: token.toString());
-                print(token);
-                setState(() {});
-              },
-              child: Text("get")),
-          ElevatedButton(
-              onPressed: () {
-              
-              },
-              child: Text("print")),
+              child: Text("Add")),
+        
+        
               Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
            SizedBox(
-             width: 300,height: 250,
+             width: 150,height: 250,
           child: skillLsit == null
             ? Center(child: CircularProgressIndicator())
             : ListView.builder(
@@ -176,7 +163,7 @@ Future<void> removeSkillsMethod({required String token, required String idSkill}
                     child: Container(
                       margin: EdgeInsets.all(8),
                       padding: EdgeInsets.all(16),
-                      color: Colors.blue,
+                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.black),
                       child: Text(
                         skillLsit![index].skill,
                         style: TextStyle(color: Colors.white),
