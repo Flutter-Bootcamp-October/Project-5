@@ -143,8 +143,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         //--------------------------------------
 
                         if (response.codeState == 200) {
-                          print(response.msg);
-                          print(response.dataUser!.email!);
+                          // print(response.msg);
+                          // print(response.dataUser!.email!);
                           Navigator.push(context,
                               MaterialPageRoute(builder: (context) {
                             return OTPScreen(

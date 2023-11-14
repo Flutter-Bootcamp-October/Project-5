@@ -3,7 +3,7 @@
 import 'package:cv_application_api/constant/constant.dart';
 import 'package:cv_application_api/pages/education_screen.dart';
 import 'package:cv_application_api/pages/login_screen.dart';
-import 'package:cv_application_api/pages/profile_screnn.dart';
+import 'package:cv_application_api/pages/profile_screen.dart';
 import 'package:cv_application_api/pages/qualification_screen.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
 import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';
@@ -26,11 +26,14 @@ class NavBarScreen extends StatelessWidget {
         children: [
           const BackgroundImage(),
           const BackgroundWhiteContainer(),
-          PageView(controller: pageControlller, children: const <Widget>[
-            ProfileScreen(),
-            QualificationScreen(),
-            EducationScreen()
-          ]),
+          PageView(
+            controller: pageControlller,
+            children: const <Widget>[
+              ProfileScreen(),
+              EducationScreen(),
+              QualificationScreen(),
+            ],
+          ),
           IconButton(
               onPressed: () async {
                 final SharedPreferences prefs =

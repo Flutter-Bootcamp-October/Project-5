@@ -2,7 +2,7 @@
 import 'package:cv_application_api/constant/constant.dart';
 import 'package:cv_application_api/model/user_info.dart';
 import 'package:cv_application_api/pages/update_profile_screen.dart';
-import 'package:cv_application_api/services/api/user_info.dart';
+import 'package:cv_application_api/services/api/user_about_api.dart';
 import 'package:cv_application_api/widgets/custom_widget_for_all_screens/normal_text.dart';
 import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title_of_screen.dart';
 import 'package:flutter/material.dart';

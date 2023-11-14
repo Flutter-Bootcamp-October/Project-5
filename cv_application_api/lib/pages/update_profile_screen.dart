@@ -3,7 +3,7 @@
 import 'package:cv_application_api/constant/constant.dart';
 import 'package:cv_application_api/model/user_info.dart';
 import 'package:cv_application_api/pages/navbar_screen.dart';
-import 'package:cv_application_api/services/api/user_info.dart';
+import 'package:cv_application_api/services/api/user_about_api.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
 import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';
 import 'package:cv_application_api/widgets/custom_widget_for_all_screens/custom_buttom.dart';
@@ -67,7 +67,7 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
                 onPressed: () {
                   Navigator.pop(context);
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.arrow_back_ios_new_rounded,
                   color: app3DarkGreen,
                   size: 30,
@@ -223,7 +223,7 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
                                           });
 
                                       if (response?.codeState == 200) {
-                                        print(response?.msg);
+                                       // print(response?.msg);
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
@@ -231,7 +231,7 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
                                         }));
                                       }
                                     } catch (error) {
-                                      print(error);
+                                     // print(error);
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content: Text(error.toString())));
@@ -252,51 +252,3 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
     );
   }
 }
-
-
-
-// TextButton(
-//                                   onPressed: () async {
-//                                     try {
-//                                       showDialog(
-//                                         context: context,
-//                                         barrierColor: appcoldGreenTrans,
-//                                         builder: (context) => const Center(
-//                                           child: CircularProgressIndicator(
-//                                             color: app2DarkGreen,
-//                                           ),
-//                                         ),
-//                                       );
-
-//                                       final UserInfo? response =
-//                                           await updateUserInfo(
-//                                               context: context,
-//                                               {
-//                                             "name": nameController.text,
-//                                             "phone": phoneController.text,
-                                          
-//                                             "titlePosition":
-//                                                 positionController.text,
-//                                             "location": locationController.text,
-//                                             "birthday": birthdayController.text,
-//                                             "about": aboutController.text
-//                                           });
-
-//                                       if (response!.codeState == 200) {
-//                                         print(user!.msg);
-                
-//                                       }
-//                                     } catch (error) {
-//                                       ScaffoldMessenger.of(context)
-//                                           .showSnackBar(SnackBar(
-//                                               content: Text(error.toString())));
-//                                     }
-//                                   },
-//                                   child: const NormalText(
-//                                     title: 'Save',
-//                                     titleFontSize: 15,
-//                                     titleletterSpacing: 0,
-//                                     titlefontWeight: FontWeight.w300,
-//                                     titleColor: appWhite,
-//                                   ),
-//                                 )

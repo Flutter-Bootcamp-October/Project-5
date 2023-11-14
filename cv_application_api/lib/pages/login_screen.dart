@@ -95,8 +95,8 @@ class LoginScreen extends StatelessWidget {
                             });
 
                             if (response.codeState == 200) {
-                              print(response.msg);
-                              print(response.dataUser!.email!);
+                              // print(response.msg);
+                              // print(response.dataUser!.email!);
                               Navigator.push(context,
                                   MaterialPageRoute(builder: (context) {
                                 return OTPScreen(
@@ -116,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                               );
                             }
                           } catch (error) {
-                            print(error);
+                            //print(error);
                             ScaffoldMessenger.of(context).showSnackBar(
                                 SnackBar(content: Text(error.toString())));
                           }
