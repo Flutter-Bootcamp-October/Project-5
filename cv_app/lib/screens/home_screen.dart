@@ -1,4 +1,5 @@
 import 'package:cv_app/globals/colors.dart';
+import 'package:cv_app/main.dart';
 import 'package:cv_app/widgets/connect_with.dart';
 import 'package:cv_app/widgets/fill_cv.dart';
 import 'package:flutter/material.dart';
@@ -8,6 +9,7 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print(prefs.getString('token'));
     return SafeArea(
       child: SingleChildScrollView(
         child: Column(

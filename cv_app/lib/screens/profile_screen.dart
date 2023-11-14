@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:cv_app/globals/colors.dart';
 import 'package:cv_app/main.dart';
 import 'package:cv_app/screens/edit_about_screen.dart';
@@ -16,8 +15,6 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileScreenState extends State<ProfileScreen> {
-  
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
