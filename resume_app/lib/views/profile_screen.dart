@@ -48,6 +48,7 @@ class ProfileScreenState extends State<ProfileScreen> {
   }
 
   String getToken() {
+    print(prefs.getString("token"));
     return prefs.getString("token") ?? "";
   }
 
