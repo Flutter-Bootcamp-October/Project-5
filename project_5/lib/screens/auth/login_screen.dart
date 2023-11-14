@@ -7,6 +7,8 @@ import 'package:project_5/screens/home/home_screen.dart';
 import 'package:project_5/screens/skill/skill_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../components/input_text_fields.dart';
+
 SharedPreferences? pref;
 
 class LoginScreen extends StatefulWidget {

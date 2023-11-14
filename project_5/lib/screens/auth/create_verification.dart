@@ -6,6 +6,8 @@ import 'package:project_5/screens/auth/login_screen.dart';
 import 'package:project_5/screens/skill/skill_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../components/input_text_fields.dart';
+
 class AccountVerification extends StatefulWidget {
   const AccountVerification(
       {super.key, required this.email, required this.type});

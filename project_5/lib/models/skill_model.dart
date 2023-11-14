@@ -5,7 +5,7 @@ class SkillModel {
     required this.codeState,
   });
   late final String msg;
-  late final List<Data> data;
+  late final List<Data>? data;
   late final int codeState;
 
   SkillModel.fromJson(Map<String, dynamic> json) {
@@ -15,11 +15,11 @@ class SkillModel {
   }
 
   Map<String, dynamic> toJson() {
-    final vData = <String, dynamic>{};
-    vData['msg'] = msg;
-    vData['data'] = data.map((e) => e.toJson()).toList();
-    vData['codeState'] = codeState;
-    return vData;
+    final _data = <String, dynamic>{};
+    _data['msg'] = msg;
+    _data['data'] = data?.map((e) => e.toJson()).toList();
+    _data['codeState'] = codeState;
+    return _data;
   }
 }
 
@@ -34,16 +34,16 @@ class Data {
   late final String skill;
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? "";
-    userId = json['user_id'] ?? "";
-    skill = json['skill'] ?? "";
+    id = json['id'];
+    userId = json['user_id'];
+    skill = json['skill'];
   }
 
   Map<String, dynamic> toJson() {
-    final vData = <String, dynamic>{};
-    vData['id'] = id;
-    vData['user_id'] = userId;
-    vData['skill'] = skill;
-    return vData;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['user_id'] = userId;
+    _data['skill'] = skill;
+    return _data;
   }
 }

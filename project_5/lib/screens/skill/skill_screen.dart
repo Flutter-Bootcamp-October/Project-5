@@ -5,6 +5,8 @@ import 'package:project_5/models/skill_model.dart';
 import 'package:project_5/screens/auth/register_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../components/input_text_fields.dart';
+
 class SkillsScreen extends StatefulWidget {
   const SkillsScreen({super.key});
 
@@ -13,83 +15,75 @@ class SkillsScreen extends StatefulWidget {
 }
 
 class _SkillsScreenState extends State<SkillsScreen> {
-  @override
-  void initState() {
-    // get skils in init
-    super.initState();
-
-    _loadSkills();
-  }
-
   List<SkillModel> skilList = [];
   final apimethod = ApiMethods();
 
-  TextEditingController skillname = TextEditingController(),
-      skillID = TextEditingController();
+  TextEditingController skillController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.add),
         onPressed: () {
           // show model bottom sheet to add new skils
           showModalBottomSheet(
             context: context,
-            builder: (context) => SizedBox(
-              height: 275,
-              child: Padding(
-                padding: const EdgeInsets.only(top: 10, bottom: 10),
-                child: Column(
-                  children: [
-                    Text(
-                      "Add New Skill",
-                      style:
-                          TextStyle(fontSize: 18, fontWeight: FontWeight.w500),
-                    ),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    InputTextFields(
-                      title: 'Enter skill name',
-                      controller: nameController,
-                      lines: 1,
-                    ),
-                    InputTextFields(
-                      title: 'Enter skill id',
-                      controller: skillID,
-                      lines: 1,
-                    ),
-                    ElevatedButton(
-                      // style: ,
-                      onPressed: () async {
-                        // add skill function
-                        try {
-                          final SharedPreferences pref =
-                              await SharedPreferences.getInstance();
-                          final token = pref.getString('token');
-                          final SkillModel = await apimethod.addSkill(body: {
-                            "id": int.parse(skillID.text),
-                            "skill": skillname.text,
-                          });
-                          Navigator.pop(context);
-                        } on FormatException catch (error) {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(error.message.toString())));
-                        }
-                      },
-                      child: const Text("add skill"),
-                    ),
-                  ],
+            builder: (context) => Builder(builder: (context) {
+              return SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.only(top: 10, bottom: 10),
+                  child: Column(
+                    children: [
+                      Text(
+                        "Add New Skill",
+                        style: TextStyle(
+                            fontSize: 18, fontWeight: FontWeight.w500),
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      InputTextFields(
+                        title: 'Enter skill name',
+                        controller: skillController,
+                        lines: 1,
+                      ),
+                      ElevatedButton(
+                        // style: ,
+                        onPressed: () async {
+                          // add skill function
+                          try {
+                            final element = await apimethod.addSkill(body: {
+                              "skill": skillController.text,
+                            });
+                            skilList.add(element);
+                            Navigator.pop(context);
+                            setState(() {});
+                          } on FormatException catch (error) {
+                            print("error");
+                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                                content: Text(error.message.toString())));
+                          }
+                        },
+                        child: const Text("add skill"),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ),
+              );
+            }),
           ).then((value) => Future.delayed(const Duration(seconds: 1)));
         },
       ),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "Skills",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        ),
         leading: InkWell(
           onTap: () => Navigator.pop(context),
           child: Icon(
@@ -98,76 +92,64 @@ class _SkillsScreenState extends State<SkillsScreen> {
           ),
         ),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          if (skilList.isEmpty) const Text("No skills added"),
-          if (skilList.isNotEmpty)
-            Column(
-                children: skilList
-                    .map((e) => ListTile(
-                          leading: Text(e.data.id.toString()),
-                          title: Text(e.data.skill),
-                          trailing: InkWell(
-                            onTap: () async {
-                              final SharedPreferences pref =
-                                  await SharedPreferences.getInstance();
-                              final token = pref.getString('token');
-                              final ApiMethods res =
+      body: SingleChildScrollView(
+        scrollDirection: Axis.vertical,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            FutureBuilder<SkillModel>(
+              future: apimethod.getSkill(),
+              builder:
+                  (BuildContext context, AsyncSnapshot<SkillModel> snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(child: CircularProgressIndicator());
+                } else {
+                  print(snapshot.data?.data);
+                  if (snapshot.data!.data!.isNotEmpty) {
+                    return ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: snapshot.data!.data?.length ?? 0,
+                        itemBuilder: (BuildContext context, int index) {
+                          // "ID: ${snapshot.data!.data![index].id}"
+                          // "${snapshot.data!.data![index].skill}"
+                          return Card(
+                            color: Colors.blue.shade50,
+                            child: ListTile(
+                              leading: Text(
+                                "ID: ${snapshot.data!.data![index].id}",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                              title: Text(
+                                "${snapshot.data!.data![index].skill}",
+                                style: TextStyle(
+                                    fontSize: 16, fontWeight: FontWeight.w500),
+                              ),
+                              trailing: InkWell(
+                                onTap: () async {
                                   await apimethod.removeSkill(
-                                      token: token!,
-                                      idSkill: e.data.id.toString());
-                              skilList.remove(e);
-                              setState(() {});
-                            },
-                            child: Icon(
-                              Icons.delete,
-                              color: Colors.red,
+                                      idSkill: snapshot.data!.data![index].id
+                                          .toString());
+                                  skilList
+                                      .remove(snapshot.data!.data![index].id);
+                                  setState(() {});
+                                },
+                                child: Icon(
+                                  Icons.delete,
+                                  color: Colors.red.shade200,
+                                ),
+                              ),
                             ),
-                          ),
-                        ))
-                    .toList())
-        ],
-      ),
-    );
-  }
-
-  _loadSkills() async {
-    try {
-      final SharedPreferences pref = await SharedPreferences.getInstance();
-      final token = pref.getString('token');
-      final SkillModel res = await apimethod.getSkill(token: token!);
-    } on FormatException catch (error) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.message.toString())));
-    }
-  }
-}
-
-class InputTextFields extends StatelessWidget {
-  const InputTextFields({
-    super.key,
-    required this.controller,
-    required this.title,
-    required this.lines,
-  });
-  final TextEditingController controller;
-  final String title;
-  final int lines;
-
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 75, vertical: 10),
-      child: TextField(
-        controller: controller,
-        decoration: InputDecoration(
-            hintMaxLines: lines,
-            border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
-            label: Text(
-              title,
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-            )),
+                          );
+                        });
+                  } else {
+                    return Text("data");
+                  }
+                }
+              },
+            ),
+          ],
+        ),
       ),
     );
   }

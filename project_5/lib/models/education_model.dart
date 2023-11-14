@@ -44,11 +44,11 @@ class Data {
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    graduationDate = json['graduationDate'];
-    university = json['university'];
-    college = json['college'];
-    specialization = json['specialization'];
-    level = json['level'];
+    graduationDate = json['graduationDate'] ?? "";
+    university = json['university'] ?? "";
+    college = json['college'] ?? "";
+    specialization = json['specialization'] ?? "";
+    level = json['level'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

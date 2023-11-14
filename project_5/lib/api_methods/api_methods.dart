@@ -1,8 +1,11 @@
 import 'dart:convert';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as https;
 import 'package:project_5/models/about_model.dart';
 import 'package:project_5/models/auth_model.dart';
+import 'package:project_5/models/education_model.dart';
 import 'package:project_5/models/error_model.dart';
+import 'package:project_5/models/project_model.dart';
 import 'package:project_5/models/skill_model.dart';
 import 'package:project_5/models/verification_model.dart';
 import 'package:project_5/screens/auth/login_screen.dart';
@@ -86,9 +89,12 @@ class ApiMethods {
     }
   }
 
-  Future getAbout({required String token}) async {
+  Future getAbout() async {
     final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
-    final response = await https.get(url, headers: {"authorization": token});
+    //sharedprefrence
+    final pref = await SharedPreferences.getInstance();
+    final response = await https
+        .get(url, headers: {"authorization": pref.getString("token")!});
     print("Response body: ${response.body}");
     print("Response status: ${response.statusCode}");
 
@@ -100,20 +106,22 @@ class ApiMethods {
     }
   }
 
-  // Future<About> editAbout({required String token, required Map body}) async {
-  //   final url = Uri.parse("https://bacend-fshi.onrender.com/user/edit/about");
-  //   final response =
-  //       await https.put(url, body: {}, headers: {"authorization": token});
-  //   print("Response body: ${response.body}");
-  //   print("Response status: ${response.statusCode}");
+  Future<About> editAbout({required Map body}) async {
+    final pref = await SharedPreferences.getInstance();
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/edit/about");
+    final response = await https.put(url,
+        body: json.encode(body),
+        headers: {"authorization": pref.getString("token")!});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
 
-  //   if (response.statusCode == 200 || response.statusCode < 300) {
-  //     return About.fromJson(json.decode(response.body));
-  //   } else {
-  //     final error = ErrorModel.fromJson(json.decode(response.body));
-  //     throw FormatException(error.msg!);
-  //   }
-  // }
+    if (response.statusCode == 200 || response.statusCode < 300) {
+      return About.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg!);
+    }
+  }
 
   deleteAccount({required String token, required String aboutId}) async {
     final url =
@@ -126,9 +134,11 @@ class ApiMethods {
     return response;
   }
 
-  Future<SkillModel> getSkill({required String token}) async {
+  Future<SkillModel> getSkill() async {
+    final pref = await SharedPreferences.getInstance();
     final url = Uri.parse("https://bacend-fshi.onrender.com/user/skills");
-    final response = await https.get(url, headers: {"authorization": token});
+    final response = await https
+        .get(url, headers: {"authorization": pref.getString("token")!});
     print("Response body: ${response.body}");
     print("Response status: ${response.statusCode}");
 
@@ -140,13 +150,14 @@ class ApiMethods {
     }
   }
 
-//
+// done
   Future<SkillModel> addSkill({required Map body}) async {
     final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/skills");
     //sharedprefrence
     final pref = await SharedPreferences.getInstance();
     final response = await https.post(url,
-        body: body, headers: {"authorization": pref.getString("token")!});
+        body: json.encode(body),
+        headers: {"authorization": pref.getString("token")!});
     print("Response body: ${response.body}");
     print("Response status: ${response.statusCode}");
 
@@ -158,15 +169,56 @@ class ApiMethods {
     }
   }
 
-  removeSkill({required String token, required String idSkill}) async {
+  removeSkill({required String idSkill}) async {
     final url =
         Uri.parse("https://bacend-fshi.onrender.com/user/delete/skills");
+    //sharedprefrence
+    final pref = await SharedPreferences.getInstance();
     final response = await https.delete(url,
         body: json.encode({"id_skill": idSkill}),
-        headers: {"authorization": token});
+        headers: {"authorization": pref.getString("token")!});
     print("Response body: ${response.body}");
     print("Response status: ${response.statusCode}");
 
     return response;
+  }
+
+// https://bacend-fshi.onrender.com/user/add/project
+// https://bacend-fshi.onrender.com/user/projects
+// https://bacend-fshi.onrender.com/user/delete/project
+  Future<Project> addProject({required Map body}) async {
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/project");
+    //sharedprefrence
+    final pref = await SharedPreferences.getInstance();
+    final response = await https.post(url,
+        body: json.encode(body),
+        headers: {"authorization": pref.getString("token")!});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
+
+    if (response.statusCode == 200 || response.statusCode < 300) {
+      return Project.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg!);
+    }
+  }
+
+  Future<Education> addEducation({required Map body}) async {
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/project");
+    //sharedprefrence
+    final pref = await SharedPreferences.getInstance();
+    final response = await https.post(url,
+        body: json.encode(body),
+        headers: {"authorization": pref.getString("token")!});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
+
+    if (response.statusCode == 200 || response.statusCode < 300) {
+      return Education.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg!);
+    }
   }
 }

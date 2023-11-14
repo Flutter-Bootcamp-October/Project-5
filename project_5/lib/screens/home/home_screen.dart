@@ -222,7 +222,7 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       final SharedPreferences pref = await SharedPreferences.getInstance();
       final token = pref.getString('token');
-      final About res = await apimethod.getAbout(token: token!);
+      final About res = await apimethod.getAbout();
     } on FormatException catch (error) {
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text(error.message.toString())));

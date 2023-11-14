@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:project_5/models/project_model.dart';
 import 'package:project_5/screens/skill/skill_screen.dart';
 
+import '../components/input_text_fields.dart';
+
 class ProjectScreen extends StatefulWidget {
   const ProjectScreen({super.key});
 

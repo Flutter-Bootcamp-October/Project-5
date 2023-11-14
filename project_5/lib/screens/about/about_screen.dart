@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:project_5/api_methods/api_methods.dart';
@@ -17,6 +16,7 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   void initState() {
     //get skills data, send token to edit, add and delete
+    apiMethod.getAbout();
     super.initState();
   }
 
