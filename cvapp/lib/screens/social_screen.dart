@@ -25,8 +25,8 @@ class SocialScreen extends StatefulWidget {
 }
 
 class _SocialScreenState extends State<SocialScreen> {
-    List<SocialMediaModel> socialMediaList = [];
-AboutModel? aboutInfo;
+  List<SocialMediaModel> socialMediaList = [];
+  AboutModel? aboutInfo;
   bool isvalid = false;
   TextEditingController usernamecontroller = TextEditingController();
   TextEditingController socialcontroller = TextEditingController();
@@ -37,8 +37,8 @@ AboutModel? aboutInfo;
         "username": usernamecontroller.text,
         "social": socialcontroller.text,
       };
-      var url = Uri.parse(
-          "https://bacend-fshi.onrender.com/user/add/social_media");
+      var url =
+          Uri.parse("https://bacend-fshi.onrender.com/user/add/social_media");
       var response = await http.post(url,
           headers: {"authorization": token}, body: json.encode(body));
       print('Response status: ${response.statusCode}');
@@ -73,14 +73,16 @@ AboutModel? aboutInfo;
     });
   }
 
-Future<void> _fetchSocialMediaData({required String token}) async {
+  Future<void> _fetchSocialMediaData({required String token}) async {
     var url = Uri.parse("https://bacend-fshi.onrender.com/user/social_media");
     try {
-      var response = await http.get(url, headers: {"Authorization": "Bearer $token"});
+      var response =
+          await http.get(url, headers: {"Authorization": "Bearer $token"});
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body)['data'] as List;
         setState(() {
-          socialMediaList = jsonData.map((e) => SocialMediaModel.fromJson(e)).toList();
+          socialMediaList =
+              jsonData.map((e) => SocialMediaModel.fromJson(e)).toList();
         });
       } else {
         print('Error fetching data: ${response.statusCode}');
@@ -90,27 +92,33 @@ Future<void> _fetchSocialMediaData({required String token}) async {
     }
   }
 
-Future<void> removeSocialMedia(int id) async {
-    var url = Uri.parse("https://bacend-fshi.onrender.com/user/delete/social_media");
+  Future<void> removeSocialMedia(int id) async {
+    var url =
+        Uri.parse("https://bacend-fshi.onrender.com/user/delete/social_media");
     try {
       var response = await http.delete(url,
           headers: {"Authorization": "Bearer $token"},
           body: json.encode({"id_social": id}));
       if (response.statusCode == 200) {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Social media deleted successfully')));
-        _fetchSocialMediaData(token: '$token'); // Refresh the list after deletion
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Social media deleted successfully')));
+        _fetchSocialMediaData(
+            token: '$token'); // Refresh the list after deletion
       } else {
-        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to delete social media.')));
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to delete social media.')));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 
-Future<void> _fetchAboutData() async {
+  Future<void> _fetchAboutData() async {
     var url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
     try {
-      var response = await http.get(url, headers: {"Authorization": "Bearer $token"});
+      var response =
+          await http.get(url, headers: {"Authorization": "Bearer $token"});
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body)['data'];
         setState(() {
@@ -127,6 +135,7 @@ Future<void> _fetchAboutData() async {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
       body: Column(
         children: [
@@ -138,36 +147,44 @@ Future<void> _fetchAboutData() async {
           Divider(
             thickness: 1,
           ),
-          Container(width: 300,height: 50,
+          Container(
+            width: 300,
+            height: 50,
             child: SinUpWedget(
                 Controller: usernamecontroller,
                 labelText: "  Enter your username"),
           ),
           SizedBox(height: 20),
-          Container(width: 300,height: 50,
+          Container(
+            width: 300,
+            height: 50,
             child: SinUpWedget(
-                Controller: socialcontroller, labelText: "  facebook or twiiter"),
+                Controller: socialcontroller,
+                labelText: "  facebook or twiiter"),
           ),
           SizedBox(height: 20),
           ElevatedButton(
               onPressed: () async {
                 await pushproject(token: token.toString());
                 await _fetchSocialMediaData(token: token.toString());
-                socialcounter+=1;
+                socialcounter += 1;
                 print(token);
                 setState(() {});
               },
               child: Text("Add")),
           SizedBox(height: 20),
           SizedBox(
-            width: 200,height: 350,
+            width: 200,
+            height: 350,
             child: ListView.builder(
               itemCount: socialMediaList.length,
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.all(8),
                   padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),color: Colors.black),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.black),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -177,10 +194,11 @@ Future<void> _fetchAboutData() async {
                       ),
                       TextButton(
                         onPressed: () {
-                          socialcounter+=1;
+                          socialcounter += 1;
                           removeSocialMedia(socialMediaList[index].id!);
-                        } ,
-                        child: Text('Delete', style: TextStyle(color: Colors.red)),
+                        },
+                        child:
+                            Text('Delete', style: TextStyle(color: Colors.red)),
                       ),
                     ],
                   ),
@@ -188,16 +206,8 @@ Future<void> _fetchAboutData() async {
               },
             ),
           ),
-  
-        
-      
-    
         ],
       ),
     );
   }
 }
-        
-      
-    
-

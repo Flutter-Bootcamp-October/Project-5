@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 String? token;
 
@@ -53,25 +52,28 @@ class _SkillsScreenState extends State<SkillsScreen> {
           .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
-Future<void> fetchSkills({required String token}) async {
-  var url = Uri.parse("https://bacend-fshi.onrender.com/user/skills");
 
-  try {
-    var response = await http.get(url, headers: {"Authorization": "Bearer $token"});
-    print(response.body);
+  Future<void> fetchSkills({required String token}) async {
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/skills");
 
-    if (response.statusCode == 200) {
-      var data = json.decode(response.body)['data'] as List;
-      setState(() {
-        skillLsit = data.map((e) => SkillsModel.fromJson(e)).toList();
-      });
-    } else {
-      print('Error: ${response.statusCode}');
+    try {
+      var response =
+          await http.get(url, headers: {"Authorization": "Bearer $token"});
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        var data = json.decode(response.body)['data'] as List;
+        setState(() {
+          skillLsit = data.map((e) => SkillsModel.fromJson(e)).toList();
+        });
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Caught error: $e');
     }
-  } catch (e) {
-    print('Caught error: $e');
   }
-}
+
   @override
   void initState() {
     super.initState();
@@ -84,51 +86,44 @@ Future<void> fetchSkills({required String token}) async {
       token = prefs.getString("token");
     });
   }
-Future<void> removeSkillsMethod({required String token, required String idSkill}) async {
-    var url = Uri.https("https://bacend-fshi.onrender.com/user/delete/skills");
-    var response = await http.delete(url,
-        body: json.encode({"id_skill": idSkill}),
-        headers: {"authorization": token});
 
-    print('Response status: ${response.statusCode}');
-    print('Response body: ${response.body}');
+  Future<void> RemoveSkill(int id) async {
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/delete/skills");
+    try {
+      var response = await http.delete(url,
+          headers: {"Authorization": "Bearer $token"},
+          body: json.encode({"id_skill": id}));
+      print(id);
+      print(response.body);
 
-    if (response.statusCode == 200) {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Skill deleted successfully')));
-      await fetchSkills(token: token); // Refresh the list after deletion
-    } else {
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Failed to delete skill.')));
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Education  deleted successfully')));
+        fetchSkills(token: '$token'); // Refresh the list after deletion
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to delete social media.')));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
-
- 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
       body: Column(
         children: [
           SizedBox(height: 200),
-          
           Divider(
             thickness: 1,
           ),
-          Container(width: 300,height: 60,
+          Container(
+            width: 300,
+            height: 60,
             child: SinUpWedget(
                 Controller: skillcontroller, labelText: "  Enter your skill"),
           ),
@@ -141,40 +136,37 @@ Future<void> removeSkillsMethod({required String token, required String idSkill}
                 setState(() {});
               },
               child: Text("Add")),
-        
-        
-              Column(
+          Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-           SizedBox(
-             width: 150,height: 250,
-          child: skillLsit == null
-            ? Center(child: CircularProgressIndicator())
-            : ListView.builder(
-                itemCount: skillLsit!.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () async {
-                    
-                      await removeSkillsMethod(token: token.toString(),idSkill: skillLsit![index].id.toString());
-                      print( skillLsit![index].id);
-                      setState(() {});
-                    },
-                    child: Container(
-                      margin: EdgeInsets.all(8),
-                      padding: EdgeInsets.all(16),
-                      decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),color: Colors.black),
-                      child: Text(
-                        skillLsit![index].skill,
-                        style: TextStyle(color: Colors.white),
+              SizedBox(
+                width: 150,
+                height: 250,
+                child: skillLsit == null
+                    ? Center(child: CircularProgressIndicator())
+                    : ListView.builder(
+                        itemCount: skillLsit!.length,
+                        itemBuilder: (context, index) {
+                          return InkWell(
+                            onLongPress: () async {
+                              await RemoveSkill(skillLsit![index].id);
+                              setState(() {});
+                            },
+                            child: Container(
+                              margin: EdgeInsets.all(8),
+                              padding: EdgeInsets.all(16),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(20),
+                                  color: Colors.black),
+                              child: Text(
+                                skillLsit![index].skill,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          );
+                        },
                       ),
-                    ),
-                  );
-                },
               ),
-        ),
-
-
             ],
           ),
         ],

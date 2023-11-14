@@ -25,7 +25,7 @@ class EducationScreen extends StatefulWidget {
 
 class _EducationScreenState extends State<EducationScreen> {
   File? selectedimage;
-  List<educationmodel> educationlist=[];
+  List<educationmodel> educationlist = [];
   bool isvalid = false;
   TextEditingController graduation_dateController = TextEditingController();
   TextEditingController universityController = TextEditingController();
@@ -64,25 +64,28 @@ class _EducationScreenState extends State<EducationScreen> {
           .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
-Future<void> fetcheducation({required String token}) async {
-  var url = Uri.parse("https://bacend-fshi.onrender.com/user/education");
 
-  try {
-    var response = await http.get(url, headers: {"Authorization": "Bearer $token"});
-    print(response.body);
+  Future<void> fetcheducation({required String token}) async {
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/education");
 
-    if (response.statusCode == 200) {
-      var jsonData = json.decode(response.body)['data'] as List;
-      setState(() {
-        educationlist = jsonData.map((e) => educationmodel.fromJson(e)).toList();
-      });
-    } else {
-      print('Error: ${response.statusCode}');
+    try {
+      var response =
+          await http.get(url, headers: {"Authorization": "Bearer $token"});
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        var jsonData = json.decode(response.body)['data'] as List;
+        setState(() {
+          educationlist =
+              jsonData.map((e) => educationmodel.fromJson(e)).toList();
+        });
+      } else {
+        print('Error: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Caught error: $e');
     }
-  } catch (e) {
-    print('Caught error: $e');
   }
-}
 
   @override
   void initState() {
@@ -95,6 +98,27 @@ Future<void> fetcheducation({required String token}) async {
     setState(() {
       token = prefs.getString("token");
     });
+  }
+
+  Future<void> RemoveEducation(int id) async {
+    var url =
+        Uri.parse("https://bacend-fshi.onrender.com/user/delete/education");
+    try {
+      var response = await http.delete(url,
+          headers: {"Authorization": "Bearer $token"},
+          body: json.encode({"id_education": id}));
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Education  deleted successfully')));
+        fetcheducation(token: '$token'); // Refresh the list after deletion
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to delete social media.')));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+    }
   }
 
   @override
@@ -148,38 +172,68 @@ Future<void> fetcheducation({required String token}) async {
                 setState(() {});
               },
               child: Text("Add")),
-         
-        
-           
-           
-        
-       
           SizedBox(
-            width: 300,height: 300,
+            width: 300,
+            height: 300,
             child: ListView.builder(
               itemCount: educationlist.length,
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.all(8),
                   padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),color: Colors.black),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.black),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("you graduate at :${educationlist[index].graduationDate}",style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,color: Colors.white),),
-                      SizedBox(height: 20,),
-                      Text("you graduate from: ${educationlist[index].university}",style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,color: Colors.white),),
-                      SizedBox(height: 20,),
-                      Text("your specialization is : ${educationlist[index].specialization}",style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,color: Colors.white),),
-                      SizedBox(height: 20,),
-                      Text("your level is : ${educationlist[index].level}",style: TextStyle(fontSize: 19,fontWeight: FontWeight.bold,color: Colors.white),),
-                      SizedBox(height: 20,),
+                      Text(
+                        "you graduate at :${educationlist[index].graduationDate}",
+                        style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "you graduate from: ${educationlist[index].university}",
+                        style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "your specialization is : ${educationlist[index].specialization}",
+                        style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      Text(
+                        "your level is : ${educationlist[index].level}",
+                        style: TextStyle(
+                            fontSize: 19,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.white),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
                       TextButton(
                         onPressed: () {
-                          socialcounter+=1;
-                          // removeSocialMedia(socialMediaList[index].id!);
-                        } ,
-                        child: Text('Delete', style: TextStyle(color: Colors.red)),
+                          socialcounter += 1;
+                          RemoveEducation(educationlist[index].id!);
+                        },
+                        child:
+                            Text('Delete', style: TextStyle(color: Colors.red)),
                       ),
                     ],
                   ),
@@ -187,14 +241,8 @@ Future<void> fetcheducation({required String token}) async {
               },
             ),
           ),
-          
-  
-
-
-            ],
-          ),
-        
-      
+        ],
+      ),
     );
   }
 }

@@ -110,15 +110,17 @@ class _ProjectScreenState extends State<ProjectScreen> {
       token = prefs.getString("token");
     });
   }
-  
-Future<void> feachproject({required String token}) async {
+
+  Future<void> feachproject({required String token}) async {
     var url = Uri.parse("https://bacend-fshi.onrender.com/user/social_media");
     try {
-      var response = await http.get(url, headers: {"Authorization": "Bearer $token"});
+      var response =
+          await http.get(url, headers: {"Authorization": "Bearer $token"});
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body)['data'] as List;
         setState(() {
-          projectlist = jsonData.map((e) => getprjectmodel.fromJson(e)).toList();
+          projectlist =
+              jsonData.map((e) => getprjectmodel.fromJson(e)).toList();
         });
       } else {
         print('Error fetching data: ${response.statusCode}');
@@ -174,29 +176,33 @@ Future<void> feachproject({required String token}) async {
                 setState(() {});
               },
               child: Text("push")),
-       
           SizedBox(
-            width: 200,height: 400,
+            width: 200,
+            height: 400,
             child: ListView.builder(
               itemCount: projectlist.length,
               itemBuilder: (context, index) {
                 return Container(
                   margin: EdgeInsets.all(8),
                   padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(borderRadius: BorderRadius.circular(16),color: Colors.green),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                      color: Colors.green),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
                         'your project name : ${projectlist[index].name.toString()}\Description : ${projectlist[index].description}\State : ${projectlist[index].state}',
-                        style: TextStyle(color: const Color.fromARGB(255, 8, 7, 7)),
+                        style: TextStyle(
+                            color: const Color.fromARGB(255, 8, 7, 7)),
                       ),
                       TextButton(
                         onPressed: () {
-                          socialcounter+=1;
+                          socialcounter += 1;
                           // removeSocialMedia(socialMediaList[index].id!);
-                        } ,
-                        child: Text('Delete', style: TextStyle(color: Colors.red)),
+                        },
+                        child:
+                            Text('Delete', style: TextStyle(color: Colors.red)),
                       ),
                     ],
                   ),
