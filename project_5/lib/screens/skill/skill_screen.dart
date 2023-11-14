@@ -53,10 +53,12 @@ class _SkillsScreenState extends State<SkillsScreen> {
                     InputTextFields(
                       title: 'Enter skill name',
                       controller: nameController,
+                      lines: 1,
                     ),
                     InputTextFields(
                       title: 'Enter skill id',
                       controller: skillID,
+                      lines: 1,
                     ),
                     ElevatedButton(
                       // style: ,
@@ -66,8 +68,7 @@ class _SkillsScreenState extends State<SkillsScreen> {
                           final SharedPreferences pref =
                               await SharedPreferences.getInstance();
                           final token = pref.getString('token');
-                          final SkillModel =
-                              await apimethod.addSkill(token: token!, body: {
+                          final SkillModel = await apimethod.addSkill(body: {
                             "id": int.parse(skillID.text),
                             "skill": skillname.text,
                           });
@@ -148,9 +149,11 @@ class InputTextFields extends StatelessWidget {
     super.key,
     required this.controller,
     required this.title,
+    required this.lines,
   });
   final TextEditingController controller;
   final String title;
+  final int lines;
 
   @override
   Widget build(BuildContext context) {
@@ -159,6 +162,7 @@ class InputTextFields extends StatelessWidget {
       child: TextField(
         controller: controller,
         decoration: InputDecoration(
+            hintMaxLines: lines,
             border: OutlineInputBorder(borderRadius: BorderRadius.circular(30)),
             label: Text(
               title,

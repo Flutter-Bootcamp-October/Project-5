@@ -33,7 +33,11 @@ class _AccountVerificationState extends State<AccountVerification> {
             const SizedBox(
               height: 25,
             ),
-            InputTextFields(controller: otpController, title: "Enter otp"),
+            InputTextFields(
+              controller: otpController,
+              title: "Enter otp",
+              lines: 1,
+            ),
             const SizedBox(
               height: 10,
             ),
@@ -41,49 +45,31 @@ class _AccountVerificationState extends State<AccountVerification> {
               onPressed: () async {
                 final apiMethod = ApiMethods();
                 if (otpController.text.isNotEmpty) {
-                  try {
-                    final Verification res =
-                        await apiMethod.emailVerification(body: {
-                      "otp": otpController.text,
-                      "email": widget.email,
-                      "type": widget.type,
-                    });
-                    if (res.codeState == 200) {
-                      final SharedPreferences pref =
-                          await SharedPreferences.getInstance();
-                      pref.setString("token", res.data.token);
-                      //sharedprefrence
-                      print(res.data.token);
+                  final Verification res =
+                      await apiMethod.emailVerification(body: {
+                    "otp": otpController.text,
+                    "email": widget.email,
+                    "type": widget.type,
+                  });
+                  final SharedPreferences pref =
+                      await SharedPreferences.getInstance();
+                  pref.setString("token", res.data.token);
 
-                      if (widget.type == "registration") {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: ((context) => LoginScreen())));
-                      } else {
-                        if (widget.type == "login") {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => HomeScreen(),
-                            ),
-                          );
-                        }
-                      }
+                  if (widget.type == "registration") {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: ((context) => LoginScreen())));
+                  } else {
+                    if (widget.type == "login") {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => HomeScreen(),
+                        ),
+                      );
                     }
-                  } on FormatException catch (error) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                        error.message.toString(),
-                      ),
-                    ));
                   }
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Enter otp"),
-                    ),
-                  );
                 }
               },
               child: const Text("submit OTP"),

@@ -40,11 +40,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
           )),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          InputTextFields(controller: nameController, title: "Enter name"),
-          InputTextFields(controller: phoneController, title: "Enter phone"),
-          InputTextFields(controller: emailController, title: "Enter email"),
           InputTextFields(
-              controller: passwordController, title: "Enter password"),
+              controller: nameController, title: "Enter name", lines: 1),
+          InputTextFields(
+              controller: phoneController, title: "Enter phone", lines: 1),
+          InputTextFields(
+              controller: emailController, title: "Enter email", lines: 1),
+          InputTextFields(
+            controller: passwordController,
+            title: "Enter password",
+            lines: 1,
+          ),
           SizedBox(
             height: 10,
           ),

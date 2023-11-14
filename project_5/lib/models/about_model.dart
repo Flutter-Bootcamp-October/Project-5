@@ -5,19 +5,19 @@ class About {
     required this.codeState,
   });
   late final String msg;
-  late final Data data;
+  late final List<Data> data;
   late final int codeState;
 
   About.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
-    data = Data.fromJson(json['data']);
+    data = List.from(json['data']).map((e) => Data.fromJson(e)).toList();
     codeState = json['codeState'];
   }
 
   Map<String, dynamic> toJson() {
     final vData = <String, dynamic>{};
     vData['msg'] = msg;
-    vData['data'] = data.toJson();
+    vData['data'] = data.map((e) => e.toJson()).toList();
     vData['codeState'] = codeState;
     return vData;
   }
@@ -51,13 +51,13 @@ class Data {
     id = json['id'];
     name = json['name'];
     email = json['email'];
-    titlePosition = json['title_position'];
+    titlePosition = json['title_position'] ?? "";
     phone = json['phone'];
-    location = json["location"];
-    birthday = json["birthday"];
-    about = json["about"];
-    image = json["image"];
-    createAt = json['create_at'];
+    location = json["location"] ?? "";
+    birthday = json["birthday"] ?? "";
+    about = json["about"] ?? "";
+    image = json["image"] ?? "";
+    createAt = json['create_at'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

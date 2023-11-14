@@ -41,9 +41,16 @@ class _LoginScreenState extends State<LoginScreen> {
           SizedBox(
             height: 50,
           ),
-          InputTextFields(controller: emailController, title: "Enter email"),
           InputTextFields(
-              controller: passwordController, title: "Enter password"),
+            controller: emailController,
+            title: "Enter email",
+            lines: 1,
+          ),
+          InputTextFields(
+            controller: passwordController,
+            title: "Enter password",
+            lines: 1,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
             child: Row(

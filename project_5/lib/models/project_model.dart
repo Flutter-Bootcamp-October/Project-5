@@ -5,19 +5,20 @@ class Project {
     required this.codeState,
   });
   late final String msg;
-  late final Data data;
+  late final List<Data> data;
   late final int codeState;
 
   Project.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
-    data = Data.fromJson(json['data']);
+    data = List.from(json['data']).map((e) => Data.fromJson(e)).toList();
+
     codeState = json['codeState'];
   }
 
   Map<String, dynamic> toJson() {
     final vData = <String, dynamic>{};
     vData['msg'] = msg;
-    vData['data'] = data.toJson();
+    vData['data'] = data.map((e) => e.toJson()).toList();
     vData['codeState'] = codeState;
     return vData;
   }
@@ -38,11 +39,11 @@ class Data {
   late final String state;
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    userId = json['user_id'];
-    name = json['name'];
-    description = json['description'];
-    state = json['state'];
+    id = json['id'] ?? "";
+    userId = json['user_id'] ?? "";
+    name = json['name'] ?? "";
+    description = json['description'] ?? "";
+    state = json['state'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

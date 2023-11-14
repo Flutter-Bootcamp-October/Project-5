@@ -6,6 +6,7 @@ import 'package:project_5/models/error_model.dart';
 import 'package:project_5/models/skill_model.dart';
 import 'package:project_5/models/verification_model.dart';
 import 'package:project_5/screens/auth/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ApiMethods {
   //
@@ -139,11 +140,13 @@ class ApiMethods {
     }
   }
 
-  Future<SkillModel> addSkill(
-      {required String token, required Map body}) async {
+//
+  Future<SkillModel> addSkill({required Map body}) async {
     final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/skills");
-    final response =
-        await https.post(url, body: body, headers: {"authorization": token});
+    //sharedprefrence
+    final pref = await SharedPreferences.getInstance();
+    final response = await https.post(url,
+        body: body, headers: {"authorization": pref.getString("token")!});
     print("Response body: ${response.body}");
     print("Response status: ${response.statusCode}");
 
