@@ -29,27 +29,31 @@ In this app you can add your CV information such as name, email, education, skil
 ## THERE IS ALSO A DARK MODE FOR THOSE WHO LIKE DARK THEME
 
 
-* Dark theme screens:
+## Dark theme screens:
 
-![Screenshot_1699993921](https://github.com/AliArafat4/Project-5/assets/84300173/25cbe22c-606b-4681-bf63-61a60db2cc15)
+* Sign-in & sign-up & OTP:
 
-![Screenshot_1699993909](https://github.com/AliArafat4/Project-5/assets/84300173/4196d521-fc77-432d-b66b-82acf2f4abbb)
+![Screenshot_1699994302](https://github.com/AliArafat4/Project-5/assets/84300173/daffc2b6-d61b-4233-94e4-695666421e3a)
 
-![Screenshot_1699993765](https://github.com/AliArafat4/Project-5/assets/84300173/74d89914-6c59-47eb-9d74-dbe840bdfd5d)
+![Screenshot_1699994292](https://github.com/AliArafat4/Project-5/assets/84300173/31e0283c-409a-4d2b-a73a-9fd68f8b5c5d)
 
-![Screenshot_1699994290](https://github.com/AliArafat4/Project-5/assets/84300173/123315ae-baeb-4350-9868-51146e7242a6)
+![Screenshot_1699994290](https://github.com/AliArafat4/Project-5/assets/84300173/64c67e14-1cdf-4aa7-928e-0fc64adc225f)
 
-![Screenshot_1699994292](https://github.com/AliArafat4/Project-5/assets/84300173/96bb17d5-d3d0-464a-850f-897f3c44dff3)
+* Profile & settings:
 
-![Screenshot_1699994302](https://github.com/AliArafat4/Project-5/assets/84300173/c1a307be-c9d7-42f3-8bd2-84fab69e476f)
+![Screenshot_1699993921](https://github.com/AliArafat4/Project-5/assets/84300173/1cba98e4-4a8d-45e2-993a-3ef3bfadf452)
 
-![Screenshot_1699993891](https://github.com/AliArafat4/Project-5/assets/84300173/626bb012-a435-4c0d-b21c-fe5157f12610)
+![Screenshot_1699993765](https://github.com/AliArafat4/Project-5/assets/84300173/17b28910-bd60-4d64-ba02-cf3888e2fb2c)
 
+![Screenshot_1699993891](https://github.com/AliArafat4/Project-5/assets/84300173/af403b77-3f9d-49a4-a84d-d3038350942f)
 
+* you can also discover opther users CVs:
 
+![Screenshot_1699993909](https://github.com/AliArafat4/Project-5/assets/84300173/43cedac7-cd7d-4f9f-ac7f-25ee969302dd)
 
+![Screenshot_1699994868](https://github.com/AliArafat4/Project-5/assets/84300173/12f00dd8-1884-4845-a658-264c41737554)
 
-
+  
 
 * have fun exploring the rest of the app :b
 
