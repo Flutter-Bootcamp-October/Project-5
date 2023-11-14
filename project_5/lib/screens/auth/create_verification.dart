@@ -3,6 +3,7 @@ import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/verification_model.dart';
 import 'package:project_5/screens/home/home_screen.dart';
 import 'package:project_5/screens/auth/login_screen.dart';
+import 'package:project_5/screens/skill/skill_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AccountVerification extends StatefulWidget {
@@ -25,10 +26,17 @@ class _AccountVerificationState extends State<AccountVerification> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Enter OTP"),
-            TextField(
-                decoration: const InputDecoration(label: Text("Enter otp")),
-                controller: otpController),
+            const Text(
+              "Enter OTP",
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(
+              height: 25,
+            ),
+            InputTextFields(controller: otpController, title: "Enter otp"),
+            const SizedBox(
+              height: 10,
+            ),
             ElevatedButton(
               onPressed: () async {
                 final apiMethod = ApiMethods();

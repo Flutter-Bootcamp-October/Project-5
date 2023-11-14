@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/auth_model.dart';
 import 'package:project_5/screens/auth/create_verification.dart';
+import 'package:project_5/screens/skill/skill_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({
@@ -27,20 +28,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: InkWell(
+            onTap: () => Navigator.pop(context),
+            child: Icon(
+              Icons.arrow_back_ios_new_outlined,
+              color: Colors.black,
+            ),
+          )),
       body: Center(
         child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-          TextField(
-              decoration: const InputDecoration(label: Text("Enter name")),
-              controller: nameController),
-          TextField(
-              decoration: const InputDecoration(label: Text("Enter phone")),
-              controller: phoneController),
-          TextField(
-              decoration: const InputDecoration(label: Text("Enter email")),
-              controller: emailController),
-          TextField(
-              decoration: const InputDecoration(label: Text("Enter password")),
-              controller: passwordController),
+          InputTextFields(controller: nameController, title: "Enter name"),
+          InputTextFields(controller: phoneController, title: "Enter phone"),
+          InputTextFields(controller: emailController, title: "Enter email"),
+          InputTextFields(
+              controller: passwordController, title: "Enter password"),
+          SizedBox(
+            height: 10,
+          ),
           ElevatedButton(
               onPressed: () async {
                 final apiMethod = ApiMethods();

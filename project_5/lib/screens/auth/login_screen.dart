@@ -4,6 +4,7 @@ import 'package:project_5/models/auth_model.dart';
 import 'package:project_5/screens/auth/create_verification.dart';
 import 'package:project_5/screens/auth/register_screen.dart';
 import 'package:project_5/screens/home/home_screen.dart';
+import 'package:project_5/screens/skill/skill_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences? pref;
@@ -31,60 +32,72 @@ class _LoginScreenState extends State<LoginScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text("Login"),
-          TextField(
-              decoration: const InputDecoration(label: Text("Enter email")),
-              controller: emailController),
-          TextField(
-              decoration: const InputDecoration(label: Text("Enter password")),
-              controller: passwordController),
-          TextButton(
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => const RegisterScreen()));
-              },
-              child: const Text("Login")),
-          ElevatedButton(
-              onPressed: () async {
-                final apiMethod = ApiMethods();
-                // add login method and conditions
-                if (emailController.text.isNotEmpty &&
-                    passwordController.text.isNotEmpty) {
-                  try {
-                    final Auth res = await apiMethod.login(body: {
-                      "email": emailController.text,
-                      "password": passwordController.text,
-                    });
-                    if (res.codeState == 200) {
-                      
-                      Navigator.push(
+          const Text(
+            "Login Page",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+          ),
+          SizedBox(
+            height: 50,
+          ),
+          InputTextFields(controller: emailController, title: "Enter email"),
+          InputTextFields(
+              controller: passwordController, title: "Enter password"),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton(
+                  onPressed: () {
+                    Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => AccountVerification(
-                                  email: res.data.email,
-                                  type: "login",
-                                )),
-                      );
-                    }
-                  } on FormatException catch (error) {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                        error.message.toString(),
-                      ),
-                    ));
-                  }
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text("Enter all text fields"),
-                    ),
-                  );
-                }
-              },
-              child: const Text("Login"))
+                            builder: (context) => const RegisterScreen()));
+                  },
+                  child: const Text("create account"),
+                ),
+                ElevatedButton(
+                    onPressed: () async {
+                      final apiMethod = ApiMethods();
+                      // add login method and conditions
+                      if (emailController.text.isNotEmpty &&
+                          passwordController.text.isNotEmpty) {
+                        try {
+                          final Auth res = await apiMethod.login(body: {
+                            "email": emailController.text,
+                            "password": passwordController.text,
+                          });
+                          if (res.codeState == 200) {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => AccountVerification(
+                                        email: res.data.email,
+                                        type: "login",
+                                      )),
+                            );
+                          }
+                        } on FormatException catch (error) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                              error.message.toString(),
+                            ),
+                          ));
+                        }
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text("Enter all text fields"),
+                          ),
+                        );
+                      }
+                    },
+                    child: const Text("Login")),
+              ],
+            ),
+          ),
         ],
       ),
     );

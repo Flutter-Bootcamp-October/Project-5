@@ -139,20 +139,21 @@ class ApiMethods {
     }
   }
 
-  // Future<SkillModel> addSkill(
-  //     {required String token, required Map body}) async {
-  //   final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/skills");
-  //   final response = await https.post(url, body: ,headers: {"authorization": token});
-  //   print("Response body: ${response.body}");
-  //   print("Response status: ${response.statusCode}");
+  Future<SkillModel> addSkill(
+      {required String token, required Map body}) async {
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/skills");
+    final response =
+        await https.post(url, body: body, headers: {"authorization": token});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
 
-  //   if (response.statusCode == 200 || response.statusCode < 300) {
-  //     return SkillModel.fromJson(json.decode(response.body));
-  //   } else {
-  //     final error = ErrorModel.fromJson(json.decode(response.body));
-  //     throw FormatException(error.msg!);
-  //   }
-  // }
+    if (response.statusCode == 200 || response.statusCode < 300) {
+      return SkillModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg!);
+    }
+  }
 
   removeSkill({required String token, required String idSkill}) async {
     final url =
