@@ -6,6 +6,7 @@ import 'package:cv_app_project/screens/edit_skill_screen.dart';
 import 'package:cv_app_project/screens/edit_social_media.dart';
 import 'package:cv_app_project/screens/home_screen.dart';
 import 'package:cv_app_project/screens/profile_screen.dart';
+import 'package:cv_app_project/services/education_api.dart';
 import 'package:flutter/material.dart';
 
 class NavController extends StatefulWidget {

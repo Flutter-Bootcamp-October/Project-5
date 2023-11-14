@@ -143,21 +143,15 @@ class SocialMedialInfo extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Container(width: double.infinity),
-                      SocialAccount(
-                        username: 'Snapchat',
-                        src: 'lib/assets/images/snapchat.png',
-                      ),
-                      SocialAccount(
-                        username: ' Whatsapp',
-                        src: 'lib/assets/images/whatsapp.png',
-                      ),
-                      SocialAccount(
-                        username: ' Facebook',
-                        src: 'lib/assets/images/facebook.png',
-                      ),
-                      SocialAccount(
-                        username: ' Instagram',
-                        src: 'lib/assets/images/instagram.png',
+                      Container(
+                        padding: EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          color: Color(0xff0174BE),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: SocialAccount(
+                          username: 'Snapchat: Koaladizer2000',
+                        ),
                       ),
                     ],
                   ),
@@ -206,66 +200,6 @@ class SKillInfo extends StatelessWidget {
                         ),
                         child: Text(
                           'OOP',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Color(0xff0174BE),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          'Flutter',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Color(0xff0174BE),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          'Soft Skills',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Color(0xff0174BE),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          'Documenting',
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
-                      Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          color: Color(0xff0174BE),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Text(
-                          'Dart',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.w600,

@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 
 class SocialAccount extends StatelessWidget {
-  SocialAccount({super.key, required this.src, required this.username});
+  SocialAccount({super.key, required this.username});
   String username;
-  String src;
+  // String src;
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Image.asset(
-          src,
-          height: 40,
-          width: 40,
-        ),
         Text(
           username,
           style: TextStyle(
