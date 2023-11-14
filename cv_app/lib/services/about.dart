@@ -6,9 +6,12 @@ import 'package:http/http.dart' as http;
 
 uploadeImg(File image) async {
   final url = Uri.parse("https://bacend-fshi.onrender.com/user/upload");
-  await http.post(url, body: await image.readAsBytes(), headers: {
-    "authorization": "Bearer ${prefs.getString("token").toString()}"
-  });
+  final response = await http.post(url,
+      body: await image.readAsBytes(),
+      headers: {
+        "authorization": "Bearer ${prefs.getString("token").toString()}"
+      });
+  print(response.body);
 }
 
 Future<About> showAbout() async {
