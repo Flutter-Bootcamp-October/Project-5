@@ -60,13 +60,15 @@ class SkillScreenState extends State<SkillScreen> {
                                     elevation: 5.0,
                                     child: const Text("add"),
                                     onPressed: () async {
-                                      newSkill = Skill.fromJson(
-                                          {"skill": customController.text});
-                                      userSkills.add(newSkill);
-                                      await SkillServ().addSkill(
-                                          token: token, skill: newSkill);
-                                      setState(() {});
-                                      Navigator.of(context).pop();
+                                      if (customController.text.isNotEmpty) {
+                                        newSkill = Skill.fromJson(
+                                            {"skill": customController.text});
+                                        userSkills.add(newSkill);
+                                        await SkillServ().addSkill(
+                                            token: token, skill: newSkill);
+                                        setState(() {});
+                                        Navigator.of(context).pop();
+                                      }
                                     },
                                   )
                                 ],

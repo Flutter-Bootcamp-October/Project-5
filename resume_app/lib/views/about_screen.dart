@@ -152,7 +152,7 @@ class AboutScreenState extends State<AboutScreen> {
                 controller: bdController,
                 decoration: returnDec(
                     icon: const Icon(Icons.date_range_outlined),
-                    hint: 'Enter Your Birthday',
+                    hint: '1978-12-20',
                     labelText: 'Birthday'),
               ),
               const SizedBox(height: 10),

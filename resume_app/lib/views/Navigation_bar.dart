@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resume_app/consts/colors.dart';
 import 'package:resume_app/views/about_screen.dart';
+import 'package:resume_app/views/education_screen.dart';
 import 'package:resume_app/views/skills_screen.dart';
 
 class NavigationScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _NavigationState extends State<NavigationScreen> {
   Color unselectedColor = const Color(0xff999999);
   List<Widget> list = [
     const AboutScreen(),
-    const SkillScreen(),
+    const EducationScreen(),
     const SkillScreen(),
     const SkillScreen(),
     const SkillScreen()
