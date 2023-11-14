@@ -64,7 +64,7 @@ class _GetAboutState extends State<GetAbout> {
         ),
       if (about["birthday"] != null)
         ContaHomeWidget(
-          icon: Icons.email,
+          icon: Icons.date_range_outlined,
           text: about["birthday"].toString(),
         ),
     ]);
