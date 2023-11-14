@@ -147,8 +147,7 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                     if (speController.text.isNotEmpty &&
                         collegeController.text.isNotEmpty &&
                         uniController.text.isNotEmpty &&
-                        dateController.text.isNotEmpty &&
-                        dateFormat.hasMatch(dateController.text)) {
+                        dateController.text.isNotEmpty) {
                       print("in Here");
                       newEdu = Education(
                           graduationDate: dateController.text,
