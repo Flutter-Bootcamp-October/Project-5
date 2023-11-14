@@ -85,7 +85,7 @@ class ApiMethods {
     }
   }
 
-  Future<About> getAbout({required String token}) async {
+  Future getAbout({required String token}) async {
     final url = Uri.parse("https://bacend-fshi.onrender.com/user/about");
     final response = await https.get(url, headers: {"authorization": token});
     print("Response body: ${response.body}");
@@ -114,30 +114,30 @@ class ApiMethods {
   //   }
   // }
 
-  // Future deleteAbout({required String token, required String aboutId}) async {
-  //   final url =
-  //       Uri.parse("https://bacend-fshi.onrender.com/user/delete_account");
-  //   final response = await https.delete(url,
-  //       body: json.encode({"id": aboutId}), headers: {"authorization": token});
-  //   print("Response body: ${response.body}");
-  //   print("Response status: ${response.statusCode}");
+  deleteAccount({required String token, required String aboutId}) async {
+    final url =
+        Uri.parse("https://bacend-fshi.onrender.com/user/delete_account");
+    final response = await https.delete(url,
+        body: json.encode({"id": aboutId}), headers: {"authorization": token});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
 
-  //   return response;
-  // }
+    return response;
+  }
 
-  // Future<SkillModel> getSkill({required String token}) async {
-  //   final url = Uri.parse("https://bacend-fshi.onrender.com/user/skills");
-  //   final response = await https.get(url, headers: {"authorization": token});
-  //   print("Response body: ${response.body}");
-  //   print("Response status: ${response.statusCode}");
+  Future<SkillModel> getSkill({required String token}) async {
+    final url = Uri.parse("https://bacend-fshi.onrender.com/user/skills");
+    final response = await https.get(url, headers: {"authorization": token});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
 
-  //   if (response.statusCode == 200 || response.statusCode < 300) {
-  //     return SkillModel.fromJson(json.decode(response.body));
-  //   } else {
-  //     final error = ErrorModel.fromJson(json.decode(response.body));
-  //     throw FormatException(error.msg!);
-  //   }
-  // }
+    if (response.statusCode == 200 || response.statusCode < 300) {
+      return SkillModel.fromJson(json.decode(response.body));
+    } else {
+      final error = ErrorModel.fromJson(json.decode(response.body));
+      throw FormatException(error.msg!);
+    }
+  }
 
   // Future<SkillModel> addSkill(
   //     {required String token, required Map body}) async {
@@ -154,15 +154,15 @@ class ApiMethods {
   //   }
   // }
 
-  // Future removeSkill(
-  //     {required String token, required String idSkill}) async {
-  //   final url = Uri.parse("https://bacend-fshi.onrender.com/user/delete/skills");
-  //   final response = await https.delete(url,
-  //       body: json.encode({"id_skill": idSkill}),
-  //       headers: {"authorization": token});
-  //   print("Response body: ${response.body}");
-  //   print("Response status: ${response.statusCode}");
+  removeSkill({required String token, required String idSkill}) async {
+    final url =
+        Uri.parse("https://bacend-fshi.onrender.com/user/delete/skills");
+    final response = await https.delete(url,
+        body: json.encode({"id_skill": idSkill}),
+        headers: {"authorization": token});
+    print("Response body: ${response.body}");
+    print("Response status: ${response.statusCode}");
 
-  //   return response;
-  // }
+    return response;
+  }
 }

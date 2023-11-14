@@ -24,32 +24,46 @@ class _AboutScreenState extends State<AboutScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        body: Column(
-      children: [
-        if (skillList.isEmpty)
-          const Center(
-            child: Text("No skills added"),
+        appBar: AppBar(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+          leading: InkWell(
+            onTap: () => Navigator.pop(context),
+            child: Icon(
+              Icons.arrow_back_ios_new,
+              color: Colors.black,
+            ),
           ),
-        if (skillList.isNotEmpty)
-          Column(
-              children: skillList
-                  .map(
-                    (e) => ListTile(
-                      subtitle: Text(e.data.skill),
-                      trailing: InkWell(
-                          onTap: () async {
-                            e.data.id;
-                            skillList.remove(e);
-                          },
-                          child: Icon(Icons.delete)),
-                    ),
-                  )
-                  .toList()),
-        ElevatedButton(
-          onPressed: () {},
-          child: const Text("edit skill "),
+          actions: [
+            // add edit about api method here to edit
+            Icon(
+              Icons.edit,
+              color: Colors.black,
+            ),
+            SizedBox(
+              width: 15,
+            ),
+          ],
         ),
-      ],
-    ));
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            if (aboutList.isEmpty) Center(child: Text("No about data added")),
+            if (aboutList.isNotEmpty)
+              Column(
+                  // change this to listview.builder
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: aboutList
+                      .map(
+                        (e) => ListTile(
+                          leading: Text(e.data.name),
+                          subtitle: Text(
+                              "email: ${e.data.email} \nphone: ${e.data.phone}\nbirthday: ${e.data.titlePosition}\nAbout me: ${e.data.about}"),
+                          trailing: Text(e.data.image),
+                        ),
+                      )
+                      .toList()),
+          ],
+        ));
   }
 }

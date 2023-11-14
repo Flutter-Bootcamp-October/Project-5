@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/verification_model.dart';
-import 'package:project_5/screens/home_screen.dart';
+import 'package:project_5/screens/home/home_screen.dart';
 import 'package:project_5/screens/auth/login_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

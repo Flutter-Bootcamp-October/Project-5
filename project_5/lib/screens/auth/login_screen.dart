@@ -3,7 +3,7 @@ import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/auth_model.dart';
 import 'package:project_5/screens/auth/create_verification.dart';
 import 'package:project_5/screens/auth/register_screen.dart';
-import 'package:project_5/screens/home_screen.dart';
+import 'package:project_5/screens/home/home_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 SharedPreferences? pref;

@@ -11,6 +11,8 @@ import 'package:project_5/screens/project/project_screen.dart';
 import 'package:project_5/screens/skill/skill_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'components/category_containers.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -18,7 +20,8 @@ class HomeScreen extends StatefulWidget {
   State<HomeScreen> createState() => _HomeScreenState();
 }
 
-late About about;
+List<About> aboutList = [];
+final apimethod = ApiMethods();
 
 class _HomeScreenState extends State<HomeScreen> {
   // File? imageGet;
@@ -27,7 +30,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     // get about data to show and update the screen
     //load token
-    loadAboutScreen();
+    _loadAboutScreen();
   }
 
   @override
@@ -37,12 +40,25 @@ class _HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(
         leading: InkWell(
             onTap: () async {
-              SharedPreferences pref = await SharedPreferences.getInstance();
-              pref.remove('token');
-              Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => LoginScreen()));
+              try {
+                final SharedPreferences pref =
+                    await SharedPreferences.getInstance();
+                final token = pref.getString('token');
+                // final About res;
+                // res = await apimethod.deleteAccount(
+                //     token: token!, aboutId: res.data.id.toString());
+                pref.remove(token!);
+                setState(() {});
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LoginScreen()));
+              } on FormatException catch (error) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(content: Text(error.message.toString())));
+              }
             },
-            child: Icon(
+            child: const Icon(
               Icons.logout,
               color: Colors.black,
             )),
@@ -56,37 +72,39 @@ class _HomeScreenState extends State<HomeScreen> {
             // add refresh library to update
             // show all about data here then navigate to each screen (skills, projects, social, education)
             // using a container button and make editing and deleting in these screens
+            if (aboutList.isEmpty)
+              Text("No about data adde information about you"),
+            if (aboutList.isNotEmpty)
+              Row(
+                children: [
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        "Hello! 👋",
+                        style: TextStyle(
+                            fontSize: 25, fontWeight: FontWeight.w600),
+                      ),
+                      Text(
+                        "created date",
+                        style: TextStyle(
+                            fontSize: 20, fontWeight: FontWeight.w600),
+                      ),
+                    ],
+                  ),
+                  const Spacer(),
 
-            Row(
-              children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Hello! 👋",
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      "created date",
-                      style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.w600),
-                    ),
-                  ],
-                ),
-                const Spacer(),
-
-                Image.asset(
-                  "assets/user.png",
-                  height: 55,
-                ),
-                // Image.file(
-                //   imageGet?.readAsBytes() as File,
-                //   width: 85,
-                //   height: 85,
-                // ),
-              ],
-            ),
+                  Image.asset(
+                    "assets/user.png",
+                    height: 55,
+                  ),
+                  // Image.file(
+                  //   imageGet?.readAsBytes() as File,
+                  //   width: 85,
+                  //   height: 85,
+                  // ),
+                ],
+              ),
 
             const SizedBox(
               height: 50,
@@ -195,56 +213,16 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  loadAboutScreen() async {
+  _loadAboutScreen() async {
     //get about
-    final SharedPreferences pref = await SharedPreferences.getInstance();
-    final token = pref.getString('token');
-    ApiMethods().getAbout(token: token!);
 
-    // final Response res = await ApiMethods().getAbout(token: token!);
-    // if (res.statusCode == 200) {
-    //   about = (await jsonDecode(res.body))["data"];
-    //   setState(() {});
-    // }
-  }
-}
-
-class CategoryContainers extends StatelessWidget {
-  const CategoryContainers({
-    super.key,
-    required this.title,
-    required this.backgroundColor,
-    required this.emoji,
-  });
-  final String title;
-  final Color backgroundColor;
-  final String emoji;
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      height: 175,
-      width: 165,
-      decoration: BoxDecoration(
-          color: backgroundColor, borderRadius: BorderRadius.circular(40)),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text(
-            "$title",
-            style: const TextStyle(
-                fontSize: 22, fontWeight: FontWeight.w600, color: Colors.white),
-          ),
-          SizedBox(
-            height: 10,
-          ),
-          Text(
-            emoji,
-            style: TextStyle(fontSize: 30),
-          ),
-        ],
-      ),
-    );
+    try {
+      final SharedPreferences pref = await SharedPreferences.getInstance();
+      final token = pref.getString('token');
+      final About res = await apimethod.getAbout(token: token!);
+    } on FormatException catch (error) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(error.message.toString())));
+    }
   }
 }
