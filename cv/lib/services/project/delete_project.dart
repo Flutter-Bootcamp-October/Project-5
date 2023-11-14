@@ -7,12 +7,15 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<Response?> uploadImage(BuildContext context, var body) async {
+Future<Response?> deleteProject(
+  BuildContext context,
+  Map body,
+) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
-  final url = Uri.parse("https://bacend-fshi.onrender.com/user/upload");
-  final response = await post(url,
-      body: body, headers: {"authorization": prefs.getString("token")!});
-  print("***************************** immmaggge");
+  final url = Uri.parse("https://bacend-fshi.onrender.com/user/delete/project");
+  final response = await delete(url,
+      body: jsonEncode(body),
+      headers: {"authorization": prefs.getString("token")!});
   print(response.body);
   try {
     if (response.statusCode >= 200 && response.statusCode < 300) {

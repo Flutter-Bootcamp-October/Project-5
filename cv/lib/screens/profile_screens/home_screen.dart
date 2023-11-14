@@ -1,10 +1,10 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'package:cv/screens/profile_screens/dispaly_skills_widget.dart';
-import 'package:cv/screens/profile_screens/dispaly_userinfo.dart';
-import 'package:cv/screens/profile_screens/display_educations_widget.dart';
-import 'package:cv/screens/profile_screens/display_projects_wiget.dart';
-import 'package:cv/screens/profile_screens/display_social_widget.dart';
+import 'package:cv/screens/profile_screens/dispaly_info/dispaly_skills_widget.dart';
+import 'package:cv/screens/profile_screens/dispaly_info/dispaly_userinfo.dart';
+import 'package:cv/screens/profile_screens/dispaly_info/display_educations_widget.dart';
+import 'package:cv/screens/profile_screens/dispaly_info/display_projects_wiget.dart';
+import 'package:cv/screens/profile_screens/dispaly_info/display_social_widget.dart';
 import 'package:cv/screens/profile_screens/settings_screen.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
@@ -17,6 +17,12 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    super.initState();
+    const DisplayUserInfo();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

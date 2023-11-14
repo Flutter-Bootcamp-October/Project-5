@@ -1,7 +1,13 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:cv/screens/profile_screens/edit_user.dart';
+import 'package:cv/screens/profile_screens/home_screen.dart';
 import 'package:cv/services/user/about.dart';
+import 'package:cv/services/user/upload_image.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 
 class DisplayUserInfo extends StatefulWidget {
   const DisplayUserInfo({super.key});
@@ -11,6 +17,7 @@ class DisplayUserInfo extends StatefulWidget {
 }
 
 class _DisplayUserInfoState extends State<DisplayUserInfo> {
+  File? importImage;
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -38,21 +45,74 @@ class _DisplayUserInfoState extends State<DisplayUserInfo> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             InkWell(
-                              onTap: () {
-                                // uploadImage();
+                              onTap: () async {
+                                try {
+                                  final ImagePicker picker = ImagePicker();
+                                  XFile? imageFile = await picker.pickImage(
+                                      source: ImageSource.gallery);
+                                  if (imageFile == null) {
+                                    // User canceled image selection
+                                    return;
+                                  }
+                                  importImage = File(imageFile.path);
+
+                                  if (importImage != null &&
+                                      await importImage!.exists()) {
+                                    var bytes =
+                                        await importImage?.readAsBytes();
+                                    print(bytes.toString());
+                                    final response =
+                                        await uploadImage(context, bytes);
+                                    if (response != null &&
+                                        response.statusCode >= 200 &&
+                                        response.statusCode < 300) {
+                                      setState(() {
+                                        Future.delayed(
+                                            const Duration(seconds: 5));
+                                      });
+                                      context
+                                          .findAncestorStateOfType<
+                                              HomeScreenState>()!
+                                          .setState(() {
+                                        Future.delayed(
+                                            const Duration(seconds: 5));
+                                      });
+                                      print("-------------");
+                                      print(snapshot.data!.image);
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(const SnackBar(
+                                              content: Text(
+                                                  "the photo is updated successfully")));
+                                    } else {
+                                      ScaffoldMessenger.of(context)
+                                          .showSnackBar(SnackBar(
+                                              content: Text(jsonDecode(
+                                                  response!.body)["msg"])));
+                                    }
+                                  } else {
+                                    print(
+                                        'Image file does not exist or is null.');
+                                  }
+                                } catch (error) {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                      SnackBar(
+                                          content: Text(error.toString())));
+                                }
                               },
                               child: SizedBox(
                                 width: 100,
                                 height: 100,
                                 child: snapshot.data!.image != null
                                     ? Image.network(snapshot.data!.image!)
-                                    : Image.asset("assets/219986.png"),
+                                    : Image.asset("assets/tiktok.png"),
                               ),
                             ),
-                            const Text(
-                              "Name:",
-                              style: TextStyle(fontWeight: FontWeight.w500),
-                            ),
+                            // if (importImage != null)
+                            //   Image.file(importImage!, height: 200, width: 200),
+                            // const Text(
+                            //   "Name:",
+                            //   style: TextStyle(fontWeight: FontWeight.w500),
+                            // ),
                             Text(
                               snapshot.data!.name ?? "",
                               overflow: TextOverflow.clip,

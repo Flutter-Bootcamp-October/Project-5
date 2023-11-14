@@ -1,13 +1,21 @@
+import 'dart:convert';
+
 import 'package:cv/models/social.dart';
+import 'package:cv/services/social/delete_social.dart';
 import 'package:cv/services/social/get_social.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class DisplayAllSocials extends StatelessWidget {
+class DisplayAllSocials extends StatefulWidget {
   const DisplayAllSocials({super.key});
 
+  @override
+  State<DisplayAllSocials> createState() => _DisplayAllSocialsState();
+}
+
+class _DisplayAllSocialsState extends State<DisplayAllSocials> {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -64,6 +72,34 @@ class DisplayAllSocials extends StatelessWidget {
                               return Row(
                                 children: [
                                   Chip(
+                                    onDeleted: () async {
+                                      try {
+                                        final response = await deleteSocial(
+                                            context, {
+                                          "id_social": socialsList[index].id
+                                        });
+                                        if (response != null &&
+                                            response.statusCode >= 200 &&
+                                            response.statusCode < 300) {
+                                          setState(() {});
+
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(const SnackBar(
+                                                  content: Text(
+                                                      "deleted successfully")));
+                                        } else {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(jsonDecode(
+                                                      response!.body)["msg"])));
+                                        }
+                                      } catch (error) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content:
+                                                    Text(error.toString())));
+                                      }
+                                    },
                                     backgroundColor: lightBlue,
                                     avatar: logo,
                                     label: Text(
