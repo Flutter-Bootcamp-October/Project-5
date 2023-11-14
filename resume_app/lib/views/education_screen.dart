@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:resume_app/globals/global.dart';
 import 'package:resume_app/main.dart';
 import 'package:resume_app/views/add_education_scree.dart';
-import 'package:resume_app/widgets/Skill_widget.dart';
 import 'package:resume_app/widgets/app_bg.dart';
 import 'package:resume_app/widgets/app_container.dart';
+import 'package:resume_app/widgets/education_widget.dart';
 
 class EducationScreen extends StatefulWidget {
   const EducationScreen({super.key});
@@ -54,9 +54,10 @@ class EducationScreenState extends State<EducationScreen> {
               ),
             ),
             Center(
-              child: Wrap(
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: List.generate(userEducation.length,
-                      (index) => SkillWidget(skill: userSkills[index]))),
+                      (index) => EducationWidget(edu: userEducation[index]))),
             ),
           ]))
     ]);

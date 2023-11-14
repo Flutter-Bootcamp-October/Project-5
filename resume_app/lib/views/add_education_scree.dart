@@ -21,6 +21,7 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
   TextEditingController collegeController = TextEditingController();
   TextEditingController speController = TextEditingController();
   int selectedOption = 1;
+  String level = "school";
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +66,7 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                   onChanged: (value) {
                     setState(() {
                       selectedOption = value!;
+                      level = "school";
                     });
                   },
                 ),
@@ -77,6 +79,7 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                   groupValue: selectedOption,
                   onChanged: (value) {
                     setState(() {
+                      level = "diploma";
                       selectedOption = value!;
                     });
                   },
@@ -90,6 +93,7 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                   groupValue: selectedOption,
                   onChanged: (value) {
                     setState(() {
+                      level = "Bachelors";
                       selectedOption = value!;
                     });
                   },
@@ -103,6 +107,7 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                   groupValue: selectedOption,
                   onChanged: (value) {
                     setState(() {
+                      level = "Master";
                       selectedOption = value!;
                     });
                   },
@@ -116,6 +121,7 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                   groupValue: selectedOption,
                   onChanged: (value) {
                     setState(() {
+                      level = "Ph.D";
                       selectedOption = value!;
                     });
                   },
@@ -135,34 +141,31 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                 ),
               ),
               ElevatedButton(
-                child: const Text("add"),
-                onPressed: () async {
-                  print("in Here");
-                  if (speController.text.isNotEmpty &&
-                      (collegeController.text.isNotEmpty ||
-                          uniController.text.isNotEmpty)) {
-                            print("in Here");
-                    if (dateController.text.isEmpty ||
-                        (dateController.text.isNotEmpty &&
-                            dateFormat.hasMatch(dateController.text))) {
-                              print("in Here");
+                  child: const Text("add"),
+                  onPressed: () async {
+                    print("in Here");
+                    if (speController.text.isNotEmpty &&
+                        collegeController.text.isNotEmpty &&
+                        uniController.text.isNotEmpty &&
+                        dateController.text.isNotEmpty &&
+                        dateFormat.hasMatch(dateController.text)) {
+                      print("in Here");
                       newEdu = Education(
-                          graduationDate: "graduationDate",
-                          university: "university",
-                          college: "college",
-                          specialization: "specialization",
-                          level: "level");
+                          graduationDate: dateController.text,
+                          university: uniController.text,
+                          college: collegeController.text,
+                          specialization: speController.text,
+                          level: level);
                       userEducation.add(newEdu);
                       await EducationServ()
                           .addEducation(token: getToken(), edu: newEdu);
-                      context
-                          .findAncestorStateOfType<EducationScreenState>()!
-                          .setState(() {});
-                      Navigator.of(context).pop();
+                      Navigator.pushAndRemoveUntil(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const EducationScreen()),
+                          ModalRoute.withName("/screen"));
                     }
-                  }
-                },
-              )
+                  })
             ],
           ),
         ),
