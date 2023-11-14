@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:http/http.dart' as http;
 
 Future createAccount(
@@ -7,6 +6,7 @@ Future createAccount(
   final url = Uri.parse('https://bacend-fshi.onrender.com/auth/registration');
   final response = await http.post(
     url,
+    headers: {},
     body: jsonEncode(
       {
         "name": name,
