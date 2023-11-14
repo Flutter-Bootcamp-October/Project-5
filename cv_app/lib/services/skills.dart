@@ -14,3 +14,25 @@ Future<List<Skill>> showSkills() async {
   }
   return skillObj;
 }
+
+addSkill({
+  required String skill,
+}) async {
+  final url = Uri.parse("https://bacend-fshi.onrender.com/user/add/skills");
+  final body = {
+    "skill": skill,
+  };
+  final response = await http.post(url,
+      body: jsonEncode(body),
+      headers: {"authorization": prefs.getString("token").toString()});
+  return jsonDecode(response.body);
+}
+
+deleteSkill(String id) async {
+  final url = Uri.parse("https://bacend-fshi.onrender.com/user/delete/skills");
+  final body = {"id_skill": id};
+  final response = await http.delete(url, body: jsonEncode(body), headers: {
+    "authorization": "Bearer ${prefs.getString("token").toString()}"
+  });
+  return response;
+}

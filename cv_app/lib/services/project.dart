@@ -39,6 +39,5 @@ deleteProject(String id) async {
   final response = await http.delete(url, body: jsonEncode(body), headers: {
     "authorization": "Bearer ${prefs.getString("token").toString()}"
   });
-  print(response.body);
   return response;
 }

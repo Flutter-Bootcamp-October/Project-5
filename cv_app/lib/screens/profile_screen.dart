@@ -41,12 +41,23 @@ class ProfileScreenState extends State<ProfileScreen> {
                             await picker.pickImage(source: ImageSource.gallery);
                         uploadeImg(File(image!.path));
                       },
-                      child: ClipOval(
-                        child: Center(
-                          child: snapshot.data!.image == null
-                              ? Image.asset("assets\\defualt_img.png", scale: 5)
-                              : Image.network(snapshot.data!.image.toString()),
-                        ),
+                      child: Center(
+                        child: snapshot.data!.image == null
+                            ? ClipOval(
+                                child: SizedBox(
+                                    height: 200,
+                                    child: Image.asset(
+                                        "assets\\defualt_img.png",
+                                        scale: 5)))
+                            : ClipOval(
+                                child: SizedBox(
+                                  height: 200,
+                                  child: Image.network(
+                                    snapshot.data!.image.toString(),
+                                    scale: 5,
+                                  ),
+                                ),
+                              ),
                       ),
                     ),
                     const Divider(),
