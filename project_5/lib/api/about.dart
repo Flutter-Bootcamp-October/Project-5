@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:image_picker/image_picker.dart';
 import 'package:project_5/api/api_user.dart';
 import 'package:project_5/model/user_model.dart';
 
@@ -10,14 +11,21 @@ class About extends ApiUser {
   final String _userEditAbout = '/user/edit/about';
   final String _deleteAccount = '/user/delete_account';
 
-  Future<http.Response> postUploadImg(Map<String, dynamic> body) async {
+  Future<http.Response> postUploadImg() async {
     try {
+      final ImagePicker _picker = ImagePicker();
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+
+      if (image == null) {
+        throw Exception('No image selected');
+      }
+      var request = http.MultipartRequest('POST', Uri.parse(_uploadImg));
+      request.files.add(await http.MultipartFile.fromPath('file', image.path));
       String? token = await getUserToken();
-      final http.Response response = await postMethod(
-        body: body,
-        endpoint: _uploadImg,
-        token: token,
-      );
+      request.headers['Authorization'] = 'Bearer $token';
+      final http.StreamedResponse streamedResponse = await request.send();
+      final http.Response response =
+          await http.Response.fromStream(streamedResponse);
       return response;
     } catch (error) {
       print('Error during image upload: $error');

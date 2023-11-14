@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class UserModel {
   final String msg;
   final UserData? data;
