@@ -14,7 +14,11 @@ class ProfileScreen extends StatelessWidget {
             Container(
               padding: EdgeInsets.symmetric(vertical: 24),
               width: MediaQuery.sizeOf(context).width,
-              color: Color(0xff0C356A),
+              decoration: BoxDecoration(
+                  color: Color(0xff0C356A),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(15),
+                      bottomRight: Radius.circular(15))),
               child: Column(
                 children: [
                   SizedBox(height: 40),
@@ -105,7 +109,7 @@ class ProfileScreen extends StatelessWidget {
             projectInfo(),
             SKillInfo(),
             SocialMedialInfo(),
-            SizedBox(height: 72),
+            SizedBox(height: 24),
           ],
         ),
       ),

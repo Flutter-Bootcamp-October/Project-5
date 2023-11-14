@@ -1,4 +1,5 @@
 import 'package:cv_app_project/screens/api_test_screen.dart';
+import 'package:cv_app_project/screens/nav_controller_screen.dart';
 import 'package:cv_app_project/screens/profile_screen.dart';
 import 'package:cv_app_project/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class MainApp extends StatelessWidget {
       theme: ThemeData(
         scaffoldBackgroundColor: Color(0xffFFF0CE),
       ),
-      home: ProfileScreen(),
+      home: NavController(),
     );
   }
 }
