@@ -79,6 +79,6 @@ Skill & Soical Media Screen
 
 ![addskill](https://github.com/rahafwmaq/Project-5/assets/86989761/bc448206-5db3-454e-9ec5-a75c3f9e2dbe)
 
+![final](https://github.com/rahafwmaq/Project-5/assets/86989761/4a48d26d-cb7d-49d8-be9b-8846b5566b9a)
 
-![final edu](https://github.com/rahafwmaq/Project-5/assets/86989761/584561d3-c041-4f4c-90c7-ff4a5cfc214c)
 
