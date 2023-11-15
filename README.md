@@ -78,5 +78,63 @@ Your task is to create a functional and user-friendly CV app using Flutter. This
 **Get All users**
   - **Get:** https://bacend-fshi.onrender.com/user/get_users
 
+Register page
+![image](https://github.com/badrsh980/Project-5/assets/60719639/60b3b9ec-a9cc-4a9f-9ef7-78c25ed00fb9)
+
+Log in 
+![image](https://github.com/badrsh980/Project-5/assets/60719639/9f22d680-dc85-428b-8860-ae7d28f84327)
+
+add page
+![image](https://github.com/badrsh980/Project-5/assets/60719639/1942c7ae-abc9-4630-bebf-8aa2cbb40c79)
+
+
+data page
+![image](https://github.com/badrsh980/Project-5/assets/60719639/9f7f469d-e6a5-4008-a4c2-8a65c8223828)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <br>
 Good luck with your exam project! If you have any general questions or need guidance, don't hesitate to reach out to the instructor. Happy coding!
