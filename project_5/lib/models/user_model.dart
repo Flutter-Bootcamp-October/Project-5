@@ -138,8 +138,8 @@ class SocialMedia {
   SocialMedia.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     userId = json['user_id'];
-    username = json['username'];
-    social = json['social'];
+    username = json['username'] ?? "";
+    social = json['social'] ?? "";
   }
 
   Map<String, dynamic> toJson() {

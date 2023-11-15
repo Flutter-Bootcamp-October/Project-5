@@ -37,9 +37,9 @@ class Data {
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    userId = json['user_id'];
-    username = json['username'];
-    social = json['social'];
+    userId = json['user_id'] ?? "";
+    username = json['username'] ?? "";
+    social = json['social'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
