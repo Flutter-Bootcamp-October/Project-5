@@ -96,7 +96,7 @@ class SocialScreenState extends State<SocialScreen> {
                                     onPressed: () async {
                                       if (customController.text.isNotEmpty &&
                                           custom2Controller.text.isNotEmpty) {
-                                        if (mediaList
+                                        if (!mediaList
                                             .contains(custom2Controller.text)) {
                                           ScaffoldMessenger.of(context)
                                               .showSnackBar(SnackBar(
