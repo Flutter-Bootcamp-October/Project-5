@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AppButton extends StatelessWidget {
   AppButton({super.key, required this.text, required this.onTap});
   String text;

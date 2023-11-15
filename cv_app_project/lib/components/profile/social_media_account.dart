@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class SocialAccount extends StatelessWidget {
   SocialAccount({super.key, required this.username});
   String username;

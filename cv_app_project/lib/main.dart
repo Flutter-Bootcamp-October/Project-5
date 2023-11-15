@@ -1,9 +1,7 @@
 import 'package:cv_app_project/screens/nav_controller_screen.dart';
-import 'package:cv_app_project/services/education_api.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  getEducation();
   runApp(const MainApp());
 }
 

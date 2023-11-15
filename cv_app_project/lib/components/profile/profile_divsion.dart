@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class ProfileDivsion extends StatelessWidget {
   ProfileDivsion({super.key, required this.title, required this.lineSize});
   String title;

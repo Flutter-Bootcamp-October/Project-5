@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+// ignore: must_be_immutable
 class AboutTextFieldWithLabel extends StatelessWidget {
   AboutTextFieldWithLabel({
     super.key,

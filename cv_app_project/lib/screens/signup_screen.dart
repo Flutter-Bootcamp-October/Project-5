@@ -1,11 +1,8 @@
-import 'dart:developer';
-
 import 'package:cv_app_project/components/general/app_button.dart';
 import 'package:cv_app_project/components/general/is_member.dart';
 import 'package:cv_app_project/components/general/textfield_with_label.dart';
-import 'package:cv_app_project/screens/home_screen.dart';
+import 'package:cv_app_project/screens/community_screen.dart';
 import 'package:cv_app_project/screens/signin_screen.dart';
-import 'package:cv_app_project/services/registration_api.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
@@ -73,8 +70,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                   );
                 } else {
-                  Navigator.pushReplacement(
-                      context, MaterialPageRoute(builder: (context) => Home()));
+                  Navigator.pushReplacement(context,
+                      MaterialPageRoute(builder: (context) => Community()));
                 }
               },
             ),

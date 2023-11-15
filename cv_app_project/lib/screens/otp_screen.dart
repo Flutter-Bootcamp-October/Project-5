@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 // ignore: must_be_immutable
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passController = TextEditingController();
+
+  TextEditingController otpController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,34 +20,20 @@ class SignInScreen extends StatelessWidget {
           children: [
             Container(width: double.infinity),
             TextFieldWithLabel(
-              label: 'Phone',
-              hint: 'Enter Your Phone Number',
-              controller: emailController,
-              isPass: false,
-            ),
-            TextFieldWithLabel(
-              label: 'Email',
-              hint: 'Enter Your Email',
-              controller: passController,
+              label: 'OTP',
+              hint: 'Enter The OTP sent to your email',
+              controller: otpController,
               isPass: false,
             ),
             SizedBox(height: 8),
             AppButton(
-              text: 'sign in',
+              text: 'Send',
               onTap: () {
                 // Navigator.push(
                 //     context, MaterialPageRoute(builder: (context) => Home()));
               },
             ),
             SizedBox(height: 16),
-            IsMember(
-              leftText: 'Did not register yet ?',
-              rightText: ' Sign up',
-              ontap: () {
-                Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => SignUpScreen()));
-              },
-            ),
           ],
         ),
       ),
