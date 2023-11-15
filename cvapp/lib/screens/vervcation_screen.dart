@@ -70,10 +70,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
             SizedBox(
               height: 20,
             ),
-            // SinUpWedget(
-            //   Controller: emaiilcontroller,
-            //   labelText: widget.mycontroller,
-            // ),
+           
             ElevatedButton(
               onPressed: () async {
                 await verifyOtp();
@@ -87,13 +84,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
               },
               child: const Text('Submit'),
             ),
-            ElevatedButton(
-                onPressed: () async {
-                  final SharedPreferences? prefs = await _prefs;
-
-                  print(prefs?.get('token'));
-                },
-                child: Text("print token"))
+            
           ],
         ),
       ),

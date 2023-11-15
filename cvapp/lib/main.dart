@@ -1,3 +1,4 @@
+import 'package:cvapp/navbar.dart';
 import 'package:cvapp/screens/add_project_screen.dart';
 import 'package:cvapp/screens/home_screen.dart';
 import 'package:cvapp/screens/register_screen.dart';
@@ -15,6 +16,6 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(home: HomeScreen());
+    return const MaterialApp(home: WelcomeScreen());
   }
 }

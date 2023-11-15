@@ -8,23 +8,20 @@ import 'package:cvapp/models/skills_model.dart';
 import 'package:cvapp/models/social_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
+import 'package:cvapp/wedgets/logo_fun_back_logout.dart';
 import 'package:cvapp/wedgets/profile_image.dart';
 import 'package:cvapp/wedgets/sginup_wedget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 String? token;
-
 class ProjectScreen extends StatefulWidget {
-  const ProjectScreen({super.key});
-
+  const ProjectScreen({super.key, });
   @override
   State<ProjectScreen> createState() => _ProjectScreenState();
 }
-
 class Item {
   String projectname;
   String description;
@@ -35,7 +32,6 @@ class Item {
       required this.description,
       required this.state});
 }
-
 class _ProjectScreenState extends State<ProjectScreen> {
   List<Item> items = [];
   List<getprjectmodel> projectlist = [];
@@ -43,7 +39,6 @@ class _ProjectScreenState extends State<ProjectScreen> {
   TextEditingController projectnameController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController stateController = TextEditingController();
-
   void _addItem(String projectnameController, String descriptionController,
       String stateController) {
     if (projectnameController.isNotEmpty && descriptionController.isNotEmpty) {
@@ -56,13 +51,6 @@ class _ProjectScreenState extends State<ProjectScreen> {
     }
   }
 
-  // void dispose() {
-  //   // Dispose controllers when the widget is disposed
-  //   projectnameController.dispose();
-  //   descriptionController.dispose();
-  //   stateController.dispose();
-  //   super.dispose();
-  // }
 
   Future pushproject({required String token}) async {
     try {
@@ -81,20 +69,9 @@ class _ProjectScreenState extends State<ProjectScreen> {
       if (response.statusCode == 200) {
         SkillsModel.fromJson(json.decode(response.body));
         isvalid = true;
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Success!')));
-        // projectnameController.clear();
-        // descriptionController.clear();
-        // stateController.clear();
       } else {
-        // Handle different responses
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to push project.')));
       }
     } catch (e) {
-      // Handle the exception
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 
@@ -112,7 +89,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
   }
 
   Future<void> feachproject({required String token}) async {
-    var url = Uri.parse("https://bacend-fshi.onrender.com/user/social_media");
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/projects");
     try {
       var response =
           await http.get(url, headers: {"Authorization": "Bearer $token"});
@@ -129,88 +106,127 @@ class _ProjectScreenState extends State<ProjectScreen> {
       print('Error fetching data: $e');
     }
   }
+   Future<void> RemoveProject(int id) async {
+    var url = Uri.parse("https://bacend-fshi.onrender.com/user/delete/project");
+    try {
+      var response = await http.delete(url,
+          headers: {"Authorization": "Bearer $token"},
+          body: json.encode({"id_project": id}));
+      print(id);
+      print(response.body);
+
+      if (response.statusCode == 200) {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Education  deleted successfully')));
+        feachproject(token: '$token');
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text('Failed to delete social media.')));
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
-      body: Column(
-        children: [
-          SizedBox(height: 50),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              if (selectedimage != null)
-                ProfileImage(selectedimage: selectedimage),
-              SizedBox(
-                height: 20,
-              ),
-              Text("welcome conan"),
-              TextButton(
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+                      SizedBox(height: 50),
+      
+             BackAndremove(context),
+            SizedBox(height: 50),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: 200, height: 200, child: Image.file(selectedimage))
+              ],
+            ),
+            Divider(
+              thickness: 1,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              child: SinUpWedget(
+                  Controller: projectnameController,
+                  labelText: "  Enter your project name"),
+            ),
+          
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+              child: SinUpWedget(
+                  Controller: descriptionController,
+                  labelText: "  Enter your description"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+              child: SinUpWedget(
+                  Controller: stateController, labelText: "  Enter your state"),
+            ),
+            ElevatedButton(
                 onPressed: () async {
-                  await pickImageFromGallery();
+                  await pushproject(token: token.toString());
+                  await feachproject(token: token.toString());
+                  print(token);
                   setState(() {});
                 },
-                child: Text("chane image"),
+                child: Text("Add")),
+            SizedBox(
+              width: 300,
+              height: 200,
+              child: ListView.builder(
+                itemCount: projectlist.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.black),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'your project name : ${projectlist[index].name.toString()}',
+                          style: TextStyle(
+                              color:  Colors.white),
+                        ),SizedBox(height: 5,),
+                        Text(
+                          'State : ${projectlist[index].state}',
+                          style: TextStyle(
+                              color:  Colors.white),
+                        ),SizedBox(height: 5,),
+                        Text(
+                          'Description : ${projectlist[index].description}',
+                          style: TextStyle(
+                              color:  Colors.white),
+                        ),
+      
+                        TextButton(
+                          onPressed: () {
+                            socialcounter += 1;
+                            RemoveProject(projectlist[index].id!);
+                            setState(() {
+                              
+                            });
+                          },
+                          child:
+                              Text('Delete', style: TextStyle(color: Colors.red)),
+                        ),
+                      ],
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
-          Divider(
-            thickness: 1,
-          ),
-          SinUpWedget(
-              Controller: projectnameController,
-              labelText: "  Enter your project name"),
-          SizedBox(height: 20),
-          SinUpWedget(
-              Controller: descriptionController,
-              labelText: "  Enter your description"),
-          SizedBox(height: 20),
-          SinUpWedget(
-              Controller: stateController, labelText: "  Enter your state"),
-          ElevatedButton(
-              onPressed: () async {
-                await pushproject(token: token.toString());
-                await feachproject(token: token.toString());
-                print(token);
-                setState(() {});
-              },
-              child: Text("push")),
-          SizedBox(
-            width: 200,
-            height: 400,
-            child: ListView.builder(
-              itemCount: projectlist.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Colors.green),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'your project name : ${projectlist[index].name.toString()}\Description : ${projectlist[index].description}\State : ${projectlist[index].state}',
-                        style: TextStyle(
-                            color: const Color.fromARGB(255, 8, 7, 7)),
-                      ),
-                      TextButton(
-                        onPressed: () {
-                          socialcounter += 1;
-                          // removeSocialMedia(socialMediaList[index].id!);
-                        },
-                        child:
-                            Text('Delete', style: TextStyle(color: Colors.red)),
-                      ),
-                    ],
-                  ),
-                );
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

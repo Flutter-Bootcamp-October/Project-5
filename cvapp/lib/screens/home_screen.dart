@@ -29,8 +29,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  File selectedimage = File(
-      '/data/user/0/com.example.cvapp/cache/5e77d3d0-8b34-4d33-996a-0a4f438a92c3/1000000033.jpg');
   Future imageupload({required String token}) async {
     try {
       var request = http.MultipartRequest(
@@ -80,23 +78,32 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            SizedBox(height: 50),
+            
+            SizedBox(height: 60),
+              Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                        InkWell(
+                          onTap: () {
+                            Navigator.pop(context);
+                          },
+                          child: Icon(Icons.arrow_back))
+                        ,Icon(Icons.logout)
+                    
+                    
+                      ],),
+                    ),
+
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (selectedimage != null)
-                  ProfileImage(selectedimage: selectedimage),
-                SizedBox(
-                  height: 20,
-                ),
-                Text("welcome conan"),
-                TextButton(
-                  onPressed: () {
-                    _pickImageFromGallery();
-                    setState(() {});
-                  },
-                  child: Text("chane image"),
-                ),
+
+           Container(width: 100,height: 100,child: Image.file(selectedimage),),
+                    // Image.network(userData['image']),
+                    SizedBox(height: 20,),
+                 
               ],
             ),
             Divider(
@@ -161,7 +168,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 )));
                   },
                   child: Adddata(
-                      img: "lib\\assets\\imges\\img4.png",
+                      img: "lib\\assets\\imges\\img9.png",
                       dataname: "social ",
                       datanumbers: "${socialcounter}"),
                 ),
@@ -173,7 +180,7 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Future _pickImageFromGallery() async {
+  Future pickImageFromGallery() async {
     final returnedimage =
         await ImagePicker().pickImage(source: ImageSource.gallery);
 
@@ -182,6 +189,7 @@ class _HomeScreenState extends State<HomeScreen> {
         selectedimage = File(returnedimage.path);
 
         imageupload(token: token.toString());
+        print(selectedimage);
       });
     }
   }

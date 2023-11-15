@@ -2,8 +2,11 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cvapp/get_models/get_skills.dart';
+import 'package:cvapp/global.dart';
 import 'package:cvapp/models/skills_model.dart';
+import 'package:cvapp/screens/welocme_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
+import 'package:cvapp/wedgets/logo_fun_back_logout.dart';
 import 'package:cvapp/wedgets/sginup_wedget.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -22,7 +25,6 @@ class SkillsScreen extends StatefulWidget {
 class _SkillsScreenState extends State<SkillsScreen> {
   List<SkillsModel>? skillLsit;
 
-  File? selectedimage;
   bool isvalid = false;
   TextEditingController skillcontroller = TextEditingController();
 
@@ -41,15 +43,9 @@ class _SkillsScreenState extends State<SkillsScreen> {
       if (response.statusCode == 200) {
         SkillsModel.fromJson(json.decode(response.body));
         isvalid = true;
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Success!')));
       } else {
-        ScaffoldMessenger.of(context)
-            .showSnackBar(SnackBar(content: Text('Failed to push project.')));
       }
     } catch (e) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('An error occurred: $e')));
     }
   }
 
@@ -116,8 +112,12 @@ class _SkillsScreenState extends State<SkillsScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
       body: Column(
-        children: [
-          SizedBox(height: 200),
+        children: [SizedBox(height: 50),
+           BackAndremove(context),
+          SizedBox(height: 50),
+            
+           Container(width: 200,height: 200,child: Image.file(selectedimage),),
+
           Divider(
             thickness: 1,
           ),
@@ -173,4 +173,6 @@ class _SkillsScreenState extends State<SkillsScreen> {
       ),
     );
   }
+
+  
 }

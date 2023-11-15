@@ -7,6 +7,7 @@ import 'package:cvapp/models/skills_model.dart';
 import 'package:cvapp/models/social_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
+import 'package:cvapp/wedgets/logo_fun_back_logout.dart';
 import 'package:cvapp/wedgets/profile_image.dart';
 import 'package:cvapp/wedgets/sginup_wedget.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class SocialScreen extends StatefulWidget {
 
 class _SocialScreenState extends State<SocialScreen> {
   List<SocialMediaModel> socialMediaList = [];
-  AboutModel? aboutInfo;
+  aboutmodel? aboutInfo;
   bool isvalid = false;
   TextEditingController usernamecontroller = TextEditingController();
   TextEditingController socialcontroller = TextEditingController();
@@ -117,7 +118,7 @@ class _SocialScreenState extends State<SocialScreen> {
       if (response.statusCode == 200) {
         var jsonData = json.decode(response.body)['data'];
         setState(() {
-          aboutInfo = AboutModel.fromJson(jsonData);
+          aboutInfo = aboutmodel.fromJson(jsonData);
         });
       } else {
         print('Error fetching about data: ${response.statusCode}');
@@ -134,7 +135,9 @@ class _SocialScreenState extends State<SocialScreen> {
       backgroundColor: Color(0xff8C5CB3),
       body: Column(
         children: [
-          SizedBox(height: 100),
+          SizedBox(height: 50),
+           BackAndremove(context),
+          SizedBox(height: 50),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

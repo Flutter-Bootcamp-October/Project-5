@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:cvapp/navbar.dart';
 import 'package:cvapp/screens/home_screen.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
@@ -94,7 +95,7 @@ class _SginInScreenState extends State<SginInScreen> {
                   await verifyOtp();
                   if (isvaild == true) {
                     Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => HomeScreen()));
+                        MaterialPageRoute(builder: (context) => NavBar()));
                   } else {
                     showAboutDialog(
                         context: context,
@@ -120,13 +121,7 @@ class _SginInScreenState extends State<SginInScreen> {
                   ),
                 ),
               ),
-              ElevatedButton(
-                  onPressed: () async {
-                    final SharedPreferences? prefs = await _prefs;
-
-                    print(prefs?.get('token'));
-                  },
-                  child: Text("print token")),
+             
               Stack(
                 children: [
                   Container(

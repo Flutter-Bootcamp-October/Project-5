@@ -8,7 +8,7 @@ class ProfileImage extends StatelessWidget {
     required this.selectedimage,
   });
 
-  final File? selectedimage;
+  final File selectedimage;
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +22,10 @@ class ProfileImage extends StatelessWidget {
           color: Colors.amber,
         ),
         // Displaying the selected image
-        child: Image.file(
-          selectedimage!,
-          fit: BoxFit.contain,
+        child: Image.file(selectedimage, fit: BoxFit.contain,)
+         
         ),
-      ),
+      
     );
   }
 }

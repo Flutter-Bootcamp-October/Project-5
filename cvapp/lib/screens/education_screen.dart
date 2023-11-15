@@ -6,6 +6,7 @@ import 'package:cvapp/models/edcuation_model.dart';
 import 'package:cvapp/models/skills_model.dart';
 import 'package:cvapp/screens/register_screen.dart';
 import 'package:cvapp/utils/api_endpoints.dart';
+import 'package:cvapp/wedgets/logo_fun_back_logout.dart';
 import 'package:cvapp/wedgets/profile_image.dart';
 import 'package:cvapp/wedgets/sginup_wedget.dart';
 import 'package:flutter/material.dart';
@@ -122,120 +123,135 @@ class _EducationScreenState extends State<EducationScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
-      body: Column(
-        children: [
-          SizedBox(height: 50),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Container(
-                  width: 100, height: 100, child: Image.file(widget.imgpath1))
-            ],
-          ),
-          Divider(
-            thickness: 1,
-          ),
-          SinUpWedget(
-            Controller: graduation_dateController,
-            labelText: " Enter your graduation date as 02/11/2001",
-            validator: (p0) {
-              if (p0!.isEmpty) {
-                return "please enter your graduation date";
-              } else if (p0.contains("/")) {
-                return "please enter your graduation date as 02/11/2001";
-              }
-            },
-          ),
-          SizedBox(height: 20),
-          SinUpWedget(
-              Controller: universityController,
-              labelText: "  Enter your university"),
-          SizedBox(height: 20),
-          SinUpWedget(
-              Controller: collegeController, labelText: " Enter your college"),
-          SizedBox(height: 20),
-          SinUpWedget(
-              Controller: specializationController,
-              labelText: " Enter your specialization"),
-          SizedBox(height: 20),
-          SinUpWedget(
-              Controller: levelController, labelText: " Enter your level"),
-          ElevatedButton(
-              onPressed: () async {
-                await pushproject(token: token.toString());
-                await fetcheducation(token: token.toString());
-                print(token);
-                setState(() {});
-              },
-              child: Text("Add")),
-          SizedBox(
-            width: 300,
-            height: 170,
-            child: ListView.builder(
-              itemCount: educationlist.length,
-              itemBuilder: (context, index) {
-                return Container(
-                  margin: EdgeInsets.all(8),
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(16),
-                      color: Colors.black),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "you graduate at :${educationlist[index].graduationDate}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "you graduate from: ${educationlist[index].university}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "your specialization is : ${educationlist[index].specialization}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "your level is : ${educationlist[index].level}",
-                        style: TextStyle(
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                            color: Colors.white),
-                      ),
-                      SizedBox(),
-                      TextButton(
-                        onPressed: () {
-                          socialcounter += 1;
-                          RemoveEducation(educationlist[index].id!);
-                        },
-                        child:
-                            Text('Delete', style: TextStyle(color: Colors.red)),
-                      ),
-                    ],
-                  ),
-                );
-              },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            SizedBox(height: 50),
+             BackAndremove(context),
+            SizedBox(height: 20),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                    width: 100, height: 100, child: Image.file(widget.imgpath1))
+              ],
             ),
-          ),
-        ],
+            Divider(
+              thickness: 1,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              child: SinUpWedget(
+                Controller: graduation_dateController,
+                labelText: " Enter your graduation date as 02/11/2001",
+                validator: (p0) {
+                  if (p0!.isEmpty) {
+                    return "please enter your graduation date";
+                  } else if (p0.contains("/")) {
+                    return "please enter your graduation date as 02/11/2001";
+                  }
+                },
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              child: SinUpWedget(
+                  Controller: universityController,
+                  labelText: "  Enter your university"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              child: SinUpWedget(
+                  Controller: collegeController, labelText: " Enter your college"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              child: SinUpWedget(
+                  Controller: specializationController,
+                  labelText: " Enter your specialization"),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              child: SinUpWedget(
+                  Controller: levelController, labelText: " Enter your level"),
+            ),
+            ElevatedButton(
+                onPressed: () async {
+                  await pushproject(token: token.toString());
+                  await fetcheducation(token: token.toString());
+                  print(token);
+                  setState(() {});
+                },
+                child: Text("Add")),
+            SizedBox(
+              width: 300,
+              height: 170,
+              child: ListView.builder(
+                itemCount: educationlist.length,
+                itemBuilder: (context, index) {
+                  return Container(
+                    margin: EdgeInsets.all(8),
+                    padding: EdgeInsets.all(16),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(16),
+                        color: Colors.black),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "you graduate at :${educationlist[index].graduationDate}",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "you graduate from: ${educationlist[index].university}",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "your specialization is : ${educationlist[index].specialization}",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          "your level is : ${educationlist[index].level}",
+                          style: TextStyle(
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white),
+                        ),
+                        SizedBox(),
+                        TextButton(
+                          onPressed: () {
+                            socialcounter += 1;
+                            RemoveEducation(educationlist[index].id!);
+                          },
+                          child:
+                              Text('Delete', style: TextStyle(color: Colors.red)),
+                        ),
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

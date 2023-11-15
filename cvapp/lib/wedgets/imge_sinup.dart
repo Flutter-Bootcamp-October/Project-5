@@ -11,8 +11,8 @@ class Costomimage extends StatelessWidget {
       padding: const EdgeInsets.only(right: 200),
       child: Container(
         alignment: Alignment.centerLeft,
-        width: 200,
-        height: 280,
+        width: 170,
+        height: 170,
         child: Image.asset(
           "lib\\assets\\imges\\img1.png",
           fit: BoxFit.contain,
