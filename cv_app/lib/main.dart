@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await check();
-  
   // await DataLoader.loadData();
   runApp(const MainApp());
 }

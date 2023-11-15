@@ -19,25 +19,28 @@ class _SkillWidgetState extends State<SkillWidget> {
   bool _isSelected = false;
   @override
   Widget build(BuildContext context) {
-    return Chip(
-      padding: EdgeInsets.all(8),
-      backgroundColor: eggShell,
-      shadowColor: Colors.black,
-      label: Text(
-        widget.skill.skill,
-        style: TextStyle(fontSize: 18),
+    return Padding(
+      padding: const EdgeInsets.only(top: 16),
+      child: Chip(
+        padding: EdgeInsets.all(8),
+        backgroundColor: eggShell,
+        shadowColor: Colors.black,
+        label: Text(
+          widget.skill.skill,
+          style: TextStyle(fontSize: 18),
+        ),
+        deleteIcon: Icon(Icons.delete_outline_outlined),
+        onDeleted: () {
+          setState(() async {
+            final result = await network
+                .removeSkillsMethod(body: {'id_skill': widget.skill.id});
+            _isSelected = false;
+          });
+          setState(() {});
+        },
+        deleteIconColor: richBlack,
+        deleteButtonTooltipMessage: 'Delete',
       ),
-      deleteIcon: Icon(Icons.delete_outline_outlined),
-      onDeleted: () {
-        setState(() async {
-          final result = await network
-              .removeSkillsMethod(body: {'id_skill': widget.skill.id});
-          _isSelected = false;
-        });
-        setState(() {});
-      },
-      deleteIconColor: richBlack,
-      deleteButtonTooltipMessage: 'Delete',
     );
   }
 }

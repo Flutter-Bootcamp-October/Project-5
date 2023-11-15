@@ -37,6 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     if (image != null) {
       setState(() {
         selectedImage = File(image.path);
+        user!.data.image = selectedImage!.path;
       });
     }
   }
@@ -184,7 +185,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      Text(
+                                      const Text(
                                         'Do you want to delete your account?',
                                         style: TextStyle(
                                           fontSize: 16,
@@ -202,7 +203,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   builder: (context) =>
                                                       const LoadingScreen()));
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Yes',
                                           style: TextStyle(
                                             fontSize: 18,
@@ -225,7 +226,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   builder: (context) =>
                                                       const LoadingScreen()));
                                         },
-                                        child: Text(
+                                        child: const Text(
                                           'Signout',
                                           style: TextStyle(
                                             fontSize: 18,

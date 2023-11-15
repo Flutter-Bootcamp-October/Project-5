@@ -28,7 +28,6 @@ class _AddInformationState extends State<AddInformation> {
       });
     }
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,7 +55,6 @@ class _AddInformationState extends State<AddInformation> {
                         ),
                       ),
                       child: const SingleChildScrollView(
-                        // physics: NeverScrollableScrollPhysics(),
                         child: SafeArea(
                           child: Padding(
                             padding: EdgeInsets.symmetric(horizontal: 16),

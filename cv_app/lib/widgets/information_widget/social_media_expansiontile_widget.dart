@@ -3,6 +3,7 @@ import 'package:cv_app/constentes/sized_box.dart';
 import 'package:cv_app/models/globals.dart';
 import 'package:cv_app/models/social_media/social_media_data_model.dart';
 import 'package:cv_app/widgets/information_widget/button_widget.dart';
+import 'package:cv_app/widgets/information_widget/socialmedia_dropdown.dart';
 import 'package:cv_app/widgets/information_widget/textfiled_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -14,10 +15,9 @@ class AddSocialMediasWidget extends StatefulWidget {
 }
 
 class _AddSocialMediasWidgetState extends State<AddSocialMediasWidget> {
-  TextEditingController socialMediaController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
   List<SocialMediaData> socialMediasList = [];
-
+  late String socialMedia = '';
   @override
   Widget build(BuildContext context) {
     return ExpansionTile(
@@ -53,17 +53,14 @@ class _AddSocialMediasWidgetState extends State<AddSocialMediasWidget> {
                       color: Colors.grey,
                     ),
                     itemBuilder: (BuildContext context, int index) {
-                      SocialMediaData socialMedia = socialMediasList[index];
-
                       return Column(
                         children: [
-                          TextFelidWidget(
-                            hintTitle: 'Enter name social media',
-                            title: 'Name social media',
-                            controller: socialMediaController,
+                          SocialDropDownMenu(
+                            title: 'choose social media',
+                            hintTitle: 'social media name',
                             onChanged: (value) {
                               socialMediasList[index].social = value;
-                              socialMediaController.text = value;
+                              socialMedia = value;
                             },
                           ),
                           TextFelidWidget(
@@ -85,7 +82,7 @@ class _AddSocialMediasWidgetState extends State<AddSocialMediasWidget> {
                       onTap: () async {
                         final result =
                             await network.addSocialMediaMethod(body: {
-                          "social": socialMediaController.text,
+                          "social": socialMedia,
                           "username": userNameController.text,
                         });
                       },
