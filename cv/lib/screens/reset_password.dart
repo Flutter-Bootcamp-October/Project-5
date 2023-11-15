@@ -67,7 +67,7 @@ class ResetPassword extends StatelessWidget {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => VerificationOtp()),
+                              builder: (context) => VerificationOtp(email:emailController.text, type: "reset password",)),
                         );
                       },
                       btnColor: AppColors.primaryColor,

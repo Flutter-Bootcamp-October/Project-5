@@ -1,14 +1,24 @@
+import 'dart:convert';
 import 'package:cv/constants/colors.dart';
 import 'package:cv/constants/sizes.dart';
 import 'package:cv/screens/login_screen.dart';
 import 'package:cv/screens/verification_screen.dart';
-import 'package:cv/services/regestration.dart';
+import 'package:cv/services/regestration_api.dart';
+import 'package:cv/services/verification.dart';
 import 'package:cv/widgets/app_rich_text.dart';
 import 'package:cv/widgets/app_text_filed.dart';
 import 'package:cv/widgets/button.dart';
 import 'package:cv/widgets/main_text.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
+
+TextEditingController nameController = TextEditingController(),
+    phoneController = TextEditingController(),
+    passwordController = TextEditingController(),
+    emailController = TextEditingController();
+
+bool? isSent;
 
 class Regestration extends StatefulWidget {
   Regestration({super.key});
@@ -18,12 +28,6 @@ class Regestration extends StatefulWidget {
 }
 
 class _RegestrationState extends State<Regestration> {
-  TextEditingController nameController = TextEditingController(),
-      phoneController = TextEditingController(),
-      passwordController = TextEditingController(),
-      emailController = TextEditingController();
-
-  bool? isSent;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,25 +80,31 @@ class _RegestrationState extends State<Regestration> {
                       isPassword: false,
                       hint: "Joud@gmail.com"),
                   Appbutton(
+                    
+
                       onpressed: () async {
                         //post
-                        String result = await sendPostData(
-                            nameController.text,
-                            phoneController.text,
-                            passwordController.text,
-                            emailController.text);
+                        try {
+                          Response? result = await registrationPost(
+                              nameController.text,
+                              phoneController.text,
+                              passwordController.text,
+                              emailController.text);
 
-                        if (result == "OK") {
-                          isSent = true;
-                          setState(() {});
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => VerificationOtp()),
-                          );
-                        } else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(content: Text("Error")));
+                          if (result!.statusCode == 200) {
+                            // ignore: use_build_context_synchronously
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => VerificationOtp(
+                                        email: emailController.text,
+                                        type: "registration",
+                                      )),
+                            );
+                          }
+                        } catch (error) {
+                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text((error.toString()).toString())));
                         }
                       },
                       btnColor: AppColors.primaryColor,

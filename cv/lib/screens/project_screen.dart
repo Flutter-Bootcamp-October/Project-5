@@ -1,17 +1,40 @@
 import 'package:cv/constants/colors.dart';
 import 'package:cv/constants/sizes.dart';
+import 'package:cv/modules/project_module.dart';
+import 'package:cv/screens/regestratio_screen%20.dart';
+import 'package:cv/services/project_api.dart';
 import 'package:cv/widgets/add_new_button.dart';
 import 'package:cv/widgets/bottom_sheet_text_filed.dart';
 import 'package:cv/widgets/button.dart';
 import 'package:cv/widgets/project_card.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
-class Project extends StatelessWidget {
-  Project({super.key});
+class ProjectScreen extends StatefulWidget {
+  ProjectScreen({super.key});
 
+  @override
+  State<ProjectScreen> createState() => _ProjectScreenState();
+}
+
+class _ProjectScreenState extends State<ProjectScreen> {
   TextEditingController ProjectNameController = TextEditingController(),
       DescriptionController = TextEditingController(),
       stateController = TextEditingController();
+  ProjectModel? project;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadProject();
+  }
+
+  loadProject() async {
+    project = await getAllProjectData();
+    print(project?.data[0].name);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -88,8 +111,37 @@ class Project extends StatelessWidget {
                                           lable: "State",
                                         ),
                                         Appbutton(
-                                            onpressed: () {
-                                              //post
+                                            //post
+                                            onpressed: () async {
+                                              try {
+                                                Response result =
+                                                    await sendProjectData(
+                                                        nameController.text,
+                                                        DescriptionController
+                                                            .text,
+                                                        stateController.text);
+                                                if (result.statusCode == 200) {
+                                                  ScaffoldMessenger.of(context)
+                                                      .showSnackBar(
+                                                    const SnackBar(
+                                                      behavior: SnackBarBehavior
+                                                          .floating,
+                                                      content: Text(
+                                                        ("new project has been added successfully"),
+                                                      ),
+                                                    ),
+                                                  );
+                                                }
+                                              } catch (error) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                  SnackBar(
+                                                    content: Text(
+                                                      (error.toString()),
+                                                    ),
+                                                  ),
+                                                );
+                                              }
                                             },
                                             btnColor: AppColors.primaryColor,
                                             title: "Add",
@@ -120,20 +172,34 @@ class Project extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10),
             child: Padding(
               padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
-              child: ListView.separated(
-                itemCount: 3,
-                separatorBuilder: (BuildContext context, int index) => height16,
-                itemBuilder: (BuildContext context, int index) {
-                  return const ProjectCard(
-                    projectName: "Project Name",
-                    projectDescription:
-                        "Project description Project description  Project description  Project description  Project description  Project description  ",
-                    isComplete: true,
-                  );
-                },
-              ),
+              child: FutureBuilder(
+                  future: getAllProjectData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      ListView.separated(
+                        itemCount: project!.data.length,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            height16,
+                        itemBuilder: (BuildContext context, int index) {
+                          return ProjectCard(
+                            projectName: project?.data[0].name ?? "No project",
+                            projectDescription: project?.data[0].description ??
+                                "No description",
+                            isComplete: true,
+                          );
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return const Center(
+                        child: Text("error"),
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }),
             ),
-          ),
+          )
         ],
       ),
     );

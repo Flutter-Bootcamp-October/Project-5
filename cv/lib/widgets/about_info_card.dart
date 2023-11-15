@@ -4,7 +4,18 @@ import 'package:cv/widgets/education_details.dart';
 import 'package:flutter/material.dart';
 
 class AboutInfoCard extends StatelessWidget {
-  const AboutInfoCard({super.key});
+  const AboutInfoCard(
+      {super.key,
+      required this.nameUser,
+      required this.brithday,
+      required this.nameCity,
+      required this.userPhone,
+      required this.aboutme});
+  final String nameUser;
+  final String brithday;
+  final String nameCity;
+  final String userPhone;
+  final String aboutme;
 
   @override
   Widget build(BuildContext context) {
@@ -36,10 +47,10 @@ class AboutInfoCard extends StatelessWidget {
                                     style: TextStyle(
                                         color: AppColors.primaryColor),
                                   )),
-                              const Padding(
+                              Padding(
                                 padding: EdgeInsets.only(top: 60),
                                 child: Text(
-                                  "Lujain Bawazir",
+                                  nameUser,
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold),
@@ -51,28 +62,27 @@ class AboutInfoCard extends StatelessWidget {
                                 style: TextStyle(color: Colors.grey),
                               ),
                               height32,
-                              const Row(
+                              Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   EducationDetail(
                                       icon: Icons.phone_android,
-                                      title: "0553218334"),
+                                      title: userPhone),
                                   height16,
                                   EducationDetail(
                                       icon: Icons.location_pin,
-                                      title: "Riyadh"),
+                                      title: nameCity),
                                   height16,
                                   EducationDetail(
-                                      icon: Icons.date_range,
-                                      title: "1998/09/12"),
+                                      icon: Icons.date_range, title: brithday),
                                 ],
                               ),
-                              const Align(
+                              Align(
                                   alignment: Alignment.centerLeft,
                                   child: Padding(
                                     padding: EdgeInsets.only(top: 43),
-                                    child: Text("about me"),
+                                    child: Text(aboutme),
                                   ))
                             ],
                           ),

@@ -44,7 +44,7 @@ class Home extends StatelessWidget {
                 onTap: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Education()),
+                    MaterialPageRoute(builder: (context) => EducationScreen()),
                   );
                 }),
             height20,
@@ -53,7 +53,7 @@ class Home extends StatelessWidget {
               onTap: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => Project()),
+                  MaterialPageRoute(builder: (context) => ProjectScreen()),
                 );
               },
             ),
@@ -64,7 +64,8 @@ class Home extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => const Community()),
+                    MaterialPageRoute(
+                        builder: (context) =>  CommunityScreen()),
                   );
                 },
                 label: const Text("Community"),

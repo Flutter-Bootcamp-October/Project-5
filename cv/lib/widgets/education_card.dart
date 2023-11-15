@@ -1,12 +1,14 @@
 import 'package:cv/constants/sizes.dart';
+import 'package:cv/modules/community_module.dart';
 import 'package:cv/widgets/education_details.dart';
 import 'package:flutter/material.dart';
 
 class EducationCard extends StatelessWidget {
-  const EducationCard(
+  EducationCard(
       {super.key, required this.specialization, required this.universtyName});
   final String specialization;
   final String universtyName;
+  Education? education;
 
   @override
   Widget build(BuildContext context) {
@@ -46,19 +48,19 @@ class EducationCard extends StatelessWidget {
                     style: const TextStyle(fontSize: 14, color: Colors.grey),
                   ),
                   height12,
-                  const EducationDetail(
+                  EducationDetail(
                     icon: Icons.location_city_outlined,
-                    title: "college",
+                    title: education!.college ?? "no college",
                   ),
                   height12,
-                  const EducationDetail(
+                  EducationDetail(
                     icon: Icons.grade_outlined,
-                    title: "level",
+                    title: education!.level ?? "no level",
                   ),
                   height12,
-                  const EducationDetail(
+                  EducationDetail(
                     icon: Icons.date_range,
-                    title: "graduation date",
+                    title: education!.graduationDate ?? "no graduationDate",
                   ),
                 ],
               ),

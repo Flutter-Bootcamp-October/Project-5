@@ -1,9 +1,17 @@
 import 'package:cv/widgets/single_social.dart';
 import 'package:flutter/material.dart';
 
-class SocailCard extends StatelessWidget {
-  const SocailCard({super.key});
+class SocailCard extends StatefulWidget {
+   SocailCard({super.key});
 
+
+  @override
+  State<SocailCard> createState() => _SocailCardState();
+}
+
+
+class _SocailCardState extends State<SocailCard> {
+  
   @override
   Widget build(BuildContext context) {
     return Container(

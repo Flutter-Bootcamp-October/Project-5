@@ -3,10 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 class OtpTextFiled extends StatelessWidget {
-  OtpTextFiled(
-      {super.key,
-      required TextEditingController controller,
-      required this.hint});
+  OtpTextFiled({super.key, required this.controller, required this.hint});
 
   TextEditingController controller = TextEditingController();
   final String hint;

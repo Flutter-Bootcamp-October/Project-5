@@ -1,12 +1,14 @@
-import 'package:cv/screens/community_screen.dart';
-import 'package:cv/screens/education_screen.dart';
-import 'package:cv/screens/home_screen.dart';
+import 'package:cv/screens/checkAuth.dart';
 import 'package:cv/screens/login_screen.dart';
 import 'package:cv/screens/regestratio_screen%20.dart';
-import 'package:cv/screens/verification_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+SharedPreferences? prefs;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
+
   runApp(const MainApp());
 }
 
@@ -17,7 +19,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: Home(),
+      home: Regestration(),
     );
   }
 }

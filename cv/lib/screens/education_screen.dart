@@ -1,23 +1,41 @@
 import 'package:cv/constants/colors.dart';
 import 'package:cv/constants/sizes.dart';
-import 'package:cv/screens/verification_screen.dart';
+import 'package:cv/modules/community_module.dart';
+import 'package:cv/services/education_api.dart';
 import 'package:cv/widgets/add_new_button.dart';
-import 'package:cv/widgets/app_text_filed.dart';
 import 'package:cv/widgets/bottom_sheet_text_filed.dart';
 import 'package:cv/widgets/button.dart';
 import 'package:cv/widgets/education_card.dart';
-import 'package:cv/widgets/main_text.dart';
-import 'package:cv/widgets/project_card.dart';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 
-class Education extends StatelessWidget {
-  Education({super.key});
+class EducationScreen extends StatefulWidget {
+  EducationScreen({super.key});
 
+  @override
+  State<EducationScreen> createState() => _EducationScreenState();
+}
+
+class _EducationScreenState extends State<EducationScreen> {
   TextEditingController specializationController = TextEditingController(),
       universtyController = TextEditingController(),
       collegeController = TextEditingController(),
       levelController = TextEditingController(),
       graduationDateController = TextEditingController();
+
+  Education? education;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadEducation();
+  }
+
+  loadEducation() async {
+    education = await getAllEducationData();
+    print(education?.university);
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -103,7 +121,23 @@ class Education extends StatelessWidget {
                                           lable: "Graduation Date",
                                         ),
                                         Appbutton(
-                                            onpressed: () {},
+                                            onpressed: () async {
+                                              Response result =
+                                                  await sendEducationData(
+                                                      graduationDateController
+                                                          .text,
+                                                      universtyController.text,
+                                                      collegeController.text,
+                                                      specializationController
+                                                          .text,
+                                                      levelController.text);
+                                              if (result.statusCode == 200) {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(SnackBar(
+                                                        content: Text(
+                                                            ("new education has been added successfully"))));
+                                              }
+                                            },
                                             btnColor: AppColors.primaryColor,
                                             title: "Add",
                                             titleColor: Colors.white),
@@ -133,18 +167,34 @@ class Education extends StatelessWidget {
             margin: const EdgeInsets.only(top: 10),
             child: Padding(
               padding: const EdgeInsets.only(top: 10, left: 22, right: 22),
-              child: ListView.separated(
-                itemCount: 1,
-                separatorBuilder: (BuildContext context, int index) => height16,
-                itemBuilder: (BuildContext context, int index) {
-                  return const EducationCard(
-                    specialization: "specialization",
-                    universtyName: "universtyName",
-                  );
-                },
-              ),
+              child: FutureBuilder(
+                  future: getAllEducationData(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      ListView.separated(
+                        itemCount: 1,
+                        separatorBuilder: (BuildContext context, int index) =>
+                            height16,
+                        itemBuilder: (BuildContext context, int index) {
+                          return EducationCard(
+                            specialization: education!.specialization ??
+                                "No specialization",
+                            universtyName:
+                                education!.university ?? "No university",
+                          );
+                        },
+                      );
+                    } else if (snapshot.hasError) {
+                      return const Center(
+                        child: Text("error"),
+                      );
+                    }
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }),
             ),
-          ),
+          )
         ],
       ),
     );
