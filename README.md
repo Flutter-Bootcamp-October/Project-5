@@ -70,11 +70,15 @@ i have delete one project
 
 
 Skill & Soical Media Screen 
+
 ![skill soical_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/0a75d805-e0d5-4d91-a245-339672dc2e31)
+
+![skill and soical](https://github.com/rahafwmaq/Project-5/assets/86989761/108f3f8f-f003-4d3e-8b32-57a4ac8f423d)
 
 ![socical](https://github.com/rahafwmaq/Project-5/assets/86989761/936526e6-67f4-4e70-a5df-291d1eee3383)
 
-![add social](https://github.com/rahafwmaq/Project-5/assets/86989761/31e0a0d2-6c85-49f5-80dc-30d0e01ba512)
+![addskill](https://github.com/rahafwmaq/Project-5/assets/86989761/bc448206-5db3-454e-9ec5-a75c3f9e2dbe)
 
-![skill](https://github.com/rahafwmaq/Project-5/assets/86989761/7e35a63b-63ee-4165-b045-c7b88d140057)
+
+![final edu](https://github.com/rahafwmaq/Project-5/assets/86989761/584561d3-c041-4f4c-90c7-ff4a5cfc214c)
 
