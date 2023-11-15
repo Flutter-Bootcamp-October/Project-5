@@ -2,8 +2,8 @@
 
 import 'package:cv_application_api/constant/constant.dart';
 import 'package:cv_application_api/model/user_model.dart';
-import 'package:cv_application_api/pages/otp_screen.dart';
-import 'package:cv_application_api/pages/sign_up_screen.dart';
+import 'package:cv_application_api/pages/otp_screen/otp_screen.dart';
+import 'package:cv_application_api/pages/signup_screen/sign_up_screen.dart';
 import 'package:cv_application_api/services/api/login_api.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
 import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';

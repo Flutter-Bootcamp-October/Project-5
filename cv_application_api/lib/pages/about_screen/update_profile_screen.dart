@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cv_application_api/constant/constant.dart';
-import 'package:cv_application_api/model/user_info.dart';
+import 'package:cv_application_api/model/user_info_model.dart';
 import 'package:cv_application_api/pages/navbar_screen.dart';
 import 'package:cv_application_api/services/api/user_about_api.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
@@ -35,18 +35,21 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
 
   Future<UserInfo> getUserInfoMethode() async {
     final UserInfo? response = await getUserInfo(context: context);
-    print(response!.data!.name);
+    print(response!.userInfodData!.name);
     user = response;
 
-    nameController = TextEditingController(text: user?.data!.name! ?? '');
+    nameController =
+        TextEditingController(text: user?.userInfodData!.name! ?? '');
     positionController =
-        TextEditingController(text: user?.data!.titlePosition ?? '');
+        TextEditingController(text: user?.userInfodData!.titlePosition ?? '');
     locationController =
-        TextEditingController(text: user?.data!.location ?? '');
-    phoneController = TextEditingController(text: user?.data!.phone ?? '');
+        TextEditingController(text: user?.userInfodData!.location ?? '');
+    phoneController =
+        TextEditingController(text: user?.userInfodData!.phone ?? '');
     birthdayController =
-        TextEditingController(text: user?.data!.birthday ?? '');
-    aboutController = TextEditingController(text: user?.data!.about ?? '');
+        TextEditingController(text: user?.userInfodData!.birthday ?? '');
+    aboutController =
+        TextEditingController(text: user?.userInfodData!.about ?? '');
     setState(() {});
     return response;
   }
@@ -223,7 +226,7 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
                                           });
 
                                       if (response?.codeState == 200) {
-                                       // print(response?.msg);
+                                        // print(response?.msg);
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                                 builder: (context) {
@@ -231,7 +234,7 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
                                         }));
                                       }
                                     } catch (error) {
-                                     // print(error);
+                                      // print(error);
                                       ScaffoldMessenger.of(context)
                                           .showSnackBar(SnackBar(
                                               content: Text(error.toString())));

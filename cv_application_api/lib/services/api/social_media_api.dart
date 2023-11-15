@@ -2,26 +2,27 @@
 
 import 'dart:convert';
 import 'package:cv_application_api/model/error_model.dart';
-import 'package:cv_application_api/model/user_info_model.dart';
+import 'package:cv_application_api/model/social_media_model.dart';
 import 'package:cv_application_api/pages/check_auth_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<UserInfo?> getUserInfo({required BuildContext context}) async {
+Future<SocialMedia?> getUserSocialMedia({required BuildContext context}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("token")!;
 
-  final url = Uri.parse('https://bacend-fshi.onrender.com/user/about');
+  final url = Uri.parse('https://bacend-fshi.onrender.com/user/social_media');
   final response =
       await http.get(url, headers: {'Authorization': 'Bearer $token'});
-  print(prefs.getString("token"));
 
-  // print('Response status: ${response.statusCode}');
-  // print('Response body: ${response.body}');
+  // print(prefs.getString("token"));
+
+  // print('Response status: ${response.statusCode}');+
+  print('Response body: ${response.body}');
 
   if (response.statusCode == 200) {
-    return UserInfo.fromJson(json.decode(response.body));
+    return SocialMedia.fromJson(json.decode(response.body));
   } else if (response.statusCode == 401) {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
@@ -35,13 +36,14 @@ Future<UserInfo?> getUserInfo({required BuildContext context}) async {
   }
 }
 
-Future<UserInfo?> updateUserInfo(Map body,
+Future<SocialMedia?> postUserSocialMedia(Map body,
     {required BuildContext context}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("token")!;
 
-  final url = Uri.parse('https://bacend-fshi.onrender.com/user/edit/about');
-  final response = await http.put(url,
+  final url =
+      Uri.parse('https://bacend-fshi.onrender.com/user/add/social_media');
+  final response = await http.post(url,
       body: jsonEncode(body),
       headers: <String, String>{'Authorization': token});
   // log(prefs.getString("token").toString());
@@ -50,7 +52,7 @@ Future<UserInfo?> updateUserInfo(Map body,
   // log('Response body: ${response.body}');
 
   if (response.statusCode == 200) {
-    return UserInfo.fromJson(json.decode(response.body));
+    return SocialMedia.fromJson(json.decode(response.body));
   } else if (response.statusCode == 401) {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();
@@ -71,12 +73,14 @@ Future<UserInfo?> updateUserInfo(Map body,
   }
 }
 
-Future<UserInfo?> deleteUserInfo(Map body,
+
+Future<SocialMedia?> deleteUserSocialMedia(Map body,
     {required BuildContext context}) async {
   final SharedPreferences prefs = await SharedPreferences.getInstance();
   String token = prefs.getString("token")!;
 
-  final url = Uri.parse('https://bacend-fshi.onrender.com/user/delete_account');
+  final url =
+      Uri.parse('https://bacend-fshi.onrender.com/user/delete/social_media');
   final response = await http.delete(url,
       body: jsonEncode(body),
       headers: <String, String>{'Authorization': token});
@@ -86,7 +90,7 @@ Future<UserInfo?> deleteUserInfo(Map body,
   // log('Response body: ${response.body}');
 
   if (response.statusCode == 200) {
-    return UserInfo.fromJson(json.decode(response.body));
+    return SocialMedia.fromJson(json.decode(response.body));
   } else if (response.statusCode == 401) {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.clear();

@@ -1,40 +1,37 @@
 import 'package:cv_application_api/constant/constant.dart';
-import 'package:cv_application_api/model/education.dart';
-import 'package:cv_application_api/pages/add_education_screen.dart';
-import 'package:cv_application_api/services/api/education_api.dart';
+import 'package:cv_application_api/model/project_model.dart';
+import 'package:cv_application_api/pages/projects_screen/add_project_screen.dart';
+import 'package:cv_application_api/services/api/project_api.dart';
 import 'package:cv_application_api/widgets/custom_widget_for_all_screens/normal_text.dart';
 import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title_of_screen.dart';
 import 'package:flutter/material.dart';
 
-class EducationScreen extends StatefulWidget {
-  const EducationScreen({super.key});
+class ProjectScreen extends StatefulWidget {
+  const ProjectScreen({super.key});
 
   @override
-  State<EducationScreen> createState() => _EducationScreenState();
+  State<ProjectScreen> createState() => _ProjectScreenState();
 }
 
-class _EducationScreenState extends State<EducationScreen> {
+class _ProjectScreenState extends State<ProjectScreen> {
   bool _isLoading = true;
-  Education? education;
+  Project? project;
   @override
   void initState() {
     super.initState();
     getUserInfoMethode();
-    Future.delayed(Duration(seconds: 6), () {
+    Future.delayed(const Duration(seconds: 3), () {
       setState(() {
         _isLoading = false;
       });
-      setState(() {});
     });
     setState(() {});
   }
 
-  Future<Education> getUserInfoMethode() async {
-    final Education? response = await getUserEducation(context: context);
-    print(response!);
-    education = response;
-    setState(() {});
-    return response;
+  Future<Project?> getUserInfoMethode() async {
+    final Project? response = await getUserProject(context: context);
+    project = response;
+    return project;
   }
 
   @override
@@ -57,40 +54,34 @@ class _EducationScreenState extends State<EducationScreen> {
                     onPressed: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) {
-                        return const AddEducationScreen();
+                        return const AddProjectScreen();
                       }));
                       setState(() {});
                     },
                     child: const TitleOfScreen(
-                      title: "Add Education",
+                      title: "Add Project",
                       titleFontSize: 30,
                       titleletterSpacing: 3,
                       titleColor: appWhite,
                       titlefontWeight: FontWeight.bold,
                     ),
                   ),
-                  GridView.count(
-                    crossAxisCount: 1,
-                    shrinkWrap: true,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10,
-                    children: [
-                      if (_isLoading == true)
-                        const Center(
-                          child: CircularProgressIndicator(
-                            color: app2DarkGreen,
-                          ),
-                        ),
-                      if (_isLoading == false)
-                        for (int i = 0;
-                            i < education!.education_data!.length;
-                            i++)
+                  if (_isLoading == true)
+                    const Center(
+                      child: CircularProgressIndicator(
+                        color: app2DarkGreen,
+                      ),
+                    ),
+                  if (_isLoading == false)
+                    for (int i = 0; i < project!.projectData!.length; i++)
+                      Stack(
+                        children: [
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 50, vertical: 10),
                             child: Container(
-                              height: 500,
-                              width: 100,
+                              height: 230,
+                              width: 300,
                               decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(20),
                                   color: app2DarkGreenTrans),
@@ -105,7 +96,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                     children: [
                                       height14,
                                       const TitleOfScreen(
-                                        title: 'College :',
+                                        title: 'Project name :',
                                         titleFontSize: 18,
                                         titleletterSpacing: 0,
                                         titlefontWeight: FontWeight.w300,
@@ -113,8 +104,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                       ),
                                       height4,
                                       NormalText(
-                                        title: education
-                                                ?.education_data![i].college! ??
+                                        title: project?.projectData![i].name! ??
                                             '',
                                         titleFontSize: 15,
                                         titleletterSpacing: 0,
@@ -123,7 +113,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                       ),
                                       height14,
                                       const TitleOfScreen(
-                                        title: 'University :',
+                                        title: 'Description :',
                                         titleFontSize: 18,
                                         titleletterSpacing: 0,
                                         titlefontWeight: FontWeight.w300,
@@ -131,8 +121,8 @@ class _EducationScreenState extends State<EducationScreen> {
                                       ),
                                       height4,
                                       NormalText(
-                                        title: education
-                                                ?.education_data![i].college! ??
+                                        title: project?.projectData![i]
+                                                .description! ??
                                             '',
                                         titleFontSize: 15,
                                         titleletterSpacing: 0,
@@ -141,7 +131,7 @@ class _EducationScreenState extends State<EducationScreen> {
                                       ),
                                       height14,
                                       const TitleOfScreen(
-                                        title: 'Specialization :',
+                                        title: 'State :',
                                         titleFontSize: 18,
                                         titleletterSpacing: 0,
                                         titlefontWeight: FontWeight.w300,
@@ -149,45 +139,9 @@ class _EducationScreenState extends State<EducationScreen> {
                                       ),
                                       height4,
                                       NormalText(
-                                        title: education
-                                                ?.education_data![i].college! ??
-                                            '',
-                                        titleFontSize: 15,
-                                        titleletterSpacing: 0,
-                                        titlefontWeight: FontWeight.w300,
-                                        titleColor: appWhite,
-                                      ),
-                                      height14,
-                                      const TitleOfScreen(
-                                        title: 'Level :',
-                                        titleFontSize: 18,
-                                        titleletterSpacing: 0,
-                                        titlefontWeight: FontWeight.w300,
-                                        titleColor: appWhite,
-                                      ),
-                                      height4,
-                                      NormalText(
-                                        title: education
-                                                ?.education_data![i].college! ??
-                                            '',
-                                        titleFontSize: 15,
-                                        titleletterSpacing: 0,
-                                        titlefontWeight: FontWeight.w300,
-                                        titleColor: appWhite,
-                                      ),
-                                      height14,
-                                      const TitleOfScreen(
-                                        title: 'Graduation Date :',
-                                        titleFontSize: 18,
-                                        titleletterSpacing: 0,
-                                        titlefontWeight: FontWeight.w300,
-                                        titleColor: appWhite,
-                                      ),
-                                      height4,
-                                      NormalText(
-                                        title: education
-                                                ?.education_data![i].college! ??
-                                            '',
+                                        title:
+                                            project?.projectData![i].state! ??
+                                                '',
                                         titleFontSize: 15,
                                         titleletterSpacing: 0,
                                         titlefontWeight: FontWeight.w300,
@@ -199,8 +153,23 @@ class _EducationScreenState extends State<EducationScreen> {
                               ),
                             ),
                           ),
-                    ],
-                  )
+                          Positioned(
+                            top: 20,
+                            left: 280,
+                            child: IconButton(
+                                onPressed: () async {
+                                  await deleteUserProject(context: context, {
+                                    "id_project": project!.projectData![i].id,
+                                  });
+                                  setState(() {});
+                                },
+                                icon: const Icon(
+                                  Icons.remove_rounded,
+                                  size: 40,
+                                )),
+                          ),
+                        ],
+                      )
                 ],
               ),
             ),

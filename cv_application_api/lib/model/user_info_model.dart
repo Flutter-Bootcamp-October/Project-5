@@ -1,28 +1,28 @@
 class UserInfo {
   String? msg;
-  Data? data;
+  UserInfoData? userInfodData;
   int? codeState;
 
-  UserInfo({this.msg, this.data, this.codeState});
+  UserInfo({this.msg, this.userInfodData, this.codeState});
 
   UserInfo.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    userInfodData = json['data'] != null ? new UserInfoData.fromJson(json['data']) : null;
     codeState = json['codeState'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['msg'] = this.msg;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
+    if (this.userInfodData != null) {
+      data['data'] = this.userInfodData!.toJson();
     }
     data['codeState'] = this.codeState;
     return data;
   }
 }
 
-class Data {
+class UserInfoData {
   int? id;
   String? name;
   String? email;
@@ -34,7 +34,7 @@ class Data {
   String? image;
   String? createAt;
 
-  Data(
+  UserInfoData(
       {this.id,
       this.name,
       this.email,
@@ -46,7 +46,7 @@ class Data {
       this.image,
       this.createAt});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  UserInfoData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     email = json['email'];

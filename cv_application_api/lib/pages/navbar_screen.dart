@@ -1,10 +1,11 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cv_application_api/constant/constant.dart';
-import 'package:cv_application_api/pages/education_screen.dart';
-import 'package:cv_application_api/pages/login_screen.dart';
-import 'package:cv_application_api/pages/profile_screen.dart';
-import 'package:cv_application_api/pages/qualification_screen.dart';
+import 'package:cv_application_api/pages/about_screen/profile_screen.dart';
+import 'package:cv_application_api/pages/education_screen/education_screen.dart';
+import 'package:cv_application_api/pages/login_screen/login_screen.dart';
+import 'package:cv_application_api/pages/projects_screen/project_screen.dart';
+import 'package:cv_application_api/pages/skills_and_soical_media_screen/skill_and_social_media_screen.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
 import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';
 import 'package:flutter/material.dart';
@@ -31,7 +32,8 @@ class NavBarScreen extends StatelessWidget {
             children: const <Widget>[
               ProfileScreen(),
               EducationScreen(),
-              QualificationScreen(),
+              ProjectScreen(),
+              SkillAndSocialMediaScreen(),
             ],
           ),
           IconButton(
@@ -66,6 +68,8 @@ class NavBarScreen extends StatelessWidget {
             RollingBottomBarItem(Icons.person,
                 label: "", activeColor: appWhite),
             RollingBottomBarItem(Icons.school,
+                label: "", activeColor: appWhite),
+            RollingBottomBarItem(Icons.laptop_chromebook_rounded,
                 label: "", activeColor: appWhite),
             RollingBottomBarItem(Icons.my_library_books_outlined,
                 label: "", activeColor: appWhite)
