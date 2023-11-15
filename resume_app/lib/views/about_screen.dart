@@ -1,5 +1,6 @@
 import 'dart:io';
-
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:resume_app/consts/colors.dart';
@@ -59,7 +60,6 @@ class AboutScreenState extends State<AboutScreen> {
               const SizedBox(width: 20),
               InkWell(
                 onTap: () async {
-                  late File imageFile;
                   final ImagePicker picker = ImagePicker();
                   final XFile? image =
                       await picker.pickImage(source: ImageSource.gallery);
@@ -101,7 +101,28 @@ class AboutScreenState extends State<AboutScreen> {
         ),
         floatingActionButton: FloatingActionButton(
           backgroundColor: appBlue,
-          onPressed: () {},
+          onPressed: () async {
+            final pdf = pw.Document();
+
+            pdf.addPage(pw.Page(
+                pageFormat: PdfPageFormat.a4,
+                build: (pw.Context context) {
+                  return pw.Center(
+                    child: pw.Text("Hello World"),
+                  ); // Center
+                }));
+            final image = pw.MemoryImage(
+              imageFile.readAsBytesSync(),
+            );
+            final file = File('example.pdf');
+            await file.writeAsBytes(await pdf.save());
+
+            pdf.addPage(pw.Page(build: (pw.Context context) {
+              return pw.Center(
+                child: pw.Image(image),
+              ); // Center
+            }));
+          },
           child: const Icon(Icons.picture_as_pdf_sharp),
         ),
         backgroundColor: Colors.transparent,
