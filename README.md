@@ -1,82 +1,51 @@
-# Project-5
+# CV App
+
+## Overview
+CV App is a mobile application designed to help users create, manage, and share their professional resumes with ease. Our app simplifies the process of curating professional details, including personal information, educational background, skills, and work experience, into a polished and presentable CV.
+
+## Features
+
+- **Create CV**: Users can add and edit various sections of their CV, including education, experience, skills, and more.
+- **Manage Profiles**: Maintain multiple profiles for different job applications.
+- **Export and Share**: Export CVs as PDFs and share them directly through the app.
+- **User Authentication**: Secure user authentication to keep personal data safe.
+- **Cloud Storage**: Users' CVs are stored in the cloud for accessibility across multiple devices.
+
+## Installation
+
+To get started with the CV App, clone the repository to your local machine:
 
 
-## Description
+git clone https://github.com/senshi900/Project-5.git
 
-Your task is to create a functional and user-friendly CV app using Flutter. This app will allow users to create their own CVs, including creating an account, writing their resume, inserting their projects and skills, and adding their educational data. The app will be easy to use and will provide users with a professional-looking CV that they can use to apply for jobs.
+## Usage
+After launching the app, users can sign up or log in. Once authenticated, users can create a new CV or select an existing one to edit. The app provides an intuitive interface for adding detailed information in a structured format.
 
-## Minimum Requirements
+## Contributing
+We welcome contributions to the CV App. If you have suggestions or improvements, feel free to fork the repository and submit a pull request.
 
-- **Correct Structure:** Ensure that the application is built with the appropriate structure. Follow Flutter's best practices for organizing code and project files.
-- **Clean Code:** Write code that is clear, well-organized, and scalable. Use meaningful variable and function names and follow standard coding conventions to improve code readability.
-- **User account creation:** Users will be able to create an account with the app using their email address and a password.
-- **verification:** Users should be able to verify their emails after creating their accounts. also should be able to reset their password.
-- **User Information:** Users will be able to write their information using the app in the (About) screen, users should able to view and edit their information. And be able to delete their account.
-- **Project and skills:** Users will be able to insert, view, and delete their projects and skills. They will be able to add a description of each project in the (Projects) screen, and Also, be able to add their skills in the (Skill) screen
-- **Educational data:** Users will be able to add their educational data to the app. They will be able to add the name of their university, the degree they earned, and the dates they graduated.
-- **Social Media:** Users will be able to insert, view, and delete their Social Media accounts.
-- **Display all Users:** Users will be able to view all other users' details.
+## Support
+For support, please open an issue on the GitHub repository or contact us at dr.fisal99@gmail.com
+# Examples
+some images from the app 
 
+welcome screen
 
-## Delivery Requirements
+![welcome](https://github.com/senshi900/Project-5/assets/129005111/44509837-e2d7-4eeb-8465-16257d901620)
 
-- **Upload the Entire Project:** Ensure that you upload the complete project, which includes all necessary code files, assets, and configurations, to the repository on GitHub.
-- **Readme File:**
-  - Create a README.md file in the root directory of your GitHub repository.
-  - Provide a detailed and well-structured description of the project in the README file, including the following sections:
-    - **Project Overview:** Briefly describe what the shopping list app is about and its main features. Give readers a clear idea of the purpose and functionality of the app.
-    - **Screenshots:** Include relevant screenshots of the app to showcase its appearance and functionalities. Visuals can help users understand the app's design and layout.
+sign up
 
+![siginup](https://github.com/senshi900/Project-5/assets/129005111/9d92c3a0-408c-42cc-997d-4eb9ff61cbc1)
 
-## Rules & Guidelines
+login
 
-1. **Version Control (Git):**
-   - Create a Fork from the exam’s GitHub repository.
-   - Create a new branch with your name.
-   - Commit frequently with descriptive messages to show your progress.
-   - Finally, create a Pull Request to the exam’s original repository containing your solution.
-2. **Academic Integrity:** Do not copy or reuse code from previous modules or external sources. The exam is a showcase of your learning progress.
-3. **Learning References:** You may refer to course materials and code examples as learning references, but implement your solutions independently.
-4. **Instructor Support:** The instructor will be available for general questions and guidance throughout the exam.
+![login](https://github.com/senshi900/Project-5/assets/129005111/e39fd0bd-38b8-40b4-b178-e487986fc8ff)
 
-## Schedule & Deadlines
+profile
 
-- **Project Start Date:** 9/11/2023 - 3:00 PM
-- **Project Submission Deadline:** 15/11/2023 – 9:59 PM
+![profile](https://github.com/senshi900/Project-5/assets/129005111/0d3f366b-c159-400a-a12b-7400edadfe72)
 
-## EndPoints
-**Auth** 
-  - **Post:** https://bacend-fshi.onrender.com/auth/registration 
-  - **Post:** https://bacend-fshi.onrender.com/auth/verification 
-  - **Post:** https://bacend-fshi.onrender.com/auth/login
+home
 
-**About** 
-  - **Get:** https://bacend-fshi.onrender.com/user/about
-  - **Put:** https://bacend-fshi.onrender.com/user/edit/about
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete_account
+![home](https://github.com/senshi900/Project-5/assets/129005111/7cedcfd5-4830-4987-aa05-2c29b173a98d)
 
-**Project** 
-  - **Get:** https://bacend-fshi.onrender.com/user/projects
-  - **Post:** https://bacend-fshi.onrender.com/user/add/project
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/project
-
-**Skills** 
-  - **Get:** https://bacend-fshi.onrender.com/user/skills 
-  - **Post:** https://bacend-fshi.onrender.com/user/add/skills 
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/skills
-
-**Education** 
-  - **Get:** https://bacend-fshi.onrender.com/user/education
-  - **Post:** https://bacend-fshi.onrender.com/user/add/education
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/education
-
-**Social Media** 
-  - **Get:** https://bacend-fshi.onrender.com/user/social_media
-  - **Post:** https://bacend-fshi.onrender.com/user/add/social_media
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/social_media
-
-**Get All users**
-  - **Get:** https://bacend-fshi.onrender.com/user/get_users
-
-<br>
-Good luck with your exam project! If you have any general questions or need guidance, don't hesitate to reach out to the instructor. Happy coding!
