@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
 final educationNetwork = EducationNetwork();
+
 class EducationNetwork {
-    final String _apiUrl = 'bacend-fshi.onrender.com';
-    final String _education = '/user/education';
+  final String _apiUrl = 'bacend-fshi.onrender.com';
+  final String _education = '/user/education';
   final String _addEducation = '/user/add/education';
   final String _deleteEducation = '/user/delete/education';
-   educationMethod({required String token}) async {
+  educationMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _education);
-    var response = await http.get(url, headers: {"Authorization": token});
-    return response;
+    try {
+      var response = await http.get(url, headers: {"Authorization": token});
+      return response;
+    } catch (e) {}
   }
 
   addEducationMethod({required String token, required Map body}) async {
@@ -25,5 +29,4 @@ class EducationNetwork {
         headers: {"Authorization": token}, body: jsonEncode(body));
     return response;
   }
-  
 }

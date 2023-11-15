@@ -23,7 +23,7 @@ class _EducationScreenState extends State<EducationScreen> {
   initState() {
     super.initState();
     _loedingEducation();
-     Future.delayed(
+    Future.delayed(
       const Duration(seconds: 3),
       () {
         empty = false;
@@ -96,11 +96,14 @@ class _EducationScreenState extends State<EducationScreen> {
       ),
     );
   }
-   _loedingEducation() async {
+
+  _loedingEducation() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    final Response res = await educationNetwork.educationMethod(token: token!);
     try {
+      final Response res =
+          await educationNetwork.educationMethod(token: token!);
+
       if (res.statusCode == 200) {
         education = (await jsonDecode(res.body))["data"];
         setState(() {});

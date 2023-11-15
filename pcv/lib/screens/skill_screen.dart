@@ -97,8 +97,9 @@ class _SkillScreenState extends State<SkillScreen> {
   _loedingSkill() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    final Response res = await netSkill.skillMethod(token: token!);
     try {
+    final Response res = await netSkill.skillMethod(token: token!);
+    
       if (res.statusCode == 200) {
         skills = (await jsonDecode(res.body))["data"];
         setState(() {});

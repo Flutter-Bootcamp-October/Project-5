@@ -10,8 +10,10 @@ class SocialNetwork {
   final String _deleteSocial = '/user/delete/social_media';
   socialMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _social);
+    try{
     var response = await http.get(url, headers: {"Authorization": token});
     return response;
+    }catch(e){}
   }
 
   addsocialMethod({required String token, required Map body}) async {

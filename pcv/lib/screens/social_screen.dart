@@ -103,8 +103,9 @@ class _SocialScreenState extends State<SocialScreen> {
   _loedingSocial() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+      try {
     final Response res = await socialNetwork.socialMethod(token: token!);
-    try {
+  
       if (res.statusCode == 200) {
         social = (await jsonDecode(res.body))["data"];
 

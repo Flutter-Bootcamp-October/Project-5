@@ -16,8 +16,10 @@ class AboutNet {
 
   aboutMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _about);
-    var response = await http.get(url, headers: {"Authorization": token});
-    return response;
+    try {
+      var response = await http.get(url, headers: {"Authorization": token});
+      return response;
+    } catch (e) {}
   }
 
   aboutUploadMethod({required String token, required File image}) async {
@@ -36,8 +38,10 @@ class AboutNet {
 
   deleteAccountMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _delete);
-    var response = await http
-        .delete(url, headers: {"Authorization": token},);
+    var response = await http.delete(
+      url,
+      headers: {"Authorization": token},
+    );
     return response;
   }
 

@@ -10,8 +10,10 @@ class SkillNet {
   final String _deleteSkill = '/user/delete/skills';
   skillMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _skill);
-    var response = await http.get(url, headers: {"Authorization": token});
-    return response;
+    try {
+      var response = await http.get(url, headers: {"Authorization": token});
+      return response;
+    } catch (e) {}
   }
 
   addSkillMethod({required String token, required Map body}) async {

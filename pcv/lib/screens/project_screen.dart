@@ -97,10 +97,11 @@ class _ProjectScreenState extends State<ProjectScreen> {
   }
 
   _loedingProject() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final Response res = await projectNet.projectMethod(token: token!);
     try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final Response res = await projectNet.projectMethod(token: token!);
+
       if (res.statusCode == 200) {
         projects = (await jsonDecode(res.body))["data"];
         setState(() {});

@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+
 final projectNet = NetProject();
+
 class NetProject {
   final String _apiUrl = 'bacend-fshi.onrender.com';
-    final String _project = '/user/projects';
+  final String _project = '/user/projects';
   final String _addProject = '/user/add/project';
   final String _deleteProject = '/user/delete/project';
-    projectMethod({required String token}) async {
+  projectMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _project);
-    var response = await http.get(url, headers: {"Authorization": token});
-    return response;
+    try {
+      var response = await http.get(url, headers: {"Authorization": token});
+      return response;
+    } catch (e) {}
   }
 
   addProjectMethod({required String token, required Map body}) async {
@@ -25,5 +29,4 @@ class NetProject {
         headers: {"Authorization": token}, body: jsonEncode(body));
     return response;
   }
-  
 }

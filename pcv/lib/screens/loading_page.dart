@@ -61,19 +61,18 @@ class _LoadingPageState extends State<LoadingPage> {
   Widget build(BuildContext context) {
     return const Scaffold(
       body: Center(
-        child: CircularProgressIndicator(
-          color: Colors.black,
-          backgroundColor: Colors.amber,
-        ),
+        child: CircularProgressIndicator(),
       ),
     );
   }
 
   _loedingEducation() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final Response res = await educationNetwork.educationMethod(token: token!);
     try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final Response res =
+          await educationNetwork.educationMethod(token: token!);
+
       if (res.statusCode == 200) {
         education = (await jsonDecode(res.body))["data"];
         setState(() {});
@@ -84,10 +83,11 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   _loedingSkill() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final Response res = await netSkill.skillMethod(token: token!);
     try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final Response res = await netSkill.skillMethod(token: token!);
+
       if (res.statusCode == 200) {
         skills = (await jsonDecode(res.body))["data"];
         setState(() {});
@@ -98,10 +98,11 @@ class _LoadingPageState extends State<LoadingPage> {
   }
 
   _loedingProject() async {
-    final SharedPreferences prefs = await SharedPreferences.getInstance();
-    final token = prefs.getString('token');
-    final Response res = await projectNet.projectMethod(token: token!);
     try {
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('token');
+      final Response res = await projectNet.projectMethod(token: token!);
+
       if (res.statusCode == 200) {
         projects = (await jsonDecode(res.body))["data"];
         setState(() {});
