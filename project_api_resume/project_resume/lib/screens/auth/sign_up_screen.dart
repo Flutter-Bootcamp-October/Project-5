@@ -11,19 +11,19 @@ class SignUpScreen extends StatelessWidget {
   TextEditingController conPassword = TextEditingController();
   TextEditingController conEmail = TextEditingController();
   @override
-  bool isValidEmail = false;
-  bool isValidPhone = false;
-  bool _isValidEmail(String email) {
-    String emailRegex = r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$';
-    RegExp regex = RegExp(emailRegex);
-    return regex.hasMatch(email);
-  }
+  // bool isValidEmail = false;
+  // bool isValidPhone = false;
+  // bool _isValidEmail(String email) {
+  //   String emailRegex = r'^[\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$';
+  //   RegExp regex = RegExp(emailRegex);
+  //   return regex.hasMatch(email);
+  // }
 
-  bool _isValidPhone(String phoneNumber) {
-    String phoneRegex = r'^05\d{8}$';
-    RegExp regex = RegExp(phoneRegex);
-    return regex.hasMatch(phoneNumber);
-  }
+  // bool _isValidPhone(String phoneNumber) {
+  //   String phoneRegex = r'^05\d{8}$';
+  //   RegExp regex = RegExp(phoneRegex);
+  //   return regex.hasMatch(phoneNumber);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -60,9 +60,6 @@ class SignUpScreen extends StatelessWidget {
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
               ),
-              onChanged: (value) {
-                isValidPhone = _isValidPhone(value);
-              },
             ),
             const SizedBox(
               height: 10,
@@ -88,9 +85,6 @@ class SignUpScreen extends StatelessWidget {
                 border: OutlineInputBorder(
                     borderRadius: BorderRadius.all(Radius.circular(15))),
               ),
-              onChanged: (value) {
-                isValidEmail = _isValidEmail(value);
-              },
             ),
             ElevatedButton(
                 //fill all textField
@@ -104,6 +98,8 @@ class SignUpScreen extends StatelessWidget {
                   if (res.statusCode == 200) {
                     final String getEMail =
                         jsonDecode(res.body)["data"]["email"];
+
+                    // ignore: use_build_context_synchronously
                     Navigator.push(
                       context,
                       MaterialPageRoute(
@@ -113,6 +109,7 @@ class SignUpScreen extends StatelessWidget {
                               )),
                     );
                   } else {
+                    // ignore: use_build_context_synchronously
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                         content: Text(
                             (await jsonDecode(res.body))["msg"].toString())));
@@ -125,83 +122,3 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
-//  onPressed: () async {
-//             final network = ConsentNetworking();
-
-//             final http.Response res = await network.loginMethod(body: {
-//               "email": controllerEmail?.text,
-//               "password": controllerPassword?.text
-//             });
-//             if (res.statusCode == 200) {
-//               final String getEMail =
-//                   json.decode(res.body)["data"]["email"];
-//               Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                       builder: (context) => VerificationScreen(
-//                             email: getEMail,
-//                             type: "login",
-//                           )));
-//             } else {
-//               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//                   content: Text(
-//                       (await json.decode(res.body))["msg"].toString())));
-//             }
-//           },
-
-// {
-//               if (conName.text.isEmpty ||
-//                   conPhone.text.isEmpty ||
-//                   conPassword.text.isEmpty ||
-//                   conEmail.text.isEmpty) {
-//                 final snackBar = SnackBar(
-//                   content: const Text('Please enter all fields'),
-//                   action: SnackBarAction(
-//                     label: 'Undo',
-//                     onPressed: () {},
-//                   ),
-//                 );
-//                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
-//               } else {
-//                 if (isValidEmail == true && isValidPhone == true) {
-//                   final data = {
-//                     'name': conName.text,
-//                     'phone': conPhone.text,
-//                     'email': conEmail.text,
-//                     'password': conPassword.text,
-//                   };
-//                   final res= sendDataRegistration(data);
-//                   //Center(child: Text('${sendDataRegistration(data)}'));
-//                     if (res.statusCode == 200) {
-//               final String getEMail =
-//                   json.decode(res.body)["data"]["email"];
-//               Navigator.push(
-//                   context,
-//                   MaterialPageRoute(
-//                       builder: (context) => verifiyAccountScreen(
-//                             email: getEMail,
-//                             type: "login",
-//                           )));
-//             } else {
-//               ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-//                   content: Text(
-//                       (await json.decode(res.body))["msg"].toString())));
-//             }
-// Navigator.push(
-//   context,
-//   MaterialPageRoute(
-//       builder: (context) => const verifiyAccountScreen()),
-// );
-//                 } else {
-//                   final snackBar = SnackBar(
-//                     content: const Text(
-//                         'Please enter the email && Phone in the correct context'),
-//                     action: SnackBarAction(
-//                       label: 'Undo',
-//                       onPressed: () {},
-//                     ),
-//                   );
-//                   ScaffoldMessenger.of(context).showSnackBar(snackBar);
-//                 }
-//               }
-//             },

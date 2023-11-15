@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:project_resume/screens/auth/sign_up_screen.dart';
+import 'package:project_resume/screens/auth/login_screen.dart';
 
 class SplashScreen extends StatelessWidget {
   const SplashScreen({super.key});
@@ -15,13 +15,13 @@ class SplashScreen extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SignUpScreen()),
+                    MaterialPageRoute(builder: (context) => LoginScreen()),
                   );
                 },
                 child: const Text('Start')),
           ),
           const Spacer(),
-          Image.asset('assets/images/imageSplashScreen.png'),
+          // Image.asset('assets/images/imageSplashScreen.png'),
         ],
       ),
     );

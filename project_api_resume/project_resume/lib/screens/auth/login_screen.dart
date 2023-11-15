@@ -2,10 +2,14 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:project_resume/networking/api_service.dart';
+import 'package:project_resume/screens/auth/sign_up_screen.dart';
 import 'package:project_resume/screens/auth/verifiy_account_screen.dart';
 
 class LoginScreen extends StatelessWidget {
-  LoginScreen({super.key});
+  LoginScreen({
+    super.key,
+  });
+
   TextEditingController conEmail = TextEditingController();
   TextEditingController conPassword = TextEditingController();
   @override
@@ -44,18 +48,18 @@ class LoginScreen extends StatelessWidget {
                       borderRadius: BorderRadius.all(Radius.circular(15))),
                 ),
               ),
-              TextButton(onPressed: () {
-                
-              }, child: const Text('rest password')),
               ElevatedButton(
                   onPressed: () async {
                     final res = await sendDataLogin(body: {
                       "email": conEmail.text,
                       "password": conPassword.text
                     });
+
                     if (res.statusCode == 200) {
                       final String getEMail =
-                          json.decode(res.body)["data"]["email"];
+                          await jsonDecode(res.body)["data"]["email"];
+
+                      // ignore: use_build_context_synchronously
                       Navigator.push(
                           context,
                           MaterialPageRoute(
@@ -63,13 +67,31 @@ class LoginScreen extends StatelessWidget {
                                     email: getEMail,
                                     type: "login",
                                   )));
+
+                   
+
+                      // }
                     } else {
+                      // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           content: Text(
                               (await jsonDecode(res.body))["msg"].toString())));
                     }
                   },
-                  child: const Text('Login'))
+                  child: const Text('Login')),
+              Row(
+                children: [
+                  const Text('You do not have account?'),
+                  TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => SignUpScreen()));
+                      },
+                      child: const Text('Register now')),
+                ],
+              ),
             ]),
       ),
     );

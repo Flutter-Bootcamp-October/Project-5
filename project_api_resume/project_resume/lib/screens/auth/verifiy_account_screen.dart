@@ -1,11 +1,19 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:project_resume/home_screen.dart';
+import 'package:project_resume/model/verify_model.dart';
 import 'package:project_resume/networking/api_service.dart';
 import 'package:project_resume/screens/auth/login_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class verifiyAccountScreen extends StatelessWidget {
-  verifiyAccountScreen({super.key, required this.email, required this.type});
+  verifiyAccountScreen({
+    super.key,
+    required this.email,
+    required this.type,
+  });
+
   String email;
   String type;
 
@@ -33,49 +41,54 @@ class verifiyAccountScreen extends StatelessWidget {
             ),
             ElevatedButton(
                 onPressed: () async {
-                  if (conOTP.text.isEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                        content: Text(('Please enter the OTP'))));
-                  }
+                  if (type == 'registration') {
+                    final Map<String, dynamic> res = await verificationMethod(
+                        body: {
+                          "otp": conOTP.text,
+                          "email": email,
+                          "type": type
+                        });
+                    Verify resMap = Verify.fromJson(res);
+                    if (resMap.codeState == 200) {
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => LoginScreen()));
+                    } else {
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content:
+                              Text((await jsonDecode(resMap.msg.toString())))));
+                    }
+                  } else if (type == 'login') {
+                    final Map<String, dynamic> res = await verificationMethod(
+                        body: {
+                          "otp": conOTP.text,
+                          "email": email,
+                          "type": type
+                        });
+                    Verify resMap = Verify.fromJson(res);
 
-                  final res = await verificationMethod(
-                      body: {"otp": conOTP.text, "email": email, "type": type});
+                    if (resMap.codeState == 200) {
+                      final token = resMap.data!.token.toString();
 
-                  if (res.statusCode == 200) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => LoginScreen()));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            (await json.decode(res.body))["msg"].toString())));
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString("token", token);
+
+                      // ignore: use_build_context_synchronously
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => const HomeScreen()));
+                    }
                   }
                 },
-                child: const Text('verification'))
+                child: const Text('verification')),
           ],
         ),
       ),
     );
   }
 }
-  // onPressed: () async {
-  //               final network = ConsentNetworking();
-                // final http.Response res = await network.verificationLoginMethod(
-                //     body: {
-                //       "otp": controllerOTP?.text,
-                //       "email": widget.email,
-                //       "type": widget.type
-                //     });
-
-                // if (res.statusCode == 200) {
-                //   final String token = json.decode(res.body)["data"]["token"];
-                //   print(token);
-                //   Navigator.push(
-                //       context,
-                //       MaterialPageRoute(
-                //           builder: (context) => const HomeScreen()));
-                // } else {
-                //   ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                //       content: Text(
-                //           (await json.decode(res.body))["msg"].toString())));
-                // }
-  //             },
