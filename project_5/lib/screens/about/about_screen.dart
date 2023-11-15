@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/screens/about/component/delete_button.dart';
 import 'package:project_5/screens/auth/register_screen.dart';
+import 'package:project_5/screens/auth/signin_screen.dart';
 import 'package:project_5/screens/components/button_widget.dart';
 import 'package:project_5/screens/components/input_text_fields.dart';
 
@@ -96,7 +97,11 @@ class _AboutScreenState extends State<AboutScreen> {
             DeleteButtonWidget(
                 textEntry: "Delete Account",
                 onpress: () async {
-                  // await apimethod.deleteAccount( aboutId: ),
+                  //  await apimethod.deleteAccount(aboutId: widget.about.data.data[index].id);
+                  Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(builder: (context) => SigninScreen()),
+                      (route) => false);
                 }),
             SizedBox(
               height: 8,
