@@ -3,13 +3,13 @@ import 'package:project_5/color/palette.dart';
 
 class LoginField extends StatelessWidget {
   final String hintText;
-  final IconData iconData;
+  final IconData? iconData;
   final TextEditingController? controller;
 
   const LoginField({
     Key? key,
     required this.hintText,
-    required this.iconData,
+    this.iconData,
     this.controller,
   }) : super(key: key);
 

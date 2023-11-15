@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:project_5/api/auth.dart';
 import 'package:project_5/color/palette.dart';
+import 'package:project_5/model/Token.dart';
 import 'package:project_5/screens/home_page.dart';
 import 'package:project_5/screens/login_screen.dart';
 import 'package:project_5/widgets/login_button.dart';
@@ -182,7 +183,7 @@ class RegistrationScreen extends StatelessWidget {
                 const SizedBox(height: 15),
                 ElevatedButton(
                   onPressed: () async {
-                    deleteToken();
+                    Token().deleteToken();
                     showDialog(
                       context: context,
                       builder: (context) {
@@ -248,10 +249,5 @@ class RegistrationScreen extends StatelessWidget {
         );
       },
     );
-  }
-
-  Future<void> deleteToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    prefs.remove('userToken');
   }
 }

@@ -1,25 +1,3 @@
-import 'package:flutter/material.dart';
-
-class UserModel {
-  final String msg;
-  final UserData? data;
-  final int codeState;
-
-  UserModel({
-    required this.msg,
-    required this.data,
-    required this.codeState,
-  });
-
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      msg: json['msg'] ?? '',
-      data: json['data'] != null ? UserData.fromJson(json['data']) : null,
-      codeState: json['codeState'] ?? 0,
-    );
-  }
-}
-
 class UserData {
   final int id;
   final String name;
