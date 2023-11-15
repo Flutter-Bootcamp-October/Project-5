@@ -43,10 +43,8 @@ class _SkillsScreenState extends State<SkillsScreen> {
       if (response.statusCode == 200) {
         SkillsModel.fromJson(json.decode(response.body));
         isvalid = true;
-      } else {
-      }
-    } catch (e) {
-    }
+      } else {}
+    } catch (e) {}
   }
 
   Future<void> fetchSkills({required String token}) async {
@@ -112,12 +110,15 @@ class _SkillsScreenState extends State<SkillsScreen> {
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
       body: Column(
-        children: [SizedBox(height: 50),
-           BackAndremove(context),
+        children: [
           SizedBox(height: 50),
-            
-           Container(width: 200,height: 200,child: Image.file(selectedimage),),
-
+          BackAndremove(context),
+          SizedBox(height: 50),
+          Container(
+            width: 200,
+            height: 200,
+            child: Image.file(selectedimage),
+          ),
           Divider(
             thickness: 1,
           ),
@@ -173,6 +174,4 @@ class _SkillsScreenState extends State<SkillsScreen> {
       ),
     );
   }
-
-  
 }

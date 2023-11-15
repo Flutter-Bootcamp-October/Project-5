@@ -127,7 +127,7 @@ class _EducationScreenState extends State<EducationScreen> {
         child: Column(
           children: [
             SizedBox(height: 50),
-             BackAndremove(context),
+            BackAndremove(context),
             SizedBox(height: 20),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -140,7 +140,7 @@ class _EducationScreenState extends State<EducationScreen> {
               thickness: 1,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: SinUpWedget(
                 Controller: graduation_dateController,
                 labelText: " Enter your graduation date as 02/11/2001",
@@ -154,24 +154,25 @@ class _EducationScreenState extends State<EducationScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: SinUpWedget(
                   Controller: universityController,
                   labelText: "  Enter your university"),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: SinUpWedget(
-                  Controller: collegeController, labelText: " Enter your college"),
+                  Controller: collegeController,
+                  labelText: " Enter your college"),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: SinUpWedget(
                   Controller: specializationController,
                   labelText: " Enter your specialization"),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: SinUpWedget(
                   Controller: levelController, labelText: " Enter your level"),
             ),
@@ -241,8 +242,8 @@ class _EducationScreenState extends State<EducationScreen> {
                             socialcounter += 1;
                             RemoveEducation(educationlist[index].id!);
                           },
-                          child:
-                              Text('Delete', style: TextStyle(color: Colors.red)),
+                          child: Text('Delete',
+                              style: TextStyle(color: Colors.red)),
                         ),
                       ],
                     ),

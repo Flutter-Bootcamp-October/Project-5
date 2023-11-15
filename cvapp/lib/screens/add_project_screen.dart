@@ -15,13 +15,18 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 final Future<SharedPreferences> _prefs = SharedPreferences.getInstance();
 String? token;
+
 class ProjectScreen extends StatefulWidget {
-  const ProjectScreen({super.key, });
+  const ProjectScreen({
+    super.key,
+  });
   @override
   State<ProjectScreen> createState() => _ProjectScreenState();
 }
+
 class Item {
   String projectname;
   String description;
@@ -32,6 +37,7 @@ class Item {
       required this.description,
       required this.state});
 }
+
 class _ProjectScreenState extends State<ProjectScreen> {
   List<Item> items = [];
   List<getprjectmodel> projectlist = [];
@@ -51,7 +57,6 @@ class _ProjectScreenState extends State<ProjectScreen> {
     }
   }
 
-
   Future pushproject({required String token}) async {
     try {
       Map body = {
@@ -69,10 +74,8 @@ class _ProjectScreenState extends State<ProjectScreen> {
       if (response.statusCode == 200) {
         SkillsModel.fromJson(json.decode(response.body));
         isvalid = true;
-      } else {
-      }
-    } catch (e) {
-    }
+      } else {}
+    } catch (e) {}
   }
 
   @override
@@ -106,7 +109,8 @@ class _ProjectScreenState extends State<ProjectScreen> {
       print('Error fetching data: $e');
     }
   }
-   Future<void> RemoveProject(int id) async {
+
+  Future<void> RemoveProject(int id) async {
     var url = Uri.parse("https://bacend-fshi.onrender.com/user/delete/project");
     try {
       var response = await http.delete(url,
@@ -137,9 +141,8 @@ class _ProjectScreenState extends State<ProjectScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-                      SizedBox(height: 50),
-      
-             BackAndremove(context),
+            SizedBox(height: 50),
+            BackAndremove(context),
             SizedBox(height: 50),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -152,20 +155,19 @@ class _ProjectScreenState extends State<ProjectScreen> {
               thickness: 1,
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,top: 10),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 10),
               child: SinUpWedget(
                   Controller: projectnameController,
                   labelText: "  Enter your project name"),
             ),
-          
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
               child: SinUpWedget(
                   Controller: descriptionController,
                   labelText: "  Enter your description"),
             ),
             Padding(
-              padding: const EdgeInsets.only(left: 20,right: 20,top: 20),
+              padding: const EdgeInsets.only(left: 20, right: 20, top: 20),
               child: SinUpWedget(
                   Controller: stateController, labelText: "  Enter your state"),
             ),
@@ -194,30 +196,30 @@ class _ProjectScreenState extends State<ProjectScreen> {
                       children: [
                         Text(
                           'your project name : ${projectlist[index].name.toString()}',
-                          style: TextStyle(
-                              color:  Colors.white),
-                        ),SizedBox(height: 5,),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text(
                           'State : ${projectlist[index].state}',
-                          style: TextStyle(
-                              color:  Colors.white),
-                        ),SizedBox(height: 5,),
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        SizedBox(
+                          height: 5,
+                        ),
                         Text(
                           'Description : ${projectlist[index].description}',
-                          style: TextStyle(
-                              color:  Colors.white),
+                          style: TextStyle(color: Colors.white),
                         ),
-      
                         TextButton(
                           onPressed: () {
                             socialcounter += 1;
                             RemoveProject(projectlist[index].id!);
-                            setState(() {
-                              
-                            });
+                            setState(() {});
                           },
-                          child:
-                              Text('Delete', style: TextStyle(color: Colors.red)),
+                          child: Text('Delete',
+                              style: TextStyle(color: Colors.red)),
                         ),
                       ],
                     ),

@@ -58,119 +58,120 @@ class _SginInScreenState extends State<SginInScreen> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          SizedBox(
-            height: 50,
-          ),
-          WelcomeWidget("Login to CV app"),
-          SizedBox(
-            height: 20,
-          ),
-          CustomDivider(),
-          SizedBox(
-            height: 20,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                height: 20,
-              ),
-              SginInText(
-                  emaiilcontroller: emaiilcontroller, labelText: "Email"),
-              SizedBox(
-                height: 30,
-              ),
-              SginInText(
-                emaiilcontroller: passwordcontroller,
-                labelText: "Password",
-              ),
-              SizedBox(
-                height: 20,
-              ),
-              InkWell(
-                onTap: () async {
-                  await verifyOtp();
-                  if (isvaild == true) {
-                    Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => NavBar()));
-                  } else {
-                    showAboutDialog(
-                        context: context,
-                        children: [Text("please enter valid data")]);
-                  }
-                },
-                child: Container(
-                  width: 180,
-                  height: 55,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(40),
-                      color: Colors.black),
-                  child: Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 17,
-                          fontWeight: FontWeight.bold),
-                      textAlign: TextAlign.center,
-                    ),
-                  ),
+      body: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            SizedBox(
+              height: 50,
+            ),
+            WelcomeWidget("Login to CV app"),
+            SizedBox(
+              height: 20,
+            ),
+            CustomDivider(),
+            SizedBox(
+              height: 20,
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                SizedBox(
+                  height: 20,
                 ),
-              ),
-             
-              Stack(
-                children: [
-                  Container(
-                    width: 390,
-                    height: 260,
-                  ),
-                  Positioned(
-                    left: 170,
-                    top: 60,
-                    child: Container(
-                      alignment: Alignment.centerLeft,
-                      width: 300,
-                      height: 200,
-                      child: Image.asset(
-                        "lib\\assets\\imges\\img2.png",
-                        fit: BoxFit.contain,
+                SginInText(
+                    emaiilcontroller: emaiilcontroller, labelText: "Email"),
+                SizedBox(
+                  height: 30,
+                ),
+                SginInText(
+                  emaiilcontroller: passwordcontroller,
+                  labelText: "Password",
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+                InkWell(
+                  onTap: () async {
+                    await verifyOtp();
+                    if (isvaild == true) {
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (context) => NavBar()));
+                    } else {
+                      showAboutDialog(
+                          context: context,
+                          children: [Text("please enter valid data")]);
+                    }
+                  },
+                  child: Container(
+                    width: 180,
+                    height: 55,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(40),
+                        color: Colors.black),
+                    child: Padding(
+                      padding: const EdgeInsets.all(16),
+                      child: Text(
+                        "Login",
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 17,
+                            fontWeight: FontWeight.bold),
+                        textAlign: TextAlign.center,
                       ),
                     ),
                   ),
-                  Positioned(
-                      top: 50,
-                      left: 50,
-                      child: Text(
-                        "Dont have an account?",
-                        style: TextStyle(fontSize: 19, color: Colors.white),
-                      )),
-                  Positioned(
-                      top: 77,
-                      left: 130,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => RegisterScreen()));
-                        },
-                        child: Text(
-                          "Sign up",
-                          style: TextStyle(
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black),
+                ),
+                Stack(
+                  children: [
+                    Container(
+                      width: 390,
+                      height: 350,
+                    ),
+                    Positioned(
+                      left: 170,
+                      top: 110,
+                      child: Container(
+                        alignment: Alignment.centerLeft,
+                        width: 300,
+                        height: 200,
+                        child: Image.asset(
+                          "lib\\assets\\imges\\img2.png",
+                          fit: BoxFit.contain,
                         ),
-                      ))
-                ],
-              )
-            ],
-          )
-        ],
+                      ),
+                    ),
+                    Positioned(
+                        top: 50,
+                        left: 50,
+                        child: Text(
+                          "Dont have an account?",
+                          style: TextStyle(fontSize: 19, color: Colors.white),
+                        )),
+                    Positioned(
+                        top: 77,
+                        left: 130,
+                        child: TextButton(
+                          onPressed: () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegisterScreen()));
+                          },
+                          child: Text(
+                            "Sign up",
+                            style: TextStyle(
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                          ),
+                        ))
+                  ],
+                )
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

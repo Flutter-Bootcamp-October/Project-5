@@ -94,12 +94,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       resizeToAvoidBottomInset: false,
       backgroundColor: Color(0xff8C5CB3),
       body: SingleChildScrollView(
         child: Column(
-          
           children: <Widget>[
             SizedBox(height: 40),
             WelcomeWidget("Login to CV app"),
@@ -170,15 +168,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 child: Text(errorMessage, style: TextStyle(color: Colors.red)),
               ),
             RegisterButton(_register),
-          
-             Stack(
+            Stack(
               children: [
                 Container(
                   width: 390,
                   height: 180,
                 ),
                 Positioned(bottom: 0, child: Costomimage()),
-              
                 Positioned(
                     top: 50,
                     left: 170,

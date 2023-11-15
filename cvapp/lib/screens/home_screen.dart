@@ -78,32 +78,30 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            
             SizedBox(height: 60),
-              Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                        InkWell(
-                          onTap: () {
-                            Navigator.pop(context);
-                          },
-                          child: Icon(Icons.arrow_back))
-                        ,Icon(Icons.logout)
-                    
-                    
-                      ],),
-                    ),
-
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
+                      child: Icon(Icons.arrow_back)),
+                  Icon(Icons.logout)
+                ],
+              ),
+            ),
             Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-
-           Container(width: 100,height: 100,child: Image.file(selectedimage),),
-                    // Image.network(userData['image']),
-                    SizedBox(height: 20,),
-                 
+                Container(
+                  width: 100,
+                  height: 100,
+                  child: Image.file(selectedimage),
+                ),
+                // Image.network(userData['image']),
               ],
             ),
             Divider(
