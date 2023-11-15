@@ -20,7 +20,7 @@ class _ProjectScreenState extends State<ProjectScreen> {
   void initState() {
     super.initState();
     getUserInfoMethode();
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(const Duration(seconds: 4), () {
       setState(() {
         _isLoading = false;
       });

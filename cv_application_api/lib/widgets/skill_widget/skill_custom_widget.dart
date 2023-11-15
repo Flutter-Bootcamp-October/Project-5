@@ -20,7 +20,7 @@ class _SkillCustomWidgetState extends State<SkillCustomWidget> {
   void initState() {
     super.initState();
     getUserInfoMethode();
-    Future.delayed(Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 4), () {
       setState(() {
         _isLoading = false;
       });

@@ -54,8 +54,16 @@ class _AddSkillScreenState extends State<AddSkillScreen> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+                      const TitleOfScreen(
+                        title: 'My Skill',
+                        titleFontSize: 30,
+                        titleletterSpacing: 3,
+                        titlefontWeight: FontWeight.w300,
+                        titleColor: appWhite,
+                      ),
+                      height20,
                       Container(
-                        height: 300,
+                        height: 270,
                         width: 300,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
@@ -66,13 +74,6 @@ class _AddSkillScreenState extends State<AddSkillScreen> {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const TitleOfScreen(
-                                title: 'Add Skill',
-                                titleFontSize: 30,
-                                titleletterSpacing: 3,
-                                titlefontWeight: FontWeight.w300,
-                                titleColor: app3DarkGreen,
-                              ),
                               height14,
                               const TitleOfScreen(
                                 title: 'Skill :',
@@ -90,7 +91,8 @@ class _AddSkillScreenState extends State<AddSkillScreen> {
                               ),
                               height14,
                               Padding(
-                                padding: const EdgeInsets.only(top: 30, left: 78),
+                                padding:
+                                    const EdgeInsets.only(top: 30, left: 78),
                                 child: CustomButtom(
                                   textButtom: 'Save',
                                   onPressed: () async {

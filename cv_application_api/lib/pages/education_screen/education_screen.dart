@@ -20,7 +20,7 @@ class _EducationScreenState extends State<EducationScreen> {
   void initState() {
     super.initState();
     getUserInfoMethode();
-    Future.delayed(const Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 4), () {
       setState(() {
         _isLoading = false;
       });

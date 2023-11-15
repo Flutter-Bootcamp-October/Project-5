@@ -86,8 +86,16 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    const TitleOfScreen(
+                      title: 'Update My Account',
+                      titleFontSize: 30,
+                      titleletterSpacing: 3,
+                      titlefontWeight: FontWeight.w300,
+                      titleColor: appWhite,
+                    ),
+                    height14,
                     Container(
-                      height: 800,
+                      height: 650,
                       width: 300,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
@@ -98,14 +106,6 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            const TitleOfScreen(
-                              title: 'Update My Account',
-                              titleFontSize: 30,
-                              titleletterSpacing: 3,
-                              titlefontWeight: FontWeight.w300,
-                              titleColor: app3DarkGreen,
-                            ),
-                            height14,
                             const TitleOfScreen(
                               title: 'Name :',
                               titleFontSize: 18,
@@ -176,7 +176,7 @@ class _UpdateProfileScreen extends State<UpdateProfileScreen> {
                             height4,
                             UpdateInfoCustomTextField(
                               textController: birthdayController,
-                              hintText: 'DD/MM/YYYY',
+                              hintText: 'MM/DD/YYYY',
                               obscureText: false,
                               keyboardType: TextInputType.datetime,
                             ),
