@@ -1,0 +1,32 @@
+name: resume_app
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.1.5 <4.0.0'
+
+dependencies:
+  http: ^1.1.0
+  image_picker: ^1.0.4
+  shared_preferences: ^2.2.2
+  badges: ^3.1.2
+  pdf: ^3.10.6
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+
+flutter:
+  assets:
+    - assets/
+  fonts:
+  - family: Oswald
+    fonts:
+      - asset: assets/fonts/Oswald-Regular.ttf
+      - asset: assets/fonts/Oswald-Bold.ttf
+  uses-material-design: true
