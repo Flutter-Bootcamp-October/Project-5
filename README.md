@@ -52,6 +52,8 @@ Education Screen
 
 ![add_edu_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/4daaa355-5e11-4e3f-a5d1-546ce0f54d99)
 
+![final edu](https://github.com/rahafwmaq/Project-5/assets/86989761/2a9571ed-12f2-4fcf-a8e5-fb83afb9ab3c)
+
 
 Project Screen 
 
@@ -60,6 +62,8 @@ Project Screen
 ![addProject_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/711298a8-a889-439a-bfe9-2ba05ad81e34)
 
 ![finaladdProject_cvapp](https://github.com/rahafwmaq/Project-5/assets/86989761/2203509a-b6dc-4038-abea-3d41fd6ef27c)
+
+i have delete one project 
 
 ![deleteproject_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/23b1e3a3-9ed7-4946-9085-8118a3788234)
 
