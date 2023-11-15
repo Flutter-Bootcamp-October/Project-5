@@ -1,8 +1,9 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cv_application_api/constant/constant.dart';
-import 'package:cv_application_api/pages/login_screen.dart';
+import 'package:cv_application_api/pages/login_screen/login_screen.dart';
 import 'package:cv_application_api/pages/navbar_screen.dart';
+import 'package:cv_application_api/widgets/background_widget/background_white_container.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -22,7 +23,7 @@ class _CheckAuthScreenState extends State<CheckAuthScreen> {
 
   _check() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-   // print(prefs.getString("token"));
+    // print(prefs.getString("token"));
     if (prefs.containsKey("token")) {
       final String token = prefs.getString("token")!;
       if (token.isNotEmpty) {
@@ -61,16 +62,22 @@ class _CheckAuthScreenState extends State<CheckAuthScreen> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SizedBox(
-            height: MediaQuery.of(context).size.height,
-            width: MediaQuery.of(context).size.width,
-            child: const Center(
-              child: CircularProgressIndicator(
-                color: app2DarkGreen,
+        resizeToAvoidBottomInset: false,
+        body: Stack(
+          children: [
+            const BackgroundWhiteContainer(),
+            SizedBox(
+              height: MediaQuery.of(context).size.height,
+              width: MediaQuery.of(context).size.width,
+              child: const Center(
+                child: CircularProgressIndicator(
+                  color: app2DarkGreen,
+                ),
               ),
             ),
-          )),
+          ],
+        ),
+      ),
     );
   }
 }

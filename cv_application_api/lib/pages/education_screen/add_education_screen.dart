@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:cv_application_api/constant/constant.dart';
-import 'package:cv_application_api/model/education.dart';
+import 'package:cv_application_api/model/education_model.dart';
 import 'package:cv_application_api/pages/navbar_screen.dart';
 import 'package:cv_application_api/services/api/education_api.dart';
 import 'package:cv_application_api/widgets/background_widget/background_image.dart';
@@ -10,7 +10,6 @@ import 'package:cv_application_api/widgets/custom_widget_for_all_screens/custom_
 import 'package:cv_application_api/widgets/custom_widget_for_all_screens/title_of_screen.dart';
 import 'package:cv_application_api/widgets/profile_widget/update_info_custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
 class AddEducationScreen extends StatefulWidget {
   const AddEducationScreen({super.key});
@@ -20,7 +19,6 @@ class AddEducationScreen extends StatefulWidget {
 }
 
 class _AddEducationScreenState extends State<AddEducationScreen> {
-  Education? user;
   TextEditingController collegeController = TextEditingController();
   TextEditingController universityController = TextEditingController();
   TextEditingController specializationController = TextEditingController();
@@ -148,13 +146,13 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                                         enabledBorder: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 width: 2,
                                                 color: appGreenTrans)),
                                         focusedBorder: OutlineInputBorder(
                                             borderRadius:
                                                 BorderRadius.circular(20),
-                                            borderSide: BorderSide(
+                                            borderSide: const BorderSide(
                                                 width: 2,
                                                 color: appGreenTrans))),
                                     value: selectedLevel,
@@ -184,7 +182,7 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                                 keyboardType: TextInputType.name,
                               ),
                               Padding(
-                                padding: EdgeInsets.only(top: 30, left: 78),
+                                padding: const EdgeInsets.only(top: 30, left: 78),
                                 child: CustomButtom(
                                   textButtom: 'Save',
                                   onPressed: () async {
@@ -214,7 +212,7 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                                             "college": collegeController.text,
                                             "specialization":
                                                 specializationController.text,
-                                            "level": selectedLevel
+                                            "level": selectedLevel.toString()
                                           });
 
                                       if (response?.codeState == 200) {

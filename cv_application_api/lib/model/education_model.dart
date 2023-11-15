@@ -1,16 +1,16 @@
 class Education {
   String? msg;
-  List<EducationData>? education_data;
+  List<EducationData>? educationData;
   int? codeState;
 
-  Education({this.msg, this.education_data, this.codeState});
+  Education({this.msg, this.educationData, this.codeState});
 
   Education.fromJson(Map<String, dynamic> json) {
     msg = json['msg'];
     if (json['data'] != null) {
-      education_data = <EducationData>[];
+      educationData = <EducationData>[];
       json['data'].forEach((v) {
-        education_data!.add(new EducationData.fromJson(v));
+        educationData!.add(new EducationData.fromJson(v));
       });
     }
     codeState = json['codeState'];
@@ -19,8 +19,8 @@ class Education {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['msg'] = this.msg;
-    if (this.education_data != null) {
-      data['data'] = this.education_data!.map((v) => v.toJson()).toList();
+    if (this.educationData != null) {
+      data['data'] = this.educationData!.map((v) => v.toJson()).toList();
     }
     data['codeState'] = this.codeState;
     return data;
