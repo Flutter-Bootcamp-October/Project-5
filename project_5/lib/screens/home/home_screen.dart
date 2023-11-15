@@ -1,7 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
-import 'package:project_5/models/about_model.dart';
 import 'package:project_5/screens/about/about_screen.dart';
 import 'package:project_5/screens/auth/signin_screen.dart';
 import 'package:project_5/screens/education/education_screen.dart';
@@ -29,7 +28,7 @@ class _HomeScreenState extends State<HomeScreen> {
     super.initState();
     // get about data to show and update the screen
     //load token
-    _loadAboutScreen();
+    
   }
 
   @override
@@ -43,9 +42,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 final SharedPreferences pref =
                     await SharedPreferences.getInstance();
                 final token = pref.getString('token');
-                // final About res;
-                // res = await apimethod.deleteAccount(
-                //     token: token!, aboutId: res.data.id.toString());
                 pref.remove(token!);
                 setState(() {});
                 Navigator.push(
@@ -205,16 +201,4 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  _loadAboutScreen() async {
-    //get about
-
-    try {
-      final SharedPreferences pref = await SharedPreferences.getInstance();
-      final token = pref.getString('token');
-      final About res = await apimethod.getAbout();
-    } on FormatException catch (error) {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text(error.message.toString())));
-    }
-  }
 }

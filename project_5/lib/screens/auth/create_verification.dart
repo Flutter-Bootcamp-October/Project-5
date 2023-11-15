@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/verification_model.dart';
+import 'package:project_5/screens/components/button_widget.dart';
 import 'package:project_5/screens/home/home_screen.dart';
 import 'package:project_5/screens/auth/signin_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -23,6 +24,23 @@ class _AccountVerificationState extends State<AccountVerification> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: Text(
+          "OTP",
+          style: TextStyle(color: Colors.black, fontWeight: FontWeight.w600),
+        ),
+        leading: InkWell(
+          onTap: () => Navigator.pop(context),
+          child: Icon(
+            Icons.arrow_back_ios_new,
+            color: Colors.blue.shade900,
+          ),
+        ),
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -42,8 +60,9 @@ class _AccountVerificationState extends State<AccountVerification> {
             const SizedBox(
               height: 10,
             ),
-            ElevatedButton(
-              onPressed: () async {
+            ButtonWidget(
+              textEntry: "submit OTP",
+              onpress: () async {
                 final apiMethod = ApiMethods();
                 if (otpController.text.isNotEmpty) {
                   final Verification res =
@@ -73,7 +92,6 @@ class _AccountVerificationState extends State<AccountVerification> {
                   }
                 }
               },
-              child: const Text("submit OTP"),
             ),
           ],
         ),

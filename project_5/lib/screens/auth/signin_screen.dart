@@ -32,6 +32,7 @@ class _SigninScreenState extends State<SigninScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: true,
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
@@ -102,9 +103,7 @@ class _SigninScreenState extends State<SigninScreen> {
               ),
             ],
           ),
-          SizedBox(
-            height: 120,
-          ),
+          Spacer(),
           TextButton(
             onPressed: () {
               Navigator.push(
@@ -112,7 +111,10 @@ class _SigninScreenState extends State<SigninScreen> {
                   MaterialPageRoute(
                       builder: (context) => const RegisterScreen()));
             },
-            child: const Text("create account"),
+            child: const Text(
+              "create account",
+              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+            ),
           ),
         ],
       ),
