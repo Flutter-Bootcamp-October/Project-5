@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ButtonWidget extends StatelessWidget {
-  ButtonWidget({
+class DeleteButtonWidget extends StatelessWidget {
+  const DeleteButtonWidget({
     super.key,
     required this.textEntry,
     required this.onpress,
@@ -17,8 +17,8 @@ class ButtonWidget extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onpress,
         style: ButtonStyle(
-            backgroundColor: MaterialStatePropertyAll(
-              Color(0xCE0D48A1),
+            backgroundColor: const MaterialStatePropertyAll(
+              Color.fromARGB(255, 174, 12, 0),
             ),
             shape: MaterialStateProperty.all(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30)))),

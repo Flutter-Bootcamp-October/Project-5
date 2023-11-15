@@ -3,10 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:project_5/api_methods/api_methods.dart';
 import 'package:project_5/models/about_model.dart';
 import 'package:project_5/screens/about/about_screen.dart';
-import 'package:project_5/screens/auth/login_screen.dart';
+import 'package:project_5/screens/auth/signin_screen.dart';
 import 'package:project_5/screens/education/education_screen.dart';
 import 'package:project_5/screens/project/project_screen.dart';
 import 'package:project_5/screens/skill/skill_screen.dart';
+import 'package:project_5/screens/social/social_screen.dart';
+import 'package:project_5/screens/users/users.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/category_containers.dart';
@@ -17,7 +19,6 @@ class HomeScreen extends StatefulWidget {
   @override
   State<HomeScreen> createState() => _HomeScreenState();
 }
-
 
 final apimethod = ApiMethods();
 
@@ -50,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => const LoginScreen()));
+                        builder: (context) => const SigninScreen()));
               } on FormatException catch (error) {
                 ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(content: Text(error.message.toString())));
@@ -73,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
             Row(
               children: [
-                Column(
+                const Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
@@ -89,21 +90,15 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
                 const Spacer(),
-
                 Image.asset(
                   "assets/user.png",
                   height: 55,
                 ),
-                // Image.file(
-                //   imageGet?.readAsBytes() as File,
-                //   width: 85,
-                //   height: 85,
-                // ),
               ],
             ),
 
             const SizedBox(
-              height: 115,
+              height: 65,
             ),
 
             Row(
@@ -117,7 +112,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           builder: (context) => const AboutScreen()),
                     );
                   },
-                  child: CategoryContainers(
+                  child: const CategoryContainers(
                     title: 'about me',
                     backgroundColor: Color.fromARGB(148, 68, 137, 255),
                     emoji: "👩🏻",
@@ -126,9 +121,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 InkWell(
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => EducationScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const EducationScreen()),
                   ),
-                  child: CategoryContainers(
+                  child: const CategoryContainers(
                     title: 'Education',
                     backgroundColor: Color.fromARGB(212, 126, 72, 53),
                     emoji: "🏬",
@@ -145,9 +141,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 InkWell(
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => SkillsScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const SkillsScreen()),
                   ),
-                  child: CategoryContainers(
+                  child: const CategoryContainers(
                     title: 'skills',
                     backgroundColor: Color.fromARGB(186, 244, 67, 54),
                     emoji: '⚒',
@@ -156,9 +153,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 InkWell(
                   onTap: () => Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => ProjectScreen()),
+                    MaterialPageRoute(
+                        builder: (context) => const ProjectScreen()),
                   ),
-                  child: CategoryContainers(
+                  child: const CategoryContainers(
                     title: 'projects',
                     backgroundColor: Color.fromARGB(179, 3, 191, 22),
                     emoji: "📚",
@@ -166,46 +164,41 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ],
             ),
-            SizedBox(
-              height: 20,
+            const SizedBox(
+              height: 10,
             ),
+
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                // call api upload image method
-
-                ElevatedButton(
-                  onPressed: () async {
-                    final ImagePicker picker = ImagePicker();
-                    // XFile? ImageFile =
-                    //     await picker.pickImage(source: ImageSource.gallery);
-                    // imageGet = File(ImageFile!.path);
-                    setState(() {});
+                InkWell(
+                  onTap: () {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const SocialScreen()),
+                    );
                   },
-                  child: const Text("upload image "),
+                  child: const CategoryContainers(
+                    title: 'Social',
+                    backgroundColor: Color.fromARGB(172, 87, 44, 29),
+                    emoji: "📱",
+                  ),
                 ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("edit about "),
-                ),
-                ElevatedButton(
-                  onPressed: () {},
-                  child: const Text("delete account "),
+                InkWell(
+                  onTap: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const UsersScreen()),
+                  ),
+                  child: const CategoryContainers(
+                    title: 'Users',
+                    backgroundColor: Color.fromARGB(210, 193, 158, 75),
+                    emoji: "👨‍👩‍👧‍👦",
+                  ),
                 ),
               ],
-            )
-
-            /**
-             * profile image
-             * 
-             * name
-             * title position
-             *
-             * information: phone, location, birthday
-             * about paragraph
-             * 
-             * at the end creat acount date
-             */
+            ),
           ],
         ),
       ),
