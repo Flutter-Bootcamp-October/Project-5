@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:resume_app/consts/colors.dart';
 import 'package:resume_app/views/about_screen.dart';
+import 'package:resume_app/views/contacts_screen.dart';
 import 'package:resume_app/views/education_screen.dart';
 import 'package:resume_app/views/skills_screen.dart';
 
@@ -20,7 +21,7 @@ class _NavigationState extends State<NavigationScreen> {
     const EducationScreen(),
     const SkillScreen(),
     const SkillScreen(),
-    const SkillScreen()
+    const SocialScreen()
   ];
   @override
   Widget build(BuildContext context) {

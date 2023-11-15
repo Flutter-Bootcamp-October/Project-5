@@ -48,7 +48,7 @@ class EducationServ {
   deleteEducation({required String token, required String educationID}) async {
     var url = Uri.https(_api, _delete);
     var response = await http.delete(url,
-        body: json.encode({"id_project": educationID}),
+        body: json.encode({"id_education": educationID}),
         headers: {"authorization": token});
     print('Response status: ${response.statusCode}');
     print('Response body: ${response.body}');

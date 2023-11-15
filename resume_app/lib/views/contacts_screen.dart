@@ -1,22 +1,34 @@
 import 'package:flutter/material.dart';
+import 'package:resume_app/consts/decotation.dart';
 import 'package:resume_app/globals/global.dart';
 import 'package:resume_app/main.dart';
-import 'package:resume_app/models/skill_model.dart';
-import 'package:resume_app/services/skill_services.dart';
+import 'package:resume_app/models/social_model.dart';
+import 'package:resume_app/services/social_services.dart';
 import 'package:resume_app/views/signin_screen.dart';
-import 'package:resume_app/widgets/Skill_widget.dart';
 import 'package:resume_app/widgets/app_bg.dart';
 import 'package:resume_app/widgets/app_container.dart';
+import 'package:resume_app/widgets/social_widget.dart';
 
-class SkillScreen extends StatefulWidget {
-  const SkillScreen({super.key});
+class SocialScreen extends StatefulWidget {
+  const SocialScreen({super.key});
 
   @override
-  State<SkillScreen> createState() => SkillScreenState();
+  State<SocialScreen> createState() => SocialScreenState();
 }
 
-class SkillScreenState extends State<SkillScreen> {
+class SocialScreenState extends State<SocialScreen> {
   late String token;
+  List<String> mediaList = [
+    'facebook',
+    'youtube',
+    'whatsapp',
+    'instagram',
+    'twitter',
+    'tiktok',
+    'telegram',
+    'snapchat',
+    'other'
+  ];
   @override
   void initState() {
     token = getToken();
@@ -41,34 +53,66 @@ class SkillScreenState extends State<SkillScreen> {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text("Skills",
+                  const Text("Social Media contacts",
                       style: TextStyle(color: Colors.black, fontSize: 40)),
                   IconButton(
                       onPressed: () async {
-                        late Skill newSkill;
+                        late Social newSocial;
                         TextEditingController customController =
+                            TextEditingController();
+                        TextEditingController custom2Controller =
                             TextEditingController();
                         showDialog(
                             context: context,
                             builder: (context) {
                               return AlertDialog(
-                                title: const Text("Enter Skill "),
-                                content: TextField(
-                                  controller: customController,
+                                title: const Text("Add New Social Contacts :"),
+                                content: Column(
+                                  children: [
+                                    TextField(
+                                      decoration: returnDec(
+                                          hint: "enter user name",
+                                          labelText: "Username"),
+                                      controller: customController,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    const Wrap(children: [
+                                      Text(
+                                          "Insert from the following: facebook,youtube, whatsapp, instagram, twitter, tiktok, telegram, snapchat,other")
+                                    ]),
+                                    const SizedBox(height: 10),
+                                    TextField(
+                                      decoration: returnDec(
+                                          hint: "snapchat",
+                                          labelText: "Social"),
+                                      controller: custom2Controller,
+                                    ),
+                                  ],
                                 ),
                                 actions: [
                                   MaterialButton(
                                     elevation: 5.0,
                                     child: const Text("add"),
                                     onPressed: () async {
-                                      if (customController.text.isNotEmpty) {
+                                      if (customController.text.isNotEmpty &&
+                                          custom2Controller.text.isNotEmpty) {
+                                        if (mediaList
+                                            .contains(custom2Controller.text)) {
+                                          ScaffoldMessenger.of(context)
+                                              .showSnackBar(SnackBar(
+                                                  content: Text(
+                                                      "please choose from the following options only"
+                                                          .toString())));
+                                        }
                                         try {
-                                          newSkill = Skill.fromJson(
-                                              {"skill": customController.text});
-                                          await SkillServ().addSkill(
-                                              token: token, skill: newSkill);
-                                          userSkills = await SkillServ()
-                                              .getSkills(token: getToken());
+                                          newSocial = Social.fromJson({
+                                            "username": customController.text,
+                                            "social": ""
+                                          });
+                                          await SocialServ().addSocials(
+                                              token: token, account: newSocial);
+                                          userSocials = await SocialServ()
+                                              .getSocials(token: getToken());
                                           setState(() {});
                                           Navigator.of(context).pop();
                                         } on FormatException catch (error) {
@@ -94,7 +138,7 @@ class SkillScreenState extends State<SkillScreen> {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(SnackBar(
                                                 content: Text(
-                                                    "please fill out required feild to add skill"
+                                                    "please fill out all required feilds"
                                                         .toString())));
                                       }
                                     },
@@ -109,8 +153,8 @@ class SkillScreenState extends State<SkillScreen> {
             ),
             Center(
               child: Wrap(
-                  children: List.generate(userSkills.length,
-                      (index) => SkillWidget(skill: userSkills[index]))),
+                  children: List.generate(userSocials.length,
+                      (index) => SocialWidget(social: userSocials[index]))),
             ),
           ]))
     ]);

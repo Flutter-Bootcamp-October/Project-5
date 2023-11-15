@@ -1,26 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:resume_app/globals/global.dart';
 import 'package:resume_app/main.dart';
-import 'package:resume_app/models/skill_model.dart';
 import 'package:badges/badges.dart' as badges;
-import 'package:resume_app/services/skill_services.dart';
+import 'package:resume_app/models/social_model.dart';
+import 'package:resume_app/services/social_services.dart';
 import 'package:resume_app/views/signin_screen.dart';
 import 'package:resume_app/views/skills_screen.dart';
 
 bool showDelete = false;
 
-class SkillWidget extends StatefulWidget {
-  const SkillWidget({
+class SocialWidget extends StatefulWidget {
+  const SocialWidget({
     super.key,
-    required this.skill,
+    required this.social,
   });
-  final Skill skill;
+  final Social social;
 
   @override
-  State<SkillWidget> createState() => _SkillWidgetState();
+  State<SocialWidget> createState() => SocialWidgetState();
 }
 
-class _SkillWidgetState extends State<SkillWidget> {
+class SocialWidgetState extends State<SocialWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -28,9 +28,9 @@ class _SkillWidgetState extends State<SkillWidget> {
       child: InkWell(
         onTap: () async {
           try {
-            await SkillServ().deleteSkill(
-                token: getToken(), skillID: widget.skill.id!.toString());
-            userSkills = await SkillServ().getSkills(token: getToken());
+            await SocialServ().deleteSocial(
+                token: getToken(), socialID: widget.social.id!.toString());
+            userSocials = await SocialServ().getSocials(token: getToken());
             showDelete = false;
             context
                 .findAncestorStateOfType<SkillScreenState>()!
@@ -69,7 +69,7 @@ class _SkillWidgetState extends State<SkillWidget> {
                 height: 120,
                 child: Center(
                   child: Text(
-                    widget.skill.skill,
+                    widget.social.username,
                     style: const TextStyle(color: Colors.black, fontSize: 16),
                   ),
                 )),

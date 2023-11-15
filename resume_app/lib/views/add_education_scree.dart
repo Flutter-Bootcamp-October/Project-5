@@ -5,7 +5,8 @@ import 'package:resume_app/globals/global.dart';
 import 'package:resume_app/main.dart';
 import 'package:resume_app/models/education_model.dart';
 import 'package:resume_app/services/education_services.dart';
-import 'package:resume_app/views/education_screen.dart';
+import 'package:resume_app/views/navigation_bar.dart';
+import 'package:resume_app/views/signin_screen.dart';
 
 class AddEducationScreen extends StatefulWidget {
   const AddEducationScreen({super.key});
@@ -143,7 +144,6 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
               ElevatedButton(
                   child: const Text("add"),
                   onPressed: () async {
-                    print("in Here");
                     if (speController.text.isNotEmpty &&
                         collegeController.text.isNotEmpty &&
                         uniController.text.isNotEmpty &&
@@ -155,14 +155,32 @@ class _AddEducationScreenState extends State<AddEducationScreen> {
                           college: collegeController.text,
                           specialization: speController.text,
                           level: level);
-                      userEducation.add(newEdu);
-                      await EducationServ()
-                          .addEducation(token: getToken(), edu: newEdu);
+                      try {
+                        await EducationServ()
+                            .addEducation(token: getToken(), edu: newEdu);
+                        userEducation = await EducationServ()
+                            .getEducation(token: getToken());
+                      } on FormatException catch (error) {
+                        if (error.message.toString().contains("token") ||
+                            error.message.toString().contains("Token")) {
+                          Navigator.pushAndRemoveUntil(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => const SignInScreen()),
+                              ModalRoute.withName("/screen"));
+                        }
+                        ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(content: Text(error.message.toString())));
+                      }
                       Navigator.pushAndRemoveUntil(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => const EducationScreen()),
+                              builder: (context) => const NavigationScreen()),
                           ModalRoute.withName("/screen"));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          content: Text("please fill out all required feilds"
+                              .toString())));
                     }
                   })
             ],

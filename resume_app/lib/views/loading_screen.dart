@@ -10,7 +10,6 @@ import 'package:resume_app/services/social_services.dart';
 import 'package:resume_app/views/navigation_bar.dart';
 import 'package:resume_app/views/signin_screen.dart';
 
-
 class LoadingScreen extends StatefulWidget {
   const LoadingScreen({super.key});
   @override
@@ -31,7 +30,7 @@ class ProfileScreenState extends State<LoadingScreen> {
         future: _loadInfo(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return const NavigationScreen();
+            return NavigationScreen();
           } else if (snapshot.hasError) {
             return const Center(child: Text("Error while getting data"));
           }

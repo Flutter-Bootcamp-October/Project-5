@@ -5,6 +5,7 @@ import 'package:resume_app/models/education_model.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:resume_app/services/education_services.dart';
 import 'package:resume_app/views/education_screen.dart';
+import 'package:resume_app/views/signin_screen.dart';
 
 bool showDelete = false;
 
@@ -26,9 +27,23 @@ class EducationWidgetState extends State<EducationWidget> {
       padding: const EdgeInsets.all(10.0),
       child: InkWell(
         onTap: () async {
-          await EducationServ().deleteEducation(
-              token: getToken(), educationID: widget.edu.id!.toString());
-          userEducation.remove(widget.edu);
+          try {
+            await EducationServ().deleteEducation(
+                token: getToken(), educationID: widget.edu.id!.toString());
+            userEducation =
+                await EducationServ().getEducation(token: getToken());
+          } on FormatException catch (error) {
+            if (error.message.toString().contains("token") ||
+                error.message.toString().contains("Token")) {
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
+                  ModalRoute.withName("/screen"));
+            }
+            ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text(error.message.toString())));
+          }
+
           showDelete = false;
           context
               .findAncestorStateOfType<EducationScreenState>()!
@@ -52,16 +67,22 @@ class EducationWidgetState extends State<EducationWidget> {
                 decoration: BoxDecoration(
                     color: Colors.amber,
                     borderRadius: BorderRadius.circular(20)),
-                width: 200,
-                height: 200,
+                width: 250,
+                height: 250,
                 child: Center(
                   child: Column(
                     children: [
-                      const Icon(Icons.school_outlined, size: 50),
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Icon(
+                          Icons.school_outlined,
+                          size: 70,
+                        ),
+                      ),
                       Text(
                         widget.edu.level,
                         style:
-                            const TextStyle(color: Colors.black, fontSize: 20),
+                            const TextStyle(color: Colors.black, fontSize: 30),
                       ),
                       Text(
                         widget.edu.specialization,
@@ -69,7 +90,7 @@ class EducationWidgetState extends State<EducationWidget> {
                             const TextStyle(color: Colors.black, fontSize: 18),
                       ),
                       Text(
-                        widget.edu.specialization,
+                        widget.edu.college,
                         style:
                             const TextStyle(color: Colors.black, fontSize: 16),
                       ),
