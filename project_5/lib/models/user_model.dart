@@ -56,17 +56,17 @@ class Data {
   late final List<Projects> projects;
 
   Data.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    idAuth = json['id_auth'] ?? '';
-    name = json['name'] ?? '';
-    createAt = json['create_at'] ?? '';
-    titlePosition = json['title_position'] ?? '';
-    phone = json['phone'] ?? '';
-    email = json['email'] ?? '';
-    location = json['location'] ?? '';
-    birthday = json['birthday'] ?? '';
-    about = json['about'] ?? '';
-    image = json['image'] ?? '';
+    id = json['id'] ?? "";
+    idAuth = json['id_auth'] ?? "";
+    name = json['name'] ?? "";
+    createAt = json['create_at'] ?? "";
+    titlePosition = json['title_position'] ?? "";
+    phone = json['phone'] ?? "";
+    email = json['email'] ?? "";
+    location = json['location'] ?? "";
+    birthday = json['birthday'] ?? "";
+    about = json['about'] ?? "";
+    image = json['image'] ?? "";
     skills = List.from(json['skills']).map((e) => Skills.fromJson(e)).toList();
     socialMedia = List.from(json['social_media'])
         .map((e) => SocialMedia.fromJson(e))
@@ -109,9 +109,9 @@ class Skills {
   late final String skill;
 
   Skills.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    userId = json['user_id'] ?? 0;
-    skill = json['skill'] ?? '';
+    id = json['id'];
+    userId = json['user_id'];
+    skill = json['skill'];
   }
 
   Map<String, dynamic> toJson() {
@@ -136,10 +136,10 @@ class SocialMedia {
   late final String social;
 
   SocialMedia.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    userId = json['user_id'] ?? '';
-    username = json['username'] ?? '';
-    social = json['social'] ?? '';
+    id = json['id'];
+    userId = json['user_id'];
+    username = json['username'];
+    social = json['social'];
   }
 
   Map<String, dynamic> toJson() {
@@ -171,13 +171,13 @@ class Education {
   late final String level;
 
   Education.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    userId = json['user_id'] ?? 0;
-    graduationDate = json['graduation_date'] ?? '';
-    university = json['university'] ?? '';
-    college = json['college'] ?? '';
-    specialization = json['specialization'] ?? '';
-    level = json['level'] ?? '';
+    id = json['id'];
+    userId = json['user_id'];
+    graduationDate = json['graduationDate'] ?? "";
+    university = json['university'] ?? "";
+    college = json['college'] ?? "";
+    specialization = json['specialization'] ?? "";
+    level = json['level'] ?? "";
   }
 
   Map<String, dynamic> toJson() {
@@ -208,11 +208,11 @@ class Projects {
   late final String state;
 
   Projects.fromJson(Map<String, dynamic> json) {
-    id = json['id'] ?? 0;
-    userId = json['user_id'] ?? 0;
-    name = json['name'] ?? '';
-    description = json['description'] ?? '';
-    state = json['state'] ?? '';
+    id = json['id'];
+    userId = json['user_id'];
+    name = json['name'];
+    description = json['description'];
+    state = json['state'];
   }
 
   Map<String, dynamic> toJson() {

@@ -8,7 +8,7 @@ import 'package:project_5/screens/education/education_screen.dart';
 import 'package:project_5/screens/project/project_screen.dart';
 import 'package:project_5/screens/skill/skill_screen.dart';
 import 'package:project_5/screens/social/social_screen.dart';
-import 'package:project_5/screens/users/users.dart';
+import 'package:project_5/screens/users/users_screen.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'components/category_containers.dart';
