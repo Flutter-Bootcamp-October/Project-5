@@ -15,10 +15,7 @@ class GridViewHome extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        Navigator.push(
-            context, MaterialPageRoute(builder: (context) => page()));
-      },
+      onTap: page,
       child: Container(
         width: 20,
         height: 10,

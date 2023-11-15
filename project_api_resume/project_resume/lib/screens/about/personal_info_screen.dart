@@ -2,7 +2,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:project_resume/networking/api_service.dart';
 
@@ -31,20 +30,20 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
 
   final conAbout = TextEditingController();
   File? selectImage;
-  String userImg = "";
-  Future<dynamic> imageUser() async {
-    final picker = ImagePicker();
-    final userImage = await picker.pickImage(source: ImageSource.gallery);
-    if (userImage != null) {
-      selectImage = File(userImage.path);
+  // String userImg = "";
+  // Future<dynamic> imageUser() async {
+  //   final picker = ImagePicker();
+  //   final userImage = await picker.pickImage(source: ImageSource.gallery);
+  //   if (userImage != null) {
+  //     selectImage = File(userImage.path);
 
-      setState(() {
-        selectImage;
-      });
-      await userUploadImage(userImge: selectImage!);
-    }
-    return null;
-  }
+  //     setState(() {
+  //       selectImage;
+  //     });
+  //     await userUploadImage(userImge: selectImage!);
+  //   }
+  //   return null;
+  // }
 
   final DateFormat _dateFormatter = DateFormat('yyyy/MM/dd');
   DateTime _date = DateTime.now();
@@ -77,9 +76,9 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
       conBirthday.text = about.data!.birthday.toString();
       conAbout.text = about.data!.about.toString();
       if (about.data!.image != null) {
-        setState(() {
-          userImg = about.data!.image!;
-        });
+        // setState(() {
+        //   userImg = about.data!.image!;
+        // });
       }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
@@ -114,24 +113,24 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
               ),
               Column(
                 children: [
-                  GestureDetector(
-                    onTap: () {
-                      imageUser();
-                    },
-                    onLongPress: () {
-                      print(userImg);
-                    },
-                    child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
-                      child: selectImage == null
-                          ? Image.network(userImg)
-                          : Image.file(
-                              selectImage!,
-                              height: 120,
-                              fit: BoxFit.fitHeight,
-                            ),
-                    ),
-                  ),
+                  // GestureDetector(
+                  //   onTap: () {
+                  //     imageUser();
+                  //   },
+                  //   onLongPress: () {
+                  //     print(userImg);
+                  //   },
+                  //   child: ClipRRect(
+                  //     borderRadius: BorderRadius.circular(12),
+                  //     child: selectImage == null
+                  //         ? Image.network(userImg)
+                  //         : Image.file(
+                  //             selectImage!,
+                  //             height: 120,
+                  //             fit: BoxFit.fitHeight,
+                  //           ),
+                  //   ),
+                  // ),
                   const SizedBox(
                     height: 10,
                   ),

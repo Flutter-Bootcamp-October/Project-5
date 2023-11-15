@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:project_resume/screens/about/personal_info_screen.dart';
 import 'package:project_resume/screens/education/education_screen.dart';
-import 'package:project_resume/screens/getUser/get_user_screen.dart';
 import 'package:project_resume/screens/project/project_screen.dart';
 import 'package:project_resume/screens/skills/skills_screen.dart';
 import 'package:project_resume/screens/social/social_screen.dart';
@@ -89,17 +88,17 @@ class HomeScreen extends StatelessWidget {
                     colorGridView: const Color.fromARGB(255, 56, 173, 182),
                     iconGridView: Icons.school_sharp,
                   ),
-                  GridViewHome(
-                    pageName: 'Users',
-                    page: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const GetUserScreen()));
-                    },
-                    colorGridView: const Color.fromARGB(255, 161, 38, 38),
-                    iconGridView: Icons.groups,
-                  ),
+                  // GridViewHome(
+                  //   pageName: 'Users',
+                  //   page: () {
+                  //     Navigator.push(
+                  //         context,
+                  //         MaterialPageRoute(
+                  //             builder: (context) => const GetUserScreen()));
+                  //   },
+                  //   colorGridView: const Color.fromARGB(255, 161, 38, 38),
+                  //   iconGridView: Icons.groups,
+                  // ),
                 ],
               ),
             ),
