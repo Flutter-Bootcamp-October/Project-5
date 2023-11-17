@@ -19,6 +19,8 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
+  final _emailkey = GlobalKey<FormState>();
+  final _passwordkey = GlobalKey<FormState>();
   TextEditingController passwordController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   @override
@@ -44,11 +46,25 @@ class _SignInScreenState extends State<SignInScreen> {
                     ),
                   ),
                   TextFieldWidget(
+                    keyForm: _emailkey,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'please';
+                      }
+                      return null;
+                    },
                     text: 'Email',
                     obscure: false,
                     controller: emailController,
                   ),
                   TextFieldWidget(
+                      keyForm: _passwordkey,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return 'please';
+                        }
+                        return null;
+                      },
                       text: 'Password',
                       obscure: true,
                       controller: passwordController),
@@ -65,32 +81,45 @@ class _SignInScreenState extends State<SignInScreen> {
                         style: TextStyle(color: Color(0xff7052ff)),
                       )),
                   ButtonWidget(
-                      onPressed: () async {
-                        try {
-                          final Response resp = await network.loginMethod({
-                            "password": passwordController.text,
-                            "email": emailController.text,
-                          });
-
-                          if (resp.statusCode == 200) {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                  builder: (context) => VerificationScreen(
-                                    type: 'login',
-                                    email: emailController.text,
-                                  ),
-                                ));
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content: Text(
-                                    (await jsonDecode(resp.body))["msg"]
-                                        .toString())));
-                          }
-                        } catch (e) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(content: Text(e.toString())));
+                      onPressed: () {
+                        List<bool> isValidation = [];
+                        isValidation.add(validation(keyForm: _emailkey));
+                        isValidation.add(validation(keyForm: _passwordkey));
+                        if (!isValidation.contains(false)) {
+                          print("---------");
+                          // context.pushAndRemoveUntil(
+                          //     view: const VerificationScreen(
+                          //   email: '',
+                          //   type: TypeOfAuth.login,
+                          //)
+                          //  );
                         }
+                        // async {
+                        // try {
+                        //   final Response resp = await network.loginMethod({
+                        //     "password": passwordController.text,
+                        //     "email": emailController.text,
+                        //   });
+
+                        //   if (resp.statusCode == 200) {
+                        //     Navigator.push(
+                        //         context,
+                        //         MaterialPageRoute(
+                        //           builder: (context) => VerificationScreen(
+                        //             type: 'login',
+                        //             email: emailController.text,
+                        //           ),
+                        //         ));
+                        //   } else {
+                        //     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        //         content: Text(
+                        //             (await jsonDecode(resp.body))["msg"]
+                        //                 .toString())));
+                        //   }
+                        // } catch (e) {
+                        //   ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(content: Text(e.toString())));
+                        // }
                       },
                       text: 'Sign In'),
                   Center(
@@ -117,5 +146,12 @@ class _SignInScreenState extends State<SignInScreen> {
                 ],
               ))),
     );
+  }
+
+  validation({required GlobalKey<FormState> keyForm}) {
+    if (!keyForm.currentState!.validate()) {
+      return false;
+    }
+    return true;
   }
 }

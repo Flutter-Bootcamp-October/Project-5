@@ -38,6 +38,7 @@ class _LoadingPageState extends State<LoadingPage> {
     Future.delayed(const Duration(seconds: 3), () async {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
+      try{
       final Response res = await netAbout.aboutMethod(token: token!);
       if (res.statusCode == 200) {
         about = (await jsonDecode(res.body))["data"];
@@ -53,6 +54,8 @@ class _LoadingPageState extends State<LoadingPage> {
               builder: (context) => const SignInScreen(),
             ),
             (route) => false);
+      }}catch(e){
+
       }
     });
   }
@@ -101,6 +104,7 @@ class _LoadingPageState extends State<LoadingPage> {
     try {
       final SharedPreferences prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('token');
+      
       final Response res = await projectNet.projectMethod(token: token!);
 
       if (res.statusCode == 200) {
@@ -115,8 +119,9 @@ class _LoadingPageState extends State<LoadingPage> {
   _loedingSocial() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
+     try {
     final Response res = await socialNetwork.socialMethod(token: token!);
-    try {
+   
       if (res.statusCode == 200) {
         social = (await jsonDecode(res.body))["data"];
 
@@ -131,8 +136,9 @@ class _LoadingPageState extends State<LoadingPage> {
   _loedingUser() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     final token = prefs.getString('token');
-    final Response res = await netAbout.getUserMethod(token: token!);
     try {
+      final Response res = await netAbout.getUserMethod(token: token!);
+
       if (res.statusCode == 200) {
         user = (await jsonDecode(res.body))["data"];
 

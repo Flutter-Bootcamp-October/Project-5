@@ -1,8 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'dart:convert';
-
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:pcv/screens/sign_in_screen.dart';
@@ -10,6 +8,7 @@ import 'package:pcv/screens/verification_screen.dart';
 import 'package:pcv/services/auth_api.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
+import 'package:pcv/widgets/text_rich_widget.dart';
 
 final network = Network();
 
@@ -23,6 +22,7 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  final  emailKey= GlobalKey<FormState>();
   TextEditingController usernameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
@@ -63,6 +63,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     controller: phoneController,
                   ),
                   TextFieldWidget(
+                    keyForm: emailKey,
+                    validator: (val){
+                      if(val!.isEmpty){
+                        return "enter the email";
+                      }
+                      return null;
+                    },
                     text: 'Email',
                     obscure: false,
                     controller: emailController,
@@ -74,6 +81,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   ButtonWidget(
                     onPressed: () async {
+                      if (!emailKey.currentState!.validate()) {
+    return false;
+    }
+
+
                       try {
                         final Response resp = await network.registerMethod({
                           "name": usernameController.text,
@@ -102,28 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       }
                     },
                     text: 'Register',
-                  ),
-                  Center(
-                    child: RichText(
-                      text: TextSpan(
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 16),
-                        children: [
-                          const TextSpan(text: 'Already Register?'),
-                          TextSpan(
-                              recognizer: TapGestureRecognizer()
-                                ..onTap = () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const SignInScreen(),
-                                    )),
-                              text: ' Log In',
-                              style: const TextStyle(color: Color(0xff7052ff)))
-                        ],
-                      ),
-                    ),
-                  )
+                  ),const TextRich(view: SignInScreen(), text1: 'text1', text2: 'text2')
                 ],
               ),
             ),

@@ -1,3 +1,5 @@
+// ignore_for_file: empty_catches
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:http/http.dart' as http;
@@ -47,7 +49,9 @@ class AboutNet {
 
   getUserMethod({required String token}) async {
     var url = Uri.https(_apiUrl, _getUser);
-    var response = await http.get(url, headers: {"Authorization": token});
-    return response;
+    try {
+      var response = await http.get(url, headers: {"Authorization": token});
+      return response;
+    } catch (e) {}
   }
 }

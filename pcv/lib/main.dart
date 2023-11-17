@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:pcv/screens/loading_page.dart';
+import 'package:pcv/screens/register_screen.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-void main() {
+ SharedPreferences? prefs;
+void main()async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs=await SharedPreferences.getInstance();
   runApp(const MainApp());
 }
 
@@ -11,13 +15,8 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(
-          textTheme: const TextTheme(
-        bodySmall: TextStyle(color: Colors.white),
-        bodyMedium: TextStyle(color: Colors.white),
-        titleMedium: TextStyle(color: Colors.white),
-      )),
-      home: const LoadingPage(),
+      theme: ThemeData(),
+      home:  const RegisterScreen(),
     );
   }
 }
