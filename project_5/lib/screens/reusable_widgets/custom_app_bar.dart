@@ -32,14 +32,17 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
               IconButton(
                   iconSize: 26,
                   onPressed: () {
-                    navigationPush(
-                        context: context, screen: const DisplayUsersScreen());
+                    navigation(
+                        type: "push",
+                        context: context,
+                        screen: const DisplayUsersScreen());
                   },
                   icon: const Icon(Icons.people)),
               IconButton(
                   iconSize: 26,
                   onPressed: () {
-                    navigationPush(
+                    navigation(
+                        type: "push",
                         context: context,
                         screen: SettingsScreen(
                           currentUserInfo: currentUser,

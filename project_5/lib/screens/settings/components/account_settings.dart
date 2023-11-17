@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:project_5/main.dart';
+import 'package:project_5/navigations/navigation_methods.dart';
 import 'package:project_5/screens/auth/components/auth_button.dart';
 import 'package:project_5/screens/auth/sign_in_screen.dart';
 
@@ -110,12 +111,11 @@ class _AccountInformationScreenState extends State<AccountInformationScreen> {
                                   const SnackBar(
                                       content: Text(
                                           "Account deleted successfully")));
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => const SignInScreen(),
-                                  ),
-                                  (route) => false);
+                              navigation(
+                                context: context,
+                                screen: const SignInScreen(),
+                                type: "pushRemove",
+                              );
                             },
                             isDisabled: false)
                       ],

@@ -35,7 +35,8 @@ class _SettingsScreenState extends State<SettingsScreen> {
         "subTitle": "Login & Account Information",
         "iconData": Icons.account_circle_rounded,
         "onTapFunc": () {
-          navigationPush(
+          navigation(
+              type: "push",
               context: context,
               screen: AccountInformationScreen(
                 currentUserInfo: widget.currentUserInfo,
@@ -84,10 +85,11 @@ class _SettingsScreenState extends State<SettingsScreen> {
           color: Colors.grey[400]!,
           onPressedFunc: () {
             pref.cleanToken();
-            Navigator.pushAndRemoveUntil(
-                context,
-                MaterialPageRoute(builder: (context) => const SignInScreen()),
-                (route) => false);
+            navigation(
+              context: context,
+              screen: const SignInScreen(),
+              type: "pushRemove",
+            );
           },
           isDisabled: false),
     );

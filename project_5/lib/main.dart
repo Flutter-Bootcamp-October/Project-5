@@ -32,8 +32,8 @@ class MyApp extends StatelessWidget {
                         isDarkTheme ? Colors.black : const Color(0xffe1dfef)),
               ),
               theme: pref.getTheme()
-                  ? ThemeData.light(useMaterial3: true)
-                  : ThemeData.dark(useMaterial3: true),
+                  ? ThemeData.dark(useMaterial3: true)
+                  : ThemeData.light(useMaterial3: true),
               home: pref.getToken().length > 1
                   ? const ProfileScreen()
                   : const SignInScreen(),

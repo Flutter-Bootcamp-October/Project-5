@@ -1,26 +1,6 @@
-import 'package:flutter/material.dart';
-import 'package:project_5/data/global_data.dart';
-import 'package:project_5/extensions/size_extension.dart';
-import 'package:project_5/main.dart';
-import 'package:project_5/models/about_model.dart';
-import 'package:project_5/screens/auth/sign_in_screen.dart';
-import 'package:project_5/screens/profile/components/projects.dart';
-import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
-import 'package:project_5/screens/reusable_widgets/education_model_sheet.dart';
-import 'package:project_5/screens/reusable_widgets/projectsModalBottomSheet.dart';
-import 'package:project_5/screens/settings/components/custom_bottom_modal_sheet.dart';
-import 'package:project_5/services/about_api.dart';
-import 'package:project_5/services/education_api.dart';
-import 'package:project_5/services/projects_api.dart';
-import 'package:project_5/services/skills_api.dart';
-import 'package:project_5/services/social_api.dart';
-import 'package:project_5/theme/shimmer/shimmer_profile_header_skeleton.dart';
+import 'package:project_5/navigations/navigation_methods.dart';
 
-import 'components/education.dart';
-import 'components/profile_user_information.dart';
-import 'components/section_title.dart';
-import 'components/skills.dart';
-import 'components/social.dart';
+import 'exports.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({Key? key}) : super(key: key);
@@ -31,11 +11,12 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   Future? aboutModelData;
-  AboutModel? aboutModel;
   Future? skillsModelData;
   Future? educationModelData;
   Future? socialModelData;
   Future? projectsModelData;
+
+  AboutModel? aboutModel;
 
   TextEditingController skillsController = TextEditingController();
 
@@ -73,12 +54,8 @@ class ProfileScreenState extends State<ProfileScreen> {
           .showSnackBar(const SnackBar(content: Text("Token Has Expired")));
       pref.cleanToken();
 
-      Navigator.pushAndRemoveUntil(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const SignInScreen(),
-          ),
-          (route) => false);
+      navigation(
+          context: context, screen: const SignInScreen(), type: "pushRemove");
       //Token expired
       return false;
     } else {
@@ -117,10 +94,9 @@ class ProfileScreenState extends State<ProfileScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: CustomAppBar(
-        hasAction: true,
-        currentUser: aboutModel,
-        title: "Profile ${aboutModel?.data?.name?.toUpperCase() ?? "..."}",
-      ),
+          hasAction: true,
+          currentUser: aboutModel,
+          title: "Profile ${aboutModel?.data?.name?.toUpperCase() ?? "..."}"),
       body: RefreshIndicator(
         strokeWidth: 3,
         onRefresh: () async {
@@ -155,6 +131,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                   indent: 16,
                   endIndent: 16,
                   color: Color(0xffded3fc)),
+
               //--Education--
               SectionTitle(
                 title: "Education 🎓",
@@ -172,10 +149,10 @@ class ProfileScreenState extends State<ProfileScreen> {
                   );
                 },
               ),
-
               Education(
                   updateMethod: updateEducationModel,
                   educationData: educationModelData),
+
               //--Skills--
               SectionTitle(
                 title: "Skills 🚀",
@@ -206,6 +183,7 @@ class ProfileScreenState extends State<ProfileScreen> {
               ),
               Skills(
                   skillsData: skillsModelData, updateMethod: updateSkillsModel),
+
               //--Experiences--
               SectionTitle(
                 title: "Projects 📝",
@@ -220,9 +198,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                 },
               ),
               Projects(
-                projectsData: projectsModelData,
-                updateProjects: updateProjectsModel,
-              ),
+                  projectsData: projectsModelData,
+                  updateProjects: updateProjectsModel),
             ],
           ),
         ),

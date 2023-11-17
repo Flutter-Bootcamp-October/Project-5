@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:project_5/data/global_data.dart';
 import 'package:project_5/models/users_model.dart';
+import 'package:project_5/navigations/navigation_methods.dart';
 import 'package:project_5/screens/reusable_widgets/custom_app_bar.dart';
 import 'package:project_5/screens/users/user_details_screen.dart';
 import 'package:project_5/services/get_users_api.dart';
@@ -39,12 +40,12 @@ class _DisplayUsersScreenState extends State<DisplayUsersScreen> {
               itemCount: usersModel.data!.length,
               itemBuilder: (context, index) => InkWell(
                 onTap: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => UsersDetailsScreen(
-                            userModel: usersModel.data![index]),
-                      ));
+                  navigation(
+                    context: context,
+                    screen:
+                        UsersDetailsScreen(userModel: usersModel.data![index]),
+                    type: "push",
+                  );
                 },
                 child: Card(
                   child: Row(

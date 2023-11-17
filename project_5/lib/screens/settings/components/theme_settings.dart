@@ -34,9 +34,9 @@ class _ThemeSettingsState extends State<ThemeSettingsScreen> {
                   },
                   style: const ToggleStyle(backgroundColor: Colors.transparent),
                   styleBuilder: (value) => ToggleStyle(
-                    indicatorColor: value ? Colors.yellow : Colors.black,
+                    indicatorColor: !value ? Colors.yellow : Colors.black,
                   ),
-                  iconBuilder: (value, foreground) => value == false
+                  iconBuilder: (value, foreground) => !value == false
                       ? const Icon(Icons.nightlight_round_rounded)
                       : const Icon(Icons.sunny),
                 ),

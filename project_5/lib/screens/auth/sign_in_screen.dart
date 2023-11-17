@@ -1,10 +1,14 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart  ';
+import 'package:flutter/services.dart';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
+import 'package:project_5/screens/auth/components/auth_loading.dart';
 import 'package:project_5/screens/auth/otp_screen.dart';
 import 'package:project_5/services/auth_api.dart';
+import 'package:project_5/widgets/sized_box.dart';
+import 'package:project_5/widgets/snack_bar.dart';
 
 import 'components/account_availability.dart';
 import 'components/auth_button.dart';
@@ -18,8 +22,17 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -27,39 +40,57 @@ class _SignInScreenState extends State<SignInScreen> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              SizedBox(height: context.getHeight() * .103),
+              sizedBoxH(context: context, multiplier: .103),
               Image.asset("assets/images/sign_logo.png", scale: 3),
-              SizedBox(height: context.getHeight() * .09136),
+              sizedBoxH(context: context, multiplier: .09136),
               AuthTextField(
                   isPassword: false,
                   content: "Email",
-                  controller: emailController),
-              SizedBox(height: context.getHeight() * .019),
+                  controller: _emailController),
+              sizedBoxH(context: context, multiplier: .019),
               AuthTextField(
                   isPassword: true,
                   content: "Password",
-                  controller: passwordController),
-              SizedBox(height: context.getHeight() * .019),
+                  controller: _passwordController),
+              sizedBoxH(context: context, multiplier: .019),
               AuthButton(
                   content: "Sign In",
                   color: Colors.grey[200]!,
                   onPressedFunc: () async {
+                    isLoading = true;
+                    setState(() {});
                     final response = await loginApi(
-                        email: emailController.text.trim(),
-                        password: passwordController.text.trim());
-                    if (response.toLowerCase() == "ok") {
-                      navigationPush(
+                        email: _emailController.text.trim(),
+                        password: _passwordController.text.trim());
+                    if (_emailController.text.trim().isEmpty) {
+                      isLoading = false;
+                      showSnackBar(
+                          context: context, message: "Please Enter Your Email");
+                    } else if (_passwordController.text.isEmpty) {
+                      isLoading = false;
+                      showSnackBar(
+                          context: context,
+                          message: "Please Enter Your Password");
+                    } else if (response.toLowerCase() == "ok") {
+                      isLoading = false;
+                      navigation(
+                          type: "push",
                           context: context,
                           screen: OTPScreen(
-                              emailAddress: emailController.text,
+                              emailAddress: _emailController.text,
                               type: "login"));
                     } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text("Email or Password are incorrect")));
+                      isLoading = false;
+                      showSnackBar(
+                          context: context,
+                          message: "Email or Password are incorrect");
                     }
+                    SystemChannels.textInput.invokeMethod('TextInput.show');
+                    setState(() {});
                   },
                   isDisabled: false),
-              const SizedBox(height: 8),
+              isLoading ? showLoadingIndicator() : const SizedBox(),
+              sizedBoxH(context: context, multiplier: .011),
               const AccountAvailability(haveAccount: false),
             ],
           ),

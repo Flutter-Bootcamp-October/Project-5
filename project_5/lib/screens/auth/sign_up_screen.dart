@@ -1,10 +1,12 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart ';
+import 'package:flutter/services.dart';
 import 'package:project_5/extensions/email_validator_extension.dart';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
 import 'package:project_5/screens/auth/components/auth_button.dart';
+import 'package:project_5/screens/auth/components/auth_loading.dart';
 import 'package:project_5/screens/auth/components/auth_text_field.dart';
 import 'package:project_5/services/auth_api.dart';
 
@@ -36,6 +38,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     super.dispose();
   }
 
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,10 +75,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   content: "Re-Enter Password",
                   controller: confirmPasswordController),
               SizedBox(height: context.getHeight() * .019),
+              //TODO: FIX LOGIC
               AuthButton(
                   content: "Sign Up",
                   color: Colors.grey[200]!,
                   onPressedFunc: () async {
+                    isLoading = true;
+                    setState(() {});
                     final isValidName = nameValidator(context, nameController);
                     final isValidEmail = emailValidation(
                         emailController.text.isValidEmail(), context);
@@ -98,19 +104,27 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         phone: phoneController.text,
                       );
                       if (response.toLowerCase() == "ok") {
-                        navigationPush(
+                        isLoading = false;
+                        navigation(
+                            type: "push",
                             context: context,
                             screen: OTPScreen(
                               emailAddress: emailController.text,
                               type: 'registration',
                             ));
                       } else {
+                        isLoading = false;
                         ScaffoldMessenger.of(context)
                             .showSnackBar(SnackBar(content: Text(response)));
                       }
+                    } else {
+                      isLoading = false;
                     }
+                    SystemChannels.textInput.invokeMethod('TextInput.show');
+                    setState(() {});
                   },
                   isDisabled: false),
+              isLoading ? showLoadingIndicator() : const SizedBox(),
               const SizedBox(height: 8),
               const AccountAvailability(haveAccount: true)
             ],

@@ -1,9 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
+import 'package:project_5/screens/auth/components/auth_button.dart';
+import 'package:project_5/screens/auth/components/auth_loading.dart';
 import 'package:project_5/screens/profile/profile_screen.dart';
 import 'package:project_5/services/auth_api.dart';
+import 'package:project_5/widgets/snack_bar.dart';
 
 import 'components/otp_fields.dart';
 
@@ -18,14 +22,15 @@ class OTPScreen extends StatefulWidget {
 }
 
 class _OTPScreenState extends State<OTPScreen> {
-  TextEditingController controller = TextEditingController();
+  final TextEditingController _otpController = TextEditingController();
 
   @override
   void dispose() {
-    controller.dispose();
+    _otpController.dispose();
     super.dispose();
   }
 
+  bool isLoading = false;
   @override
   Widget build(BuildContext context) {
     FocusNode focusNode1 = FocusNode();
@@ -75,41 +80,42 @@ class _OTPScreenState extends State<OTPScreen> {
                   itemBuilder: (context, index) => OTPField(
                       focusNodeList: focusNodeList,
                       index: index,
-                      controller: controller),
+                      controller: _otpController),
                 ),
               ),
               const SizedBox(height: 75),
-              SizedBox(
-                width: MediaQuery.of(context).size.width * .75,
-                child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.deepPurple),
-                    onPressed: () async {
-                      if (controller.text.length < 4) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text("Please Enter OTP")));
-                      } else {
-                        final response = await verificationApi(
-                            otp: controller.text,
-                            email: widget.emailAddress,
-                            type: widget.type);
-                        if (response.toLowerCase() == "ok") {
-                          navigationPush(
-                              context: context, screen: const ProfileScreen());
-                        } else {
-                          ScaffoldMessenger.of(context)
-                              .showSnackBar(SnackBar(content: Text(response)));
-                        }
-                      }
-                    },
-                    child: const Text(
-                      "Send",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.w600),
-                    )),
-              )
+              AuthButton(
+                color: Colors.grey[200]!,
+                content: "Send",
+                isDisabled: false,
+                onPressedFunc: () async {
+                  isLoading = true;
+                  setState(() {});
+                  if (_otpController.text.length < 4) {
+                    showSnackBar(context: context, message: "Please Enter OTP");
+                    isLoading = false;
+                  } else {
+                    final response = await verificationApi(
+                        otp: _otpController.text,
+                        email: widget.emailAddress,
+                        type: widget.type);
+                    if (response.toLowerCase() == "ok") {
+                      isLoading = false;
+                      navigation(
+                          type: "push",
+                          context: context,
+                          screen: const ProfileScreen());
+                    } else {
+                      showSnackBar(
+                          context: context, message: "Wrong OTP $response");
+                      isLoading = false;
+                    }
+                  }
+                  SystemChannels.textInput.invokeMethod('TextInput.show');
+                  setState(() {});
+                },
+              ),
+              isLoading ? showLoadingIndicator() : const SizedBox(),
             ],
           ),
         ),

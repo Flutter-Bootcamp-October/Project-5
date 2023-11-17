@@ -30,7 +30,7 @@ class _AuthFloatingButtonState extends State<AuthButton> {
               // disabledForegroundColor: const Color(0xFF9A9EC1),
               // disabledBackgroundColor: const Color(0xFF454B94),
               //TODO:FIX COLORS
-              backgroundColor: pref.getTheme() ? widget.color : Colors.black,
+              backgroundColor: pref.getTheme() ? Colors.black : widget.color,
               elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30))),
