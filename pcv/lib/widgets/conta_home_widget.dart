@@ -13,11 +13,10 @@ class ContaHomeWidget extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 5),
       child: Container(
-          width: MediaQuery.of(context).size.width * 0.88,
-          height: 60,
-          decoration: BoxDecoration(
-              color: Colors.grey.shade100.withOpacity(0.2),
-              borderRadius: const BorderRadius.horizontal(
+          height: 40,
+          decoration: const BoxDecoration(
+              color: Colors.grey,
+              borderRadius: BorderRadius.horizontal(
                   left: Radius.circular(15), right: Radius.circular(15))),
           child: Center(
               child: Row(
@@ -27,7 +26,6 @@ class ContaHomeWidget extends StatelessWidget {
               ),
               Icon(
                 icon,
-                color: Colors.white,
               ),
               const SizedBox(
                 width: 20,

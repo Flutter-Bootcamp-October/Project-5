@@ -2,12 +2,13 @@
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
+import 'package:pcv/main.dart';
 import 'package:pcv/screens/edit_about.dart';
 import 'package:pcv/screens/education_screen.dart';
 import 'package:pcv/screens/home_screen.dart';
 import 'package:pcv/screens/project_screen.dart';
-import 'package:pcv/screens/register_screen.dart';
-import 'package:pcv/screens/sign_in_screen.dart';
+import 'package:pcv/screens/auth/register_screen.dart';
+import 'package:pcv/screens/auth/sign_in_screen.dart';
 import 'package:pcv/screens/skill_screen.dart';
 import 'package:pcv/screens/social_screen.dart';
 import 'package:pcv/screens/user.dart';
@@ -34,6 +35,7 @@ class _DrawerScreensState extends State<DrawerScreens> {
             title: const Text('Home'),
             trailing: const Icon(Icons.home_outlined),
             onTap: () {
+              print(prefs?.getString('token'));
               Navigator.push(
                   context,
                   MaterialPageRoute(
@@ -50,7 +52,7 @@ class _DrawerScreensState extends State<DrawerScreens> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const EditAboutScreen(),
+                    builder: (context) =>  EditAboutScreen(),
                   ));
             },
           ),

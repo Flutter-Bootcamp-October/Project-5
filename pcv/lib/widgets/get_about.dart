@@ -1,30 +1,48 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:pcv/model/about_model.dart';
 import 'package:pcv/services/api_about.dart';
 import 'package:pcv/widgets/conta_home_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Map about = {};
-
 class GetAbout extends StatefulWidget {
-  const GetAbout({super.key});
-
+  const GetAbout({super.key,
+    this.id,
+    this.name,
+    this.email,
+    this.titlePosition,
+    this.phone,
+    this.location,
+    this.birthday,
+    this.about,
+    this.image});
+ final String? id;
+  final  String? name;
+  final String? email;
+  final String? titlePosition;
+  final String? phone;
+  final String? location;
+  final  String? birthday;
+  final String? about;
+  final String? image; 
   @override
   State<GetAbout> createState() => _GetAboutState();
 }
 
 class _GetAboutState extends State<GetAbout> {
+
   final ImagePicker picker = ImagePicker();
   File? imageFile;
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
       Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
           ClipOval(
               child: SizedBox(
@@ -40,10 +58,7 @@ class _GetAboutState extends State<GetAbout> {
                               await SharedPreferences.getInstance();
                           final token = prefs.getString('token');
                           final Response resp =
-                              await netAbout.aboutUploadMethod(
-                            token: token!,
-                            image: imageFile!,
-                          );
+                              await netAbout.aboutUploadMethod(image: imageFile!);
                           if (resp.statusCode == 200) {
                             ScaffoldMessenger.of(context).showSnackBar(
                                 const SnackBar(
@@ -63,59 +78,57 @@ class _GetAboutState extends State<GetAbout> {
                         height: 40,
                         width: 40,
                         color: Colors.grey,
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            if (about["image"] == null)
-                              const Icon(
-                                Icons.person_outline,
-                                size: 50,
-                              ),
-                            if (about["image"] != null)
-                              Image.network(about["image"]),
-                          ],
-                        ),
+                        child:
+                            widget.image== null?
+                              const Center(
+                                child: Icon(
+                                  Icons.person_outline,
+                                  size: 50,
+                                ),
+                              )
+                           :
+                              Image.network(widget.image!),
                       )))),
           Column(
             children: [
               Text(
-                ' ${about["name"].toString()}',
+                ' ${widget.name.toString()}',
                 style: const TextStyle(fontSize: 28),
               ),
-              if (about["title_position"] != null)
+              if (widget.titlePosition != null)
                 Text(
-                  about["title_position"].toString(),
+                  widget.titlePosition.toString(),
                   style: TextStyle(fontSize: 16, color: Colors.grey[400]),
                 ),
             ],
           ),
         ],
       ),
-      if (about["about"] != null)
+      if (widget.about != null)
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 20),
-          child: Text(about["about"].toString()),
+          child: Text(widget.about.toString()),
         ),
       const SizedBox(
         height: 24,
       ),
       ContaHomeWidget(
         icon: Icons.email,
-        text: about["email"].toString(),
+        text: widget.email.toString(),
       ),
       ContaHomeWidget(
         icon: Icons.phone,
-        text: about["phone"].toString(),
+        text: widget.phone.toString(),
       ),
-      if (about["location"] != null)
+      if (widget.location != null)
         ContaHomeWidget(
           icon: Icons.location_on,
-          text: about["location"].toString(),
+          text: widget.location.toString(),
         ),
-      if (about["birthday"] != null)
+      if (widget.birthday != null)
         ContaHomeWidget(
           icon: Icons.date_range_outlined,
-          text: about["birthday"].toString(),
+          text: widget.birthday.toString(),
         ),
     ]);
   }

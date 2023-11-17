@@ -4,8 +4,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart';
-import 'package:pcv/screens/register_screen.dart';
-import 'package:pcv/screens/verification_screen.dart';
+import 'package:pcv/screens/auth/register_screen.dart';
+import 'package:pcv/screens/auth/verification_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
 

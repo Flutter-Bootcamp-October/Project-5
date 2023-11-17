@@ -1,11 +1,14 @@
-// ignore_for_file: empty_catches
+// ignore_for_file: empty_catches, use_build_context_synchronously
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:pcv/main.dart';
+import 'package:pcv/model/about_model.dart';
+import 'package:pcv/screens/auth/sign_in_screen.dart';
 
 final netAbout = AboutNet();
-
 class AboutNet {
   final String _apiUrl = 'bacend-fshi.onrender.com';
 
@@ -16,25 +19,31 @@ class AboutNet {
 
   final String _getUser = '/user/get_users';
 
-  aboutMethod({required String token}) async {
+  Future<AboutModel?> aboutMethod({required BuildContext context}) async {
     var url = Uri.https(_apiUrl, _about);
-    try {
-      var response = await http.get(url, headers: {"Authorization": token});
-      return response;
-    } catch (e) {}
+      var response = await http.get(url, headers: {"Authorization": prefs!.getString("token")!});
+      if(response.statusCode==200){
+        return AboutModel.fromJson(jsonDecode(response.body));
+      }else if(response.statusCode==401){
+        prefs?.clear();
+        Navigator.pushAndRemoveUntil(context,
+            MaterialPageRoute(builder: (context) => const SignInScreen()
+              ,), (route) => false);
+      }
+      return null;
   }
 
-  aboutUploadMethod({required String token, required File image}) async {
+  aboutUploadMethod({required File image}) async {
     var url = Uri.https(_apiUrl, _upload);
     var response = await http.post(url,
-        headers: {"Authorization": token}, body: await image.readAsBytes());
+        headers: {"Authorization": prefs!.getString("token")!}, body: await image.readAsBytes());
     return response;
   }
 
-  editAboutMethod({required String token, required Map body}) async {
+  editAboutMethod({ required Map body}) async {
     var url = Uri.https(_apiUrl, _editAbout);
     var response = await http.put(url,
-        headers: {"Authorization": token}, body: jsonEncode(body));
+        headers: {"Authorization": prefs!.getString("token")!}, body: jsonEncode(body));
     return response;
   }
 
@@ -42,16 +51,15 @@ class AboutNet {
     var url = Uri.https(_apiUrl, _delete);
     var response = await http.delete(
       url,
-      headers: {"Authorization": token},
+      headers: {"Authorization": prefs!.getString("token")!},
     );
     return response;
   }
 
-  getUserMethod({required String token}) async {
+  Future<AboutModel?>getUserMethod({required BuildContext context}) async {
     var url = Uri.https(_apiUrl, _getUser);
-    try {
-      var response = await http.get(url, headers: {"Authorization": token});
-      return response;
-    } catch (e) {}
+      var response = await http.get(url, headers: {"Authorization": prefs!.getString("token")!});
+      return AboutModel.fromJson(jsonDecode(response.body));
+
   }
 }

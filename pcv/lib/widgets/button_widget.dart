@@ -15,12 +15,11 @@ class ButtonWidget extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 10,
-            shadowColor: const Color.fromARGB(255, 176, 163, 241),
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.horizontal(
-                  left: Radius.circular(20), right: Radius.circular(20)),
+            shadowColor: const Color(0xffFF6700),
+            shape:  RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10),
             ),
-            backgroundColor: const Color(0xff7052ff),
+            backgroundColor: const Color(0xffFF6700),
             fixedSize: Size(MediaQuery.of(context).size.width * 0.9, 1),
           ),
           onPressed: onPressed,

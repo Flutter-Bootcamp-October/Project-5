@@ -23,7 +23,7 @@ final String? text1;
                         view,
                       )),
                 text: text2,
-                style: const TextStyle(color: Color(0xff7052ff)))
+                style: const TextStyle(color: Color(0xffff6700)))
           ],
         ),
       ),

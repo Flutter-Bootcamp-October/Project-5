@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:pcv/screens/register_screen.dart';
+import 'package:pcv/screens/auth/register_screen.dart';
+import 'package:pcv/screens/auth/sign_in_screen.dart';
+import 'package:pcv/screens/loading_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
  SharedPreferences? prefs;
@@ -15,8 +17,10 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      theme: ThemeData(),
-      home:  const RegisterScreen(),
+      theme: ThemeData(
+        useMaterial3: true
+      ),
+      home:  const LoadingPage(),
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
-List user = [];
+import 'package:pcv/model/about_model.dart';
+import 'package:pcv/services/api_about.dart';
+import 'package:pcv/widgets/card_user.dart';
 
 class UserScreen extends StatefulWidget {
   const UserScreen({super.key});
@@ -10,48 +11,42 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
+  AboutModel? aboutData;
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadUser();
+    print(aboutData!.data);
+  }
+  loadUser()async{
+   aboutData= await netAbout.getUserMethod(context: context);
+   setState(() {
+
+   });
+  }
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: const BoxDecoration(
-          gradient: LinearGradient(
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-              colors: [Colors.pink, Colors.deepPurple, Colors.lightBlue])),
-      child: Scaffold(
+    return Scaffold(
         backgroundColor: Colors.transparent,
-        body: SafeArea(
+        body:SafeArea(
           child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                if (user.isEmpty)
-                  const Center(child: CircularProgressIndicator()),
-                if (user.isNotEmpty)
-                  Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: user
-                          .map((e) => Card(
-                                color: Colors.grey.shade100.withOpacity(0.6),
-                                child: ListTile(
-                                  title: Text(
-                                    "${e["name"]}",
-                                    style: const TextStyle(
-                                        fontWeight: FontWeight.bold),
-                                  ),
-                                  subtitle: Text("${e["email"]}",
-                                      style: const TextStyle(
-                                          color: Colors.white70)),
-                                  trailing: Text(e["phone"]),
-                                ),
-                              ))
-                          .toList())
-              ],
+            child:
+            SizedBox(height: 400,
+              child: GridView.count(
+                shrinkWrap: true,
+                childAspectRatio: 3,
+                crossAxisCount: 1,
+                children: [
+                  if(aboutData!.data==null)
+                const Center(child: CircularProgressIndicator()),
+                if(aboutData!.data!=null)
+                  CardUser(image: aboutData!.data!.image, name: aboutData!.data!.name.toString(),
+                      email: aboutData!.data!.email.toString(), phone: aboutData!.data!.phone.toString())
+              ],)
+            )
             ),
           ),
-        ),
-      ),
     );
   }
 }
