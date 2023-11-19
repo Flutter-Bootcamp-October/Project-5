@@ -79,7 +79,9 @@ class ProfileScreenState extends State<ProfileScreen> {
                                   about: snapshot.data!,
                                 ),
                               ),
-                            );
+                            ).then((value) {
+                              setState(() {});
+                            });
                           },
                           icon: const Icon(
                             Icons.edit_location_sharp,
@@ -87,19 +89,19 @@ class ProfileScreenState extends State<ProfileScreen> {
                           ),
                         ),
                         IconButton(
-                            onPressed: () {
-                              deleteAccount();
-                              Navigator.pushAndRemoveUntil(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const LoginScreen()),
-                                  (route) => false);
-                            },
-                            icon: const Icon(
-                              Icons.delete,
-                              color: Colors.redAccent,
-                            ))
+                          onPressed: () {
+                            deleteAccount();
+                            Navigator.pushAndRemoveUntil(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => const LoginScreen()),
+                                (route) => false);
+                          },
+                          icon: const Icon(
+                            Icons.delete,
+                            color: Colors.redAccent,
+                          ),
+                        )
                       ],
                     ),
                     const Divider(),

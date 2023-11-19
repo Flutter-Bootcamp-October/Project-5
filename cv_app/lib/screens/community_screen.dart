@@ -16,8 +16,9 @@ class CommunityScreen extends StatelessWidget {
               itemBuilder: ((context, index) {
                 return Card(
                   child: ListTile(
-                    leading: Text(snapshot.data![index].id.toString()),
                     title: Text(snapshot.data![index].name.toString()),
+                    subtitle:
+                        Text(snapshot.data![index].titlePosition.toString()),
                     trailing: Text(snapshot.data![index].phone.toString()),
                   ),
                 );
