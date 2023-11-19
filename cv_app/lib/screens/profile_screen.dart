@@ -90,12 +90,37 @@ class ProfileScreenState extends State<ProfileScreen> {
                         ),
                         IconButton(
                           onPressed: () {
-                            deleteAccount();
-                            Navigator.pushAndRemoveUntil(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => const LoginScreen()),
-                                (route) => false);
+                            showDialog(
+                                context: context,
+                                builder: (context) => AlertDialog(
+                                      title: const Text('Delete account'),
+                                      content: const Text(
+                                          'Sure you want to delete your account?'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            deleteAccount();
+                                            Navigator.pushAndRemoveUntil(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        const LoginScreen()),
+                                                (route) => false);
+                                          },
+                                          child: const Text(
+                                            'Delete',
+                                            style: TextStyle(
+                                                color: Colors.redAccent),
+                                          ),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Close'),
+                                        ),
+                                      ],
+                                    ));
                           },
                           icon: const Icon(
                             Icons.delete,

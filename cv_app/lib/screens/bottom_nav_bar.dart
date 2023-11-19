@@ -84,8 +84,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
         backgroundColor: mainColor,
         elevation: 0,
         child: const Icon(
-          Icons.add_circle_outline_sharp,
-          size: 35,
+          Icons.account_tree_rounded,
+          size: 30,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,

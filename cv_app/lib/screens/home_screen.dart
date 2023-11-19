@@ -90,10 +90,6 @@ class HomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  FillCV(
-                      onTap: () {},
-                      text: "AboutMe",
-                      icon: Icons.data_saver_off_outlined),
                   FillCV(onTap: () {}, text: "Projects", icon: Icons.work),
                   FillCV(
                       onTap: () {},
