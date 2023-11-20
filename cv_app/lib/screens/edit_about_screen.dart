@@ -90,8 +90,10 @@ class _EditAboutScreenState extends State<EditAboutScreen> {
                           birthday: birthdayController.text,
                           about: aboutController.text);
                       if (response['codeState'] == 200) {
+                        // ignore: use_build_context_synchronously
                         Navigator.pop(context);
                       } else {
+                        // ignore: use_build_context_synchronously
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(content: Text(response['msg'].toString())),
                         );

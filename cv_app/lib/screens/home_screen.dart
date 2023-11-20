@@ -1,4 +1,8 @@
 import 'package:cv_app/globals/colors.dart';
+import 'package:cv_app/screens/education_screen.dart';
+import 'package:cv_app/screens/project_screen.dart';
+import 'package:cv_app/screens/skills_screen.dart';
+import 'package:cv_app/screens/social_screen.dart';
 import 'package:cv_app/widgets/connect_with.dart';
 import 'package:cv_app/widgets/fill_cv.dart';
 import 'package:flutter/material.dart';
@@ -90,16 +94,50 @@ class HomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               child: Row(
                 children: [
-                  FillCV(onTap: () {}, text: "Projects", icon: Icons.work),
                   FillCV(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const ProjectScreen(),
+                          ),
+                        );
+                      },
+                      text: "Projects",
+                      icon: Icons.work),
+                  FillCV(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SkillScreen(),
+                          ),
+                        );
+                      },
                       text: "Skills",
                       icon: Icons.precision_manufacturing),
                   FillCV(
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SocialScreen(),
+                          ),
+                        );
+                      },
                       text: "Social",
                       icon: Icons.connect_without_contact),
-                  FillCV(onTap: () {}, text: "Education", icon: Icons.school),
+                  FillCV(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const EducationScreen(),
+                          ),
+                        );
+                      },
+                      text: "Education",
+                      icon: Icons.school),
                 ],
               ),
             ),
@@ -107,7 +145,7 @@ class HomeScreen extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16),
               child: Text(
-                "Connect with: ",
+                "Share with: ",
                 style: TextStyle(
                     color: mainColor,
                     fontSize: 20,

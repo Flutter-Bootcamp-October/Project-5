@@ -1,8 +1,13 @@
 import 'package:cv_app/globals/colors.dart';
 import 'package:cv_app/screens/community_screen.dart';
+import 'package:cv_app/screens/education_screen.dart';
 import 'package:cv_app/screens/home_screen.dart';
 import 'package:cv_app/screens/my_cv.dart';
 import 'package:cv_app/screens/profile_screen.dart';
+import 'package:cv_app/screens/project_screen.dart';
+import 'package:cv_app/screens/skills_screen.dart';
+import 'package:cv_app/screens/social_screen.dart';
+import 'package:cv_app/widgets/add_to_cv.dart';
 import 'package:cv_app/widgets/nav_bar_item.dart';
 import 'package:flutter/material.dart';
 
@@ -80,11 +85,76 @@ class _BottomNavBarState extends State<BottomNavBar> {
       ),
       body: screens[selectedIndex],
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (context) {
+                return SizedBox(
+                  height: 175,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      AddToCV(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const ProjectScreen(),
+                            ),
+                          ).then((value) => Navigator.pop(context));
+                        },
+                        icon: Icons.work,
+                        text: "Project",
+                        color: const Color(0xff9bc5f9),
+                      ),
+                      AddToCV(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SkillScreen(),
+                            ),
+                          ).then((value) => Navigator.pop(context));
+                        },
+                        icon: Icons.precision_manufacturing,
+                        text: "Skills",
+                        color: const Color(0xfff4bf8d),
+                      ),
+                      AddToCV(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const SocialScreen(),
+                            ),
+                          ).then((value) => Navigator.pop(context));
+                        },
+                        icon: Icons.connect_without_contact,
+                        text: "Social",
+                        color: const Color(0xffb0d6a7),
+                      ),
+                      AddToCV(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => const EducationScreen(),
+                            ),
+                          ).then((value) => Navigator.pop(context));
+                        },
+                        icon: Icons.school,
+                        text: "Education",
+                        color: const Color(0xfff38ea8),
+                      ),
+                    ],
+                  ),
+                );
+              });
+        },
         backgroundColor: mainColor,
         elevation: 0,
         child: const Icon(
-          Icons.account_tree_rounded,
+          Icons.space_dashboard_outlined,
           size: 30,
         ),
       ),

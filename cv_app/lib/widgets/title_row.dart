@@ -24,6 +24,7 @@ class TitleRow extends StatelessWidget {
           icon: const Icon(
             Icons.add_box_rounded,
             color: mainColor,
+            size: 30,
           ),
         ),
       ],

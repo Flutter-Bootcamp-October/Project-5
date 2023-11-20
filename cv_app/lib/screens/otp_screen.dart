@@ -68,6 +68,7 @@ class OTPScreen extends StatelessWidget {
                         loading(context);
                         final response =
                             await verification(otpController.text, email, type);
+                        // ignore: use_build_context_synchronously
                         Navigator.pop(context);
                         if (response['codeState'] == 200) {
                           prefs.setString("token", response['data']['token']);

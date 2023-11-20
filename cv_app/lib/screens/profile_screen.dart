@@ -44,18 +44,12 @@ class ProfileScreenState extends State<ProfileScreen> {
                       child: Center(
                         child: snapshot.data!.image == null
                             ? ClipOval(
-                                child: SizedBox(
-                                    height: 200,
-                                    child: Image.asset(
-                                        "assets\\defualt_img.png",
-                                        scale: 5)))
+                                child: Image.asset("assets\\defualt_img.png",
+                                    scale: 5))
                             : ClipOval(
-                                child: SizedBox(
-                                  height: 200,
-                                  child: Image.network(
-                                    snapshot.data!.image.toString(),
-                                    scale: 5,
-                                  ),
+                                child: Image.network(
+                                  snapshot.data!.image.toString(),
+                                  scale: 5,
                                 ),
                               ),
                       ),

@@ -59,6 +59,7 @@ class SignupScreen extends StatelessWidget {
                         phoneController.text,
                         emailController.text,
                         passwordController.text);
+                    // ignore: use_build_context_synchronously
                     Navigator.pop(context);
 
                     if (response['codeState'] == 200) {
