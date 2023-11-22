@@ -12,7 +12,6 @@ import 'package:pcv/widgets/get_education.dart';
 import 'package:pcv/widgets/get_project.dart';
 import 'package:pcv/widgets/get_social.dart';
 import 'package:pcv/widgets/skill_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../main.dart';
 

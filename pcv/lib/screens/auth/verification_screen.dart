@@ -8,6 +8,7 @@ import 'package:http/http.dart';
 import 'package:pcv/screens/auth/register_screen.dart';
 import 'package:pcv/screens/auth/sign_in_screen.dart';
 import 'package:pinput/pinput.dart';
+
 class VerificationScreen extends StatefulWidget {
   const VerificationScreen(
       {super.key, required this.type, required this.email});
@@ -30,11 +31,10 @@ class _VerificationScreenState extends State<VerificationScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-
             Pinput(
               autofocus: true,
               length: 6,
-              onCompleted: (pin) async{
+              onCompleted: (pin) async {
                 try {
                   final Response resp = await network.verificationMethod({
                     "otp": pin.toString(),
@@ -46,27 +46,26 @@ class _VerificationScreenState extends State<VerificationScreen> {
                     if (widget.type == "login" ||
                         widget.type == "registration") {
                       final String token =
-                      jsonDecode(resp.body)['data']['token'];
+                          jsonDecode(resp.body)['data']['token'];
                       final SharedPreferences prefs =
-                      await SharedPreferences.getInstance();
+                          await SharedPreferences.getInstance();
                       await prefs.setString('token', token);
                       Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) => const LoadingPage(),
                           ));
+                    } else {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const SignInScreen(),
+                          ));
                     }
-                    // else {
-                    //   Navigator.push(
-                    //       context,
-                    //       MaterialPageRoute(
-                    //         builder: (context) => const SignInScreen(),
-                    //       ));
-                    // }
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text((await jsonDecode(resp.body))["msg"]
-                            .toString())));
+                        content: Text(
+                            (await jsonDecode(resp.body))["msg"].toString())));
                   }
                 } catch (e) {
                   ScaffoldMessenger.of(context)

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:pcv/screens/auth/register_screen.dart';
-import 'package:pcv/screens/auth/sign_in_screen.dart';
 import 'package:pcv/screens/loading_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

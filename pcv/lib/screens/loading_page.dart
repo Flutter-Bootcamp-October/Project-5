@@ -20,7 +20,7 @@ class _LoadingPageState extends State<LoadingPage> {
     netAbout.aboutMethod(context: context);
     Future.delayed(
       const Duration(seconds: 2),
-          () { if (prefs?.getString('token') != null) {
+          () { if (prefs!.getString('token') != null) {
         Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => const HomeScreen()),(route) => false, );
       } else {
         Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => const HomeScreen()),(route) => false, );
