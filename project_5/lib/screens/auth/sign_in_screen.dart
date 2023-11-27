@@ -1,38 +1,21 @@
-// ignore_for_file: use_build_context_synchronously
-
 import 'package:flutter/material.dart  ';
 import 'package:flutter/services.dart';
-import 'package:project_5/extensions/size_extension.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_5/bloc/auth_bloc/auth_bloc.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
 import 'package:project_5/screens/auth/components/auth_loading.dart';
 import 'package:project_5/screens/auth/otp_screen.dart';
-import 'package:project_5/services/auth_api.dart';
 import 'package:project_5/widgets/sized_box.dart';
 import 'package:project_5/widgets/snack_bar.dart';
-
 import 'components/account_availability.dart';
 import 'components/auth_button.dart';
 import 'components/auth_text_field.dart';
 
-class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
+class SignInScreen extends StatelessWidget {
+  SignInScreen({Key? key}) : super(key: key);
 
-  @override
-  State<SignInScreen> createState() => _SignInScreenState();
-}
-
-class _SignInScreenState extends State<SignInScreen> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-
-  @override
-  void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
-    super.dispose();
-  }
-
-  bool isLoading = false;
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -46,50 +29,51 @@ class _SignInScreenState extends State<SignInScreen> {
               AuthTextField(
                   isPassword: false,
                   content: "Email",
-                  controller: _emailController),
+                  controller: emailController),
               sizedBoxH(context: context, multiplier: .019),
               AuthTextField(
                   isPassword: true,
                   content: "Password",
-                  controller: _passwordController),
+                  controller: passwordController),
               sizedBoxH(context: context, multiplier: .019),
-              AuthButton(
-                  content: "Sign In",
-                  color: Colors.grey[200]!,
-                  onPressedFunc: () async {
-                    isLoading = true;
-                    setState(() {});
-                    final response = await loginApi(
-                        email: _emailController.text.trim(),
-                        password: _passwordController.text.trim());
-                    if (_emailController.text.trim().isEmpty) {
-                      isLoading = false;
-                      showSnackBar(
-                          context: context, message: "Please Enter Your Email");
-                    } else if (_passwordController.text.isEmpty) {
-                      isLoading = false;
-                      showSnackBar(
+              BlocConsumer<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return AuthButton(
+                    content: "Sign In",
+                    color: Colors.grey[200]!,
+                    isDisabled: false,
+                    onPressedFunc: () {
+                      context.read<AuthBloc>().add(
+                            AuthLoginEvent(
+                              email: emailController.text,
+                              password: passwordController.text,
+                            ),
+                          );
+                    },
+                  );
+                },
+                listener: (BuildContext context, AuthState state) {
+                  state is AuthLoginErrorState
+                      ? showSnackBar(context: context, message: state.errorMsg)
+                      : SystemChannels.textInput.invokeMethod('TextInput.show');
+                  state is AuthLoginSuccessState
+                      ? navigation(
                           context: context,
-                          message: "Please Enter Your Password");
-                    } else if (response.toLowerCase() == "ok") {
-                      isLoading = false;
-                      navigation(
                           type: "push",
-                          context: context,
                           screen: OTPScreen(
-                              emailAddress: _emailController.text,
-                              type: "login"));
-                    } else {
-                      isLoading = false;
-                      showSnackBar(
-                          context: context,
-                          message: "Email or Password are incorrect");
-                    }
-                    SystemChannels.textInput.invokeMethod('TextInput.show');
-                    setState(() {});
-                  },
-                  isDisabled: false),
-              isLoading ? showLoadingIndicator() : const SizedBox(),
+                              emailAddress: state.email, type: state.type))
+                      : const SizedBox();
+                },
+              ),
+              BlocBuilder<AuthBloc, AuthState>(
+                builder: (context, state) {
+                  return state is LoadingState
+                      ? state.isLoading
+                          ? showLoadingIndicator()
+                          : const SizedBox()
+                      : const SizedBox();
+                },
+              ),
               sizedBoxH(context: context, multiplier: .011),
               const AccountAvailability(haveAccount: false),
             ],

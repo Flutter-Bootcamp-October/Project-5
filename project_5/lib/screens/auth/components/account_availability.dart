@@ -28,7 +28,7 @@ class AccountAvailability extends StatelessWidget {
                   navigation(
                       context: context,
                       screen: haveAccount
-                          ? const SignInScreen()
+                          ?  SignInScreen()
                           : const SignUpScreen(),
                       type: "push");
                 },

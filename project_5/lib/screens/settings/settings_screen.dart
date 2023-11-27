@@ -87,7 +87,7 @@ class _SettingsScreenState extends State<SettingsScreen> {
             pref.cleanToken();
             navigation(
               context: context,
-              screen: const SignInScreen(),
+              screen: SignInScreen(),
               type: "pushRemove",
             );
           },

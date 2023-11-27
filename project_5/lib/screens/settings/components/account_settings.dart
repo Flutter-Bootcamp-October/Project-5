@@ -113,7 +113,7 @@ class _AccountInformationScreenState extends State<AccountInformationScreen> {
                                           "Account deleted successfully")));
                               navigation(
                                 context: context,
-                                screen: const SignInScreen(),
+                                screen:  SignInScreen(),
                                 type: "pushRemove",
                               );
                             },

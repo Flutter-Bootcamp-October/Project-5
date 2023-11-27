@@ -3,7 +3,6 @@ import 'package:http/http.dart' as http;
 import 'package:project_5/main.dart';
 import 'package:project_5/models/error_model.dart';
 
-// await pref.setToken(token);
 Future registerApi(
     {required String name,
     required String phone,
@@ -42,7 +41,9 @@ Future<String> loginApi(
 
   final response = await http.post(url,
       body: jsonEncode(data), headers: {"content-Type": "application/json"});
-
+  print(response.body);
+  print(response.statusCode);
+  //TODO:CHECK IF EMAIL NOT CONFIRMED
   if (response.statusCode >= 200 && response.statusCode < 300) {
     return "Ok";
   } else if (response.statusCode >= 400) {
@@ -75,13 +76,3 @@ Future verificationApi(
     return err.msg;
   }
 }
-
-// void resetPasswordApi({required String email}) async {
-//   final data = {
-//     "email": email,
-//   };
-//   final url = Uri.parse("https://bacend-fshi.onrender.com/auth/rest_password");
-//
-//   final response = await http.post(url,
-//       body: jsonEncode(data), headers: {"content-Type": "application/json"});
-// }

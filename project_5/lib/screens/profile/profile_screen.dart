@@ -55,7 +55,7 @@ class ProfileScreenState extends State<ProfileScreen> {
       pref.cleanToken();
 
       navigation(
-          context: context, screen: const SignInScreen(), type: "pushRemove");
+          context: context, screen:  SignInScreen(), type: "pushRemove");
       //Token expired
       return false;
     } else {

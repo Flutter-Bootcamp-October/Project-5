@@ -29,7 +29,6 @@ class _ThemeSettingsState extends State<ThemeSettingsScreen> {
                   onChanged: (i) {
                     isDarkTheme = i;
                     pref.isDarkThemePref(i);
-                    AdaptiveTheme.of(context).setDark();
                     setState(() {});
                   },
                   style: const ToggleStyle(backgroundColor: Colors.transparent),
