@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="NONE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="0f37a664-52b0-41ad-a80b-ad16fedcb33d" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pcv/lib/extension/ext_string.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pcv/lib/model/about_model.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pcv/lib/screens/auth/register_screen.dart" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/pcv/lib/widgets/card_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/main.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/main.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/screens/drawer_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/screens/drawer_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/screens/edit_about.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/screens/edit_about.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/screens/home_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/screens/home_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/screens/loading_page.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/screens/loading_page.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/screens/register_screen.dart" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/screens/rest_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/screens/auth/rest_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/screens/sign_in_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/screens/auth/sign_in_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/screens/verification_screen.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/screens/auth/verification_screen.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/services/api_about.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/services/api_about.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/widgets/button_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/widgets/button_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/widgets/get_about.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/widgets/get_about.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/widgets/text_field_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/widgets/text_field_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/lib/widgets/text_rich_widget.dart" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/lib/widgets/text_rich_widget.dart" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/pubspec.lock" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/pubspec.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pcv/pubspec.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/pcv/pubspec.yaml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2YJA13jzMuYObRzMOhSfFcz5REF" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
+    &quot;dart.analysis.tool.window.visible&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Labs/Project-5/pcv&quot;,
+    &quot;show.migrate.to.gradle.popup&quot;: &quot;false&quot;
+  }
+}</component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="0f37a664-52b0-41ad-a80b-ad16fedcb33d" name="Changes" comment="" />
+      <created>1700233089213</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1700233089213</updated>
+    </task>
+    <servers />
+  </component>
+</project>

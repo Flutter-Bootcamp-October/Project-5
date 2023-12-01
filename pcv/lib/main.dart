@@ -1,7 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:pcv/screens/loading_page.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pcv/blocs/education_bloc/education_bloc.dart';
+import 'package:pcv/blocs/project_bloc/project_bloc.dart';
+import 'package:pcv/blocs/skill_bloc/skill_bloc.dart';
+import 'package:pcv/blocs/social_bloc/social_bloc.dart';
+import 'package:pcv/views/loading_page.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'blocs/auth_bloc/auth_bloc.dart';
 
-void main() {
+SharedPreferences? prefs;
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  prefs = await SharedPreferences.getInstance();
   runApp(const MainApp());
 }
 
@@ -10,14 +21,31 @@ class MainApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-          textTheme: const TextTheme(
-        bodySmall: TextStyle(color: Colors.white),
-        bodyMedium: TextStyle(color: Colors.white),
-        titleMedium: TextStyle(color: Colors.white),
-      )),
-      home: const LoadingPage(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => SkillBloc(),
+        ),
+        BlocProvider(
+          create: (context) => EducationBloc(),
+        ),
+        BlocProvider(
+          create: (context) => AuthBloc(),
+        ),
+        BlocProvider(
+          create: (context) => ProjectBloc(),
+        ),
+        BlocProvider(
+          create: (context) => SocialBloc(),
+        ),
+        // BlocProvider(
+        //   create: (context) => DeleteBloc(),
+        // ),
+      ],
+      child: MaterialApp(
+        theme: ThemeData(useMaterial3: true),
+        home: const LoadingPage(),
+      ),
     );
   }
 }
