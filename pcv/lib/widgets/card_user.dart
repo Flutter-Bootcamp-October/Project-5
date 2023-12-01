@@ -23,6 +23,6 @@ class CardUser extends StatelessWidget {
                 color: Colors.white70)),
         trailing: Text(phone.toString()),
       ),
-    );;
+    );
   }
 }
