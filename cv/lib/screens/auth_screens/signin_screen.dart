@@ -1,14 +1,13 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:convert';
-
+import 'package:cv/blocs/signin_bloc/signin_bloc.dart';
 import 'package:cv/screens/auth_screens/signup_screen.dart';
 import 'package:cv/screens/auth_screens/verification_screen.dart';
-import 'package:cv/services/auth/login.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SigninScreen extends StatelessWidget {
   const SigninScreen({
@@ -53,51 +52,52 @@ class SigninScreen extends StatelessWidget {
           ),
           hight40(),
           hight8(),
-          InkWell(
-            onTap: () async {
-              try {
-                if (emailController.text.isNotEmpty &&
-                    passwordController.text.isNotEmpty) {
-                  final response = await login({
-                    "email": emailController.text,
-                    "password": passwordController.text
-                  });
-                  if (response.statusCode >= 200 && response.statusCode < 300) {
-                    ScaffoldMessenger.of(context)
-                        .showSnackBar(const SnackBar(content: Text("done")));
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => VerificationScreen(
-                            email: emailController.text,
-                            type: 'login',
-                          ),
-                        ));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(jsonDecode(response.body)["msg"])));
-                  }
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text("Please enter all information")));
-                }
-              } catch (error) {
-                ScaffoldMessenger.of(context)
-                    .showSnackBar(SnackBar(content: Text(error.toString())));
+          BlocListener<SigninBloc, SigninState>(
+            listener: (context, state) {
+              if (state is ErrorState) {
+                ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    backgroundColor: Colors.white,
+                    content: Text(
+                      state.massege,
+                      style: const TextStyle(color: Colors.black),
+                    )));
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                    backgroundColor: Colors.white,
+                    content: Text(
+                      "done",
+                      style: TextStyle(color: Colors.black),
+                    )));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => VerificationScreen(
+                        email: emailController.text,
+                        type: 'login',
+                      ),
+                    ));
               }
             },
-            child: Container(
-              width: 330,
-              height: 50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20), color: pink),
-              child: const Center(
-                child: Text(
-                  "Sign in",
-                  style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontWeight: FontWeight.bold),
+            child: InkWell(
+              onTap: () async {
+                context.read<SigninBloc>().add(SigninEvent(
+                      emailController.text,
+                      passwordController.text,
+                    ));
+              },
+              child: Container(
+                width: 330,
+                height: 50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20), color: pink),
+                child: const Center(
+                  child: Text(
+                    "Sign in",
+                    style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
             ),
