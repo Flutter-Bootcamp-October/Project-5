@@ -45,6 +45,18 @@ class CommunityScreen extends StatelessWidget {
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
+                                  snapshot.data![index].image == null
+                                      ? Image.asset(
+                                          "assets/219986.png",
+                                          height: 40,
+                                          width: 40,
+                                        )
+                                      : Image.network(
+                                          snapshot.data![index].image ?? "",
+                                          height: 40,
+                                          width: 40,
+                                        ),
+                                  hight14(),
                                   Row(
                                     children: [
                                       const Text("ID: "),
@@ -54,8 +66,13 @@ class CommunityScreen extends StatelessWidget {
                                   Row(
                                     children: [
                                       const Text("Name: "),
-                                      Text(snapshot.data![index].name
-                                          .toString()),
+                                      Expanded(
+                                        child: Text(
+                                          snapshot.data![index].name.toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 1,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   Row(

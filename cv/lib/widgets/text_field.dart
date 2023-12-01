@@ -36,6 +36,7 @@ class AddTextField extends StatelessWidget {
           suffixIconColor: orange,
           suffixIcon: Icon(icon),
           filled: true,
+          fillColor: Colors.white,
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(15),
             borderSide:
