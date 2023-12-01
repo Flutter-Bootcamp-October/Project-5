@@ -15,8 +15,7 @@ import 'package:project_5/widgets/snack_bar.dart';
 import 'components/otp_fields.dart';
 
 class OTPScreen extends StatelessWidget {
-  OTPScreen({Key? key, required this.emailAddress, required this.type})
-      : super(key: key);
+  OTPScreen({Key? key, required this.emailAddress, required this.type}) : super(key: key);
 
   final TextEditingController otpController = TextEditingController();
   final String emailAddress;
@@ -60,13 +59,10 @@ class OTPScreen extends StatelessWidget {
                   shrinkWrap: true,
                   scrollDirection: Axis.horizontal,
                   physics: const NeverScrollableScrollPhysics(),
-                  separatorBuilder: (context, index) =>
-                      const SizedBox(width: 5),
+                  separatorBuilder: (context, index) => const SizedBox(width: 5),
                   itemCount: focusNodeList.length,
                   itemBuilder: (context, index) => OTPField(
-                      focusNodeList: focusNodeList,
-                      index: index,
-                      controller: otpController),
+                      focusNodeList: focusNodeList, index: index, controller: otpController),
                 ),
               ),
               sizedBoxH(context: context, multiplier: .095),
@@ -78,10 +74,7 @@ class OTPScreen extends StatelessWidget {
                     isDisabled: false,
                     onPressedFunc: () {
                       context.read<AuthBloc>().add(
-                            OTPEvent(
-                                email: emailAddress,
-                                type: type,
-                                otpCode: otpController.text),
+                            OTPEvent(email: emailAddress, type: type, otpCode: otpController.text),
                           );
                     },
                   );
@@ -91,10 +84,7 @@ class OTPScreen extends StatelessWidget {
                       ? showSnackBar(context: context, message: state.errorMsg)
                       : SystemChannels.textInput.invokeMethod('TextInput.show');
                   if (state is AuthOTPSuccessState) {
-                    navigation(
-                        context: context,
-                        type: "pushRemove",
-                        screen: const ProfileScreen());
+                    navigation(context: context, type: "pushRemove", screen: const ProfileScreen());
                     SystemChannels.textInput.invokeMethod('TextInput.hide');
                   } else {
                     const SizedBox();

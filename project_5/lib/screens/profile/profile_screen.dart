@@ -1,3 +1,6 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_5/bloc/education%20bloc/education_cubit.dart';
+import 'package:project_5/bloc/skills_bloc/skills_cubit.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
 
 import 'exports.dart';
@@ -11,8 +14,7 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   Future? aboutModelData;
-  Future? skillsModelData;
-  Future? educationModelData;
+
   Future? socialModelData;
   Future? projectsModelData;
 
@@ -39,8 +41,6 @@ class ProfileScreenState extends State<ProfileScreen> {
     if (check) {
       aboutModel = await aboutModelData;
       aboutModelData = getAboutApi();
-      skillsModelData = getSkillsData();
-      educationModelData = getEducationData();
       socialModelData = getSocialData();
       projectsModelData = getProjectsData();
       setState(() {});
@@ -54,8 +54,7 @@ class ProfileScreenState extends State<ProfileScreen> {
           .showSnackBar(const SnackBar(content: Text("Token Has Expired")));
       pref.cleanToken();
 
-      navigation(
-          context: context, screen:  SignInScreen(), type: "pushRemove");
+      navigation(context: context, screen: SignInScreen(), type: "pushRemove");
       //Token expired
       return false;
     } else {
@@ -67,16 +66,6 @@ class ProfileScreenState extends State<ProfileScreen> {
   updateAboutData() async {
     aboutModel = await aboutModelData;
     aboutModelData = getAboutApi();
-    Future.delayed(const Duration(seconds: 2), () => setState(() {}));
-  }
-
-  updateSkillsModel() async {
-    skillsModelData = getSkillsData();
-    setState(() {});
-  }
-
-  updateEducationModel() async {
-    educationModelData = getEducationData();
     Future.delayed(const Duration(seconds: 2), () => setState(() {}));
   }
 
@@ -123,83 +112,104 @@ class ProfileScreenState extends State<ProfileScreen> {
                     }
                   }),
               //Social
-              Social(
-                  updateMethod: updateSocialModel, socialData: socialModelData),
+              Social(updateMethod: updateSocialModel, socialData: socialModelData),
 
-              const Divider(
-                  thickness: .8,
-                  indent: 16,
-                  endIndent: 16,
-                  color: Color(0xffded3fc)),
+              const Divider(thickness: .8, indent: 16, endIndent: 16, color: Color(0xffded3fc)),
 
               //--Education--
-              SectionTitle(
-                title: "Education 🎓",
-                iconData: Icons.add,
-                onPressedFunc: () {
-                  educationModalBottomSheet(
-                    context,
-                    content: "Education",
-                    isSkills: true,
-                    gradDateController: gradDateController,
-                    collegeController: collegeController,
-                    universityController: universityController,
-                    specializationController: specializationController,
-                    updateMethod: updateEducationModel,
+              BlocConsumer<EducationCubit, EducationState>(
+                builder: (context, state) {
+                  return Wrap(
+                    children: [
+                      SectionTitle(
+                        title: "Education 🎓",
+                        iconData: Icons.add,
+                        onPressedFunc: () {
+                          educationModalBottomSheet(
+                            state: state,
+                            context,
+                            content: "Education",
+                            isSkills: true,
+                            gradDateController: gradDateController,
+                            collegeController: collegeController,
+                            universityController: universityController,
+                            specializationController: specializationController,
+                          );
+                        },
+                      ),
+                      Education(state: state),
+                    ],
                   );
                 },
+                listener: (BuildContext context, EducationState state) {
+                  if (state is EducationAddState) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(const SnackBar(content: Text("Education has been added")));
+                  }
+                  if (state is EducationErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.only(bottom: (context.getHeight() * .5)),
+                        content: Text(state.errMsg)));
+                  }
+                },
               ),
-              Education(
-                  updateMethod: updateEducationModel,
-                  educationData: educationModelData),
 
               //--Skills--
-              SectionTitle(
-                title: "Skills 🚀",
-                iconData: Icons.add,
-                onPressedFunc: () {
-                  customModalBottomSheet(
-                    context,
-                    controller: skillsController,
-                    content: "Skills",
-                    isSkills: true,
-                    onPressedFunc: () {
-                      if (skillsController.text.isNotEmpty) {
-                        addSkills(skill: skillsController.text);
-                        setState(() {
-                          loadData();
-                          skillsController.clear();
-                          Navigator.pop(context);
-                        });
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content:
-                                    Text("Please Enter a Name for the Skill")));
-                      }
-                    },
+              BlocConsumer<SkillsCubit, SkillsState>(
+                listener: (context, state) {
+                  if (state is SkillsAddState) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(const SnackBar(content: Text("Skill has been added")));
+                  }
+                  if (state is SkillsErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.only(bottom: (context.getHeight() * .5)),
+                        content: Text(state.errMsg)));
+                  }
+                },
+                builder: (context, state) {
+                  return Wrap(
+                    children: [
+                      SectionTitle(
+                        title: "Skills 🚀",
+                        iconData: Icons.add,
+                        onPressedFunc: () {
+                          customModalBottomSheet(
+                            context,
+                            controller: skillsController,
+                            content: "Skills",
+                            isSkills: true,
+                            onPressedFunc: () {
+                              context
+                                  .read<SkillsCubit>()
+                                  .addSkillsCubit(skillsController: skillsController);
+                            },
+                          );
+                        },
+                      ),
+                      Skills(state: state),
+                    ],
                   );
                 },
               ),
-              Skills(
-                  skillsData: skillsModelData, updateMethod: updateSkillsModel),
 
-              //--Experiences--
+              //--Projects--
               SectionTitle(
                 title: "Projects 📝",
                 iconData: Icons.add,
                 onPressedFunc: () {
                   projectsModalBottomSheet(context,
                       projectNameController: projectNameController,
-                      projectDescriptionController:
-                          projectDescriptionController,
+                      projectDescriptionController: projectDescriptionController,
                       content: "Project",
                       updateMethod: updateProjectsModel);
                 },
               ),
-              Projects(
-                  projectsData: projectsModelData,
-                  updateProjects: updateProjectsModel),
+              Projects(projectsData: projectsModelData, updateProjects: updateProjectsModel),
             ],
           ),
         ),

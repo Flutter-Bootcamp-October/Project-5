@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_5/bloc/auth_bloc/auth_bloc.dart';
+import 'package:project_5/bloc/education%20bloc/education_cubit.dart';
+import 'package:project_5/bloc/skills_bloc/skills_cubit.dart';
 import 'package:project_5/screens/profile/profile_screen.dart';
 import 'package:project_5/theme/theme.dart';
 
@@ -25,16 +27,17 @@ class MyApp extends StatelessWidget {
         BlocProvider<AuthBloc>(
           create: (context) => AuthBloc(),
         ),
-        // BlocProvider(
-        //   create: (context) => SubjectBloc(),
-        // ),
+        BlocProvider<EducationCubit>(
+          create: (context) => EducationCubit(),
+        ),
+        BlocProvider<SkillsCubit>(
+          create: (context) => SkillsCubit(),
+        ),
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: themeMap[pref.getTheme() ? "dark" : "light"],
-        home: pref.getToken().length > 1
-            ? const ProfileScreen()
-            :  SignInScreen(),
+        home: pref.getToken().length > 1 ? const ProfileScreen() : SignInScreen(),
       ),
     );
   }
