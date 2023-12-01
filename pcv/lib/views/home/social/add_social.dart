@@ -28,19 +28,19 @@ Future<void> addSocial(BuildContext context) {
                 .showSnackBar(SnackBar(content: Text(state.msg)));
           }
         },
-        child: AlertDialog(
-          title: const Text('Add Project'),
-          content: Column(
-            children: [
-              TextFieldWidget(
-                text: 'name',
-                obscure: false,
-                controller: usernameController,
-              ),
-              BlocBuilder<SocialBloc, SocialState>(
-                builder: (context, state) {
-                  if (state is ChangeState) {
-                    return DropdownMenu<String>(
+        child: BlocBuilder<SocialBloc, SocialState>(
+          builder: (context, state) {
+            if (state is ChangeState) {
+              return AlertDialog(
+                title: const Text('Add Project'),
+                content: Column(
+                  children: [
+                    TextFieldWidget(
+                      text: 'name',
+                      obscure: false,
+                      controller: usernameController,
+                    ),
+                    DropdownMenu<String>(
                       width: 250,
                       inputDecorationTheme: InputDecorationTheme(
                           enabledBorder: OutlineInputBorder(
@@ -56,9 +56,30 @@ Future<void> addSocial(BuildContext context) {
                           .map<DropdownMenuEntry<String>>((String value) {
                         return DropdownMenuEntry(value: value, label: value);
                       }).toList(),
-                    );
-                  }
-                  return DropdownMenu<String>(
+                    ),
+                    ButtonWidget(
+                      onPressed: () async {
+                        context.read<SocialBloc>().add(AddSocialEvent(
+                            userName: usernameController.text,
+                            social: dropdownValue));
+                        Navigator.of(context).pop();
+                      },
+                      text: 'Add',
+                    ),
+                  ],
+                ),
+              );
+            }
+            return AlertDialog(
+              title: const Text('Add Project'),
+              content: Column(
+                children: [
+                  TextFieldWidget(
+                    text: 'name',
+                    obscure: false,
+                    controller: usernameController,
+                  ),
+                  DropdownMenu<String>(
                     width: 250,
                     inputDecorationTheme: InputDecorationTheme(
                         enabledBorder: OutlineInputBorder(
@@ -68,25 +89,26 @@ Future<void> addSocial(BuildContext context) {
                       context
                           .read<SocialBloc>()
                           .add(ChangeStateSocialEvent(state: value!));
+                      dropdownValue = value;
                     },
                     dropdownMenuEntries: socialList
                         .map<DropdownMenuEntry<String>>((String value) {
                       return DropdownMenuEntry(value: value, label: value);
                     }).toList(),
-                  );
-                },
+                  ),
+                  ButtonWidget(
+                    onPressed: () async {
+                      context.read<SocialBloc>().add(AddSocialEvent(
+                          userName: usernameController.text,
+                          social: dropdownValue));
+                      Navigator.of(context).pop();
+                    },
+                    text: 'Add',
+                  ),
+                ],
               ),
-              ButtonWidget(
-                onPressed: () async {
-                  context.read<SocialBloc>().add(AddSocialEvent(
-                      userName: usernameController.text,
-                      social: dropdownValue));
-                  Navigator.of(context).pop();
-                },
-                text: 'Add',
-              ),
-            ],
-          ),
+            );
+          },
         ),
       );
     },

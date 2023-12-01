@@ -19,7 +19,8 @@ class SocialBloc extends Bloc<SocialEvent, SocialState> {
         if (resp.statusCode == 200) {
           _loedingSocial();
         } else {
-          emit(ErrorSocialState(msg: await jsonDecode(resp.body)["msg"].toString()));
+          String msg=jsonDecode(resp.body)["msg"].toString();
+          emit(ErrorSocialState(msg:msg ));
         }
       } catch (e) {
         emit(ErrorSocialState(msg: e.toString()));

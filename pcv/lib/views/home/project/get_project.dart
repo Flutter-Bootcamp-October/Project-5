@@ -33,7 +33,7 @@ class GetProjectWidget extends StatelessWidget {
                                 child: Container(
                                   width: 50,
                                   decoration: BoxDecoration(
-                                      color: Color(0xffff6700),
+                                      color: const Color(0xffff6700),
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Stack(
                                       alignment: AlignmentDirectional.center,
@@ -68,7 +68,7 @@ class GetProjectWidget extends StatelessWidget {
                            )
                       .toList());
             }
-            return SizedBox();
+            return const SizedBox();
           },
         )
       ],

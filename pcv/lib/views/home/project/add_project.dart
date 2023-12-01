@@ -21,22 +21,22 @@ Future<void> addProject(BuildContext context) {
         },
         child: AlertDialog(
           title: const Text('Add Project'),
-          content: Column(
-            children: [
-              TextFieldWidget(
-                text: 'name',
-                obscure: false,
-                controller: usernameController,
-              ),
-              TextFieldWidget(
-                text: 'Description',
-                obscure: false,
-                controller: descripController,
-              ),
-              BlocBuilder<ProjectBloc, ProjectState>(
-                builder: (context, state) {
-                  if (state is ChangeState) {
-                    return DropdownMenu<String>(
+          content: BlocBuilder<ProjectBloc, ProjectState>(
+            builder: (context, state) {
+              if (state is ChangeState) {
+                return Column(
+                  children: [
+                    TextFieldWidget(
+                      text: 'name',
+                      obscure: false,
+                      controller: usernameController,
+                    ),
+                    TextFieldWidget(
+                      text: 'Description',
+                      obscure: false,
+                      controller: descripController,
+                    ),
+                    DropdownMenu<String>(
                       width: 250,
                       inputDecorationTheme: const InputDecorationTheme(
                           enabledBorder: OutlineInputBorder(
@@ -54,9 +54,33 @@ Future<void> addProject(BuildContext context) {
                           list.map<DropdownMenuEntry<String>>((String value) {
                         return DropdownMenuEntry(value: value, label: value);
                       }).toList(),
-                    );
-                  }
-                  return DropdownMenu<String>(
+                    ),
+                    ButtonWidget(
+                      onPressed: () async {
+                        context.read<ProjectBloc>().add(AddProjectEvent(
+                            name: usernameController.text,
+                            description: descripController.text,
+                            state: dropdownValue));
+                        Navigator.of(context).pop();
+                      },
+                      text: 'Add',
+                    ),
+                  ],
+                );
+              }
+              return Column(
+                children: [
+                  TextFieldWidget(
+                    text: 'name',
+                    obscure: false,
+                    controller: usernameController,
+                  ),
+                  TextFieldWidget(
+                    text: 'Description',
+                    obscure: false,
+                    controller: descripController,
+                  ),
+                  DropdownMenu<String>(
                     width: 250,
                     inputDecorationTheme: const InputDecorationTheme(
                         enabledBorder: OutlineInputBorder(
@@ -68,25 +92,26 @@ Future<void> addProject(BuildContext context) {
                       context
                           .read<ProjectBloc>()
                           .add(ChangeStateProjectEvent(state: value!));
+                      dropdownValue = value;
                     },
                     dropdownMenuEntries:
                         list.map<DropdownMenuEntry<String>>((String value) {
                       return DropdownMenuEntry(value: value, label: value);
                     }).toList(),
-                  );
-                },
-              ),
-              ButtonWidget(
-                onPressed: () async {
-                  context.read<ProjectBloc>().add(AddProjectEvent(
-                      name: usernameController.text,
-                      description: descripController.text,
-                      state: dropdownValue));
-                  Navigator.of(context).pop();
-                },
-                text: 'Add',
-              ),
-            ],
+                  ),
+                  ButtonWidget(
+                    onPressed: () async {
+                      context.read<ProjectBloc>().add(AddProjectEvent(
+                          name: usernameController.text,
+                          description: descripController.text,
+                          state: dropdownValue));
+                      Navigator.of(context).pop();
+                    },
+                    text: 'Add',
+                  ),
+                ],
+              );
+            },
           ),
         ),
       );

@@ -21,8 +21,8 @@ class EducationBloc extends Bloc<EducationEvent, EducationState> {
       });
       loedingeducation();
     });
-    on<DeleteEducationEvent>((event, emit) {
-      educationNetwork.deleteEducationMethod(body: {"id_education": event.id});
+    on<DeleteEducationEvent>((event, emit) async{
+     await educationNetwork.deleteEducationMethod(body: {"id_education": event.id});
       loedingeducation();
     });
     on<ChangeEvent>(
