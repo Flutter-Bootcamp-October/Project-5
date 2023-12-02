@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pcv/blocs/page_bloc/page_bloc.dart';
 import 'package:pcv/main.dart';
 import 'package:pcv/views/auth/sign_in_screen.dart';
 import 'package:pcv/views/navi_bar.dart';
