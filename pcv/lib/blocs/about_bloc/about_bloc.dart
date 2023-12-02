@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart';
-import 'package:pcv/main.dart';
 import 'package:pcv/model/about_model.dart';
 import 'package:pcv/services/api_about.dart';
 part 'about_event.dart';
@@ -48,14 +47,12 @@ class AboutBloc extends Bloc<AboutEvent, AboutState> {
       try {
         final Response response = await netAbout.deleteAccountMethod();
         if (response.statusCode == 200) {
-          prefs?.clear();
           emit(SuccessDeleteAccount());
         } else {
           emit(ErrorAboutState(msg: await jsonDecode(response.body)["msg"]));
         }
-        print(response.statusCode);
       } catch (error) {
-        emit(ErrorAboutState(msg: error.toString()));
+        return;
       }
     });
   }

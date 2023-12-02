@@ -26,10 +26,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           if (resp.statusCode == 200) {
             emit(SignUpSuccessState());
           } else {
-            emit(ErrorState("${await jsonDecode(resp.body)["msg"]}"));
+            emit(SignUpErrorState("${await jsonDecode(resp.body)["msg"]}"));
           }
         } catch (e) {
-          emit(ErrorState(e.toString()));
+          emit(SignUpErrorState(e.toString()));
         }
       }
     });
@@ -55,12 +55,10 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           if (resp.statusCode == 200) {
             emit(LoginSuccessState());
           } else {
-            emit(ErrorState("email or password not correct"));
+            emit(ErrorState(await jsonDecode(resp.body)["msg"]));
           }
         } catch (e) {
           emit(ErrorState(e.toString()));
-          // ScaffoldMessenger.of(context).showSnackBar(
-          //     SnackBar(content: Text(e.toString())));
         }
       }
     });
@@ -77,7 +75,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
             emit(AuthInitial());
           }
         } else {
-          emit(ErrorState("Wrong code"));
+          emit(ErrorVerificationState("Wrong code"));
         }
       } catch (e) {
         emit(ErrorState(e.toString()));

@@ -32,123 +32,140 @@ class _SignInScreenState extends State<SignInScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
-          child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.end,
-                children: [
-                  Padding(
-                    padding: EdgeInsets.only(
-                        right: MediaQuery.of(context).size.width / 1.5,
-                        bottom: 20),
-                    child: const Text(
-                      'Login',
-                      style:
-                          TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-                    ),
-                  ),
-                  TextFieldWidget(
-                    keyForm: _emailKey,
-                    validator: (val) {
-                      if (val!.isEmpty) {
-                        return "enter the email";
-                      }
-                      if (!val.isValidEmail) {
-                        return "Email must be contain @ And .com";
-                      }
-                      return null;
-                    },
-                    text: 'Email',
-                    obscure: false,
-                    controller: emailController,
-                  ),
-                  BlocBuilder<AuthBloc, AuthState>(
-                    builder: (context, state) {
-                      if (state is DisplayState) {
-                        return TextFieldWidget(
-                          displayPass: state.display,
-                          keyForm: _passwordKey,
-                          text: 'Password',
-                          obscure: true,
-                          controller: passwordController,
-                          validator: (val) {
-                            if (!val!.isValidPassword) {
-                              return "must be contain Uppercase, lowercase and (!@#*~)";
-                            }
-                            return null;
-                          },
-                          onTap: () {
-                            context
-                                .read<AuthBloc>()
-                                .add(DisplayPasswordEvent(state.display));
-                          },
-                        );
-                      }
-                      return TextFieldWidget(
-                        displayPass: displayPass,
-                        keyForm: _passwordKey,
-                        text: 'Password',
-                        obscure: true,
-                        controller: passwordController,
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: SafeArea(
+            child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      Center(
+                        child: Image.asset(
+                          "assets/log.png",
+                          cacheHeight: 200,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            right: MediaQuery.of(context).size.width / 1.5,
+                            bottom: 20),
+                        child: const Text(
+                          'Login',
+                          style: TextStyle(
+                              fontSize: 24,
+                              fontWeight: FontWeight.bold,
+                              color: Color(0xffff6700)),
+                        ),
+                      ),
+                      TextFieldWidget(
+                        keyForm: _emailKey,
                         validator: (val) {
-                          if (!val!.isValidPassword) {
-                            return "must be contain Uppercase, lowercase and (!@#*~)";
+                          if (val!.isEmpty) {
+                            return "enter the email";
+                          }
+                          if (!val.isValidEmail) {
+                            return "Email must be contain @ And .com";
                           }
                           return null;
                         },
-                        onTap: () {
-                          context
-                              .read<AuthBloc>()
-                              .add(DisplayPasswordEvent(displayPass));
+                        text: 'Email',
+                        obscure: false,
+                        controller: emailController,
+                      ),
+                      BlocBuilder<AuthBloc, AuthState>(
+                        builder: (context, state) {
+                          if (state is DisplayState) {
+                            return TextFieldWidget(
+                              displayPass: state.display,
+                              keyForm: _passwordKey,
+                              text: 'Password',
+                              obscure: true,
+                              controller: passwordController,
+                              validator: (val) {
+                                if (!val!.isValidPassword) {
+                                  return "must be contain Uppercase, lowercase and (!@#*~)";
+                                }
+                                return null;
+                              },
+                              onTap: () {
+                                context
+                                    .read<AuthBloc>()
+                                    .add(DisplayPasswordEvent(state.display));
+                              },
+                            );
+                          }
+                          return TextFieldWidget(
+                            displayPass: displayPass,
+                            keyForm: _passwordKey,
+                            text: 'Password',
+                            obscure: true,
+                            controller: passwordController,
+                            validator: (val) {
+                              if (!val!.isValidPassword) {
+                                return "must be contain Uppercase, lowercase and (!@#*~)";
+                              }
+                              return null;
+                            },
+                            onTap: () {
+                              context
+                                  .read<AuthBloc>()
+                                  .add(DisplayPasswordEvent(displayPass));
+                            },
+                          );
                         },
-                      );
-                    },
-                  ),
-                  TextButton(
-                      onPressed: () {},
-                      child: const Text(
-                        'Forget Password?',
-                        style: TextStyle(color: Color(0xffFF6700)),
-                      )),
-                  BlocListener<AuthBloc, AuthState>(
-                    listener: (context, state) {
-                      if (state is LoginSuccessState) {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => VerificationScreen(
-                                type: 'login',
-                                email: emailController.text,
+                      ),
+                      TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Forget Password?',
+                            style: TextStyle(color: Color(0xffFF6700)),
+                          )),
+                      BlocListener<AuthBloc, AuthState>(
+                      
+                        listener: (context, state) {
+                          if (state is LoginSuccessState) {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => VerificationScreen(
+                                    type: 'login',
+                                    email: emailController.text,
+                                  ),
+                                ));
+                          }
+                          if (state is ErrorState) {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AlertDialog(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(10)),
+                                content: Text(state.message),
                               ),
-                            ));
-                      } else if (state is ErrorState) {
-                        showDialog(
-                          context: context,
-                          builder: (context) => AlertDialog(
-                            content: Text(state.message),
-                          ),
-                        );
-                      }
-                    },
-                    child: ButtonWidget(
-                        onPressed: () {
-                          context.read<AuthBloc>().add(LogInAuthEvent(
-                              email: emailController.text,
-                              password: passwordController.text,
-                              emailKey: _emailKey,
-                              passwordKey: _passwordKey));
+                            );
+                          }
                         },
-                        text: 'Sign In'),
+                        child: ButtonWidget(
+                            onPressed: () {
+                              context.read<AuthBloc>().add(LogInAuthEvent(
+                                  email: emailController.text,
+                                  password: passwordController.text,
+                                  emailKey: _emailKey,
+                                  passwordKey: _passwordKey));
+                            },
+                            text: 'Sign In'),
+                      ),
+                      TextRich(
+                          view: RegisterScreen(),
+                          text1: 'Don\'t have an account?',
+                          text2: ' Register')
+                    ],
                   ),
-                  TextRich(
-                      view: RegisterScreen(),
-                      text1: 'Don\'t have an account?',
-                      text2: ' Register')
-                ],
-              ))),
+                ))),
+      ),
     );
   }
 }

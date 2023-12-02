@@ -15,46 +15,59 @@ class VerificationScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            BlocListener<AuthBloc, AuthState>(
-              listener: (context, state) {
-                if (state is LoginSuccessState) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoadingPage(),
-                      ));
-                } else if (state is AuthInitial) {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const SignInScreen(),
-                      ));
-                } else if (state is ErrorState) {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      content: Text(state.message),
-                    ),
-                  );
-                }
-              },
-              child: Pinput(
-                autofocus: true,
-                length: 6,
-                onCompleted: (pin) {
-                  context.read<AuthBloc>().add(VerificationEvent(
-                      otp: pin.toString(), email: email, type: type));
-                },
+    return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      child: Scaffold(
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                "assets/mail.png",
+                cacheHeight: 200,
               ),
-            ),
-          ],
+              const SizedBox(
+                height: 20,
+              ),
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) {
+                  if (state is LoginSuccessState) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const LoadingPage(),
+                        ));
+                  } else if (state is AuthInitial) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => const SignInScreen(),
+                        ));
+                  } else if (state is ErrorVerificationState) {
+                    showDialog(
+                      context: context,
+                      builder: (context) => AlertDialog(
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(10)),
+                        content: Text(state.message),
+                      ),
+                    );
+                  }
+                },
+                child: Pinput(
+                  autofocus: true,
+                  length: 6,
+                  onCompleted: (pin) {
+                    FocusScope.of(context).unfocus();
+                    context.read<AuthBloc>().add(VerificationEvent(
+                        otp: pin.toString(), email: email, type: type));
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

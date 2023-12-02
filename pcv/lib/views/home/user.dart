@@ -22,7 +22,7 @@ class UserScreen extends StatelessWidget {
                     return CardUser(
                         image: state.about.data![index].image ?? "",
                         name: state.about.data![index].name.toString(),
-                        email: state.about.data![index].email.toString(),
+                        email: state.about.data![index].about.toString(),
                         phone: state.about.data![index].phone.toString());
                   },
                   shrinkWrap: true,
