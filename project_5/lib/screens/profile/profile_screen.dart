@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_5/bloc/education%20bloc/education_cubit.dart';
 import 'package:project_5/bloc/projects_bloc/projects_cubit.dart';
-import 'package:project_5/bloc/projects_bloc/projects_cubit.dart';
 import 'package:project_5/bloc/skills_bloc/skills_cubit.dart';
 import 'package:project_5/bloc/social_bloc/social_cubit.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
@@ -17,11 +16,7 @@ class ProfileScreen extends StatefulWidget {
 
 class ProfileScreenState extends State<ProfileScreen> {
   Future? aboutModelData;
-
-  Future? socialModelData;
-
   AboutModel? aboutModel;
-
   TextEditingController skillsController = TextEditingController();
 
   TextEditingController gradDateController = TextEditingController();
@@ -43,7 +38,7 @@ class ProfileScreenState extends State<ProfileScreen> {
     if (check) {
       aboutModel = await aboutModelData;
       aboutModelData = getAboutApi();
-      socialModelData = getSocialData();
+
       setState(() {});
     }
   }
@@ -67,11 +62,6 @@ class ProfileScreenState extends State<ProfileScreen> {
   updateAboutData() async {
     aboutModel = await aboutModelData;
     aboutModelData = getAboutApi();
-    Future.delayed(const Duration(seconds: 2), () => setState(() {}));
-  }
-
-  updateSocialModel() async {
-    socialModelData = getSocialData();
     Future.delayed(const Duration(seconds: 2), () => setState(() {}));
   }
 
@@ -107,15 +97,11 @@ class ProfileScreenState extends State<ProfileScreen> {
                       return const ShimmerProfileHeaderSkeleton();
                     }
                   }),
-              //Social
-              BlocConsumer<SocialCubit, SocialState>(
-                listener: (context, state) {
-                  // TODO: implement listener
-                },
+
+              //--Social--
+              BlocBuilder<SocialCubit, SocialState>(
                 builder: (context, state) {
-                  return Social(state: state
-                      // updateMethod: updateSocialModel, socialData: socialModelData
-                      );
+                  return Social(state: state);
                 },
               ),
 
