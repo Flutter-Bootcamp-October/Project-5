@@ -26,6 +26,16 @@ class ProfileScreenState extends State<ProfileScreen> {
   TextEditingController projectNameController = TextEditingController();
   TextEditingController projectDescriptionController = TextEditingController();
 
+  @override
+  void initState() {
+    loadData();
+    super.initState();
+  }
+
+  loadData() async {
+    final check = checkTokenValidity(check: await getAboutApi());
+  }
+
   bool checkTokenValidity({required check}) {
     // print(pref.getToken());
     if (check == "Token is expired or invalid") {

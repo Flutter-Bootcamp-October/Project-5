@@ -14,13 +14,15 @@ class ThemeSettingsScreen extends StatelessWidget {
   final dynamic state;
   @override
   Widget build(BuildContext context) {
-    state is ThemeInitial ? context.read<ThemeCubit>().getThemeFunc() : const SizedBox();
+    state is ThemeInitial
+        ? context.read<ThemeCubit>().getThemeFunc()
+        : const SizedBox();
     return Scaffold(
       appBar: const CustomAppBar(title: "Theme", hasAction: false),
       body: ListView(
         children: [
           ListTile(
-              title: Text("${isDarkTheme ? "Light" : "Dark"} Mode"),
+              title: Text("${isDarkTheme ? "Dark" : "Light"} Mode"),
               trailing: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: AnimatedToggleSwitch<bool>.rolling(
@@ -31,7 +33,8 @@ class ThemeSettingsScreen extends StatelessWidget {
                       // pref.isDarkThemePref(i);
                       context.read<ThemeCubit>().changeThemeFunc(isDark: i);
                     },
-                    style: const ToggleStyle(backgroundColor: Colors.transparent),
+                    style:
+                        const ToggleStyle(backgroundColor: Colors.transparent),
                     styleBuilder: (value) {
                       return ToggleStyle(
                         indicatorColor: state is ThemeChanged
