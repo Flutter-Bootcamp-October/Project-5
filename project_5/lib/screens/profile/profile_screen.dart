@@ -1,6 +1,9 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:project_5/bloc/education%20bloc/education_cubit.dart';
+import 'package:project_5/bloc/projects_bloc/projects_cubit.dart';
+import 'package:project_5/bloc/projects_bloc/projects_cubit.dart';
 import 'package:project_5/bloc/skills_bloc/skills_cubit.dart';
+import 'package:project_5/bloc/social_bloc/social_cubit.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
 
 import 'exports.dart';
@@ -16,7 +19,6 @@ class ProfileScreenState extends State<ProfileScreen> {
   Future? aboutModelData;
 
   Future? socialModelData;
-  Future? projectsModelData;
 
   AboutModel? aboutModel;
 
@@ -42,7 +44,6 @@ class ProfileScreenState extends State<ProfileScreen> {
       aboutModel = await aboutModelData;
       aboutModelData = getAboutApi();
       socialModelData = getSocialData();
-      projectsModelData = getProjectsData();
       setState(() {});
     }
   }
@@ -71,11 +72,6 @@ class ProfileScreenState extends State<ProfileScreen> {
 
   updateSocialModel() async {
     socialModelData = getSocialData();
-    Future.delayed(const Duration(seconds: 2), () => setState(() {}));
-  }
-
-  updateProjectsModel() async {
-    projectsModelData = getProjectsData();
     Future.delayed(const Duration(seconds: 2), () => setState(() {}));
   }
 
@@ -112,7 +108,16 @@ class ProfileScreenState extends State<ProfileScreen> {
                     }
                   }),
               //Social
-              Social(updateMethod: updateSocialModel, socialData: socialModelData),
+              BlocConsumer<SocialCubit, SocialState>(
+                listener: (context, state) {
+                  // TODO: implement listener
+                },
+                builder: (context, state) {
+                  return Social(state: state
+                      // updateMethod: updateSocialModel, socialData: socialModelData
+                      );
+                },
+              ),
 
               const Divider(thickness: .8, indent: 16, endIndent: 16, color: Color(0xffded3fc)),
 
@@ -198,18 +203,39 @@ class ProfileScreenState extends State<ProfileScreen> {
               ),
 
               //--Projects--
-              SectionTitle(
-                title: "Projects 📝",
-                iconData: Icons.add,
-                onPressedFunc: () {
-                  projectsModalBottomSheet(context,
-                      projectNameController: projectNameController,
-                      projectDescriptionController: projectDescriptionController,
-                      content: "Project",
-                      updateMethod: updateProjectsModel);
+              BlocConsumer<ProjectsCubit, ProjectsState>(
+                listener: (context, state) {
+                  if (state is ProjectsAddState) {
+                    Navigator.pop(context);
+                    ScaffoldMessenger.of(context)
+                        .showSnackBar(const SnackBar(content: Text("Project has been added")));
+                  }
+                  if (state is ProjectsErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        behavior: SnackBarBehavior.floating,
+                        margin: EdgeInsets.only(bottom: (context.getHeight() * .5)),
+                        content: Text(state.errMsg)));
+                  }
+                },
+                builder: (context, state) {
+                  return Wrap(
+                    children: [
+                      SectionTitle(
+                        title: "Projects 📝",
+                        iconData: Icons.add,
+                        onPressedFunc: () {
+                          projectsModalBottomSheet(context,
+                              projectNameController: projectNameController,
+                              projectDescriptionController: projectDescriptionController,
+                              content: "Project",
+                              state: state);
+                        },
+                      ),
+                      Projects(state: state),
+                    ],
+                  );
                 },
               ),
-              Projects(projectsData: projectsModelData, updateProjects: updateProjectsModel),
             ],
           ),
         ),

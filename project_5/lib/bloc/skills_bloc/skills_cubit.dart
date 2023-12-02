@@ -17,25 +17,20 @@ class SkillsCubit extends Cubit<SkillsState> {
     required TextEditingController skillsController,
   }) async {
     if (skillsController.text.isNotEmpty) {
-      await addSkills(skill: skillsController.text).then((value) async {
+      await addSkills(skill: skillsController.text).then((value) {
         emit(SkillsAddState());
         getSkillsCubit();
         skillsController.clear();
       });
-
-      // skillsController.clear();
-      // emit(SkillsAddState());
-      // getSkillsCubit();
     } else {
-      // ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-      //     content: Text("Please Enter a Name for the Skill")));
       emit(SkillsErrorState(errMsg: "Please Enter a Name for the Skill"));
     }
   }
 
   deleteSkillsCubit({required int id}) async {
-    await deleteSkill(id: id);
-    emit(SkillsDeleteState());
-    getSkillsCubit();
+    await deleteSkill(id: id).then((value) {
+      emit(SkillsDeleteState());
+      getSkillsCubit();
+    });
   }
 }
