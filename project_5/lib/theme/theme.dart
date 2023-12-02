@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 Map themeMap = {
   "light": ThemeData(
+    useMaterial3: true,
     brightness: Brightness.light,
     appBarTheme: const AppBarTheme(
       color: Colors.black12,
@@ -15,6 +16,7 @@ Map themeMap = {
     ),
   ),
   "dark": ThemeData(
+      useMaterial3: true,
       brightness: Brightness.dark,
       // appBarTheme: const AppBarTheme(
       //   color: Colors.purple,
@@ -26,5 +28,6 @@ Map themeMap = {
               TextStyle(color: Colors.black),
             )),
       ),
-      progressIndicatorTheme: const ProgressIndicatorThemeData(color: Colors.deepPurple)),
+      progressIndicatorTheme:
+          const ProgressIndicatorThemeData(color: Colors.deepPurple)),
 };

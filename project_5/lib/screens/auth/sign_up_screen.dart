@@ -24,7 +24,8 @@ class SignUpScreen extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController = TextEditingController();
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
 
   // @override
   @override
@@ -37,7 +38,10 @@ class SignUpScreen extends StatelessWidget {
               SizedBox(height: context.getHeight() * .103),
               Image.asset("assets/images/sign_logo.png", scale: 3),
               SizedBox(height: context.getHeight() * .075),
-              AuthTextField(isPassword: false, content: "Name", controller: nameController),
+              AuthTextField(
+                  isPassword: false,
+                  content: "Name",
+                  controller: nameController),
               SizedBox(height: context.getHeight() * .019),
               AuthTextField(
                 isPassword: false,
@@ -45,9 +49,15 @@ class SignUpScreen extends StatelessWidget {
                 controller: emailController,
               ),
               SizedBox(height: context.getHeight() * .019),
-              AuthTextField(isPassword: false, content: "Phone", controller: phoneController),
+              AuthTextField(
+                  isPassword: false,
+                  content: "Phone",
+                  controller: phoneController),
               SizedBox(height: context.getHeight() * .019),
-              AuthTextField(isPassword: true, content: "Password", controller: passwordController),
+              AuthTextField(
+                  isPassword: true,
+                  content: "Password",
+                  controller: passwordController),
               SizedBox(height: context.getHeight() * .019),
               AuthTextField(
                   isPassword: true,
