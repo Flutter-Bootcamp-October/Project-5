@@ -1,16 +1,14 @@
-// ignore_for_file: use_build_context_synchronously
+// ignore_for_file: use_build_context_synchronously, must_be_immutable
 
-import 'dart:convert';
 import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:pcv/services/api_about.dart';
+import 'package:pcv/blocs/about_bloc/about_bloc.dart';
 import 'package:pcv/widgets/conta_home_widget.dart';
 
-class GetAbout extends StatelessWidget {
-   GetAbout(
+class AboutWidget extends StatelessWidget {
+  AboutWidget(
       {super.key,
       this.id,
       this.name,
@@ -32,38 +30,42 @@ class GetAbout extends StatelessWidget {
   final String? image;
   final ImagePicker picker = ImagePicker();
 
-  File? imageFile;
-
+  late File? imageFile;
   @override
   Widget build(BuildContext context) {
     return Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
-      Row(
-        children: [
-          InkWell(
-              onTap: () async {
-                try {
-                  XFile? image =
-                      await picker.pickImage(source: ImageSource.gallery);
-                  imageFile = File(image!.path);
+      BlocListener<AboutBloc, AboutState>(
+        listener: (context, state) {
+          if (state is ErrorAboutState) {
+            ScaffoldMessenger.of(context)
+                .showSnackBar(SnackBar(content: Text(state.msg)));
+          }
+        },
+        child: InkWell(
+            onTap: () async {
+              try {
+                XFile? image =
+                    await picker.pickImage(source: ImageSource.gallery);
+                imageFile = File(image!.path);
+                context.read<AboutBloc>().add(UpdateImage(image: imageFile));
 
-                  final Response resp =
-                      await netAbout.aboutUploadMethod(image: imageFile!);
-                  if (resp.statusCode == 200) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        const SnackBar(content: Text('image it\'s update')));
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                        content: Text(
-                            (await jsonDecode(resp.body))["msg"].toString())));
-                  }
-                } catch (e) {
-                  ScaffoldMessenger.of(context)
-                      .showSnackBar(SnackBar(content: Text(e.toString())));
-                }
-              },
+                showDialog(
+                    context: context,
+                    builder: (context) => const Center(
+                          child: CircularProgressIndicator(),
+                        ));
+                Future.delayed(const Duration(seconds: 3), () {
+                  Navigator.of(context).pop();
+                });
+              } catch (e) {
+                ScaffoldMessenger.of(context)
+                    .showSnackBar(SnackBar(content: Text(e.toString())));
+              }
+            },
+            child: ClipOval(
               child: Container(
                 height: 120,
-                width: 100,
+                width: 120,
                 color: const Color(0xffff6700),
                 child: image == null
                     ? const Center(
@@ -77,21 +79,20 @@ class GetAbout extends StatelessWidget {
                         image!,
                         fit: BoxFit.cover,
                       ),
-              )),
-          Column(
-            children: [
-              Text(
-                ' ${name.toString()}',
-                style: const TextStyle(fontSize: 28),
               ),
-              if (titlePosition != null &&
-                  titlePosition != "null")
-                Text(
-                  titlePosition.toString(),
-                  style: TextStyle(fontSize: 16, color: Colors.grey[400]),
-                ),
-            ],
+            )),
+      ),
+      Column(
+        children: [
+          Text(
+            ' ${name.toString()}',
+            style: const TextStyle(fontSize: 28),
           ),
+          if (titlePosition != null && titlePosition != "null")
+            Text(
+              titlePosition.toString(),
+              style: TextStyle(fontSize: 16, color: Colors.grey[400]),
+            ),
         ],
       ),
       if (about != null && about != "null")

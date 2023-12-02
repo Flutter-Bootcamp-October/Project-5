@@ -9,14 +9,14 @@ class TextFieldWidget extends StatelessWidget {
     this.keyForm,
     this.validator,
     this.displayPass = false,
-    this.onTap,
+    this.onTap, this.keyboardType,
   });
   final String text;
   final bool obscure;
   final TextEditingController? controller;
   final GlobalKey? keyForm;
   final String? Function(String?)? validator;
-
+  final TextInputType? keyboardType;
   final bool displayPass;
   final Function()? onTap;
   @override
@@ -26,6 +26,7 @@ class TextFieldWidget extends StatelessWidget {
         child: Form(
           key: keyForm,
           child: TextFormField(
+            keyboardType: keyboardType,
             validator: validator,
             obscureText: !obscure ? false : !displayPass,
             controller: controller,

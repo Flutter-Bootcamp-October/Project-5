@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pcv/blocs/project_bloc/project_bloc.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
-import '../../../globel/global.dart';
 import '../../../widgets/button_widget.dart';
 
 Future<void> addProject(BuildContext context) {
+  const List<String> list = <String>['completed', 'processing', 'other'];
+
   String dropdownValue = list.first;
   final usernameController = TextEditingController();
   final descripController = TextEditingController();
@@ -19,11 +20,58 @@ Future<void> addProject(BuildContext context) {
                 .showSnackBar(SnackBar(content: Text(state.msg)));
           }
         },
-        child: AlertDialog(
-          title: const Text('Add Project'),
-          content: BlocBuilder<ProjectBloc, ProjectState>(
-            builder: (context, state) {
-              if (state is ChangeState) {
+        child: GestureDetector(
+          onTap: () => FocusScope.of(context).unfocus(),
+          onDoubleTap: () => Navigator.pop(context),
+          child: AlertDialog(
+            title: const Text('Add Project'),
+            content: BlocBuilder<ProjectBloc, ProjectState>(
+              builder: (context, state) {
+                if (state is ChangeState) {
+                  return Column(
+                    children: [
+                      TextFieldWidget(
+                        text: 'name',
+                        obscure: false,
+                        controller: usernameController,
+                      ),
+                      TextFieldWidget(
+                        text: 'Description',
+                        obscure: false,
+                        controller: descripController,
+                      ),
+                      DropdownMenu<String>(
+                        width: 250,
+                        inputDecorationTheme: const InputDecorationTheme(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.horizontal(
+                                    left: Radius.circular(25),
+                                    right: Radius.circular(25)))),
+                        initialSelection: list.first,
+                        onSelected: (String? value) {
+                          context
+                              .read<ProjectBloc>()
+                              .add(ChangeStateProjectEvent(state: value!));
+                          dropdownValue = state.state;
+                        },
+                        dropdownMenuEntries:
+                            list.map<DropdownMenuEntry<String>>((String value) {
+                          return DropdownMenuEntry(value: value, label: value);
+                        }).toList(),
+                      ),
+                      ButtonWidget(
+                        onPressed: () async {
+                          context.read<ProjectBloc>().add(AddProjectEvent(
+                              name: usernameController.text,
+                              description: descripController.text,
+                              state: dropdownValue));
+                          Navigator.of(context).pop();
+                        },
+                        text: 'Add',
+                      ),
+                    ],
+                  );
+                }
                 return Column(
                   children: [
                     TextFieldWidget(
@@ -48,7 +96,7 @@ Future<void> addProject(BuildContext context) {
                         context
                             .read<ProjectBloc>()
                             .add(ChangeStateProjectEvent(state: value!));
-                        dropdownValue = state.state;
+                        dropdownValue = value;
                       },
                       dropdownMenuEntries:
                           list.map<DropdownMenuEntry<String>>((String value) {
@@ -67,51 +115,8 @@ Future<void> addProject(BuildContext context) {
                     ),
                   ],
                 );
-              }
-              return Column(
-                children: [
-                  TextFieldWidget(
-                    text: 'name',
-                    obscure: false,
-                    controller: usernameController,
-                  ),
-                  TextFieldWidget(
-                    text: 'Description',
-                    obscure: false,
-                    controller: descripController,
-                  ),
-                  DropdownMenu<String>(
-                    width: 250,
-                    inputDecorationTheme: const InputDecorationTheme(
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.horizontal(
-                                left: Radius.circular(25),
-                                right: Radius.circular(25)))),
-                    initialSelection: list.first,
-                    onSelected: (String? value) {
-                      context
-                          .read<ProjectBloc>()
-                          .add(ChangeStateProjectEvent(state: value!));
-                      dropdownValue = value;
-                    },
-                    dropdownMenuEntries:
-                        list.map<DropdownMenuEntry<String>>((String value) {
-                      return DropdownMenuEntry(value: value, label: value);
-                    }).toList(),
-                  ),
-                  ButtonWidget(
-                    onPressed: () async {
-                      context.read<ProjectBloc>().add(AddProjectEvent(
-                          name: usernameController.text,
-                          description: descripController.text,
-                          state: dropdownValue));
-                      Navigator.of(context).pop();
-                    },
-                    text: 'Add',
-                  ),
-                ],
-              );
-            },
+              },
+            ),
           ),
         ),
       );

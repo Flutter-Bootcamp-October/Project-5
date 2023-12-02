@@ -1,6 +1,5 @@
 // ignore_for_file: invalid_use_of_visible_for_testing_member
 
-
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pcv/model/education_model.dart';
 import 'package:pcv/services/education_api.dart';
@@ -21,8 +20,9 @@ class EducationBloc extends Bloc<EducationEvent, EducationState> {
       });
       loedingeducation();
     });
-    on<DeleteEducationEvent>((event, emit) async{
-     await educationNetwork.deleteEducationMethod(body: {"id_education": event.id});
+    on<DeleteEducationEvent>((event, emit) async {
+      await educationNetwork
+          .deleteEducationMethod(body: {"id_education": event.id});
       loedingeducation();
     });
     on<ChangeEvent>(
@@ -33,7 +33,7 @@ class EducationBloc extends Bloc<EducationEvent, EducationState> {
       final educaton = await educationNetwork.educationMethod();
       emit(GetEducationState(education: educaton!));
     } catch (error) {
-      //
+      return;
     }
   }
 }

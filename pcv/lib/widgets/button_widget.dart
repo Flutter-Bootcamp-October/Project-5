@@ -5,9 +5,11 @@ class ButtonWidget extends StatelessWidget {
     super.key,
     required this.onPressed,
     required this.text,
+    this.color = const Color(0xffFF6700),
   });
   final Function() onPressed;
   final String text;
+  final Color? color;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -15,11 +17,11 @@ class ButtonWidget extends StatelessWidget {
         child: ElevatedButton(
           style: ElevatedButton.styleFrom(
             elevation: 10,
-            shadowColor: const Color(0xffFF6700),
-            shape:  RoundedRectangleBorder(
+            shadowColor: color,
+            shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            backgroundColor: const Color(0xffFF6700),
+            backgroundColor: color,
             fixedSize: Size(MediaQuery.of(context).size.width * 0.9, 1),
           ),
           onPressed: onPressed,

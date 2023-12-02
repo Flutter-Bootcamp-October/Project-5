@@ -9,25 +9,29 @@ Future<void> addSkill(BuildContext context) {
   return showDialog<void>(
     context: context,
     builder: (BuildContext context) {
-      return AlertDialog(
-        title: const Text('Add Skill'),
-        content: Column(
-          children: [
-            TextFieldWidget(
-              text: 'skill',
-              obscure: false,
-              controller: skillController,
-            ),
-            ButtonWidget(
-              onPressed: () async {
-                context
-                    .read<SkillBloc>()
-                    .add(AddSkill(skill: skillController.text));
-                Navigator.of(context).pop();
-              },
-              text: 'Add',
-            ),
-          ],
+      return GestureDetector(
+        onTap: () => FocusScope.of(context).unfocus(),
+        onDoubleTap: () => Navigator.pop(context),
+        child: AlertDialog(
+          title: const Text('Add Skill'),
+          content: Column(
+            children: [
+              TextFieldWidget(
+                text: 'skill',
+                obscure: false,
+                controller: skillController,
+              ),
+              ButtonWidget(
+                onPressed: () async {
+                  context
+                      .read<SkillBloc>()
+                      .add(AddSkill(skill: skillController.text));
+                  Navigator.of(context).pop();
+                },
+                text: 'Add',
+              ),
+            ],
+          ),
         ),
       );
     },

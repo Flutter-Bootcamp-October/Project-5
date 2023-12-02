@@ -31,7 +31,53 @@ Future<void> addSocial(BuildContext context) {
         child: BlocBuilder<SocialBloc, SocialState>(
           builder: (context, state) {
             if (state is ChangeState) {
-              return AlertDialog(
+              return GestureDetector(
+                onTap: () => FocusScope.of(context).unfocus(),
+                onDoubleTap: () => Navigator.pop(context),
+                child: AlertDialog(
+                  title: const Text('Add Project'),
+                  content: Column(
+                    children: [
+                      TextFieldWidget(
+                        text: 'name',
+                        obscure: false,
+                        controller: usernameController,
+                      ),
+                      DropdownMenu<String>(
+                        width: 250,
+                        inputDecorationTheme: InputDecorationTheme(
+                            enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20))),
+                        initialSelection: socialList.first,
+                        onSelected: (String? value) {
+                          context
+                              .read<SocialBloc>()
+                              .add(ChangeStateSocialEvent(state: value!));
+                          dropdownValue = state.state;
+                        },
+                        dropdownMenuEntries: socialList
+                            .map<DropdownMenuEntry<String>>((String value) {
+                          return DropdownMenuEntry(value: value, label: value);
+                        }).toList(),
+                      ),
+                      ButtonWidget(
+                        onPressed: () async {
+                          context.read<SocialBloc>().add(AddSocialEvent(
+                              userName: usernameController.text,
+                              social: dropdownValue));
+                          Navigator.of(context).pop();
+                        },
+                        text: 'Add',
+                      ),
+                    ],
+                  ),
+                ),
+              );
+            }
+            return GestureDetector(
+              onTap: () => FocusScope.of(context).unfocus(),
+              onDoubleTap: () => Navigator.pop(context),
+              child: AlertDialog(
                 title: const Text('Add Project'),
                 content: Column(
                   children: [
@@ -50,7 +96,7 @@ Future<void> addSocial(BuildContext context) {
                         context
                             .read<SocialBloc>()
                             .add(ChangeStateSocialEvent(state: value!));
-                        dropdownValue = state.state;
+                        dropdownValue = value;
                       },
                       dropdownMenuEntries: socialList
                           .map<DropdownMenuEntry<String>>((String value) {
@@ -68,44 +114,6 @@ Future<void> addSocial(BuildContext context) {
                     ),
                   ],
                 ),
-              );
-            }
-            return AlertDialog(
-              title: const Text('Add Project'),
-              content: Column(
-                children: [
-                  TextFieldWidget(
-                    text: 'name',
-                    obscure: false,
-                    controller: usernameController,
-                  ),
-                  DropdownMenu<String>(
-                    width: 250,
-                    inputDecorationTheme: InputDecorationTheme(
-                        enabledBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20))),
-                    initialSelection: socialList.first,
-                    onSelected: (String? value) {
-                      context
-                          .read<SocialBloc>()
-                          .add(ChangeStateSocialEvent(state: value!));
-                      dropdownValue = value;
-                    },
-                    dropdownMenuEntries: socialList
-                        .map<DropdownMenuEntry<String>>((String value) {
-                      return DropdownMenuEntry(value: value, label: value);
-                    }).toList(),
-                  ),
-                  ButtonWidget(
-                    onPressed: () async {
-                      context.read<SocialBloc>().add(AddSocialEvent(
-                          userName: usernameController.text,
-                          social: dropdownValue));
-                      Navigator.of(context).pop();
-                    },
-                    text: 'Add',
-                  ),
-                ],
               ),
             );
           },

@@ -32,7 +32,7 @@ class ContaHomeWidget extends StatelessWidget {
               ),
               Text(
                 text,
-                style: const TextStyle(fontSize: 18),
+                style: const TextStyle(fontSize: 18, color: Colors.white),
               ),
             ],
           ))),

@@ -19,6 +19,12 @@ class GetEducation extends StatelessWidget {
           TitlesWidget(
               titles: 'Education', onPressed: () => addEducation(context)),
           BlocBuilder<EducationBloc, EducationState>(
+            buildWhen: (oldState, newState) {
+              if (newState is ChangeStateEducaion) {
+                return false;
+              }
+              return true;
+            },
             builder: (context, state) {
               if (state is GetEducationState) {
                 return GridView.count(

@@ -2,13 +2,14 @@
 
 import 'dart:convert';
 import 'dart:io';
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:pcv/main.dart';
 import 'package:pcv/model/about_model.dart';
-import 'package:pcv/views/auth/sign_in_screen.dart';
+import 'package:pcv/model/user_model.dart';
 
 final netAbout = AboutNet();
+
 class AboutNet {
   final String _apiUrl = 'bacend-fshi.onrender.com';
   final String _about = '/user/about';
@@ -17,19 +18,21 @@ class AboutNet {
   final String _delete = '/user/delete_account';
   final String _getUser = '/user/get_users';
 
-  Future<AboutModel?> aboutMethod({required BuildContext context}) async {
+  Future<AboutModel?> aboutMethod() async {
     var url = Uri.https(_apiUrl, _about);
     try {
+      AboutModel about;
       var response = await http.get(url,
           headers: {"Authorization": prefs!.getString("token") ?? ""});
+      if (kDebugMode) {
+        print(prefs!.getString("token"));
+      }
       if (response.statusCode == 200) {
-        return AboutModel.fromJson(jsonDecode(response.body));
+        about = AboutModel.fromJson(jsonDecode(response.body));
+        return about;
       } else if (response.statusCode == 401) {
         prefs?.clear();
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const SignInScreen()),
-            (route) => false);
+        return null;
       }
     } catch (e) {}
 
@@ -52,7 +55,7 @@ class AboutNet {
     return response;
   }
 
-  deleteAccountMethod({required String token}) async {
+  deleteAccountMethod() async {
     var url = Uri.https(_apiUrl, _delete);
     var response = await http.delete(
       url,
@@ -61,10 +64,13 @@ class AboutNet {
     return response;
   }
 
-  Future<AboutModel?> getUserMethod({required BuildContext context}) async {
+  Future<UserModel?> getUserMethod() async {
     var url = Uri.https(_apiUrl, _getUser);
-    var response = await http
-        .get(url, headers: {"Authorization": prefs!.getString("token")!});
-    return AboutModel.fromJson(jsonDecode(response.body));
+    try {
+      var response = await http
+          .get(url, headers: {"Authorization": prefs!.getString("token")!});
+      return UserModel.fromJson(jsonDecode(response.body));
+    } catch (error) {}
+    return null;
   }
 }

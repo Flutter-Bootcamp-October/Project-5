@@ -27,11 +27,17 @@ class GetSocial extends StatelessWidget {
         onPressed: () => addSocial(context),
       ),
       BlocBuilder<SocialBloc, SocialState>(
+        buildWhen: (oldState, newState) {
+          if (newState is ChangeState) {
+            return false;
+          }
+          return true;
+        },
         builder: (context, state) {
           if (state is GetSocialState) {
             return GridView.count(
                 physics: const NeverScrollableScrollPhysics(),
-                childAspectRatio: 2,
+                childAspectRatio: 1.7,
                 shrinkWrap: true,
                 crossAxisCount: 2,
                 mainAxisSpacing: 4,
@@ -39,7 +45,7 @@ class GetSocial extends StatelessWidget {
                 children: state.social[0].data!
                     .map((e) => Container(
                           decoration: BoxDecoration(
-                              color: Colors.grey.shade100.withOpacity(0.9),
+                              color: const Color(0xffff6700),
                               borderRadius: BorderRadius.circular(10)),
                           child: ListTile(
                             subtitle: Column(
@@ -47,7 +53,8 @@ class GetSocial extends StatelessWidget {
                                 Text(
                                   "${e.username}",
                                   style: const TextStyle(
-                                      fontWeight: FontWeight.w500),
+                                      fontWeight: FontWeight.w500,
+                                      color: Colors.white),
                                 ),
                                 Image.asset(
                                   "assets/${e.social}.png",
@@ -59,9 +66,33 @@ class GetSocial extends StatelessWidget {
                             trailing: IconButton(
                               icon: const Icon(Icons.delete),
                               onPressed: () {
-                                context
-                                    .read<SocialBloc>()
-                                    .add(DeleteSocialEvent(id: e.id!));
+                                showBottomSheet(
+                                    constraints:
+                                        const BoxConstraints(maxHeight: 200),
+                                    context: context,
+                                    builder: (contxt) => AlertDialog(
+                                          content: const Text(
+                                              "Do You Want Delete This Project?"),
+                                          actions: [
+                                            TextButton(
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                                child: const Text("Cancel")),
+                                            IconButton(
+                                                onPressed: () {
+                                                  context
+                                                      .read<SocialBloc>()
+                                                      .add(DeleteSocialEvent(
+                                                          id: e.id!));
+                                                  Navigator.pop(context);
+                                                },
+                                                icon: const Icon(
+                                                  Icons.delete_forever,
+                                                  color: Colors.red,
+                                                ))
+                                          ],
+                                        ));
                               },
                             ),
                           ),

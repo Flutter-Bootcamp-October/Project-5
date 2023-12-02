@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pcv/extension/ext_string.dart';
 import 'package:pcv/views/auth/register_screen.dart';
-import 'package:pcv/views/auth/rest_screen.dart';
+
 import 'package:pcv/views/auth/verification_screen.dart';
 import 'package:pcv/widgets/button_widget.dart';
 import 'package:pcv/widgets/text_field_widget.dart';
@@ -108,13 +108,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                   ),
                   TextButton(
-                      onPressed: () {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const RestScreen(),
-                            ));
-                      },
+                      onPressed: () {},
                       child: const Text(
                         'Forget Password?',
                         style: TextStyle(color: Color(0xffFF6700)),

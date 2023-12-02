@@ -1,52 +1,34 @@
-// ignore_for_file: use_build_context_synchronously
-
-
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pcv/blocs/page_bloc/page_bloc.dart';
 import 'package:pcv/views/auth/sign_in_screen.dart';
-import 'package:pcv/views/home/home_screen.dart';
-import 'package:pcv/services/api_about.dart';
+import 'package:pcv/views/navi_bar.dart';
 
-import '../main.dart';
-
-class LoadingPage extends StatefulWidget {
+class LoadingPage extends StatelessWidget {
   const LoadingPage({super.key});
 
   @override
-  State<LoadingPage> createState() => _LoadingPageState();
-}
-
-class _LoadingPageState extends State<LoadingPage> {
-  @override
-  initState() {
-    super.initState();
-    netAbout.aboutMethod(context: context);
-    Future.delayed(
-      const Duration(seconds: 2),
-      () {
-        if (prefs!.getString('token') != null) {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => const HomeScreen()),
-            (route) => false,
-          );
-        } else {
-          Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(builder: (context) => SignInScreen()),
-            (route) => false,
-          );
-        }
-      },
-    );
-  }
-
-
-
-  @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: CircularProgressIndicator(),
+        child: BlocListener<PageBloc, PageState>(
+          listener: (context, state) {
+            if (state is SuccessTokenState) {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => NaviBar()),
+                (route) => false,
+              );
+            } else {
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(builder: (context) => const SignInScreen()),
+                (route) => false,
+              );
+            }
+          },
+          child: const CircularProgressIndicator(),
+        ),
       ),
     );
   }
