@@ -27,14 +27,11 @@ class AccountAvailability extends StatelessWidget {
                 ..onTap = () {
                   navigation(
                       context: context,
-                      screen: haveAccount
-                          ?  SignInScreen()
-                          : const SignUpScreen(),
+                      screen: haveAccount ? SignInScreen() : SignUpScreen(),
                       type: "push");
                 },
               text: haveAccount ? "Sign In" : "Sign Up",
-              style: const TextStyle(
-                  color: Colors.blue, decoration: TextDecoration.underline),
+              style: const TextStyle(color: Colors.blue, decoration: TextDecoration.underline),
             ),
           ]),
     );

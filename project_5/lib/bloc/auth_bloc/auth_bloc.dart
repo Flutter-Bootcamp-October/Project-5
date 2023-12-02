@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_5/extensions/email_validator_extension.dart';
+import 'package:project_5/screens/auth/logic/sign_up_validators.dart';
 import 'package:project_5/services/auth_api.dart';
 
 part 'auth_event.dart';
@@ -10,8 +13,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(LoadingState(isLoading: true));
 
       if (event.email.isNotEmpty && event.password.isNotEmpty) {
-        final response = await loginApi(
-            email: event.email.trim(), password: event.password.trim());
+        final response = await loginApi(email: event.email.trim(), password: event.password.trim());
 
         if (event.email.trim().isEmpty) {
           emit(AuthLoginErrorState(errorMsg: "Please Enter Your Email"));
@@ -25,53 +27,58 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthLoginSuccessState(type: "login", email: event.email.trim()));
         } else {
           emit(LoadingState(isLoading: false));
-          emit(
-              AuthLoginErrorState(errorMsg: "Email or Password are incorrect"));
+          emit(AuthLoginErrorState(errorMsg: "Email or Password are incorrect"));
         }
       } else {
         emit(AuthLoginErrorState(errorMsg: 'Please Fill The Required Fields'));
       }
     });
 
-    on<AuthRegisterEvent>((event, emit) {
-      if (event.email.isNotEmpty &&
-          event.password.isNotEmpty &&
-          event.userName.isNotEmpty) {
-        List doesExists = [];
-        // for (var item in usersList) {
-        //   if (item.email!.contains(event.email.trim().toLowerCase())) {
-        //     doesExists.add(true);
-        //   }
-        // }
-        if (!doesExists.contains(true)) {
-          // currentUser = User(
-          //   address: [],
-          //   userAvatar: "",
-          //   email: event.email.trim(),
-          //   password: event.password.trim(),
-          //   mobileNumber: '',
-          //   name: event.userName.trim(),
-          // );
-          // loggedInUsers.add(currentUser);
-          // usersList.add(currentUser);
-          emit(AuthRegisterSuccessState(
-              type: "register", email: event.email.trim()));
+    on<AuthRegisterEvent>((event, emit) async {
+      emit(LoadingState(isLoading: true));
+
+      if (event.email.isNotEmpty && event.password.isNotEmpty && event.userName.isNotEmpty) {
+        emit(LoadingState(isLoading: true));
+
+        //TODO: FIX ERR STATE - SNACKBAR
+        final isValidName = nameValidator(event.context, event.userName);
+        final isValidEmail = emailValidation(event.email.isValidEmail(), event.context);
+        final isValidPhone = phoneValidator(event.context, event.phone);
+        final isValidPassword = passwordValidator(event.context, event.password);
+        final isMatchPassword =
+            confirmPasswordValidator(event.context, event.password, event.confirmPassword);
+
+        if (isValidName && isValidEmail && isValidPhone && isValidPassword && isMatchPassword) {
+          final response = await registerApi(
+            name: event.userName,
+            email: event.email,
+            password: event.password,
+            phone: event.phone,
+          );
+
+          if (response.toLowerCase() == "ok") {
+            emit(LoadingState(isLoading: false));
+            emit(AuthRegisterSuccessState(email: event.email, type: 'registration'));
+          } else {
+            emit(LoadingState(isLoading: false));
+            emit(AuthRegisterErrorState(errorMsg: response));
+          }
         } else {
-          emit(AuthRegisterErrorState(errorMsg: 'Account Exists'));
+          emit(LoadingState(isLoading: false));
         }
       } else {
-        emit(AuthRegisterErrorState(
-            errorMsg: 'Please Fill The Required Fields'));
+        emit(AuthRegisterErrorState(errorMsg: 'Please Fill The Required Fields'));
       }
     });
+
     on<OTPEvent>((event, emit) async {
       emit(LoadingState(isLoading: true));
       if (event.otpCode.length < 6) {
         emit(AuthOTPErrorState(errorMsg: "Please Enter OTP"));
         emit(LoadingState(isLoading: false));
       } else {
-        final response = await verificationApi(
-            otp: event.otpCode, email: event.email, type: event.type);
+        final response =
+            await verificationApi(otp: event.otpCode, email: event.email, type: event.type);
         if (response.toLowerCase() == "ok") {
           emit(LoadingState(isLoading: false));
           emit(AuthOTPSuccessState());

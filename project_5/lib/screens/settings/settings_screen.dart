@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_5/bloc/theme_bloc/theme_cubit.dart';
 import 'package:project_5/main.dart';
 import 'package:project_5/navigations/navigation_methods.dart';
 import 'package:project_5/screens/auth/components/auth_button.dart';
@@ -9,8 +11,7 @@ import 'components/account_settings.dart';
 import 'components/settings_options.dart';
 
 class SettingsScreen extends StatefulWidget {
-  const SettingsScreen({Key? key, required this.currentUserInfo})
-      : super(key: key);
+  const SettingsScreen({Key? key, required this.currentUserInfo}) : super(key: key);
 
   @override
   State<SettingsScreen> createState() => _SettingsScreenState();
@@ -49,12 +50,13 @@ class _SettingsScreenState extends State<SettingsScreen> {
         "iconData": Icons.color_lens,
         "onTapFunc": () {
           Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ThemeSettingsScreen()))
-              .then((value) {
-            setState(() {});
-          });
+              context,
+              MaterialPageRoute(
+                  builder: (context) => BlocBuilder<ThemeCubit, ThemeState>(
+                      builder: (context, state) => ThemeSettingsScreen(state: state))));
+          //     .then((value) {
+          //   setState(() {});
+          // });
         },
       },
     ];

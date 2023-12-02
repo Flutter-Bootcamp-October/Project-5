@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_5/bloc/social_bloc/social_cubit.dart';
+import 'package:project_5/data/global_data.dart';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/models/social_model.dart';
 import 'package:project_5/screens/auth/components/auth_button.dart';
@@ -6,108 +9,63 @@ import 'package:project_5/screens/reusable_widgets/social_modal_sheet.dart';
 import 'package:project_5/services/social_api.dart';
 import 'package:project_5/theme/shimmer/shimmer_text_skeleton.dart';
 
-class Social extends StatefulWidget {
-  const Social({Key? key, required this.updateMethod, this.socialData})
-      : super(key: key);
+class Social extends StatelessWidget {
+  Social({Key? key, required this.state}) : super(key: key);
 
-  final Function updateMethod;
-  final Future? socialData;
+  final dynamic state;
 
-  @override
-  State<Social> createState() => _SocialState();
-}
+  final TextEditingController userNameController = TextEditingController();
 
-class _SocialState extends State<Social> {
-  List<Map> iconsList = const [
-    {
-      "snapchat": Icon(Icons.snapchat),
-    },
-    {
-      "telegram": Icon(Icons.telegram),
-    },
-    {
-      "facebook": Icon(Icons.facebook),
-    },
-    {
-      "tiktok": Icon(Icons.tiktok),
-    },
-    {
-      "other": Icon(Icons.question_mark),
-    },
-    {
-      "youtube": Icon(Icons.play_arrow),
-    },
-    {
-      "instagram": Icon(Icons.camera),
-    },
-    {
-      "twitter": Icon(Icons.flutter_dash_outlined),
-    },
-    {
-      "whatsapp": Icon(Icons.call),
-    },
-  ];
-
-  List imgs = [];
-  TextEditingController userNameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    state is SocialInitial ? context.read<SocialCubit>().getSocialCubit() : const SizedBox();
     return Padding(
       padding: const EdgeInsets.only(left: 16.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          FutureBuilder(
-            future: widget.socialData,
-            builder: (context, snapshot) {
-              if (snapshot.hasData) {
-                final SocialModel socialModel = snapshot.data;
-                updateIconsList(socialModel, iconsList, imgs);
-                return socialModel.data!.length != 0
+      child: state is SocialGetDataState
+          ? Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                state.socialModel.data!.isNotEmpty
                     ? Flexible(
                         child: Wrap(
                           children: [
                             ...List.generate(
-                                socialModel.data!.length,
+                                state.socialModel.data!.length,
                                 (index) => InkWell(
                                       onTap: () {
-                                        socialDialog(context, socialModel,
-                                            index, iconsList, imgs);
-                                        setState(() {});
+                                        socialDialog(
+                                            context, state.socialModel, index, iconsList, imgs);
                                       },
                                       child: Wrap(
                                         children: [
                                           imgs[index],
-                                          Text(
-                                              " ${socialModel.data![index].username} "),
+                                          Text(" ${state.socialModel.data![index].username} "),
                                         ],
                                       ),
                                     )),
                           ],
                         ),
                       )
-                    : const Text("No Social Media Added yet");
-              } else {
-                return ShimmerTextSkeleton(
+                    : const Text("No Social Media Added yet"),
+                IconButton(
+                    onPressed: () {
+                      socialModalBottomSheet(
+                        context,
+                        content: "Social Media",
+                        isSkills: true,
+                        userNameController: userNameController,
+                        state: state,
+                      );
+                    },
+                    icon: const Icon(Icons.edit_outlined)),
+              ],
+            )
+          : state is SocialInitial
+              ? ShimmerTextSkeleton(
                   numberOfItems: 3,
                   itemWidth: context.getWidth() * .85 / 3.8,
-                );
-              }
-            },
-          ),
-          IconButton(
-              onPressed: () {
-                socialModalBottomSheet(
-                  context,
-                  content: "Social Media",
-                  isSkills: true,
-                  userNameController: userNameController,
-                  updateMethod: widget.updateMethod,
-                );
-              },
-              icon: const Icon(Icons.edit_outlined)),
-        ],
-      ),
+                )
+              : const SizedBox(),
     );
   }
 
@@ -132,9 +90,10 @@ class _SocialState extends State<Social> {
                           imgs.remove(item[socialModel.data![index].social]);
                         }
                       }
-                      await deleteSocial(socialId: socialModel.data![index].id!)
+                      context
+                          .read<SocialCubit>()
+                          .deleteSocialCubit(id: socialModel.data![index].id!)
                           .then((value) {
-                        widget.updateMethod.call();
                         Navigator.pop(context);
                       });
                     },
@@ -144,18 +103,17 @@ class _SocialState extends State<Social> {
           );
         });
   }
+}
 
-  void updateIconsList(SocialModel socialModel,
-      List<Map<dynamic, dynamic>> iconsList, List<dynamic> imgs) {
-    socialModel.data?.where((element) {
-      for (var item in iconsList) {
-        if (item[element.social] != null &&
-            !imgs.contains(item[element.social])) {
-          imgs.add(item[element.social]);
-        }
+void updateIconsList(
+    SocialModel socialModel, List<Map<dynamic, dynamic>> iconsList, List<dynamic> imgs) {
+  socialModel.data?.where((element) {
+    for (var item in iconsList) {
+      if (item[element.social] != null && !imgs.contains(item[element.social])) {
+        imgs.add(item[element.social]);
       }
+    }
 
-      return true;
-    }).toList();
-  }
+    return true;
+  }).toList();
 }

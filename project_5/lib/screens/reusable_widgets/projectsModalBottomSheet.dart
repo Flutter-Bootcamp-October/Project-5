@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_5/bloc/projects_bloc/projects_cubit.dart';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/screens/auth/components/auth_button.dart';
 import 'package:project_5/screens/auth/components/auth_text_field.dart';
@@ -10,7 +12,7 @@ Future<dynamic> projectsModalBottomSheet(
   required TextEditingController projectNameController,
   required TextEditingController projectDescriptionController,
   required String content,
-  required Function? updateMethod,
+  required dynamic state,
 }) {
   final List<String> process = [
     "other",
@@ -27,8 +29,7 @@ Future<dynamic> projectsModalBottomSheet(
     builder: (context) {
       return StatefulBuilder(
         builder: (context, setState) => Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -73,33 +74,16 @@ Future<dynamic> projectsModalBottomSheet(
               ),
               SizedBox(height: context.getHeight() * .04),
               AuthButton(
-                  content: "ADD",
-                  color: Colors.grey[300]!,
-                  onPressedFunc: () {
-                    if (projectNameController.text.isNotEmpty &&
-                        projectDescriptionController.text.isNotEmpty) {
-                      addProjects(
-                              name: projectNameController.text,
-                              description: projectDescriptionController.text,
-                              state: selectedProcess)
-                          .then((value) async {
-                        Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text("Project has been added")));
-                        await updateMethod?.call();
-                        projectNameController.clear();
-                        projectDescriptionController.clear();
-                      });
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                          behavior: SnackBarBehavior.floating,
-                          margin: EdgeInsets.only(
-                              bottom: (context.getHeight() * .5)),
-                          content: const Text("Please don't fill all fields")));
-                    }
-                  },
-                  isDisabled: false),
+                content: "ADD",
+                color: Colors.grey[300]!,
+                isDisabled: false,
+                onPressedFunc: () {
+                  context.read<ProjectsCubit>().addProjectsCubit(
+                      nameController: projectNameController,
+                      description: projectDescriptionController,
+                      projectState: selectedProcess);
+                },
+              ),
               SizedBox(height: context.getHeight() * .01),
             ],
           ),

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:project_5/bloc/social_bloc/social_cubit.dart';
 import 'package:project_5/extensions/size_extension.dart';
 import 'package:project_5/screens/auth/components/auth_button.dart';
 import 'package:project_5/screens/auth/components/auth_text_field.dart';
@@ -9,7 +11,7 @@ Future<dynamic> socialModalBottomSheet(
   required TextEditingController userNameController,
   required String content,
   required bool isSkills,
-  required Function? updateMethod,
+  required dynamic state,
 }) {
   final List<String> socials = [
     'facebook',
@@ -32,8 +34,7 @@ Future<dynamic> socialModalBottomSheet(
     builder: (context) {
       return StatefulBuilder(
         builder: (context, setState) => Padding(
-          padding:
-              EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+          padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -82,23 +83,19 @@ Future<dynamic> socialModalBottomSheet(
                   color: Colors.grey[300]!,
                   onPressedFunc: () {
                     if (userNameController.text.isNotEmpty) {
-                      addSocial(
-                        userName: userNameController.text,
-                        social: selectedSocial,
-                      ).then((value) async {
+                      context
+                          .read<SocialCubit>()
+                          .addSocialCubit(userName: userNameController.text, social: selectedSocial)
+                          .then((value) async {
                         Navigator.pop(context);
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text("Social has been added")));
-
-                        await updateMethod?.call();
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(content: Text("Social has been added")));
                       });
                     } else {
                       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                           behavior: SnackBarBehavior.floating,
-                          margin: EdgeInsets.only(
-                              bottom: (context.getHeight() * .5)),
-                          content: const Text("Please don't fill all fields")));
+                          margin: EdgeInsets.only(bottom: (context.getHeight() * .5)),
+                          content: const Text("Please fill all fields")));
                     }
                   },
                   isDisabled: false),

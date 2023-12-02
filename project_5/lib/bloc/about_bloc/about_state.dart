@@ -1,4 +1,4 @@
-part of 'about_bloc.dart';
+part of 'about_cubit.dart';
 
 @immutable
 abstract class AboutState {}
