@@ -1,27 +1,32 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:convert';
-
-import 'package:cv/services/social/add_social.dart';
+import 'package:cv/blocs/radio_button_bloc/radio_button_bloc.dart';
+import 'package:cv/blocs/social_bloc/social_bloc.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class SocilaScreen extends StatefulWidget {
+class SocilaScreen extends StatelessWidget {
   const SocilaScreen({super.key});
 
   @override
-  State<SocilaScreen> createState() => _SocilaScreenState();
-}
-
-class _SocilaScreenState extends State<SocilaScreen> {
-  String type = "Income";
-  TextEditingController socialController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
+    TextEditingController socialController = TextEditingController();
+
+    String type = "telegram";
+    final status = [
+      "telegram",
+      "facebook",
+      "youtube",
+      "whatsapp",
+      "instagram",
+      "twitter",
+      "tiktok"
+    ];
     return Scaffold(
       body: ListView(
         children: [
@@ -63,138 +68,84 @@ class _SocilaScreenState extends State<SocilaScreen> {
                       style: TextStyle(fontSize: 16, color: blue),
                     ),
                     hight8(),
-                    RadioListTile(
-                        fillColor: MaterialStateProperty.all(lightOrange),
-                        activeColor: lightOrange,
-                        title: const Text("Facebook"),
-                        value: "facebook",
-                        groupValue: type,
-                        onChanged: (value) {
-                          setState(() {
-                            type = "facebook";
-                          });
-                        },
-                        dense: true),
-                    RadioListTile(
-                        fillColor: MaterialStateProperty.all(lightOrange),
-                        activeColor: lightOrange,
-                        title: const Text("Youtube"),
-                        value: "youtube",
-                        groupValue: type,
-                        onChanged: (value) {
-                          setState(() {
-                            type = "youtube";
-                          });
-                        },
-                        dense: true),
-                    RadioListTile(
-                        fillColor: MaterialStateProperty.all(lightOrange),
-                        activeColor: lightOrange,
-                        title: const Text("Whatsapp"),
-                        value: "whatsapp",
-                        groupValue: type,
-                        onChanged: (value) {
-                          setState(() {
-                            type = "whatsapp";
-                          });
-                        },
-                        dense: true),
-                    RadioListTile(
-                        fillColor: MaterialStateProperty.all(lightOrange),
-                        activeColor: lightOrange,
-                        title: const Text("Instagram"),
-                        value: "instagram",
-                        groupValue: type,
-                        onChanged: (value) {
-                          setState(() {
-                            type = "instagram";
-                          });
-                        },
-                        dense: true),
-                    RadioListTile(
-                        fillColor: MaterialStateProperty.all(lightOrange),
-                        activeColor: lightOrange,
-                        title: const Text("Twitter"),
-                        value: "twitter",
-                        groupValue: type,
-                        onChanged: (value) {
-                          setState(() {
-                            type = "twitter";
-                          });
-                        },
-                        dense: true),
-                    RadioListTile(
-                        fillColor: MaterialStateProperty.all(lightOrange),
-                        activeColor: lightOrange,
-                        title: const Text("Tiktok"),
-                        value: "tiktok",
-                        groupValue: type,
-                        onChanged: (value) {
-                          setState(() {
-                            type = "tiktok";
-                          });
-                        },
-                        dense: true),
-                    RadioListTile(
-                        fillColor: MaterialStateProperty.all(lightOrange),
-                        activeColor: lightOrange,
-                        title: const Text("Telegram"),
-                        value: "telegram",
-                        groupValue: type,
-                        onChanged: (value) {
-                          setState(() {
-                            type = "telegram";
-                          });
-                        },
-                        dense: true),
+                    BlocBuilder<RadioButtonBloc, RadioButtonState>(
+                      builder: (context, state) {
+                        if (state is Radiostate) {
+                          RadioGroup<String>.builder(
+                            groupValue: type,
+                            onChanged: (value) {
+                              context
+                                  .read<RadioButtonBloc>()
+                                  .add(RadioButtonEvent(value!));
+                              type = state.value;
+                            },
+                            items: status,
+                            itemBuilder: (item) => RadioButtonBuilder(
+                              item,
+                            ),
+                            fillColor: lightOrange,
+                          );
+                        }
+                        return RadioGroup<String>.builder(
+                          groupValue: type,
+                          onChanged: (value) {
+                            context
+                                .read<RadioButtonBloc>()
+                                .add(RadioButtonEvent(value!));
+                            type = value;
+                          },
+                          items: status,
+                          itemBuilder: (item) => RadioButtonBuilder(
+                            item,
+                          ),
+                          fillColor: lightOrange,
+                        );
+                      },
+                    ),
                   ],
                 ),
               ),
               hight20(),
               Center(
-                child: InkWell(
-                  onTap: () async {
-                    try {
-                      if (socialController.text.isNotEmpty) {
-                        final response = await addSocial(context, {
-                          "username": socialController.text,
-                          "social": type
-                        });
-                        if (response != null) {
-                          if (response.statusCode >= 200 &&
-                              response.statusCode < 300) {
-                            ScaffoldMessenger.of(context).showSnackBar(
-                                const SnackBar(
-                                    content: Text(
-                                        "Social Media is added successfully")));
-                          } else {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                                content:
-                                    Text(jsonDecode(response.body)["msg"])));
-                          }
-                        }
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                                content: Text("Please enter all information")));
-                      }
-                    } catch (error) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text(error.toString())));
+                child: BlocListener<SocialBloc, SocialState>(
+                  listener: (context, state) {
+                    if (state is ErrorState) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            state.massege,
+                            style: const TextStyle(color: Colors.black),
+                          )));
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            "Social is added successfully",
+                            style: TextStyle(color: Colors.black),
+                          )));
                     }
                   },
-                  child: Container(
-                    width: 330,
-                    height: 50,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20), color: pink),
-                    child: const Center(
-                      child: Text(
-                        "Add Social",
-                        style: TextStyle(
-                            fontSize: 16,
-                            color: Colors.white,
-                            fontWeight: FontWeight.bold),
+                  child: InkWell(
+                    onTap: () async {
+                      context.read<SocialBloc>().add(SocialEvent(
+                            context,
+                            socialController.text,
+                            type,
+                          ));
+                    },
+                    child: Container(
+                      width: 330,
+                      height: 50,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20), color: pink),
+                      child: const Center(
+                        child: Text(
+                          "Add Social",
+                          style: TextStyle(
+                              fontSize: 16,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ),
                   ),

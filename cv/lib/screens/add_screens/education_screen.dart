@@ -1,31 +1,34 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:convert';
-
-import 'package:cv/services/education/add_education.dart';
+import 'package:cv/blocs/education_bloc/education_bloc.dart';
+import 'package:cv/blocs/radio_button_bloc/radio_button_bloc.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:group_radio_button/group_radio_button.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class EducationsScreen extends StatefulWidget {
+class EducationsScreen extends StatelessWidget {
   const EducationsScreen({super.key});
 
   @override
-  State<EducationsScreen> createState() => _EducationsScreenState();
-}
-
-class _EducationsScreenState extends State<EducationsScreen> {
-  TextEditingController graduationDateController = TextEditingController();
-  TextEditingController universityController = TextEditingController();
-  TextEditingController collegeController = TextEditingController();
-  TextEditingController specializationController = TextEditingController();
-  String level = "school";
-  final status = ["school", "diploma", "Bachelors", "Master", "Ph.D", "Other"];
-  @override
   Widget build(BuildContext context) {
+    String level = "school";
+    final status = [
+      "school",
+      "diploma",
+      "Bachelors",
+      "Master",
+      "Ph.D",
+      "Other"
+    ];
+    TextEditingController graduationDateController = TextEditingController();
+    TextEditingController universityController = TextEditingController();
+    TextEditingController collegeController = TextEditingController();
+    TextEditingController specializationController = TextEditingController();
+
     return Scaffold(
       body: Center(
         child: ListView(
@@ -92,73 +95,89 @@ class _EducationsScreenState extends State<EducationsScreen> {
                   padding: const EdgeInsets.only(left: 35.0),
                   child: Column(
                     children: <Widget>[
-                      RadioGroup<String>.builder(
-                        groupValue: level,
-                        onChanged: (value) => setState(() {
-                          level = value ?? '';
-                        }),
-                        items: status,
-                        itemBuilder: (item) => RadioButtonBuilder(
-                          item,
-                        ),
-                        fillColor: lightOrange,
+                      BlocBuilder<RadioButtonBloc, RadioButtonState>(
+                        builder: (context, state) {
+                          if (state is Radiostate) {
+                            RadioGroup<String>.builder(
+                              groupValue: level,
+                              onChanged: (value) {
+                                context
+                                    .read<RadioButtonBloc>()
+                                    .add(RadioButtonEvent(value!));
+                                level = state.value;
+                              },
+                              items: status,
+                              itemBuilder: (item) => RadioButtonBuilder(
+                                item,
+                              ),
+                              fillColor: lightOrange,
+                            );
+                          }
+                          return RadioGroup<String>.builder(
+                            groupValue: level,
+                            onChanged: (value) {
+                              context
+                                  .read<RadioButtonBloc>()
+                                  .add(RadioButtonEvent(value!));
+                              level = value;
+                            },
+                            items: status,
+                            itemBuilder: (item) => RadioButtonBuilder(
+                              item,
+                            ),
+                            fillColor: lightOrange,
+                          );
+                        },
                       ),
                     ],
                   ),
                 ),
                 hight20(),
                 Center(
-                  child: InkWell(
-                    onTap: () async {
-                      try {
-                        if (graduationDateController.text.isNotEmpty &&
-                            collegeController.text.isNotEmpty &&
-                            specializationController.text.isNotEmpty &&
-                            universityController.text.isNotEmpty) {
-                          final response = await addEducation(context, {
-                            "graduation_date": graduationDateController.text,
-                            "university": universityController.text,
-                            "specialization": specializationController.text,
-                            "level": level,
-                            "college": collegeController.text
-                          });
-                          if (response != null) {
-                            if (response.statusCode >= 200 &&
-                                response.statusCode < 300) {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          "Education is added successfully")));
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(
-                                          jsonDecode(response.body)["msg"])));
-                            }
-                          }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text("Please enter all information")));
-                        }
-                      } catch (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(error.toString())));
+                  child: BlocListener<EducationBloc, EducationState>(
+                    listener: (context, state) {
+                      if (state is ErrorState) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.white,
+                            content: Text(
+                              state.massege,
+                              style: const TextStyle(color: Colors.black),
+                            )));
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.white,
+                                content: Text(
+                                  "Education is added successfully",
+                                  style: TextStyle(color: Colors.black),
+                                )));
                       }
                     },
-                    child: Container(
-                      width: 330,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20), color: pink),
-                      child: const Center(
-                        child: Text(
-                          "Add Education",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                    child: InkWell(
+                      onTap: () async {
+                        context.read<EducationBloc>().add(EducationEvent(
+                              graduationDateController.text,
+                              universityController.text,
+                              collegeController.text,
+                              level,
+                              specializationController.text,
+                              context,
+                            ));
+                      },
+                      child: Container(
+                        width: 330,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: pink),
+                        child: const Center(
+                          child: Text(
+                            "Add Education",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),

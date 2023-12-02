@@ -1,28 +1,31 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:convert';
-
-import 'package:cv/services/project/add_project.dart';
+import 'package:cv/blocs/project_bloc/project_bloc.dart';
+import 'package:cv/blocs/radio_button_bloc/radio_button_bloc.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:group_radio_button/group_radio_button.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class ProjectsScreen extends StatefulWidget {
+class ProjectsScreen extends StatelessWidget {
   const ProjectsScreen({super.key});
 
   @override
-  State<ProjectsScreen> createState() => _ProjectsScreenState();
-}
-
-class _ProjectsScreenState extends State<ProjectsScreen> {
-  String statetype = "completed";
-  TextEditingController nameController = TextEditingController();
-  TextEditingController descriptionController = TextEditingController();
-
-  @override
   Widget build(BuildContext context) {
+    String statetype = "completed";
+
+    TextEditingController nameController = TextEditingController();
+
+    TextEditingController descriptionController = TextEditingController();
+
+    final status = [
+      "completed",
+      "processing",
+      "other",
+    ];
     return Scaffold(
       body: Padding(
         padding: const EdgeInsets.only(top: 60.0),
@@ -65,88 +68,82 @@ class _ProjectsScreenState extends State<ProjectsScreen> {
                           style: TextStyle(fontSize: 16, color: blue),
                         ),
                         hight8(),
-                        RadioListTile(
-                            fillColor: MaterialStateProperty.all(lightOrange),
-                            activeColor: lightOrange,
-                            title: const Text("Completed"),
-                            value: "completed",
-                            groupValue: statetype,
-                            onChanged: (value) {
-                              setState(() {
-                                statetype = "completed";
-                              });
-                            },
-                            dense: true),
-                        RadioListTile(
-                            fillColor: MaterialStateProperty.all(lightOrange),
-                            activeColor: lightOrange,
-                            title: const Text("Processing"),
-                            value: "processing",
-                            groupValue: statetype,
-                            onChanged: (value) {
-                              setState(() {
-                                statetype = "processing";
-                              });
-                            },
-                            dense: true),
-                        RadioListTile(
-                            fillColor: MaterialStateProperty.all(lightOrange),
-                            activeColor: lightOrange,
-                            title: const Text("Other"),
-                            value: "other",
-                            groupValue: statetype,
-                            onChanged: (value) {
-                              setState(() {
-                                statetype = "other";
-                              });
-                            },
-                            dense: true),
+                        BlocBuilder<RadioButtonBloc, RadioButtonState>(
+                          builder: (context, state) {
+                            if (state is Radiostate) {
+                              RadioGroup<String>.builder(
+                                groupValue: statetype,
+                                onChanged: (value) {
+                                  context
+                                      .read<RadioButtonBloc>()
+                                      .add(RadioButtonEvent(value!));
+                                  statetype = state.value;
+                                },
+                                items: status,
+                                itemBuilder: (item) => RadioButtonBuilder(
+                                  item,
+                                ),
+                                fillColor: lightOrange,
+                              );
+                            }
+                            return RadioGroup<String>.builder(
+                              groupValue: statetype,
+                              onChanged: (value) {
+                                context
+                                    .read<RadioButtonBloc>()
+                                    .add(RadioButtonEvent(value!));
+                                statetype = value;
+                              },
+                              items: status,
+                              itemBuilder: (item) => RadioButtonBuilder(
+                                item,
+                              ),
+                              fillColor: lightOrange,
+                            );
+                          },
+                        ),
                       ])),
               hight40(),
               hight8(),
-              InkWell(
-                onTap: () async {
-                  try {
-                    if (nameController.text.isNotEmpty &&
-                        descriptionController.text.isNotEmpty) {
-                      final response = await addProject(context, {
-                        "name": nameController.text,
-                        "description": descriptionController.text,
-                        "state": statetype
-                      });
-                      if (response != null) {
-                        if (response.statusCode >= 200 &&
-                            response.statusCode < 300) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text("Project is added successfully")));
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(jsonDecode(response.body)["msg"])));
-                        }
-                      }
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                          content: Text("Please enter all information")));
-                    }
-                  } catch (error) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text(error.toString())));
+              BlocListener<ProjectBloc, ProjectState>(
+                listener: (context, state) {
+                  if (state is ErrorState) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        backgroundColor: Colors.white,
+                        content: Text(
+                          state.massege,
+                          style: const TextStyle(color: Colors.black),
+                        )));
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                        backgroundColor: Colors.white,
+                        content: Text(
+                          "Project is added successfully",
+                          style: TextStyle(color: Colors.black),
+                        )));
                   }
                 },
-                child: Container(
-                  width: 330,
-                  height: 50,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20), color: pink),
-                  child: const Center(
-                    child: Text(
-                      "Add Project",
-                      style: TextStyle(
-                          fontSize: 16,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold),
+                child: InkWell(
+                  onTap: () async {
+                    context.read<ProjectBloc>().add(ProjectEvent(
+                        context,
+                        nameController.text,
+                        descriptionController.text,
+                        statetype));
+                  },
+                  child: Container(
+                    width: 330,
+                    height: 50,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(20), color: pink),
+                    child: const Center(
+                      child: Text(
+                        "Add Project",
+                        style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                            fontWeight: FontWeight.bold),
+                      ),
                     ),
                   ),
                 ),

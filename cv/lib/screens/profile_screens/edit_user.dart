@@ -1,45 +1,32 @@
 // ignore_for_file: use_build_context_synchronously
 
-import 'dart:convert';
-
+import 'package:cv/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:cv/models/user.dart';
-import 'package:cv/services/user/edit_user.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:cv/widgets/text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:icons_plus/icons_plus.dart';
 
-class EditUserScreen extends StatefulWidget {
+class EditUserScreen extends StatelessWidget {
   const EditUserScreen({super.key, required this.user});
   final User user;
-  @override
-  State<EditUserScreen> createState() => _EditUserScreenState();
-}
-
-class _EditUserScreenState extends State<EditUserScreen> {
-  late TextEditingController nameController;
-  late TextEditingController titleController;
-  late TextEditingController phoneController;
-  late TextEditingController locationController;
-  late TextEditingController birthController;
-  late TextEditingController aboutController;
-
-  @override
-  void initState() {
-    super.initState();
-    nameController = TextEditingController(text: widget.user.name);
-    titleController =
-        TextEditingController(text: widget.user.titlePosition ?? "");
-    phoneController = TextEditingController(text: widget.user.phone);
-    locationController =
-        TextEditingController(text: widget.user.location ?? "");
-    birthController = TextEditingController(text: widget.user.birthday ?? "");
-    aboutController = TextEditingController(text: widget.user.about ?? "");
-  }
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController nameController =
+        TextEditingController(text: user.name);
+    TextEditingController titleController =
+        TextEditingController(text: user.titlePosition ?? "");
+    TextEditingController phoneController =
+        TextEditingController(text: user.phone);
+    TextEditingController locationController =
+        TextEditingController(text: user.location ?? "");
+    TextEditingController birthController =
+        TextEditingController(text: user.birthday ?? "");
+    TextEditingController aboutController =
+        TextEditingController(text: user.about ?? "");
     return Scaffold(
       body: Center(
         child: ListView(
@@ -114,64 +101,53 @@ class _EditUserScreenState extends State<EditUserScreen> {
                       hight30(),
                     ]),
                 Center(
-                  child: InkWell(
-                    onTap: () async {
-                      try {
-                        if (aboutController.text.isNotEmpty &&
-                            locationController.text.isNotEmpty &&
-                            birthController.text.isNotEmpty &&
-                            titleController.text.isNotEmpty &&
-                            nameController.text.isNotEmpty &&
-                            phoneController.text.isNotEmpty) {
-                          final response = await editUser(context, {
-                            "name": nameController.text,
-                            "title_position": titleController.text,
-                            "phone": phoneController.text,
-                            "location": locationController.text,
-                            "birthday": birthController.text,
-                            "about": aboutController.text
-                          });
-                          if (response != null) {
-                            if (response.statusCode >= 200 &&
-                                response.statusCode < 300) {
-                              setState(() {});
+                  child: BlocListener<EditProfileBloc, EditProfileState>(
+                    listener: (context, state) {
+                      if (state is ErrorState) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            backgroundColor: Colors.white,
+                            content: Text(
+                              state.massege,
+                              style: const TextStyle(color: Colors.black),
+                            )));
+                      } else {
+                        ScaffoldMessenger.of(context)
+                            .showSnackBar(const SnackBar(
+                                backgroundColor: Colors.white,
+                                content: Text(
+                                  "Your information is updated successfully",
+                                  style: TextStyle(color: Colors.black),
+                                )));
 
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  const SnackBar(
-                                      content: Text(
-                                          "Your information is updated successfully")));
-
-                              Navigator.pop(context, true);
-                            } else {
-                              ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                      content: Text(
-                                          jsonDecode(response.body)["msg"])));
-                            }
-                          }
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                  content:
-                                      Text("Please enter all information")));
-                        }
-                      } catch (error) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text(error.toString())));
+                        Navigator.pop(context, true);
                       }
                     },
-                    child: Container(
-                      width: 330,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20), color: pink),
-                      child: const Center(
-                        child: Text(
-                          "Update Information",
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold),
+                    child: InkWell(
+                      onTap: () async {
+                        context.read<EditProfileBloc>().add(EditProfileEvent(
+                              context,
+                              nameController.text,
+                              titleController.text,
+                              phoneController.text,
+                              locationController.text,
+                              birthController.text,
+                              aboutController.text,
+                            ));
+                      },
+                      child: Container(
+                        width: 330,
+                        height: 50,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20),
+                            color: pink),
+                        child: const Center(
+                          child: Text(
+                            "Update Information",
+                            style: TextStyle(
+                                fontSize: 16,
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                     ),
