@@ -1,0 +1,1 @@
+ C:\\Users\\R3333\\Desktop\\Flutter\ Bootcamp\\flutter_openAI\\learn_course_path\\.dart_tool\\flutter_build\\7ddb50fcb99c29f155926751a04779a9\\native_assets.yaml: 

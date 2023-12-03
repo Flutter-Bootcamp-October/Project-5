@@ -1,0 +1,21 @@
+com.example.learn_course_path.app-jetified-window-1.0.0-beta04-0 C:\Users\R3333\.gradle\caches\transforms-3\076eb9235982ee06112d76594ea8585f\transformed\jetified-window-1.0.0-beta04\res
+com.example.learn_course_path.app-webkit-1.7.0-1 C:\Users\R3333\.gradle\caches\transforms-3\42e5ec024b36c9bb75771580f651e3dd\transformed\webkit-1.7.0\res
+com.example.learn_course_path.app-jetified-annotation-experimental-1.3.0-2 C:\Users\R3333\.gradle\caches\transforms-3\761929e091d544d9e6394773eda8bdee\transformed\jetified-annotation-experimental-1.3.0\res
+com.example.learn_course_path.app-core-1.10.1-3 C:\Users\R3333\.gradle\caches\transforms-3\889ce5bd12f1117e5357d5fcdb5e1305\transformed\core-1.10.1\res
+com.example.learn_course_path.app-jetified-window-java-1.0.0-beta04-4 C:\Users\R3333\.gradle\caches\transforms-3\99750bb863b6fe460a7b5da8686e778d\transformed\jetified-window-java-1.0.0-beta04\res
+com.example.learn_course_path.app-browser-1.5.0-5 C:\Users\R3333\.gradle\caches\transforms-3\d9d38ec9344928c1b01c151ec647a95a\transformed\browser-1.5.0\res
+com.example.learn_course_path.app-lifecycle-runtime-2.3.1-6 C:\Users\R3333\.gradle\caches\transforms-3\db4b39695b36fb6bc4e9dc229c8d81d0\transformed\lifecycle-runtime-2.3.1\res
+com.example.learn_course_path.app-debug-7 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\android\app\src\debug\res
+com.example.learn_course_path.app-main-8 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\android\app\src\main\res
+com.example.learn_course_path.app-pngs-9 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\app\generated\res\pngs\debug
+com.example.learn_course_path.app-resValues-10 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\app\generated\res\resValues\debug
+com.example.learn_course_path.app-rs-11 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\app\generated\res\rs\debug
+com.example.learn_course_path.app-mergeDebugResources-12 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\app\intermediates\incremental\debug\mergeDebugResources\merged.dir
+com.example.learn_course_path.app-mergeDebugResources-13 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\app\intermediates\incremental\debug\mergeDebugResources\stripped.dir
+com.example.learn_course_path.app-merged_res-14 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\app\intermediates\merged_res\debug
+com.example.learn_course_path.app-packaged_res-15 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\app_links\intermediates\packaged_res\debug
+com.example.learn_course_path.app-packaged_res-16 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\path_provider_android\intermediates\packaged_res\debug
+com.example.learn_course_path.app-packaged_res-17 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\shared_preferences_android\intermediates\packaged_res\debug
+com.example.learn_course_path.app-packaged_res-18 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\sign_in_with_apple\intermediates\packaged_res\debug
+com.example.learn_course_path.app-packaged_res-19 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\url_launcher_android\intermediates\packaged_res\debug
+com.example.learn_course_path.app-packaged_res-20 C:\Users\R3333\Desktop\Flutter Bootcamp\flutter_openAI\learn_course_path\build\webview_flutter_android\intermediates\packaged_res\debug
