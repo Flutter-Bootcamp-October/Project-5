@@ -3,80 +3,82 @@
 
 ## Description
 
-Your task is to create a functional and user-friendly CV app using Flutter. This app will allow users to create their own CVs, including creating an account, writing their resume, inserting their projects and skills, and adding their educational data. The app will be easy to use and will provide users with a professional-looking CV that they can use to apply for jobs.
+I have build A CV application that regist a new account or login ,
+Also have OTP code to confirm and connected to API
 
-## Minimum Requirements
+And then the user can add all the information
 
-- **Correct Structure:** Ensure that the application is built with the appropriate structure. Follow Flutter's best practices for organizing code and project files.
-- **Clean Code:** Write code that is clear, well-organized, and scalable. Use meaningful variable and function names and follow standard coding conventions to improve code readability.
-- **User account creation:** Users will be able to create an account with the app using their email address and a password.
-- **verification:** Users should be able to verify their emails after creating their accounts. also should be able to reset their password.
-- **User Information:** Users will be able to write their information using the app in the (About) screen, users should able to view and edit their information. And be able to delete their account.
-- **Project and skills:** Users will be able to insert, view, and delete their projects and skills. They will be able to add a description of each project in the (Projects) screen, and Also, be able to add their skills in the (Skill) screen
-- **Educational data:** Users will be able to add their educational data to the app. They will be able to add the name of their university, the degree they earned, and the dates they graduated.
-- **Social Media:** Users will be able to insert, view, and delete their Social Media accounts.
-- **Display all Users:** Users will be able to view all other users' details.
+## Screens
 
-
-## Delivery Requirements
-
-- **Upload the Entire Project:** Ensure that you upload the complete project, which includes all necessary code files, assets, and configurations, to the repository on GitHub.
-- **Readme File:**
-  - Create a README.md file in the root directory of your GitHub repository.
-  - Provide a detailed and well-structured description of the project in the README file, including the following sections:
-    - **Project Overview:** Briefly describe what the shopping list app is about and its main features. Give readers a clear idea of the purpose and functionality of the app.
-    - **Screenshots:** Include relevant screenshots of the app to showcase its appearance and functionalities. Visuals can help users understand the app's design and layout.
+Signup Screen Folder => sign_up_screen.dart
+Login Screen Folder => login_screen.dart
+OTP Screen Folder => otp_screen.dart
+About Screen Folder => profile_screen.dart & update_profile_screen.dart
+Education Screen Folder => education_screen.dart & add_education_screen.dart
+Project Screen Folder => prohect_screen.dart & add_prohect_screen.dart
+Skills and Soical Media Screen Folder => 
+      
+      skills_and_soical_media_screen.dart(have two custom widget for skill and soical media) & add_skill_screen.dart & add_soical_media_screen.dart
 
 
-## Rules & Guidelines
+## Screenshots
+Login Screen 
 
-1. **Version Control (Git):**
-   - Create a Fork from the exam’s GitHub repository.
-   - Create a new branch with your name.
-   - Commit frequently with descriptive messages to show your progress.
-   - Finally, create a Pull Request to the exam’s original repository containing your solution.
-2. **Academic Integrity:** Do not copy or reuse code from previous modules or external sources. The exam is a showcase of your learning progress.
-3. **Learning References:** You may refer to course materials and code examples as learning references, but implement your solutions independently.
-4. **Instructor Support:** The instructor will be available for general questions and guidance throughout the exam.
+![login_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/94c08187-de7f-4079-a80a-582f7c37d066)
 
-## Schedule & Deadlines
+Signup Screen 
 
-- **Project Start Date:** 9/11/2023 - 3:00 PM
-- **Project Submission Deadline:** 15/11/2023 – 9:59 PM
+![signup_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/e35d51d8-2e07-4660-9d3e-88227f496fe3)
 
-## EndPoints
-**Auth** 
-  - **Post:** https://bacend-fshi.onrender.com/auth/registration 
-  - **Post:** https://bacend-fshi.onrender.com/auth/verification 
-  - **Post:** https://bacend-fshi.onrender.com/auth/login
+![signup_with_user_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/4c63f41b-e88c-415b-9988-a7548b0257ca)
 
-**About** 
-  - **Get:** https://bacend-fshi.onrender.com/user/about
-  - **Put:** https://bacend-fshi.onrender.com/user/edit/about
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete_account
+OTP Screen 
 
-**Project** 
-  - **Get:** https://bacend-fshi.onrender.com/user/projects
-  - **Post:** https://bacend-fshi.onrender.com/user/add/project
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/project
+![otp_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/7d90018f-8610-448a-bff4-2a6df03028ee)
 
-**Skills** 
-  - **Get:** https://bacend-fshi.onrender.com/user/skills 
-  - **Post:** https://bacend-fshi.onrender.com/user/add/skills 
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/skills
 
-**Education** 
-  - **Get:** https://bacend-fshi.onrender.com/user/education
-  - **Post:** https://bacend-fshi.onrender.com/user/add/education
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/education
+About Screen 
 
-**Social Media** 
-  - **Get:** https://bacend-fshi.onrender.com/user/social_media
-  - **Post:** https://bacend-fshi.onrender.com/user/add/social_media
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/social_media
+![abot_cvapp](https://github.com/rahafwmaq/Project-5/assets/86989761/4a86a5a6-b1bd-4469-a04b-37e701884f4e)
 
-**Get All users**
-  - **Get:** https://bacend-fshi.onrender.com/user/get_users
+![edit_about_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/91b83807-157c-4a1c-b678-91c6d77219db)
 
-<br>
-Good luck with your exam project! If you have any general questions or need guidance, don't hesitate to reach out to the instructor. Happy coding!
+![hasbeenupdate_appcv](https://github.com/rahafwmaq/Project-5/assets/86989761/6f788b65-2bfa-4234-8531-445e8abdb6ad)
+
+
+Education Screen 
+
+![edu_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/a26e3257-6af2-4a91-ba00-edd47e3c78d6)
+
+![add_edu_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/4daaa355-5e11-4e3f-a5d1-546ce0f54d99)
+
+![final edu](https://github.com/rahafwmaq/Project-5/assets/86989761/2a9571ed-12f2-4fcf-a8e5-fb83afb9ab3c)
+
+
+Project Screen 
+
+![project_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/b7499c7a-ac67-4abc-912b-811d86d96d8d)
+
+![addProject_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/711298a8-a889-439a-bfe9-2ba05ad81e34)
+
+![finaladdProject_cvapp](https://github.com/rahafwmaq/Project-5/assets/86989761/2203509a-b6dc-4038-abea-3d41fd6ef27c)
+
+i have delete one project 
+
+![deleteproject_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/23b1e3a3-9ed7-4946-9085-8118a3788234)
+
+
+
+Skill & Soical Media Screen 
+
+![skill soical_cvApp](https://github.com/rahafwmaq/Project-5/assets/86989761/0a75d805-e0d5-4d91-a245-339672dc2e31)
+
+![skill and soical](https://github.com/rahafwmaq/Project-5/assets/86989761/108f3f8f-f003-4d3e-8b32-57a4ac8f423d)
+
+![socical](https://github.com/rahafwmaq/Project-5/assets/86989761/936526e6-67f4-4e70-a5df-291d1eee3383)
+
+![addskill](https://github.com/rahafwmaq/Project-5/assets/86989761/bc448206-5db3-454e-9ec5-a75c3f9e2dbe)
+
+![final](https://github.com/rahafwmaq/Project-5/assets/86989761/4a48d26d-cb7d-49d8-be9b-8846b5566b9a)
+
+
