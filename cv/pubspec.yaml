@@ -1,0 +1,32 @@
+name: cv
+description: A new Flutter project.
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: '>=3.1.3 <4.0.0'
+
+dependencies:
+  custom_sliding_segmented_control: ^1.8.1
+  flutter:
+    sdk: flutter
+  flutter_bloc: ^8.1.3
+  group_radio_button: ^1.3.0
+  http: ^1.1.0
+  icons_plus: ^4.0.0
+  image_picker: ^1.0.4
+  salomon_bottom_bar: ^3.3.2
+  shared_preferences: ^2.2.2
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/tiktok.png
+    - assets/219986.png
+
