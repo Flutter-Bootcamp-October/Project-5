@@ -1,3 +1,6 @@
+import 'dart:developer';
+
+import 'package:cv_app_project/models/community_model.dart';
 import 'package:cv_app_project/services/community_api.dart';
 import 'package:flutter/material.dart';
 
@@ -16,9 +19,10 @@ class _CommunityState extends State<Community> {
     return Scaffold(
       body: SafeArea(
         child: SingleChildScrollView(
-          child: FutureBuilder(
+          child: FutureBuilder<CommuityModel>(
             future: getCommuity(),
             builder: (context, snapshot) {
+              log(snapshot.data.toString());
               if (!snapshot.hasData) {
                 return Center(
                   child: CircularProgressIndicator(),

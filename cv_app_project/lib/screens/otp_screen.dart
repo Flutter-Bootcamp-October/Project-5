@@ -5,8 +5,8 @@ import 'package:cv_app_project/screens/signup_screen.dart';
 import 'package:flutter/material.dart';
 
 // ignore: must_be_immutable
-class SignInScreen extends StatelessWidget {
-  SignInScreen({super.key});
+class OTPScreen extends StatelessWidget {
+  OTPScreen({super.key});
 
   TextEditingController otpController = TextEditingController();
   @override

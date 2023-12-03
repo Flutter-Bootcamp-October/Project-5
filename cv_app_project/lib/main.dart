@@ -1,4 +1,5 @@
 import 'package:cv_app_project/screens/nav_controller_screen.dart';
+import 'package:cv_app_project/screens/signin_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -17,7 +18,7 @@ class MainApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: NavController(),
+      home: SignInScreen(),
     );
   }
 }
