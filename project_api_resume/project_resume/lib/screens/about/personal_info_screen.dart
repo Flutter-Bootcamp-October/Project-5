@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -29,7 +28,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
   final conBirthday = TextEditingController();
 
   final conAbout = TextEditingController();
-  File? selectImage;
+  // File? selectImage;
   // String userImg = "";
   // Future<dynamic> imageUser() async {
   //   final picker = ImagePicker();
@@ -83,7 +82,7 @@ class _PersonalInfoScreenState extends State<PersonalInfoScreen> {
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
-          content: Text('لايوجد بيانات '),
+          content: Text(' No data '),
         ),
       );
     }
