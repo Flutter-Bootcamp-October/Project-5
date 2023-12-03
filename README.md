@@ -1,82 +1,84 @@
 # Project-5
 
+This is a CV app linked with supabase API for you to build your resume in a fast and an easy way.
 
 ## Description
 
-Your task is to create a functional and user-friendly CV app using Flutter. This app will allow users to create their own CVs, including creating an account, writing their resume, inserting their projects and skills, and adding their educational data. The app will be easy to use and will provide users with a professional-looking CV that they can use to apply for jobs.
+In this app you can add your CV information such as name, email, education, skills, and more.
 
-## Minimum Requirements
+* First Sign-in & Sign-up screens:
+  
+![Screenshot_1699994248](https://github.com/AliArafat4/Project-5/assets/84300173/98c90c8e-1e9c-45aa-beaa-a235367d0d89)
 
-- **Correct Structure:** Ensure that the application is built with the appropriate structure. Follow Flutter's best practices for organizing code and project files.
-- **Clean Code:** Write code that is clear, well-organized, and scalable. Use meaningful variable and function names and follow standard coding conventions to improve code readability.
-- **User account creation:** Users will be able to create an account with the app using their email address and a password.
-- **verification:** Users should be able to verify their emails after creating their accounts. also should be able to reset their password.
-- **User Information:** Users will be able to write their information using the app in the (About) screen, users should able to view and edit their information. And be able to delete their account.
-- **Project and skills:** Users will be able to insert, view, and delete their projects and skills. They will be able to add a description of each project in the (Projects) screen, and Also, be able to add their skills in the (Skill) screen
-- **Educational data:** Users will be able to add their educational data to the app. They will be able to add the name of their university, the degree they earned, and the dates they graduated.
-- **Social Media:** Users will be able to insert, view, and delete their Social Media accounts.
-- **Display all Users:** Users will be able to view all other users' details.
+![Screenshot_1699994244](https://github.com/AliArafat4/Project-5/assets/84300173/1b969573-ace4-49b5-ae02-f063474dbdbb)
 
 
-## Delivery Requirements
-
-- **Upload the Entire Project:** Ensure that you upload the complete project, which includes all necessary code files, assets, and configurations, to the repository on GitHub.
-- **Readme File:**
-  - Create a README.md file in the root directory of your GitHub repository.
-  - Provide a detailed and well-structured description of the project in the README file, including the following sections:
-    - **Project Overview:** Briefly describe what the shopping list app is about and its main features. Give readers a clear idea of the purpose and functionality of the app.
-    - **Screenshots:** Include relevant screenshots of the app to showcase its appearance and functionalities. Visuals can help users understand the app's design and layout.
 
 
-## Rules & Guidelines
+* OTP screen:
+  
+![Screenshot_1699994268](https://github.com/AliArafat4/Project-5/assets/84300173/9192f67d-707b-4a5c-b9b1-ed4d7ec8a75f)
 
-1. **Version Control (Git):**
-   - Create a Fork from the exam’s GitHub repository.
-   - Create a new branch with your name.
-   - Commit frequently with descriptive messages to show your progress.
-   - Finally, create a Pull Request to the exam’s original repository containing your solution.
-2. **Academic Integrity:** Do not copy or reuse code from previous modules or external sources. The exam is a showcase of your learning progress.
-3. **Learning References:** You may refer to course materials and code examples as learning references, but implement your solutions independently.
-4. **Instructor Support:** The instructor will be available for general questions and guidance throughout the exam.
 
-## Schedule & Deadlines
+* Main screen is your profile -CV-:
 
-- **Project Start Date:** 9/11/2023 - 3:00 PM
-- **Project Submission Deadline:** 15/11/2023 – 9:59 PM
 
-## EndPoints
-**Auth** 
-  - **Post:** https://bacend-fshi.onrender.com/auth/registration 
-  - **Post:** https://bacend-fshi.onrender.com/auth/verification 
-  - **Post:** https://bacend-fshi.onrender.com/auth/login
+![Screenshot_1699993930](https://github.com/AliArafat4/Project-5/assets/84300173/ec4f2897-89da-4cc4-b87e-8b29ed4eaee2)
 
-**About** 
-  - **Get:** https://bacend-fshi.onrender.com/user/about
-  - **Put:** https://bacend-fshi.onrender.com/user/edit/about
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete_account
 
-**Project** 
-  - **Get:** https://bacend-fshi.onrender.com/user/projects
-  - **Post:** https://bacend-fshi.onrender.com/user/add/project
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/project
+## THERE IS ALSO A DARK MODE FOR THOSE WHO LIKE DARK THEME
 
-**Skills** 
-  - **Get:** https://bacend-fshi.onrender.com/user/skills 
-  - **Post:** https://bacend-fshi.onrender.com/user/add/skills 
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/skills
 
-**Education** 
-  - **Get:** https://bacend-fshi.onrender.com/user/education
-  - **Post:** https://bacend-fshi.onrender.com/user/add/education
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/education
+## Dark theme screens:
 
-**Social Media** 
-  - **Get:** https://bacend-fshi.onrender.com/user/social_media
-  - **Post:** https://bacend-fshi.onrender.com/user/add/social_media
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/social_media
+* Sign-in & sign-up:
 
-**Get All users**
-  - **Get:** https://bacend-fshi.onrender.com/user/get_users
+![Screenshot_1699994292](https://github.com/AliArafat4/Project-5/assets/84300173/31e0283c-409a-4d2b-a73a-9fd68f8b5c5d)
 
-<br>
-Good luck with your exam project! If you have any general questions or need guidance, don't hesitate to reach out to the instructor. Happy coding!
+![Screenshot_1699994290](https://github.com/AliArafat4/Project-5/assets/84300173/64c67e14-1cdf-4aa7-928e-0fc64adc225f)
+
+* OTP:
+
+![Screenshot_1699994302](https://github.com/AliArafat4/Project-5/assets/84300173/daffc2b6-d61b-4233-94e4-695666421e3a)
+
+* Profile & settings:
+
+![Screenshot_1699993921](https://github.com/AliArafat4/Project-5/assets/84300173/1cba98e4-4a8d-45e2-993a-3ef3bfadf452)
+
+![Screenshot_1699993765](https://github.com/AliArafat4/Project-5/assets/84300173/17b28910-bd60-4d64-ba02-cf3888e2fb2c)
+
+![Screenshot_1699993891](https://github.com/AliArafat4/Project-5/assets/84300173/af403b77-3f9d-49a4-a84d-d3038350942f)
+
+* you can also discover opther users CVs:
+
+![Screenshot_1699993909](https://github.com/AliArafat4/Project-5/assets/84300173/43cedac7-cd7d-4f9f-ac7f-25ee969302dd)
+
+![Screenshot_1699994868](https://github.com/AliArafat4/Project-5/assets/84300173/12f00dd8-1884-4845-a658-264c41737554)
+
+  
+
+* have fun exploring the rest of the app :b
+
+## Getting Started
+
+### Dependencies
+
+* Anyone can use this app.
+  
+
+### Installing
+
+* Clone the project, then run it in an IDE 
+
+### Executing program
+
+* Use an IDE
+
+
+## Notes
+just have fun :D
+
+## Authors
+
+Me: Ali Arafat
+
