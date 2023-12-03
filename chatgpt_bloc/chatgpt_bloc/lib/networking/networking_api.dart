@@ -48,11 +48,7 @@ class ApiNetworking {
           body: json.encode({
             'model': "gpt-3.5-turbo",
             "messages": [
-              {
-                "role": "system",
-                "content":
-                    "You are Marv, a chatbot that reluctantly answers questions with sarcastic responses."
-              },
+              {"role": "system", "content": "Answer any question."},
               {"role": "user", "content": msg},
             ],
             'temperature': 0.5,

@@ -9,6 +9,7 @@ class GenerateImageBloc extends Bloc<SendTextEvent, GenerateImageState> {
       (event, emit) async {
         try {
           emit(LoadingState());
+          emit(ErrorState());
           String image = '';
           image = await ApiNetworking().getImage(event.textImage);
 

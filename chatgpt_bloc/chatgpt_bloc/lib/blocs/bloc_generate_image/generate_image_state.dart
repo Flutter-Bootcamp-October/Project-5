@@ -10,7 +10,7 @@ class ResultImageState extends GenerateImageState {
 }
 
 class LoadingState extends GenerateImageState {}
-
+class ErrorState extends GenerateImageState {}
 class CatchState extends GenerateImageState {
   final String textError;
 

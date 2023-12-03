@@ -11,6 +11,7 @@ class ChatWithGPTBloc extends Bloc<SendTextEvent, ChatWithGPTState> {
           emit(WriteTextUserState());
 
           emit(LoadingState());
+          emit(ErrorState());
           String answer;
           final answerGPT =
               await ApiNetworking().chatWithGPT(msg: event.textChat);

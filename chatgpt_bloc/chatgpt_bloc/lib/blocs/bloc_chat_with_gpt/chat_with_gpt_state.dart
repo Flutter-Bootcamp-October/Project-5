@@ -11,7 +11,7 @@ class ResultTextSendState extends ChatWithGPTState {
 class WriteTextUserState extends ChatWithGPTState {}
 
 class LoadingState extends ChatWithGPTState {}
-
+class ErrorState extends ChatWithGPTState {}
 class CatchState extends ChatWithGPTState {
   final String textError;
 

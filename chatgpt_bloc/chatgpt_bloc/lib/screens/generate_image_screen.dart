@@ -53,16 +53,6 @@ class GenerateImage extends StatelessWidget {
                                   textImage: textImageCon.text,
                                   loadingImage: isLoad,
                                 ));
-
-                            // if (image.isNotEmpty) {
-                            //   isLoad = true;
-
-                            //   //setState(() {});
-                            // } else {
-                            //   const Center(
-                            //     child: CircularProgressIndicator(),
-                            //   );
-                            // }
                           },
                           icon: const Icon(
                             Icons.image,

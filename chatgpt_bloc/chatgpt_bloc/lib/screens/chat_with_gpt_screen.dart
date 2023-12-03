@@ -67,8 +67,7 @@ class ChatWithGPT extends StatelessWidget {
                     const SizedBox(
                       height: 15,
                     ),
-                    Stack(
-                      children: [
+                    Stack(children: [
                       Padding(
                         padding: const EdgeInsets.only(top: 150),
                         child: Image.asset('assets/images/Robot.png'),
