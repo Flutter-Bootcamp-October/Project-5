@@ -1,11 +1,10 @@
-import 'dart:convert';
-
+import 'package:cv/blocs/delete_bloc/delete_bloc.dart';
 import 'package:cv/models/skill.dart';
-import 'package:cv/services/skill/delete_skill.dart';
 import 'package:cv/services/skill/get_skills.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DisplayAllSkills extends StatefulWidget {
   const DisplayAllSkills({super.key});
@@ -51,31 +50,9 @@ class _DisplayAllSkillsState extends State<DisplayAllSkills> {
                                 children: [
                                   Chip(
                                     onDeleted: () async {
-                                      try {
-                                        final response = await deleteSkill(
-                                            context,
-                                            {"id_skill": skillsList[index].id});
-                                        if (response != null &&
-                                            response.statusCode >= 200 &&
-                                            response.statusCode < 300) {
-                                          setState(() {});
-
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(const SnackBar(
-                                                  content: Text(
-                                                      "deleted successfully")));
-                                        } else {
-                                          ScaffoldMessenger.of(context)
-                                              .showSnackBar(SnackBar(
-                                                  content: Text(jsonDecode(
-                                                      response!.body)["msg"])));
-                                        }
-                                      } catch (error) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(SnackBar(
-                                                content:
-                                                    Text(error.toString())));
-                                      }
+                                      context.read<DeleteBloc>().add(
+                                          DeleteSocialEvent(
+                                              skillsList[index].id!, context));
                                     },
                                     backgroundColor: lightBlue,
                                     // avatar: logo,

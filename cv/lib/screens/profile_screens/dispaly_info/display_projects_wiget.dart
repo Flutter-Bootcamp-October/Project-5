@@ -7,11 +7,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DisplayAllProject extends StatelessWidget {
-  DisplayAllProject({super.key, projects});
+  const DisplayAllProject({super.key, projects});
 
-  List<Project>? projects = [];
   @override
   Widget build(BuildContext context) {
+    List<Project>? projects = [];
     return FutureBuilder(
         future: getProjects(context),
         builder: (context, snapshot) {
@@ -40,9 +40,9 @@ class DisplayAllProject extends StatelessWidget {
                             itemCount: snapshot.data!.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              if (projects!.isEmpty) {
-                                projects = snapshot.data!;
-                              }
+                              // if (projects!.isEmpty) {
+                              projects = snapshot.data!;
+                              // }
                               return Row(
                                 children: [
                                   Stack(

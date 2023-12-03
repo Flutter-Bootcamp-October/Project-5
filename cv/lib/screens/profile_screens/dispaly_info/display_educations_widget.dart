@@ -1,10 +1,9 @@
-import 'dart:convert';
-
-import 'package:cv/services/education/delete_education.dart';
+import 'package:cv/blocs/delete_bloc/delete_bloc.dart';
 import 'package:cv/services/education/get_educations.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DisplayAllEducation extends StatefulWidget {
   const DisplayAllEducation({super.key});
@@ -37,7 +36,7 @@ class _DisplayAllEducationState extends State<DisplayAllEducation> {
                       Padding(
                         padding: const EdgeInsets.only(left: 18.0, top: 8),
                         child: SizedBox(
-                          height: 250,
+                          height: 300,
                           width: MediaQuery.of(context).size.width,
                           child: ListView.builder(
                             scrollDirection: Axis.horizontal,
@@ -49,7 +48,7 @@ class _DisplayAllEducationState extends State<DisplayAllEducation> {
                                   Stack(
                                     children: [
                                       SizedBox(
-                                        height: 250,
+                                        height: 290,
                                         width: 180,
                                         child: Container(
                                           decoration: BoxDecoration(
@@ -164,38 +163,10 @@ class _DisplayAllEducationState extends State<DisplayAllEducation> {
                                         left: 130,
                                         child: IconButton(
                                             onPressed: () async {
-                                              try {
-                                                final response =
-                                                    await deleteEducation(
-                                                        context, {
-                                                  "id_education":
-                                                      snapshot.data![index].id
-                                                });
-                                                if (response != null &&
-                                                    response.statusCode >=
-                                                        200 &&
-                                                    response.statusCode < 300) {
-                                                  setState(() {});
-
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(const SnackBar(
-                                                          content: Text(
-                                                              "deleted successfully")));
-                                                } else {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                          content: Text(
-                                                              jsonDecode(
-                                                                      response!
-                                                                          .body)[
-                                                                  "msg"])));
-                                                }
-                                              } catch (error) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
-                                                        content: Text(
-                                                            error.toString())));
-                                              }
+                                              context.read<DeleteBloc>().add(
+                                                  DeleteEducationEvent(
+                                                      snapshot.data![index].id!,
+                                                      context));
                                             },
                                             icon: const Icon(
                                               Icons.cancel_sharp,

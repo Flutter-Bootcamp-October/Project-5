@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:cv/screens/profile_screens/edit_user.dart';
-import 'package:cv/screens/profile_screens/home_screen.dart';
 import 'package:cv/services/user/about.dart';
 import 'package:cv/services/user/upload_image.dart';
 import 'package:cv/style/colors.dart';
@@ -84,13 +83,7 @@ class _DisplayUserInfoState extends State<DisplayUserInfo> {
                                           Future.delayed(
                                               const Duration(seconds: 5));
                                         });
-                                        context
-                                            .findAncestorStateOfType<
-                                                HomeScreenState>()!
-                                            .setState(() {
-                                          Future.delayed(
-                                              const Duration(seconds: 5));
-                                        });
+                                   
                                         print("-------------");
                                         print(snapshot.data!.image);
                                         ScaffoldMessenger.of(context)

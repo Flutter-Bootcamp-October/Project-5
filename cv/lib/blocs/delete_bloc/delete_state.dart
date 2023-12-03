@@ -15,3 +15,9 @@ final class ProjectDeleteState extends DeleteState {
 
   ProjectDeleteState(this.projects);
 }
+
+final class EducationDeleteState extends DeleteState {}
+
+final class SkillDeleteState extends DeleteState {}
+
+final class SocialDeleteState extends DeleteState {}

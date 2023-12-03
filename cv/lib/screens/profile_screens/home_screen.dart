@@ -12,14 +12,9 @@ import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => HomeScreenState();
-}
-
-class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -86,9 +81,57 @@ class HomeScreenState extends State<HomeScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 hight14(),
-                const DisplayAllSkills(),
+                BlocConsumer<DeleteBloc, DeleteState>(
+                  listener: (context, state) {
+                    if (state is ErrorState) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            state.massege,
+                            style: const TextStyle(color: Colors.black),
+                          )));
+                    } else if (state is SkillDeleteState) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            "deleted successfully",
+                            style: TextStyle(color: Colors.black),
+                          )));
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is SkillDeleteState) {
+                      return const DisplayAllSkills();
+                    }
+                    return const DisplayAllSkills();
+                  },
+                ),
                 hight14(),
-                const DisplayAllSocials(),
+                BlocConsumer<DeleteBloc, DeleteState>(
+                  listener: (context, state) {
+                    if (state is ErrorState) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            state.massege,
+                            style: const TextStyle(color: Colors.black),
+                          )));
+                    } else if (state is SocialDeleteState) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            "deleted successfully",
+                            style: TextStyle(color: Colors.black),
+                          )));
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is SocialDeleteState) {
+                      return const DisplayAllSocials();
+                    }
+                    return const DisplayAllSocials();
+                  },
+                ),
                 hight14(),
                 BlocConsumer<DeleteBloc, DeleteState>(
                   listener: (context, state) {
@@ -110,13 +153,38 @@ class HomeScreenState extends State<HomeScreen> {
                   },
                   builder: (context, state) {
                     if (state is ProjectDeleteState) {
-                      return DisplayAllProject(projects: state.projects);
+                      return const DisplayAllProject();
+                      // return DisplayAllProject(projects: state.projects);
                     }
-                    return DisplayAllProject();
+                    return const DisplayAllProject();
                   },
                 ),
                 hight14(),
-                const DisplayAllEducation(),
+                BlocConsumer<DeleteBloc, DeleteState>(
+                  listener: (context, state) {
+                    if (state is ErrorState) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            state.massege,
+                            style: const TextStyle(color: Colors.black),
+                          )));
+                    } else if (state is EducationDeleteState) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            "deleted successfully",
+                            style: TextStyle(color: Colors.black),
+                          )));
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is EducationDeleteState) {
+                      return const DisplayAllEducation();
+                    }
+                    return const DisplayAllEducation();
+                  },
+                ),
                 hight40(),
               ],
             ),
