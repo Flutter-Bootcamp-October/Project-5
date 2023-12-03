@@ -9,7 +9,7 @@ class OpenAi {
       headers: {
         "Content-Type": "application/json",
         "Authorization":
-            "Bearer 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"
+            "Bearer "
       },
       body: jsonEncode({
         "model": "gpt-3.5-turbo",
