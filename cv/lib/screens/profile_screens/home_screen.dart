@@ -1,5 +1,6 @@
 // ignore_for_file: use_build_context_synchronously
 
+import 'package:cv/blocs/delete_bloc/delete_bloc.dart';
 import 'package:cv/screens/profile_screens/dispaly_info/dispaly_skills_widget.dart';
 import 'package:cv/screens/profile_screens/dispaly_info/dispaly_userinfo.dart';
 import 'package:cv/screens/profile_screens/dispaly_info/display_educations_widget.dart';
@@ -9,6 +10,7 @@ import 'package:cv/screens/profile_screens/settings_screen.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -88,7 +90,31 @@ class HomeScreenState extends State<HomeScreen> {
                 hight14(),
                 const DisplayAllSocials(),
                 hight14(),
-                const DisplayAllProject(),
+                BlocConsumer<DeleteBloc, DeleteState>(
+                  listener: (context, state) {
+                    if (state is ErrorState) {
+                      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            state.massege,
+                            style: const TextStyle(color: Colors.black),
+                          )));
+                    } else if (state is ProjectDeleteState) {
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          backgroundColor: Colors.white,
+                          content: Text(
+                            "deleted successfully",
+                            style: TextStyle(color: Colors.black),
+                          )));
+                    }
+                  },
+                  builder: (context, state) {
+                    if (state is ProjectDeleteState) {
+                      return DisplayAllProject(projects: state.projects);
+                    }
+                    return DisplayAllProject();
+                  },
+                ),
                 hight14(),
                 const DisplayAllEducation(),
                 hight40(),

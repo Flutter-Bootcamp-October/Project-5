@@ -1,3 +1,4 @@
+import 'package:cv/blocs/delete_bloc/delete_bloc.dart';
 import 'package:cv/blocs/edit_profile_bloc/edit_profile_bloc.dart';
 import 'package:cv/blocs/education_bloc/education_bloc.dart';
 import 'package:cv/blocs/project_bloc/project_bloc.dart';
@@ -48,6 +49,9 @@ class MainApp extends StatelessWidget {
         ),
         BlocProvider(
           create: (context) => SocialBloc(),
+        ),
+        BlocProvider(
+          create: (context) => DeleteBloc(),
         ),
       ],
       child: const MaterialApp(

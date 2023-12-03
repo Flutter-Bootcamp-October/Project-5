@@ -1,19 +1,15 @@
-import 'dart:convert';
-
-import 'package:cv/services/project/delete_project.dart';
+import 'package:cv/blocs/delete_bloc/delete_bloc.dart';
+import 'package:cv/models/project.dart';
 import 'package:cv/services/project/get_projects.dart';
 import 'package:cv/style/colors.dart';
 import 'package:cv/style/sizes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
-class DisplayAllProject extends StatefulWidget {
-  const DisplayAllProject({super.key});
+class DisplayAllProject extends StatelessWidget {
+  DisplayAllProject({super.key, projects});
 
-  @override
-  State<DisplayAllProject> createState() => _DisplayAllProjectState();
-}
-
-class _DisplayAllProjectState extends State<DisplayAllProject> {
+  List<Project>? projects = [];
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
@@ -44,15 +40,9 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                             itemCount: snapshot.data!.length,
                             shrinkWrap: true,
                             itemBuilder: (context, index) {
-                              // if (snapshot.data![index].state == "completed") {
-                              //   borderColor = const Color(0xff1C7C54);
-                              // }
-                              // if (snapshot.data![index].state == "processing") {
-                              //   borderColor = const Color(0xffFEC086);
-                              // }
-                              // if (snapshot.data![index].state == "other") {
-                              //   borderColor = const Color(0xffCC444B);
-                              // }
+                              if (projects!.isEmpty) {
+                                projects = snapshot.data!;
+                              }
                               return Row(
                                 children: [
                                   Stack(
@@ -64,29 +54,6 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                                           padding: const EdgeInsets.all(8.0),
                                           child: Container(
                                             decoration: BoxDecoration(
-                                              // gradient: const RadialGradient(
-                                              //   center: Alignment.center,
-                                              //   radius: 0.5,
-                                              //   colors: [
-                                              //     Color.fromARGB(
-                                              //         164, 107, 128, 131),
-                                              //     Color(0xffE3F0F3),
-                                              //   ],
-                                              // ),
-
-                                              // border: Border.all(
-                                              //     color: borderColor),
-                                              // boxShadow: [
-                                              //   BoxShadow(
-                                              //     color: lightBlue.withOpacity(
-                                              //         0.5), // Shadow color
-                                              //     spreadRadius:
-                                              //         2, // Spread radius
-                                              //     blurRadius: 2, // Blur radius
-                                              //     offset: const Offset(0,
-                                              //         2), // Changes position of shadow
-                                              //   ),
-                                              // ],
                                               shape: BoxShape.rectangle,
                                               borderRadius:
                                                   BorderRadius.circular(25),
@@ -109,8 +76,7 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                                                     ),
                                                   ),
                                                   Text(
-                                                      snapshot.data![index]
-                                                              .name ??
+                                                      projects![index].name ??
                                                           "",
                                                       overflow:
                                                           TextOverflow.clip,
@@ -129,7 +95,7 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                                                             FontWeight.w500,
                                                       )),
                                                   Text(
-                                                      snapshot.data![index]
+                                                      projects![index]
                                                               .description ??
                                                           "",
                                                       overflow:
@@ -148,8 +114,7 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                                                             FontWeight.w500,
                                                       )),
                                                   Text(
-                                                    snapshot.data![index]
-                                                            .state ??
+                                                    projects![index].state ??
                                                         "",
                                                     style: const TextStyle(
                                                         color: Color.fromARGB(
@@ -166,38 +131,10 @@ class _DisplayAllProjectState extends State<DisplayAllProject> {
                                         top: 3,
                                         child: IconButton(
                                             onPressed: () async {
-                                              try {
-                                                final response =
-                                                    await deleteProject(
-                                                        context, {
-                                                  "id_project":
-                                                      snapshot.data![index].id
-                                                });
-                                                if (response != null &&
-                                                    response.statusCode >=
-                                                        200 &&
-                                                    response.statusCode < 300) {
-                                                  setState(() {});
-
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(const SnackBar(
-                                                          content: Text(
-                                                              "deleted successfully")));
-                                                } else {
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(SnackBar(
-                                                          content: Text(
-                                                              jsonDecode(
-                                                                      response!
-                                                                          .body)[
-                                                                  "msg"])));
-                                                }
-                                              } catch (error) {
-                                                ScaffoldMessenger.of(context)
-                                                    .showSnackBar(SnackBar(
-                                                        content: Text(
-                                                            error.toString())));
-                                              }
+                                              context.read<DeleteBloc>().add(
+                                                  DeleteProjectEvent(
+                                                      projects![index].id!,
+                                                      context));
                                             },
                                             icon: const Icon(
                                               Icons.cancel_sharp,
