@@ -51,7 +51,7 @@ class _DisplayAllSkillsState extends State<DisplayAllSkills> {
                                   Chip(
                                     onDeleted: () async {
                                       context.read<DeleteBloc>().add(
-                                          DeleteSocialEvent(
+                                          DeleteSkillEvent(
                                               skillsList[index].id!, context));
                                     },
                                     backgroundColor: lightBlue,
