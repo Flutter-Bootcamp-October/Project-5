@@ -5,6 +5,7 @@ import 'package:cv_app/screens/onboarding.dart';
 import 'package:cv_app/screens/progress_screen.dart';
 import 'package:cv_app/screens/project_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 void main() {
   runApp(const MainApp());

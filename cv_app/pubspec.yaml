@@ -9,8 +9,10 @@ environment:
 dependencies:
   buttons_tabbar: ^1.3.8
   dropdown_button2: ^2.3.9
+  floating_bottom_navigation_bar: ^1.5.2
   flutter:
     sdk: flutter
+  flutter_bloc: ^8.1.3
   flutter_onboarding_slider: ^1.0.11
   http: ^1.1.0
   image_picker: ^1.0.4

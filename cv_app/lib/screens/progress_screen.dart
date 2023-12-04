@@ -22,11 +22,7 @@ class _TabProgressState extends State<TabProgress> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Padding(
-          padding: const EdgeInsets.only(left: 95),
-          child: Text("Cv Maker"),
-        ),
-        actions: [],
+        title: Text("Cv Maker"),
         backgroundColor: purble,
         leading: InkWell(
             onTap: () async {
@@ -42,44 +38,47 @@ class _TabProgressState extends State<TabProgress> {
             length: 7,
             child: Column(
               children: <Widget>[
-                ButtonsTabBar(
-                  buttonMargin: EdgeInsets.all(1),
-                  labelSpacing: 6,
-                  backgroundColor: orang,
-                  unselectedBackgroundColor: Colors.grey[300],
-                  unselectedLabelStyle: TextStyle(color: Colors.black),
-                  labelStyle: TextStyle(
-                      color: Colors.white, fontWeight: FontWeight.bold),
-                  tabs: [
-                    Tab(
-                      icon: Icon(Icons.person_add_alt_1),
-                      text: "About",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.cast_for_education),
-                      text: "Education",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.workspace_premium),
-                      text: "Project",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.local_activity_rounded),
-                      text: "Skills",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.contact_emergency),
-                      text: "Social media",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.contact_page),
-                      text: "Cv Page",
-                    ),
-                    Tab(
-                      icon: Icon(Icons.person_pin_circle_outlined),
-                      text: "Community",
-                    ),
-                  ],
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: ButtonsTabBar(
+                    buttonMargin: EdgeInsets.all(1),
+                    labelSpacing: 6,
+                    backgroundColor: orang,
+                    unselectedBackgroundColor: Colors.grey[300],
+                    unselectedLabelStyle: TextStyle(color: Colors.black),
+                    labelStyle: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.bold),
+                    tabs: [
+                      Tab(
+                        icon: Icon(Icons.person_add_alt_1),
+                        text: "About",
+                      ),
+                      Tab(
+                        icon: Icon(Icons.cast_for_education),
+                        text: "Education",
+                      ),
+                      Tab(
+                        icon: Icon(Icons.workspace_premium),
+                        text: "Project",
+                      ),
+                      Tab(
+                        icon: Icon(Icons.local_activity_rounded),
+                        text: "Skills",
+                      ),
+                      Tab(
+                        icon: Icon(Icons.contact_emergency),
+                        text: "Social media",
+                      ),
+                      Tab(
+                        icon: Icon(Icons.contact_page),
+                        text: "Cv Page",
+                      ),
+                      Tab(
+                        icon: Icon(Icons.person_pin_circle_outlined),
+                        text: "Community",
+                      ),
+                    ],
+                  ),
                 ),
                 Expanded(
                   child: TabBarView(
