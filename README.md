@@ -1,82 +1,47 @@
 # Project-5
+Cv App It is an application that creates a CV Interacts with the user,that are containe :
+1-About page 
+2- Education page 
+3-Skills page 
+4-Social media 
+5-Projects page
+6-Community page
+
+![Screenshot_1700026544](https://github.com/re23a/Project-5/assets/147350855/b469a5f7-e6c8-40d5-966a-9c4cf76459b3)
+
+![Screenshot_1700026548](https://github.com/re23a/Project-5/assets/147350855/7ff26108-5c7d-4535-8284-d865d596ac5c)
+
+![Screenshot_1700026552](https://github.com/re23a/Project-5/assets/147350855/ed97a411-92be-483f-8630-33df8b132d85)
+
+![Screenshot_1700026557](https://github.com/re23a/Project-5/assets/147350855/7829b25e-d758-4adc-b49d-ba5d76278d90)
 
 
-## Description
-
-Your task is to create a functional and user-friendly CV app using Flutter. This app will allow users to create their own CVs, including creating an account, writing their resume, inserting their projects and skills, and adding their educational data. The app will be easy to use and will provide users with a professional-looking CV that they can use to apply for jobs.
-
-## Minimum Requirements
-
-- **Correct Structure:** Ensure that the application is built with the appropriate structure. Follow Flutter's best practices for organizing code and project files.
-- **Clean Code:** Write code that is clear, well-organized, and scalable. Use meaningful variable and function names and follow standard coding conventions to improve code readability.
-- **User account creation:** Users will be able to create an account with the app using their email address and a password.
-- **verification:** Users should be able to verify their emails after creating their accounts. also should be able to reset their password.
-- **User Information:** Users will be able to write their information using the app in the (About) screen, users should able to view and edit their information. And be able to delete their account.
-- **Project and skills:** Users will be able to insert, view, and delete their projects and skills. They will be able to add a description of each project in the (Projects) screen, and Also, be able to add their skills in the (Skill) screen
-- **Educational data:** Users will be able to add their educational data to the app. They will be able to add the name of their university, the degree they earned, and the dates they graduated.
-- **Social Media:** Users will be able to insert, view, and delete their Social Media accounts.
-- **Display all Users:** Users will be able to view all other users' details.
+![Screenshot_1700026566](https://github.com/re23a/Project-5/assets/147350855/1c91f3be-f9f1-4fb0-8ae5-96b25938c976)
 
 
-## Delivery Requirements
 
-- **Upload the Entire Project:** Ensure that you upload the complete project, which includes all necessary code files, assets, and configurations, to the repository on GitHub.
-- **Readme File:**
-  - Create a README.md file in the root directory of your GitHub repository.
-  - Provide a detailed and well-structured description of the project in the README file, including the following sections:
-    - **Project Overview:** Briefly describe what the shopping list app is about and its main features. Give readers a clear idea of the purpose and functionality of the app.
-    - **Screenshots:** Include relevant screenshots of the app to showcase its appearance and functionalities. Visuals can help users understand the app's design and layout.
+![Screenshot_1700026572](https://github.com/re23a/Project-5/assets/147350855/d5ebe06d-dda9-4b7f-8021-1f75b158fbb7)
+
+![Screenshot_1700026615](https://github.com/re23a/Project-5/assets/147350855/72a7c9e5-a92f-44b3-9a85-d31cf0523f28)
+![Screenshot_1700026663](https://github.com/re23a/Project-5/assets/147350855/ca38f1b8-b321-43a3-9a51-03834d9c1f7a)
 
 
-## Rules & Guidelines
+![Screenshot_1700026645](https://github.com/re23a/Project-5/assets/147350855/03e6b6bb-e95a-4b80-af64-873a77460025)
 
-1. **Version Control (Git):**
-   - Create a Fork from the exam’s GitHub repository.
-   - Create a new branch with your name.
-   - Commit frequently with descriptive messages to show your progress.
-   - Finally, create a Pull Request to the exam’s original repository containing your solution.
-2. **Academic Integrity:** Do not copy or reuse code from previous modules or external sources. The exam is a showcase of your learning progress.
-3. **Learning References:** You may refer to course materials and code examples as learning references, but implement your solutions independently.
-4. **Instructor Support:** The instructor will be available for general questions and guidance throughout the exam.
+![Screenshot_1700026649](https://github.com/re23a/Project-5/assets/147350855/baafded9-2d33-4f95-8ec0-3a8b7cd24f6e)
+![Screenshot_1700026653](https://github.com/re23a/Project-5/assets/147350855/5798bab4-9978-45d4-a540-645d9fd56302)
 
-## Schedule & Deadlines
 
-- **Project Start Date:** 9/11/2023 - 3:00 PM
-- **Project Submission Deadline:** 15/11/2023 – 9:59 PM
+![Screenshot_1700026656](https://github.com/re23a/Project-5/assets/147350855/e76fca7e-36e5-4784-8b7c-50fdabc5677d)
 
-## EndPoints
-**Auth** 
-  - **Post:** https://bacend-fshi.onrender.com/auth/registration 
-  - **Post:** https://bacend-fshi.onrender.com/auth/verification 
-  - **Post:** https://bacend-fshi.onrender.com/auth/login
 
-**About** 
-  - **Get:** https://bacend-fshi.onrender.com/user/about
-  - **Put:** https://bacend-fshi.onrender.com/user/edit/about
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete_account
+![Screenshot_1700026673](https://github.com/re23a/Project-5/assets/147350855/2e9cc6de-b43e-4256-9d97-ee7ba4ef0032)
 
-**Project** 
-  - **Get:** https://bacend-fshi.onrender.com/user/projects
-  - **Post:** https://bacend-fshi.onrender.com/user/add/project
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/project
 
-**Skills** 
-  - **Get:** https://bacend-fshi.onrender.com/user/skills 
-  - **Post:** https://bacend-fshi.onrender.com/user/add/skills 
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/skills
+![Screenshot_1700026685](https://github.com/re23a/Project-5/assets/147350855/82c6b2ba-4003-4c31-bd71-dc10ff14f6fd)
 
-**Education** 
-  - **Get:** https://bacend-fshi.onrender.com/user/education
-  - **Post:** https://bacend-fshi.onrender.com/user/add/education
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/education
+![Screenshot_1700026694](https://github.com/re23a/Project-5/assets/147350855/4b60bbe2-7f94-4d8d-991f-31170cac858b)
 
-**Social Media** 
-  - **Get:** https://bacend-fshi.onrender.com/user/social_media
-  - **Post:** https://bacend-fshi.onrender.com/user/add/social_media
-  - **Delete:** https://bacend-fshi.onrender.com/user/delete/social_media
 
-**Get All users**
-  - **Get:** https://bacend-fshi.onrender.com/user/get_users
 
-<br>
-Good luck with your exam project! If you have any general questions or need guidance, don't hesitate to reach out to the instructor. Happy coding!
+
