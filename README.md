@@ -1,4 +1,4 @@
-# Project-5
+# CV app
 Cv App It is an application that creates a CV Interacts with the user,that are containe :
 1-About page 
 2- Education page 
