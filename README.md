@@ -58,11 +58,7 @@ ______________________________________________________________________
 
 ![socialScreen-2023-11-15 041402](https://github.com/RubaAlHilal/Project-5/assets/73358612/313bdd24-f94d-477e-a86e-a75ba3717a23)
 
-______________________________________________________________________
-  
-  10- Users Page
-  // had an error that made the screen red because of a null value that I couldn't resolve.
-![UsersScreen-2023-11-15 052007](https://github.com/RubaAlHilal/Project-5/assets/73358612/189f5aad-f788-4977-a39a-4e60739b328c)
+
 
   
 ______________________________________________________________________
